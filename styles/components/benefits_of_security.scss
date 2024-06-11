@@ -1,0 +1,114 @@
+.benefits_of_security {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 0;
+  margin: 0 30px;
+  @media (max-width: 991px) {
+    padding: auto 30px;
+  }
+
+  &_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    max-width: 1152px;
+    gap: 80px;
+  }
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+
+    @media (max-width: 991px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+    h2 {
+      color: #10345e;
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 40px;
+      max-width: 512px;
+
+      @media (max-width: 991px) {
+        font-size: 30px;
+        line-height: 33px;
+      }
+    }
+
+    p {
+      color: #4e5a6c;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 32px; /* 160% */
+      max-width: 409px;
+    }
+  }
+
+  &_cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+
+    @media (max-width: 991px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-content: center;
+      align-items: center;
+    }
+    @media (max-width: 550px) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &_card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1 0 0;
+    @media (max-width: 991px) {
+      /* background-color: red; */
+    }
+
+    &_text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      align-self: stretch;
+
+      h3 {
+        color: #10345e;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32px;
+      }
+      
+      p {
+        color: var(--colour-neutral-neutral800, #4e5a6c);
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 32px;
+      }
+    }
+  }
+
+  button {
+    display: flex;
+    padding: 16px 78px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    background: #00b8de;
+    color: white;
+    border: none;
+    font-size: 18px;
+  }
+}

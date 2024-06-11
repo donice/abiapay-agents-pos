@@ -1,0 +1,94 @@
+@use "../index.scss" as *;
+
+  .get_started {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: px-to-rem(100px) px-to-rem(10px);
+
+    &_container {
+      gap: px-to-rem(20px);
+      display: flex;
+      flex-direction: column;
+      background-image: url(../../assets/blure-2.webp),
+        url(../../assets/blure-2.webp);
+      background-color: #10345e;
+      background-repeat: no-repeat;
+      background-size: 50%;
+      background-position:
+        -50% 220%,
+        150% 220%;
+      border-radius: px-to-rem(36px);
+      max-width: 1110px;
+    }
+    &_text {
+      max-width: px-to-rem(853px);
+      display: flex;
+      flex-direction: column;
+      gap: px-to-rem(16px);
+      margin: px-to-rem(50px) px-to-rem(100px) 0 px-to-rem(100px);
+      @include custom-media-query("mobile", 768px) {
+        margin: px-to-rem(50px) px-to-rem(40px) 0 px-to-rem(40px);
+      }
+      h3 {
+        font-size: px-to-rem(48px);
+        color: var(--white);
+        text-align: center;
+        line-height: px-to-rem(64px);
+        font-weight: 600;
+        margin-inline: auto;
+      }
+
+      p {
+        text-align: center;
+        color: var(--white);
+        font-size: px-to-rem(20px);
+        line-height: px-to-rem(32px);
+        margin-inline: auto;
+        font-weight: 300;
+      }
+    }
+    &_img_container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    &_btn {
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: px-to-rem(24px);
+      margin: 0 0 px-to-rem(60px) 0;
+
+      @include custom-media-query("mobile", 600px) {
+        flex-direction: column;
+      }
+      .primary_btn {
+        padding: px-to-rem(16px) px-to-rem(24px);
+        gap: 12px;
+        display: inline-block;
+        width: fit-content;
+        display: flex;
+        // flex-basis: 200px;
+        text-align: center;
+        border-radius: 8px;
+        background-color: var(--white);
+        color: var(--active-blue-600);
+      }
+
+      .secondary_btn {
+        // flex-basis: 200px;
+        padding: px-to-rem(16px) px-to-rem(16px);
+        border: 2px solid var(--white);
+        text-align: center;
+        border-radius: 8px;
+      }
+      a {
+        color: var(--white);
+      }
+    }
+  }

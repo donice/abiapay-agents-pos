@@ -1,0 +1,91 @@
+  @use "../index.scss" as *;
+
+
+  .feature {
+    padding-block: px-to-rem(32px);
+    margin-bottom: px-to-rem(80px);
+    background-color: white;
+    @include custom-media-query("mobile", 1190px) {
+      padding: px-to-rem(32px) px-to-rem(20px);
+    }
+
+    &_container {
+      max-width: var(--container-lg);
+      margin-inline: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: px-to-rem(56px);
+    }
+    h3 {
+      max-width: px-to-rem(500px);
+      font-size: px-to-rem(32px);
+      color: var(--active-blue-400);
+      color: var(--colour-activeblue-activeBlue600, #10345e);
+      font-size: px-to-rem(40px);
+      font-weight: 700;
+      line-height: 48px;
+      @include custom-media-query("mobile", 100px) {
+        font-size: px-to-rem(32px);
+      }
+    }
+    p {
+      color: var(--colour-neutral-neutral800, #4e5a6c);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 32px;
+    }
+
+    &_item {
+      padding-block: px-to-rem(18px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 56px;
+      width: 100%;
+    }
+
+    &_card {
+      max-width: px-to-rem(1120px);
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      @include custom-media-query("mobile", 768px) {
+        flex-direction: column;
+        gap: px-to-rem(30px);
+      }
+    }
+  }
+
+  // -----
+
+    .features_card {
+    max-width: px-to-rem(507px);
+    display: flex;
+    flex-direction: column;
+    gap: px-to-rem(20px);
+    h4 {
+      color: var(--colour-neutral-neutral800, #4e5a6c);
+      font-weight: 700;
+      color: #10345e;
+      font-size: px-to-rem(24px);
+      line-height: px-to-rem(32px);
+    }
+
+    p {
+      font-weight: 400;
+      font-size: px-to-rem(20px);
+      line-height: px-to-rem(32px);
+      color: var(--colour-neutral-neutral800, #4e5a6c);
+    }
+    &_img {
+      width: px-to-rem(40px);
+      height: px-to-rem(40px);
+    }
+
+    &_details {
+      display: flex;
+      flex-direction: column;
+      gap: px-to-rem(12px);
+    }
+  }

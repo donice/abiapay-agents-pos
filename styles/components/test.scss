@@ -1,0 +1,9 @@
+.test{
+  background-color: blue;
+}
+
+.test + .test {
+  margin-top: 2rem;
+  max-width: 200px;
+  margin-inline: auto;
+}

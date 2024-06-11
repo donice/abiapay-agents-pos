@@ -1,0 +1,68 @@
+// Convert px to rem
+$base-font-size: 16px;
+@function px-to-rem($px, $suffix: 1rem) {
+	@return calc(($px / $base-font-size) * $suffix);
+}
+
+// Media Query
+@mixin custom-media-query($device-type, $width) {
+	@if $device-type == "mobile" {
+		@media (max-width: $width) {
+			@content;
+		}
+	} @else if $device-type == "desktop" {
+		@media (min-width: $width) {
+			@content;
+		}
+	} @else {
+		@warn 'Invalid argument for custom-media-query mixin. Please use mobile or desktop.';
+	}
+}
+
+@mixin scrollbar($width, $track, $thumb) {
+	&::-webkit-scrollbar {
+		width: px-to-rem($width);
+	}
+
+	&::-webkit-scrollbar-track {
+		background: $track;
+		margin-block: px-to-rem(8px);
+		border-radius: px-to-rem(50px);
+	}
+	&::-webkit-scrollbar-thumb {
+		background: $thumb;
+		border: px-to-rem(2px) solid track;
+		&:hover {
+			background: $thumb;
+		}
+		border-radius: px-to-rem(50px);
+	}
+}
+
+@mixin scrollbar_hide {
+	&::-webkit-scrollbar {
+		width: px-to-rem(1px);
+	}
+
+	&::-webkit-scrollbar-track {
+		background: rgba(255, 255, 255, 0);
+		margin-block: px-to-rem(8px);
+		border-radius: px-to-rem(50px);
+	}
+	&::-webkit-scrollbar-thumb {
+		background: rgba(255, 255, 255, 0);
+		border: px-to-rem(2px) solid rgba(255, 255, 255, 0);
+		&:hover {
+			background: rgba(255, 255, 255, 0);
+		}
+		border-radius: px-to-rem(50px);
+	}
+}
+
+
+/* ----------------- custom support for unsupported property ----------------- */
+@mixin unsupported-property($property, $value) {
+	@supports not (#{$property}: #{$value}) {
+		@content;
+	}
+}

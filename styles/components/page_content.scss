@@ -1,0 +1,22 @@
+@use "../index.scss" as *;
+
+.page_content {
+	// Spacing for benefits
+	overflow-x: clip;
+	/* -----------------------------------Benefit Spacing--------------------------------------- */
+	.benefit + .benefit {
+		margin-top: px-to-rem(160px);
+		@include custom-media-query("mobile", 426px) {
+			margin-top: px-to-rem(100px);
+		}
+	}
+	.benefit + .header-spacer {
+		margin-top: px-to-rem(160px);
+		@include custom-media-query("mobile", 426px) {
+			margin-top: px-to-rem(100px);
+		}
+	}
+
+	/* ----------------------------------Section---------------------------------------- */
+	// testint
+}
