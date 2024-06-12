@@ -1,0 +1,37 @@
+@use "../../../../styles/index.scss" as *;
+
+.stats-card {
+  $bold-primary-text: #3f3f46;
+
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #86efac;
+  padding: 1rem;
+  border-radius: 0.7rem;
+  background-color: #f0fdf439;
+  color: $text-primary;
+  font-size: 14px;
+
+  &_summ {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    span:nth-child(1) {
+      color: $bold-primary-text;
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+  }
+  &_amount {
+    display: grid;
+
+    span:nth-child(1) {
+      color: $bold-primary-text;
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+  }
+  img {
+    width: 40px;
+  }
+}

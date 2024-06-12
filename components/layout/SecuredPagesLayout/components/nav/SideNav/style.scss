@@ -1,11 +1,5 @@
 @use "../../../../../../styles/index.scss" as *;
 
-$primary: rgb(20 83 45);
-$primary-hover: rgb(22 101 52);
-$text-primary: rgb(113 113 122);
-$gray: rgba(113, 113, 122, 0.111);
-$border: 1px solid $gray;
-
 .side-nav {
   height: 100vh;
   min-width: 20%;

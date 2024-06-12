@@ -1,0 +1,41 @@
+@use "../../../../styles/index.scss" as *;
+
+.wallet-card {
+  $bold-primary-text: #3f3f46;
+
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #86efac;
+  padding: 1rem;
+  border-radius: 0.7rem;
+  background-color: #f0fdf4;
+  color: $text-primary;
+  font-size: 13px;
+
+  &_balance {
+    display: grid;
+
+    span:nth-child(2) {
+      color: $bold-primary-text;
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+  }
+  &_earnings {
+    display: grid;
+
+    span:nth-child(2) {
+      color: $bold-primary-text;
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+
+    span:nth-child(3) {
+      color: red;
+    }
+  }
+
+  img {
+    width: 40px;
+  }
+}

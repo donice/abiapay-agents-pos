@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Metadata } from "next";
+import DashbaordComponent from '@/components/modules/dashboard';
 
 export const metadata: Metadata = {
   title: "Agents Portal - Dashbaord",
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div>
+      <DashbaordComponent/>
+    </div>
   )
 }
 

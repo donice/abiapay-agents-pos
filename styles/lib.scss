@@ -1,5 +1,13 @@
 // Convert px to rem
 $base-font-size: 16px;
+
+$primary: rgb(20 83 45);
+$primary-hover: rgb(22 101 52);
+$text-primary: rgb(113 113 122);
+$gray: rgba(113, 113, 122, 0.111);
+$border: 1px solid $gray;
+
+
 @function px-to-rem($px, $suffix: 1rem) {
 	@return calc(($px / $base-font-size) * $suffix);
 }
