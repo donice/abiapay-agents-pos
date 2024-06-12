@@ -8,7 +8,7 @@ const TopNav = () => {
   return (
     <nav className="top-nav">
       <div className="top-nav_logo">
-        <a href="/" className="logo">
+        <a href="/dashboard" className="logo">
           <AbiaLogo />
         </a>
       </div>
