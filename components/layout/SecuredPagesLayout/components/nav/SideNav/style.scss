@@ -1,0 +1,79 @@
+@use "../../../../../../styles/index.scss" as *;
+
+$primary: rgb(34 197 94);
+$primary-hover: rgb(2 44 34);
+$text-primary: rgb(113 113 122);
+$gray: rgba(113, 113, 122, 0.111);
+$border: 1px solid $gray;
+
+.side-nav {
+  height: 100vh;
+  min-width: 20%;
+  position: fixed;
+  left: 0;
+  top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $text-primary;
+  background-color: white;
+  border-right: $border;
+
+  &_items_container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: px-to-rem(24px);
+
+    .side-nav_items {
+      width: 100%;
+      height: 100%;
+      display: grid;
+
+      li {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: px-to-rem(18px);
+        gap: 10px;
+        font-weight: 500;
+        border-radius: px-to-rem(8px);
+
+        &:hover {
+          background-color: rgba(211, 211, 211, 0.222);
+        }
+
+        span {
+          &:nth-child(1) .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .out {
+            color: red;
+          }
+
+          &:nth-child(2) {
+            font-size: px-to-rem(14px);
+          }
+        }
+      }
+      .logout {
+        border-top: $border;
+      }
+      // .active {
+      //   background-color: $primary;
+
+      //   color: white;
+
+      //   .out {
+      //     color: white;
+      //   }
+      // }
+    }
+  }
+}
