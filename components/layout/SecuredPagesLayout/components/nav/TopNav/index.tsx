@@ -1,6 +1,7 @@
 "use client"
 import React from "react";
 import "./style.scss";
+import { TbUserSquareRounded } from "react-icons/tb";
 
 const TopNav = () => {
 
@@ -8,11 +9,13 @@ const TopNav = () => {
     <nav className="top-nav">
       <div className="top-nav_logo">
         <a href="/" className="logo">
-          Abia Agent Portal
+        Agent Portal
         </a>
       </div>
       <div className="top-nav_user">
+
         <p>Donice Ubaru</p>
+        <TbUserSquareRounded className="icon"/>
       </div>
     </nav>
   );
