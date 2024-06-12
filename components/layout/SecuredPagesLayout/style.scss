@@ -7,5 +7,11 @@
   top: 3.5rem;
   position: fixed;
   padding: px-to-rem(36px);
-  // border: 20px solid red;
+  transition: width 1s ease-in-out;
+  z-index: -1;
+
+  @include custom-media-query("mobile", 768px) {
+    width: 100%;
+    padding: px-to-rem(16px);
+  }
 }

@@ -1,25 +1,23 @@
 @use "../../../../styles/index.scss" as *;
 
-.wallet-card {
+.tickets-wallet-card {
   $bold-primary-text: #3f3f46;
 
   display: flex;
   justify-content: space-between;
   border: 1px solid #86efac;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   border-radius: 0.7rem;
-  background-color: #f0fdf4;
-  color: $text-primary;
+  background-color: $primary;
+  color: #d4d4d8;
   font-size: 13px;
-
-  
 
   &_balance {
     display: grid;
 
     span:nth-child(2) {
-      color: $bold-primary-text;
-      font-weight: 600;
+      color: #e4e4e7;
+      font-weight: 500;
       font-size: 1.3rem;
     }
   }
@@ -27,13 +25,9 @@
     display: grid;
 
     span:nth-child(2) {
-      color: $bold-primary-text;
-      font-weight: 600;
+      color: #e4e4e7;
+      font-weight: 500;
       font-size: 1.3rem;
-    }
-
-    span:nth-child(3) {
-      color: red;
     }
   }
 

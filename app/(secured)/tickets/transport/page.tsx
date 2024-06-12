@@ -1,8 +1,18 @@
 import React from 'react'
+import type { Metadata } from "next";
+import TransportTicketComponent from '@/components/modules/tickets/transport';
+
+export const metadata: Metadata = {
+  title: "Transport Tickets - Agent Portal",
+  description: "Agents Portal Tickets Page",
+};
+
 
 const TransportTicketsPage = () => {
   return (
-    <div>TransportTicketsPage</div>
+    <div>
+      <TransportTicketComponent />
+    </div>
   )
 }
 

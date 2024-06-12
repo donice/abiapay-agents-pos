@@ -12,6 +12,12 @@
   color: $text-primary;
   background-color: white;
   border-right: $border;
+  transition: width 1s ease-in-out;
+
+  @include custom-media-query("mobile", 768px) {
+    display: none;
+    padding: px-to-rem(16px);
+  }
 
   &_items_container {
     width: 100%;
