@@ -1,7 +1,11 @@
 import React from 'react'
 import "./style.scss"
 
-const WalletCard = () => {
+interface props {
+  bank: string;
+}
+
+const WalletCard = ({bank}: props) => {
   return (
     <div className="wallet-card">
       <div className="wallet-card_balance">

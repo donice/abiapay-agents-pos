@@ -20,8 +20,8 @@ const DashbaordComponent = () => {
         </div>
       </header>
       <div className="dashboard_wallets">
-        <WalletCard />
-        <WalletCard />
+        <WalletCard bank="access" />
+        <WalletCard bank="fidelity"/>
       </div>
       <div className="dashboard_stats">
         <StatsCard name="Tickets" amount="30" />

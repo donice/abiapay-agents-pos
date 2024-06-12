@@ -12,6 +12,6 @@
 
   @include custom-media-query("mobile", 768px) {
     width: 100%;
-    padding: px-to-rem(16px);
+    padding: 2rem px-to-rem(16px);
   }
 }
