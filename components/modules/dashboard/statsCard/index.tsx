@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.scss";
-import { TbTicket, TbCreditCard, TbCopyCheck } from "react-icons/tb";
+import { TbTicket, TbCreditCard, TbServer2 } from "react-icons/tb";
 
 interface props {
   icon?: string;
@@ -17,7 +17,7 @@ const StatsCard = ({ name, amount }: props) => {
           ) : name === "ABSSIN" ? (
             <TbCreditCard className="icon"/>
           ) : (
-            <TbCopyCheck className="icon"/>
+            <TbServer2 className="icon"/>
           )
         }</span>
         <span>{name}</span>
