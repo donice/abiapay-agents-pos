@@ -1,6 +1,10 @@
 import React from "react";
 
-const SecuredPagesLayout = ({ children }: { children: React.ReactNode }) => {
+const SecuredPagesLayout = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
   return <div>SecuredPagesLayout {children}</div>;
 };
 
