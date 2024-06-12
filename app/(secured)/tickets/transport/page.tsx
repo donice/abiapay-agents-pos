@@ -6,4 +6,4 @@ const TransportTicketsPage = () => {
   )
 }
 
-export default TransportTicketsPage
+export default TransportTicketsPage;

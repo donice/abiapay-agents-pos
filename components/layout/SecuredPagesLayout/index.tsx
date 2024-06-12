@@ -3,19 +3,15 @@ import SideNav from "./components/nav/SideNav";
 import TopNav from "./components/nav/TopNav";
 import "./style.scss";
 
-const SecuredPagesLayout = ({
+const SecuredPagesLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+}) => {
   return (
     <section>
       <TopNav />
       <section>
-        <SideNav /> 
-        <section className="main-section">
-          {children}
-          </section> 
+        <SideNav />
+        <section className="main-section">{children}</section>
       </section>
     </section>
   );

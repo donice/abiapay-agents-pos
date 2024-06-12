@@ -1,7 +1,9 @@
+"use client"
 import React from "react";
 import "./style.scss";
 
 const TopNav = () => {
+
   return (
     <nav className="top-nav">
       <div className="top-nav_logo">

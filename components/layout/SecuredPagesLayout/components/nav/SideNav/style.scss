@@ -1,7 +1,7 @@
 @use "../../../../../../styles/index.scss" as *;
 
-$primary: rgb(34 197 94);
-$primary-hover: rgb(2 44 34);
+$primary: rgb(20 83 45);
+$primary-hover: rgb(22 101 52);
 $text-primary: rgb(113 113 122);
 $gray: rgba(113, 113, 122, 0.111);
 $border: 1px solid $gray;
@@ -30,6 +30,7 @@ $border: 1px solid $gray;
       width: 100%;
       height: 100%;
       display: grid;
+      gap: 0.5rem;
 
       li {
         cursor: pointer;
@@ -39,10 +40,8 @@ $border: 1px solid $gray;
         gap: 10px;
         font-weight: 500;
         border-radius: px-to-rem(8px);
-
-        &:hover {
-          background-color: rgba(211, 211, 211, 0.222);
-        }
+        background-color: none;
+        transition: background-color 0.15s ease-in;
 
         span {
           &:nth-child(1) .icon {
@@ -62,18 +61,29 @@ $border: 1px solid $gray;
           }
         }
       }
+      .inactive {
+        &:hover {
+          background-color: rgba(211, 211, 211, 0.222);
+        }
+      }
+
+      .active {
+        &:hover {
+          background-color: $primary-hover;
+        }
+      }
       .logout {
         border-top: $border;
       }
-      // .active {
-      //   background-color: $primary;
+      .active {
+        background-color: $primary;
 
-      //   color: white;
+        color: white;
 
-      //   .out {
-      //     color: white;
-      //   }
-      // }
+        .out {
+          color: white;
+        }
+      }
     }
   }
 }

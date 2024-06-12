@@ -1,14 +1,14 @@
 "use client";
 import React, { ReactElement } from "react";
 import "./style.scss";
+import Link from "next/link";
+import getRoute from "@/hooks/getRoute";
 import {
   TbLayoutDashboard,
   TbTicket,
   TbBasketDown,
   TbLogout2,
 } from "react-icons/tb";
-import { useRouter } from "next/router";
-import Link from "next/link";
 
 interface SideNavProps {
   name: string;
@@ -35,17 +35,15 @@ const nav_items: SideNavProps[] = [
 ];
 
 const SideNav = () => {
-  // const router = useRouter();
-  // const { asPath } = router;
+  const route = getRoute();
 
   return (
     <nav className="side-nav">
-      {/* {asPath} */}
       <div className="side-nav_items_container">
         <ul className="side-nav_items">
           {nav_items.map((item) => (
             <Link href={`/${item.name}`} key={item.name}>
-              <li key={item.name} className="active">
+              <li key={item.name} className={`${item.name === route ? "active" : "inactive"}`}>
                 <span>{item.icon}</span>
                 <span>{item.title}</span>
               </li>
