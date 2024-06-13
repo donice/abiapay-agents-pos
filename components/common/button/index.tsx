@@ -21,7 +21,7 @@ export const DefaultButton = ({ text, link, disabled }: prop) => {
 
   return (
     <button
-      className="button primary"
+      className={`button primary ${disabled && "disabled"}`}
       disabled={disabled}
       onClick={() => handleClick(link)}
     >

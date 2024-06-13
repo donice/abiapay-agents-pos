@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import { DefaultButton, CancelButton } from "@/components/common/button";
 import "./style.scss";
@@ -11,35 +11,47 @@ const AddTransportTicketForm = () => {
     taxPayerName: "",
     taxPayerPhone: "",
     paymentPeriod: "",
-    amount: ""
+    amount: "",
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    const allFieldsFilled = Object.values(formData).every((field) => field !== "");
+    const allFieldsFilled = Object.values(formData).every(
+      (field) => field !== ""
+    );
     setIsFormValid(allFieldsFilled);
   }, [formData]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
+    sessionStorage.setItem("TRANSPORT_FORM_DETAILS", JSON.stringify(formData));
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="ticketType">Ticket Type</label>
-        <select name="ticketType" id="ticketType" className="minimal" value={formData.ticketType} onChange={handleChange}>
-          <option disabled value="">Select Ticket Type</option>
+        <select
+          name="ticketType"
+          id="ticketType"
+          className="minimal"
+          value={formData.ticketType}
+          onChange={handleChange}
+        >
+          <option disabled value="">
+            Select Ticket Type
+          </option>
           <option value="truck">Truck</option>
           <option value="bus">Bus</option>
           <option value="car">Car</option>
@@ -49,8 +61,16 @@ const AddTransportTicketForm = () => {
 
       <div>
         <label htmlFor="lga">L.G.A</label>
-        <select name="lga" id="lga" className="minimal" value={formData.lga} onChange={handleChange}>
-          <option disabled value="">Select L.G.A</option>
+        <select
+          name="lga"
+          id="lga"
+          className="minimal"
+          value={formData.lga}
+          onChange={handleChange}
+        >
+          <option disabled value="">
+            Select L.G.A
+          </option>
           <option value="lga1">LGA 1</option>
           <option value="lga2">LGA 2</option>
           <option value="lga3">LGA 3</option>
@@ -91,8 +111,16 @@ const AddTransportTicketForm = () => {
 
       <div>
         <label htmlFor="paymentPeriod">Payment Period</label>
-        <select name="paymentPeriod" id="paymentPeriod" className="minimal" value={formData.paymentPeriod} onChange={handleChange}>
-          <option disabled value="">Select Payment Period</option>
+        <select
+          name="paymentPeriod"
+          id="paymentPeriod"
+          className="minimal"
+          value={formData.paymentPeriod}
+          onChange={handleChange}
+        >
+          <option disabled value="">
+            Select Payment Period
+          </option>
           <option value="day">1 Day</option>
           <option value="week">1 Week</option>
           <option value="month">1 Month</option>
@@ -111,7 +139,11 @@ const AddTransportTicketForm = () => {
 
       <div className="btn_container">
         <CancelButton link="/tickets/transport" />
-        <DefaultButton text="Proceed to Payment" link="/" disabled={!isFormValid} />
+        <DefaultButton
+          text="Save & Continue"
+          link={`/tickets/transport/summary/${formData?.plateNumber}`}
+          disabled={!isFormValid}
+        />
       </div>
     </form>
   );
