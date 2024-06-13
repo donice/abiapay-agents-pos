@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Metadata } from "next";
-import DashbaordComponent from '@/components/modules/dashboard';
+import DashbaordComponent from '@/src/components/modules/dashboard';
 
 export const metadata: Metadata = {
   title: "Agents Portal - Dashbaord",

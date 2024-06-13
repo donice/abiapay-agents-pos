@@ -1,8 +1,8 @@
 import React from "react";
 import TicketsWalletCard from "../ticketsWalletsCard";
-import { SecondaryButton } from "@/components/common/button";
-import CustomHeader from "@/components/common/header";
-import CustomTable from "@/components/common/table";
+import { SecondaryButton } from "@/src/components/common/button";
+import CustomHeader from "@/src/components/common/header";
+import CustomTable from "@/src/components/common/table";
 import "./style.scss";
 
 

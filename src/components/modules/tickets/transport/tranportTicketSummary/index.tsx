@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import CustomHeader from "@/components/common/header";
-import { CamelCaseToTitleCase } from "@/components/utils/helper";
+import CustomHeader from "@/src/components/common/header";
+import { CamelCaseToTitleCase } from "@/src/components/utils/helper";
 import "./style.scss";
-import { DefaultButton, CancelButton, GoBackButton } from "@/components/common/button";
+import { DefaultButton, CancelButton, GoBackButton } from "@/src/components/common/button";
 
 const TransportTicketsSummaryComponent = () => {
   const [data, setData] = useState(null);

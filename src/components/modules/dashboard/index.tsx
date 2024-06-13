@@ -2,9 +2,9 @@
 import React from "react";
 import WalletCard from "./WalletCard";
 import StatsCard from "./statsCard";
-import { PrimaryButton, SecondaryButton } from "@/components/common/button";
+import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
 import "./style.scss";
-import CustomHeader from "@/components/common/header";
+import CustomHeader from "@/src/components/common/header";
 
 const DashbaordComponent = () => {
 

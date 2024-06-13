@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import "./style.scss";
-import { AbiaLogo } from "@/components/common/Images";
+import { AbiaLogo } from "@/src/components/common/Images";
 import { TbUserSquareRounded } from "react-icons/tb";
 
 const TopNav = () => {

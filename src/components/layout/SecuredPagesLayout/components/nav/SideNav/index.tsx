@@ -2,7 +2,7 @@
 import React, { ReactElement } from "react";
 import "./style.scss";
 import Link from "next/link";
-import getRoute from "@/hooks/getRoute";
+import getRoute from "@/src/hooks/getRoute";
 import {
   TbLayoutDashboard,
   TbTicket,
@@ -10,48 +10,48 @@ import {
   TbLogout2,
 } from "react-icons/tb";
 
-interface BottomNavProps {
+interface SideNavProps {
   name: string;
   title: string;
   icon?: ReactElement;
 }
 
-const nav_items: BottomNavProps[] = [
+const nav_items: SideNavProps[] = [
   {
     name: "dashboard",
-    title: "Overview",
+    title: "Dashboard",
     icon: <TbLayoutDashboard className="icon" />,
   },
   {
     name: "tickets/transport",
-    title: "Transport",
+    title: "Transport Ticket",
     icon: <TbTicket className="icon" />,
   },
   {
     name: "tickets/market",
-    title: "Maket",
+    title: "Maket Ticket",
     icon: <TbBasketDown className="icon" />,
   },
 ];
 
-const BottomNav = () => {
+const SideNav = () => {
   const route = getRoute();
 
   return (
-    <nav className="bottom-nav">
-      <div className="bottom-nav_items_container">
-        <div className="bottom-nav_items">
+    <nav className="side-nav">
+      <div className="side-nav_items_container">
+        <div className="side-nav_items">
           {nav_items.map((item) => (
-            <Link href={`/${item.name}`} key={item.name} className={`bottom-nav_item ${item.name === route ? "active" : "inactive"}`}>
+            <Link href={`/${item.name}`} key={item.name} className={`side-nav_item ${item.name === route ? "active" : "inactive"}`}>
                 <span>{item.icon}</span>
-                {/* <span>{item.title}</span> */}
+                <span>{item.title}</span>
             </Link>
           ))}
-          <div key={"logout"} className="bottom-nav_item logout">
+          <div key={"logout"} className="side-nav_item logout">
             <span>
               <TbLogout2 className="icon out" />
             </span>
-            {/* <span>Sign Out</span> */}
+            <span>Sign Out</span>
           </div>
         </div>
       </div>
@@ -59,4 +59,4 @@ const BottomNav = () => {
   );
 };
 
-export default BottomNav;
+export default SideNav;

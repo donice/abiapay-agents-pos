@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Metadata } from "next";
-import TransportTicketComponent from '@/components/modules/tickets/transport';
+import TransportTicketComponent from '@/src/components/modules/tickets/transport';
 
 export const metadata: Metadata = {
   title: "Transport Tickets - Agent Portal",

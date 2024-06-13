@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { DefaultButton, CancelButton } from "@/components/common/button";
+import { DefaultButton, CancelButton } from "@/src/components/common/button";
 import "./style.scss";
 
 const AddTransportTicketForm = () => {

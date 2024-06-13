@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import React from 'react'
-import TransportTicketsSummaryComponent from '@/components/modules/tickets/transport/tranportTicketSummary';
+import TransportTicketsSummaryComponent from '@/src/components/modules/tickets/transport/tranportTicketSummary';
 
 export const metadata: Metadata = {
   title: "View Payment Summary",

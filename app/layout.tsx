@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import MainLayout from "@/components/layout/MainLayout";
+import MainLayout from "@/src/components/layout/MainLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MainLayout isProtected={isProtected} isNotFound={isNotFound}>
+        <MainLayout isProtected={isProtected} isUnprotected={isUnprotected} isNotFound={isNotFound}>
           {children}
         </MainLayout>
       </body>

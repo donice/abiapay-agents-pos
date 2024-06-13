@@ -1,5 +1,5 @@
 import React from 'react'
-import AddTransportTicketComponent from '@/components/modules/tickets/transport/addTransportTicket'
+import AddTransportTicketComponent from '@/src/components/modules/tickets/transport/addTransportTicket'
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
