@@ -20,7 +20,7 @@ $border: 1px solid $gray;
   padding: 0 px-to-rem(36px);
   z-index: 1;
 
-  @include custom-media-query("mobile", $sm) {
+  @include custom-media-query("mobile", $lg) {
     padding: 0 px-to-rem(12px);
   }
 

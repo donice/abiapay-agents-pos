@@ -1,6 +1,7 @@
 import React from "react";
 import SideNav from "./components/nav/SideNav";
 import TopNav from "./components/nav/TopNav";
+import BottomNav from "./components/nav/ButtomNav";
 import "./style.scss";
 
 const SecuredPagesLayout: React.FC<{ children: React.ReactNode }> = ({
@@ -13,6 +14,7 @@ const SecuredPagesLayout: React.FC<{ children: React.ReactNode }> = ({
         <SideNav />
         <section className="main-section">{children}</section>
       </section>
+      <BottomNav />
     </section>
   );
 };
