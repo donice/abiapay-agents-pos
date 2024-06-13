@@ -32,7 +32,7 @@
       display: grid;
       gap: 0.5rem;
 
-      li {
+      .side-nav_item {
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -61,6 +61,7 @@
           }
         }
       }
+
       .inactive {
         &:hover {
           background-color: rgba(211, 211, 211, 0.222);

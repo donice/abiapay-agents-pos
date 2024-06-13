@@ -1,0 +1,91 @@
+@use "../../../../../../styles/index.scss" as *;
+
+$form-label: rgb(89, 90, 91);
+$form-input-border: #d5d5d5;
+select {
+  /* styling */
+  background-color: white;
+  border: thin solid $form-input-border;
+  border-radius: 5px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+
+  /* reset */
+
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* arrows */
+
+  &.minimal {
+    background-image: linear-gradient(45deg, transparent 50%, gray 50%),
+      linear-gradient(135deg, gray 50%, transparent 50%),
+      linear-gradient(to right, #ccc, #ccc);
+    background-position: calc(100% - 20px) calc(1em + 2px),
+      calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+    background-size: 5px 5px, 5px 5px, 1px 1.5em;
+    background-repeat: no-repeat;
+
+    &:focus {
+      background-image: linear-gradient(45deg, #d5d5d5 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, #d5d5d5 50%),
+        linear-gradient(to right, #ccc, #ccc);
+      background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em,
+        calc(100% - 2.5em) 0.5em;
+      background-size: 5px 5px, 5px 5px, 1px 1.5em;
+      background-repeat: no-repeat;
+      border-color: gray;
+      outline: 0;
+    }
+  }
+  &:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+  }
+}
+
+form {
+  // border: 2px solid red;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    label {
+      display: block;
+      color: $form-label;
+      font-size: 0.85rem;
+    }
+
+    input {
+      border: thin solid $form-input-border;
+      padding: 0.5em 3.5em 0.5em 1em;
+      border-radius: 5px;
+
+      &::placeholder {
+        color: #8e8e8ea5;
+        font-size: 14px;
+        font-weight: 200;
+      }
+    }
+  }
+
+  .btn_container {
+    margin-top: 4rem;
+    max-width: $sm;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}

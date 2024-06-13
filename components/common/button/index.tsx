@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { MdOutlineAdd } from "react-icons/md";
+import { MdOutlineAdd, MdOutlineArrowBackIos } from "react-icons/md";
 import { useRouter } from 'next/navigation'
 import "./style.scss"
 
@@ -8,6 +8,34 @@ interface prop {
   text: string;
   link: string;
 }
+
+export const DefaultButton = ({text, link}: prop) => {
+  const router = useRouter()
+
+  const handleClick = (route: string) => {
+    return router.push(route)
+  }
+
+  return (
+    <button className='button primary' onClick={() => handleClick(link)}>
+      {text}
+    </button>
+  )
+}
+export const CancelButton = ({link}: {link: string}) => {
+  const router = useRouter()
+
+  const handleClick = (route: string) => {
+    return router.push(route)
+  }
+
+  return (
+    <button className='button secondary' onClick={() => handleClick(link)}>
+      Cancel
+    </button>
+  )
+}
+
 
 export const PrimaryButton = ({text, link}: prop) => {
   const router = useRouter()
@@ -30,6 +58,18 @@ export const SecondaryButton = ({text}: prop) => {
     <button className='button secondary'>
       <MdOutlineAdd className='icon' />
       {text}
+    </button>
+  )
+}
+export const GoBackButton = ({link}: {link: string}) => {
+  const router = useRouter()
+  const handleClick = (route: string) => {
+    return router.push(route)
+  }
+  return (
+    <button className='go_back' onClick={() => handleClick(link)}>
+      <MdOutlineArrowBackIos className='icon' />
+      Go Back
     </button>
   )
 }

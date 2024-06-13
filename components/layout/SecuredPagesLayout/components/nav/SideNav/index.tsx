@@ -40,22 +40,20 @@ const SideNav = () => {
   return (
     <nav className="side-nav">
       <div className="side-nav_items_container">
-        <ul className="side-nav_items">
+        <div className="side-nav_items">
           {nav_items.map((item) => (
-            <Link href={`/${item.name}`} key={item.name}>
-              <li key={item.name} className={`${item.name === route ? "active" : "inactive"}`}>
+            <Link href={`/${item.name}`} key={item.name} className={`side-nav_item ${item.name === route ? "active" : "inactive"}`}>
                 <span>{item.icon}</span>
                 <span>{item.title}</span>
-              </li>
             </Link>
           ))}
-          <li key={"logout"} className="logout">
+          <div key={"logout"} className="side-nav_item logout">
             <span>
               <TbLogout2 className="icon out" />
             </span>
             <span>Sign Out</span>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </nav>
   );
