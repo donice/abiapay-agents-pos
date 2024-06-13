@@ -1,6 +1,7 @@
 @use "../../../styles/index.scss" as *;
 
 .button {
+  cursor: pointer;
   width: auto;
   display: flex;
   justify-content: center;

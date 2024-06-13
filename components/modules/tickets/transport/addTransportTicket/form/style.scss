@@ -82,10 +82,10 @@ form {
   }
 
   .btn_container {
-    margin-top: 4rem;
+    margin-top: 3rem;
     max-width: $sm;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2rem;
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
   }
 }

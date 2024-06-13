@@ -8,13 +8,16 @@ const AddTransportTicketComponent = () => {
   return (
     <div>
       <GoBackButton link="/tickets/transport"/>
-      <header className="transport-comp_header">
+      <div className='transport-comp'>
+        <header className="transport-comp_header">
         <CustomHeader title='Add Transport Ticket' desc='Manage/Create Transaction'/>
       </header>
 
       <div className='transport-comp_form'>
         <AddTransportTicketForm/>
       </div>
+      </div>
+      
     </div>
   )
 }
