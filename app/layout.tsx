@@ -12,8 +12,8 @@ export default function RootLayout({
   children,
   pathname,
 }: {
-  children: React.ReactNode;
-  pathname: string;
+  children: any;
+  pathname: any;
 }) {
   const isProtected = protectedRoutes.includes(pathname);
   const isUnprotected = unprotectedRoutes.includes(pathname);
