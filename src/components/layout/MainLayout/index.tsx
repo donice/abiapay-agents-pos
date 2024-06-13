@@ -1,4 +1,8 @@
+"use client";
 import React from "react";
+import { usePathname } from "next/navigation";
+import { AuthProvider } from "@/src/context/authContext";
+import { protectedRoutes, unprotectedRoutes } from "@/src/routes";
 import SecuredPagesLayout from "@/src/components/layout/SecuredPagesLayout";
 import UnsecuredPagesLayout from "@/src/components/layout/UnsecuredPagesLayout";
 
@@ -11,25 +15,24 @@ export interface RouteConfig {
   };
 }
 
-const MainLayout = ({
-  children,
-  isProtected,
-  isUnprotected,
-  isNotFound,
-}: {
-  children: React.ReactNode;
-  isProtected: boolean;
-  isUnprotected: boolean;
-  isNotFound: boolean;
-}) => {
+const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const pathname = usePathname();
+  const isProtectedRoute = protectedRoutes.includes(pathname);
+  const isUnprotectedRoute = unprotectedRoutes.includes(pathname);
 
-  if (!isProtected) {
-    return <SecuredPagesLayout>{children}</SecuredPagesLayout>;
-  }  else if (isNotFound){
-    return <section>Not found</section>;
-  }else {
-    return <UnsecuredPagesLayout>{children}</UnsecuredPagesLayout>;
-  }
+  return (
+    <AuthProvider>
+      <div>
+        {isProtectedRoute ? (
+          <SecuredPagesLayout>{children}</SecuredPagesLayout>
+        ) : isUnprotectedRoute ? (
+          <UnsecuredPagesLayout>{children}</UnsecuredPagesLayout>
+        ) : (
+          <div>{children}</div>
+        )}
+      </div>
+    </AuthProvider>
+  );
 };
 
 export default MainLayout;

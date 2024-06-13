@@ -1,6 +1,4 @@
-// src/authContext.tsx
-
-import React, { createContext, useContext, useReducer, Dispatch } from 'react';
+import React, { createContext, useContext, useReducer, Dispatch, ReactNode } from 'react';
 import axios from 'axios';
 
 // Define types and interfaces
@@ -19,6 +17,10 @@ type AuthAction =
 interface AuthContextType {
   state: AuthState;
   dispatch: Dispatch<AuthAction>;
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
 // Initial state
@@ -43,12 +45,12 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     case 'LOGOUT':
       return { ...state, token: null };
     default:
-      throw new Error(`Unhandled action type`);
+      throw new Error(`Unhandled action type: `);
       // throw new Error(`Unhandled action type: ${action.type}`);
   }
 };
 
-export const AuthProvider: React.FC = ({ children }: any) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   return (
@@ -83,10 +85,10 @@ export const login = async (dispatch: Dispatch<AuthAction>, data: { email: strin
       email: data.email,
       password: data.password,
     };
-    const loginResponse = await axios.post<{ token: string }>('/api/user/login', user);
+    const loginResponse = await axios.post<{ token: string }>('/api/user/sigin', user);
     const auth = loginResponse.data.token;
     dispatch({ type: 'LOGIN', payload: auth });
-    // localStorage.setItem('ABSSIN_number', JSON.stringify(loginResponse.data?.state_id));
+    // localStorage.setItem('ABSSIN_number', JSON.stringify(loginResponse.data.state_id));
   } catch (error) {
     dispatch({ type: 'SET_LOGIN_ERRORS', payload: "Invalid login credentials" });
     console.error('Login error:', error);

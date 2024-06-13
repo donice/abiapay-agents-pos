@@ -1,0 +1,14 @@
+@use "../../../styles/index.scss" as *;
+
+.unsecured-main {
+  display: flex;
+  justify-content: flex-end;
+  background-image: url(./assets/old_man.jpg);
+  background-repeat: no-repeat;
+  background-position: auto;
+  background-size: 50%;
+  height: 100vh;
+
+
+ 
+}
