@@ -13,7 +13,7 @@ const TicketsWalletCard = () => {
 
       </div>
 
-      <div className="tickets-wallet-card_earnings">
+      <div className="tickets-wallet-card_balance">
         <span>ePayments Today</span>
         <span>N30,000</span>
       </div>

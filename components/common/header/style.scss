@@ -6,9 +6,9 @@
     margin-bottom: 2rem;
   }
   h1 {
-    font-size: clamp(min(1rem), 300px, max(1.5rem));
+    font-size: clamp(min(0.75rem), 300px, max(1.2rem));
     font-weight: 500;
-    color: $text-primary;
+    color: rgb(81, 81, 86);;
   }
 
   p {
