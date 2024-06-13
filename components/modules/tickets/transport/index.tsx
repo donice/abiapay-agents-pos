@@ -1,18 +1,16 @@
 import React from "react";
 import TicketsWalletCard from "../ticketsWalletsCard";
 import { PrimaryButton } from "@/components/common/button";
+import CustomHeader from "@/components/common/header";
 import "./style.scss";
 
 const TransportTicketComponent = () => {
   return (
     <div className="transport">
       <header className="transport_header">
-        <div className="transport_header_text">
-          <h1>Transport Ticket</h1>
-          <p>Manage/Create Transport Tickets</p>
-        </div>
+        <CustomHeader title="Transport Ticket" desc="Manage/Create Transport Ticket"/>
         <div className="transport_header_buttons">
-          <PrimaryButton text="Add Ticket" />
+          <PrimaryButton text="Add Ticket" link="/tickets/transport/add"/>
         </div>
       </header>
       <TicketsWalletCard />

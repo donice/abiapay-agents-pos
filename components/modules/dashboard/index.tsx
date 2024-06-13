@@ -4,19 +4,17 @@ import WalletCard from "./WalletCard";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/components/common/button";
 import "./style.scss";
+import CustomHeader from "@/components/common/header";
 
 const DashbaordComponent = () => {
 
   return (
     <div className="dashboard">
       <header className="dashboard_header">
-        <div className="dashboard_header_text">
-          <h1>Dashboard</h1>
-          <p>Overview of Dashboard</p>
-        </div>
+        <CustomHeader title="Dashboard" desc="Overview of Dashboard"/>
         <div className="dashboard_header_buttons">
-          <SecondaryButton text="Akara Ekwenti" />
-          <PrimaryButton text="Smart Tickets" />
+          <SecondaryButton text="Akara Ekwenti" link="/"/>
+          <PrimaryButton text="Smart Tickets" link="/"/>
         </div>
       </header>
       <div className="dashboard_wallets">

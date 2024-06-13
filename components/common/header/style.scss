@@ -1,0 +1,20 @@
+@use "../../../styles/index.scss" as * ;
+
+.custom-header {
+
+  @include custom-media-query("mobile", $sm) {
+    margin-bottom: 2rem;
+  }
+  h1 {
+    font-size: clamp(min(1rem), 300px, max(1.5rem));
+    font-weight: 500;
+    color: $text-primary;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 300;
+    margin: -0.25rem 0;
+    color: $text-primary;
+  }
+}
