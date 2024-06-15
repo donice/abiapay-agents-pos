@@ -6,7 +6,7 @@ interface props {
   desc: string
 }
 
-const CustomHeader = ({title, desc}: props) => {
+export const CustomHeader = ({title, desc}: props) => {
   return (
     <div className="custom-header">
       <h1>{title}</h1>
@@ -15,4 +15,12 @@ const CustomHeader = ({title, desc}: props) => {
   );
 };
 
-export default CustomHeader;
+export const CustomFormHeader = ({title, desc}: props) => {
+  return (
+    <div className="custom-form-header">
+      <h1>{title}</h1>
+      <p>{desc}</p>
+    </div>
+  );
+};
+

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import CustomHeader from "@/src/components/common/header";
+import {CustomHeader} from "@/src/components/common/header";
 import { CamelCaseToTitleCase } from "@/src/components/utils/helper";
 import "./style.scss";
 import { DefaultButton, CancelButton, GoBackButton } from "@/src/components/common/button";

@@ -1,14 +1,14 @@
-import React from 'react'
-import SigninForm from './form'
-import CustomHeader from '../../common/header'
-
+import React from "react";
+import SigninForm from "./form";
+import { CustomFormHeader } from "../../common/header";
 
 const SigninComponent = () => {
   return (
     <div>
-      <CustomHeader title="Signin" desc="Manage/Create Transaction"/> 
-      <SigninForm/></div>
-  )
-}
+      <CustomFormHeader title="Signin" desc="Manage/Create Transaction" />
+      <SigninForm />
+    </div>
+  );
+};
 
-export default SigninComponent
+export default SigninComponent;

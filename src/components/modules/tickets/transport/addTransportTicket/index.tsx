@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomHeader from '@/src/components/common/header'
+import {CustomHeader} from '@/src/components/common/header'
 import "./style.scss"
 import { GoBackButton } from '@/src/components/common/button'
 import AddTransportTicketForm from './form'

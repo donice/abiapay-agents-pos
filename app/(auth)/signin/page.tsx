@@ -1,4 +1,4 @@
-import SigninComponent from '@/src/components/modules//signin';
+import SigninComponent from '@/src/components/modules/signin';
 import { Metadata } from 'next';
 import React from 'react'
 

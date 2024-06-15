@@ -1,14 +1,14 @@
 @use "../../../styles/index.scss" as *;
 
 .button {
-  cursor: pointer;
   width: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.1rem;
-  padding: clamp(0.55rem , 1.2vw + 7.16px, 0.75rem) clamp(0.75rem , 1.2vw + 7.16px, 1.5rem);
-  border-radius: 0.5rem;
+  padding: clamp(0.55rem, 1.2vw + 7.16px, 0.75rem)
+    clamp(0.75rem, 1.2vw + 7.16px, 1.5rem);
+  border-radius: 0.35rem;
   transition: all 0.5s ease;
   font-size: clamp(14px, 1.2vw + 7.16px, 16px);
   font-weight: 300;
@@ -19,6 +19,7 @@
 }
 
 .primary {
+  cursor: pointer;
   background-color: $primary;
   color: white;
 
@@ -28,6 +29,7 @@
 }
 
 .secondary {
+  cursor: pointer;
   border: 1px solid $primary;
   color: $primary;
 
@@ -37,7 +39,9 @@
 }
 
 .disabled {
-  background-color: $gray;
+  cursor: not-allowed;
+  background-color: #a7a7a7;
+  color: white;
 }
 
 .icon {
@@ -45,6 +49,7 @@
 }
 
 .go_back {
+  cursor: pointer;
   display: flex;
   align-items: center;
   color: rgb(5 150 105);

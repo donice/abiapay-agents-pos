@@ -2,7 +2,7 @@
 
 "use client";
 import React, { useState, useEffect } from "react";
-import { DefaultButton, CancelButton } from "@/src/components/common/button";
+import { FormButton, CancelButton } from "@/src/components/common/button";
 import {TextInput} from "@/src/components/common/input"; // Importing the custom input component
 import "./style.scss";
 import "../../tickets/transport/addTransportTicket/form/style.scss";
@@ -41,7 +41,7 @@ const SigninForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="sign-in_form">
+    <form onSubmit={handleSubmit} className="signin_form">
       <TextInput
         label="Email"
         type="email"
@@ -60,9 +60,8 @@ const SigninForm: React.FC = () => {
       />
 
       <div className="btn_container">
-        <DefaultButton
-          text="Save & Continue"
-          link="/tickets/transport/summary"
+        <FormButton
+          text="Sign in"
           disabled={!isFormValid}
         />
       </div>

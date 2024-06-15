@@ -10,6 +10,25 @@ interface prop {
   disabled?: boolean;
 }
 
+export const FormButton = ({
+  text,
+  disabled,
+}: {
+  text: string;
+  disabled: true | false;
+}) => {
+  const router = useRouter();
+
+  return (
+    <button
+    className={`button ${disabled ? "disabled" : "primary"}`}
+      disabled={disabled}
+    >
+      {text}
+    </button>
+  );
+};
+
 export const DefaultButton = ({ text, link, disabled }: prop) => {
   const router = useRouter();
 
@@ -21,7 +40,7 @@ export const DefaultButton = ({ text, link, disabled }: prop) => {
 
   return (
     <button
-      className={`button primary ${disabled && "disabled"}`}
+      className={`button ${disabled ? "disabled" : "primary"}`}
       disabled={disabled}
       onClick={() => handleClick(link)}
     >
