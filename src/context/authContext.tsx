@@ -85,7 +85,7 @@ export const login = async (dispatch: Dispatch<AuthAction>, data: { email: strin
       email: data.email,
       password: data.password,
     };
-    const loginResponse = await axios.post<{ token: string }>('/api/user//signin', user);
+    const loginResponse = await axios.post<{ token: string }>('/api/v1/user/login', user);
     const auth = loginResponse.data.token;
     dispatch({ type: 'LOGIN', payload: auth });
     // localStorage.setItem('ABSSIN_number', JSON.stringify(loginResponse.data.state_id));

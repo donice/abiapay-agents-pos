@@ -2,6 +2,7 @@
 import React from "react";
 import { MdOutlineAdd, MdOutlineArrowBackIos } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import Loader from "../loader";
 import "./style.scss";
 
 interface prop {
@@ -13,18 +14,21 @@ interface prop {
 export const FormButton = ({
   text,
   disabled,
+  loading,
 }: {
   text: string;
   disabled: true | false;
+  loading: true | false;
 }) => {
   const router = useRouter();
 
   return (
     <button
-    className={`button ${disabled ? "disabled" : "primary"}`}
+      className={`button ${disabled ? "disabled" : "primary"}`}
       disabled={disabled}
     >
       {text}
+      {loading && <Loader />}
     </button>
   );
 };

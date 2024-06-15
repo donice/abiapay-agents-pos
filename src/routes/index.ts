@@ -1,5 +1,6 @@
 
 export const protectedRoutes: string[] = [
+  '/',
   '/dashboard',
   '/tickets/transport',
   '/tickets/market',

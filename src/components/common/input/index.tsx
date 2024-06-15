@@ -35,7 +35,9 @@ export const TextInput: React.FC<InputProps> = ({
   };
   return (
     <div className="input-container">
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>
+        {label}{" "}
+      </label>
 
       {/* To add the icon to the inputs */}
       <span>

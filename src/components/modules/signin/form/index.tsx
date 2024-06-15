@@ -3,7 +3,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FormButton, CancelButton } from "@/src/components/common/button";
-import {TextInput} from "@/src/components/common/input"; // Importing the custom input component
+import { TextInput } from "@/src/components/common/input"; // Importing the custom input component
 import "./style.scss";
 import "../../tickets/transport/addTransportTicket/form/style.scss";
 
@@ -60,10 +60,7 @@ const SigninForm: React.FC = () => {
       />
 
       <div className="btn_container">
-        <FormButton
-          text="Sign in"
-          disabled={!isFormValid}
-        />
+        <FormButton loading={true} text="Sign in" disabled={!isFormValid} />
       </div>
     </form>
   );

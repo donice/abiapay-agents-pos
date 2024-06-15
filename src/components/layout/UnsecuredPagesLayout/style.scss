@@ -2,8 +2,10 @@
 
 .unsecured-main {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
   background: rgb(38, 132, 255);
   background: linear-gradient(
     59deg,

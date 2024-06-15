@@ -9,3 +9,11 @@ export const AbiaLogo = () => {
     </div>
   )
 }
+
+export const AbiaLogoLarge = () => {
+  return (
+    <div>
+      <Image src={Logo} alt="Abiapay Agents Logo" width={150}/>
+    </div>
+  )
+}
