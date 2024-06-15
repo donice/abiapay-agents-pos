@@ -1,5 +1,7 @@
+import SigninComponent from '@/src/components/modules/sigin';
 import { Metadata } from 'next';
 import React from 'react'
+
 
 export const metadata: Metadata = {
   title: "Sigin to Agents Portal",
@@ -8,7 +10,9 @@ export const metadata: Metadata = {
 
 const SignInPage = () => {
   return (
-    <div>SignInPage</div>
+    <div>
+      <SigninComponent />
+    </div>
   )
 }
 

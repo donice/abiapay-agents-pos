@@ -2,13 +2,26 @@
 
 .unsecured-main {
   display: flex;
-  justify-content: flex-end;
-  background-image: url(./assets/old_man.jpg);
-  background-repeat: no-repeat;
-  background-position: auto;
-  background-size: 50%;
-  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: rgb(38, 132, 255);
+  background: linear-gradient(
+    59deg,
+    rgba(38, 132, 255, 1) 0%,
+    rgba(64, 193, 77, 1) 50%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  min-height: 100vh;
 
-
- 
+  &_container {
+    // width: 100%;
+    max-width: $sm;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
