@@ -51,16 +51,18 @@ select {
   }
 }
 
-form {
+.add-ticket form {
   // border: 2px solid red;
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1rem; 
+  max-width: 25rem;
 
   div {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
+   
 
     label {
       display: block;
@@ -70,8 +72,9 @@ form {
 
     input {
       border: thin solid $form-input-border;
-      padding: 0.5em 3.5em 0.5em 1em;
+      padding: 0.5em 3.5rem ;
       border-radius: 5px;
+      width: 100%;
 
       &::placeholder {
         color: #8e8e8ea5;
@@ -82,7 +85,7 @@ form {
   }
 
   .btn_container {
-    margin-top: 3rem;
+    margin-top: 2rem;
     max-width: $sm;
     gap: 1rem;
     display: flex;

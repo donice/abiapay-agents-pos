@@ -42,11 +42,13 @@
       }
     }
   }
-}
-.btn_container {
+  
+  .btn_container {
   margin-top: 3rem;
   max-width: $sm;
   gap: 1rem;
   display: flex;
   flex-direction: row;
 }
+}
+

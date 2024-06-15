@@ -12,7 +12,7 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     if (!token && protectedRoutes.includes(pathname)) {
-      router.push('/sigin');
+      router.push('/signin');
     }
   }, [token, pathname, router]);
 

@@ -39,7 +39,7 @@ const AddTransportTicketForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="add-ticket">
       <div>
         <label htmlFor="ticketType">Ticket Type</label>
         <select
