@@ -19,25 +19,40 @@ const SigninForm: React.FC = () => {
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
+  const [showWarnings, setShowWarnings] = useState({
+    email: false,
+    password: false,
+  });
 
   useEffect(() => {
-    const allFieldsFilled = Object.values(formData).every(
-      (field) => field !== ""
-    );
-    setIsFormValid(allFieldsFilled);
+    setIsFormValid(Object.values(formData).every((field) => field !== ""));
   }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
+    setShowWarnings((prev) => ({
+      ...prev,
+      [name]: false,
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+
+    const newWarnings = {
+      email: formData.email === "",
+      password: formData.password === "",
+    };
+
+    setShowWarnings(newWarnings);
+
+    if (!Object.values(newWarnings).includes(true)) {
+      console.log(formData);
+    }
   };
 
   return (
@@ -50,6 +65,7 @@ const SigninForm: React.FC = () => {
         value={formData.email}
         onChange={handleChange}
       />
+      {showWarnings.email && <div className="warning">Email is required</div>}
       <TextInput
         label="Password"
         type="password"
@@ -58,6 +74,9 @@ const SigninForm: React.FC = () => {
         value={formData.password}
         onChange={handleChange}
       />
+      {showWarnings.password && (
+        <div className="warning">Password is required</div>
+      )}
 
       <div className="btn_container">
         <FormButton loading={true} text="Sign in" disabled={!isFormValid} />
