@@ -1,5 +1,3 @@
-# robots.txt
-
 # Disallow all web crawlers from accessing certain directories
 User-agent: *
 Disallow: /dashboard/

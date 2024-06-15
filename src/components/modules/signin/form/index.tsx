@@ -6,6 +6,7 @@ import { FormButton, CancelButton } from "@/src/components/common/button";
 import { TextInput } from "@/src/components/common/input"; // Importing the custom input component
 import "./style.scss";
 import "../../tickets/transport/addTransportTicket/form/style.scss";
+import { useToast } from "@/src/hooks/useToast";
 
 interface FormData {
   email: string;
@@ -19,40 +20,34 @@ const SigninForm: React.FC = () => {
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
-  const [showWarnings, setShowWarnings] = useState({
-    email: false,
-    password: false,
-  });
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  const url = process.env.BASE_URL;
+  console.log(url, "URL");
 
   useEffect(() => {
-    setIsFormValid(Object.values(formData).every((field) => field !== ""));
+    const allFieldsFilled = Object.values(formData).every(
+      (field) => field !== ""
+    );
+    setIsFormValid(allFieldsFilled);
   }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
+    setFormData({
+      ...formData,
       [name]: value,
-    }));
-    setShowWarnings((prev) => ({
-      ...prev,
-      [name]: false,
-    }));
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    toast({ description: "Hello" });
 
-    const newWarnings = {
-      email: formData.email === "",
-      password: formData.password === "",
-    };
-
-    setShowWarnings(newWarnings);
-
-    if (!Object.values(newWarnings).includes(true)) {
-      console.log(formData);
-    }
+    setTimeout(() => console.log(formData), 20000);
+    setLoading(false);
   };
 
   return (
@@ -65,7 +60,6 @@ const SigninForm: React.FC = () => {
         value={formData.email}
         onChange={handleChange}
       />
-      {showWarnings.email && <div className="warning">Email is required</div>}
       <TextInput
         label="Password"
         type="password"
@@ -74,12 +68,9 @@ const SigninForm: React.FC = () => {
         value={formData.password}
         onChange={handleChange}
       />
-      {showWarnings.password && (
-        <div className="warning">Password is required</div>
-      )}
 
       <div className="btn_container">
-        <FormButton loading={true} text="Sign in" disabled={!isFormValid} />
+        <FormButton loading={loading} text="Sign in" disabled={!isFormValid} />
       </div>
     </form>
   );

@@ -1,10 +1,11 @@
 import { RotatingLines } from "react-loader-spinner";
+import "./style.scss"
 
 import React from "react";
 
 const Loader = () => {
   return (
-    <div>
+    <div className="loader-div">
       <RotatingLines
         visible={true}
         width="22"

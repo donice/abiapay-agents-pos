@@ -1,9 +1,8 @@
-// src/components/AuthGuard.tsx
-
-import React, { useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { protectedRoutes } from '../routes';
-import { useAuthState } from '../context/authContext';
+import React, { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { protectedRoutes } from "../routes";
+import { useAuthState } from "../context/authContext";
+import Loader from "../components/common/loader";
 
 const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { token } = useAuthState();
@@ -12,12 +11,17 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     if (!token && protectedRoutes.includes(pathname)) {
-      router.push('/signin');
+      router.push("/signin");
     }
   }, [token, pathname, router]);
 
   if (!token && protectedRoutes.includes(pathname)) {
-    return <p>Redirecting...</p>; // Or a loading spinner
+    return (
+      <div>
+        <Loader />
+        <p> Redirecting...</p>
+      </div>
+    ); // Or a loading spinner
   }
 
   return <>{children}</>;
