@@ -1,5 +1,11 @@
-import React, { createContext, useContext, useReducer, Dispatch, ReactNode } from 'react';
-import axios from 'axios';
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  Dispatch,
+  ReactNode,
+} from "react";
+import axios from "axios";
 
 // Define types and interfaces
 interface AuthState {
@@ -9,10 +15,10 @@ interface AuthState {
 }
 
 type AuthAction =
-  | { type: 'SET_LOGIN_SUBMITTING'; payload: boolean }
-  | { type: 'LOGIN'; payload: string }
-  | { type: 'SET_LOGIN_ERRORS'; payload: string | null }
-  | { type: 'LOGOUT' };
+  | { type: "SET_LOGIN_SUBMITTING"; payload: boolean }
+  | { type: "LOGIN"; payload: string }
+  | { type: "SET_LOGIN_ERRORS"; payload: string | null }
+  | { type: "LOGOUT" };
 
 interface AuthContextType {
   state: AuthState;
@@ -32,23 +38,25 @@ const initialState: AuthState = {
 
 // Context and provider
 const AuthStateContext = createContext<AuthState | undefined>(undefined);
-const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(undefined);
+const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(
+  undefined
+);
 
-const url = process.env.NEXT_PUBLIC_BASE_URL
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case 'SET_LOGIN_SUBMITTING':
+    case "SET_LOGIN_SUBMITTING":
       return { ...state, isSubmitting: action.payload };
-    case 'LOGIN':
+    case "LOGIN":
       return { ...state, token: action.payload, errors: null };
-    case 'SET_LOGIN_ERRORS':
+    case "SET_LOGIN_ERRORS":
       return { ...state, errors: action.payload };
-    case 'LOGOUT':
+    case "LOGOUT":
       return { ...state, token: null };
     default:
       throw new Error(`Unhandled action type: `);
-      // throw new Error(`Unhandled action type: ${action.type}`);
+    // throw new Error(`Unhandled action type: ${action.type}`);
   }
 };
 
@@ -67,7 +75,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 export const useAuthState = (): AuthState => {
   const state = useContext(AuthStateContext);
   if (state === undefined) {
-    throw new Error('useAuthState must be used within an AuthProvider');
+    throw new Error("useAuthState must be used within an AuthProvider");
   }
   return state;
 };
@@ -75,31 +83,40 @@ export const useAuthState = (): AuthState => {
 export const useAuthDispatch = (): Dispatch<AuthAction> => {
   const dispatch = useContext(AuthDispatchContext);
   if (dispatch === undefined) {
-    throw new Error('useAuthDispatch must be used within an AuthProvider');
+    throw new Error("useAuthDispatch must be used within an AuthProvider");
   }
   return dispatch;
 };
 
-export const login = async (dispatch: Dispatch<AuthAction>, data: { email: string; password: string }) => {
-  dispatch({ type: 'SET_LOGIN_SUBMITTING', payload: true });
+export const login = async (
+  dispatch: Dispatch<AuthAction>,
+  data: { email: string; password: string }
+) => {
+  dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
     const user = {
       email: data.email,
       password: data.password,
     };
-    const loginResponse = await axios.post<{ token: string }>(`${url}/api/v1/user/login`, user);
+    const loginResponse = await axios.post<{ token: string }>(
+      `${url}/api/v1/user/login`,
+      user
+    );
     const auth = loginResponse.data.token;
-    dispatch({ type: 'LOGIN', payload: auth });
+    dispatch({ type: "LOGIN", payload: auth });
     // localStorage.setItem('ABSSIN_number', JSON.stringify(loginResponse.data.state_id));
   } catch (error) {
-    dispatch({ type: 'SET_LOGIN_ERRORS', payload: "Invalid login credentials" });
-    console.error('Login error:', error);
+    dispatch({
+      type: "SET_LOGIN_ERRORS",
+      payload: "Invalid login credentials",
+    });
+    console.error("Login error:", error);
   } finally {
-    dispatch({ type: 'SET_LOGIN_SUBMITTING', payload: false });
+    dispatch({ type: "SET_LOGIN_SUBMITTING", payload: false });
   }
 };
 
 export const logout = (dispatch: Dispatch<AuthAction>) => {
-  dispatch({ type: 'LOGOUT' });
-  localStorage.removeItem('ABSSIN_number');
+  dispatch({ type: "LOGOUT" });
+  localStorage.removeItem("ABSSIN_number");
 };

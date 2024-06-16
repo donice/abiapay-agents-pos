@@ -1,12 +1,13 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/src/context/authContext";
 import { protectedRoutes, unprotectedRoutes } from "@/src/routes";
 import SecuredPagesLayout from "@/src/components/layout/SecuredPagesLayout";
 import UnsecuredPagesLayout from "@/src/components/layout/UnsecuredPagesLayout";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-
 
 export interface RouteConfig {
   path: string;
@@ -21,19 +22,23 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
   const isProtectedRoute = protectedRoutes.includes(pathname);
   const isUnprotectedRoute = unprotectedRoutes.includes(pathname);
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <AuthProvider>
-      <div>
-        {isProtectedRoute ? (
-          <SecuredPagesLayout>{children}</SecuredPagesLayout>
-        ) : isUnprotectedRoute ? (
-          <UnsecuredPagesLayout>{children}</UnsecuredPagesLayout>
-        ) : (
-          <div>{children}</div>
-        )}
-      </div>
-      <Toaster />
+      <QueryClientProvider client={queryClient}>
+        <div>
+          {isProtectedRoute ? (
+            <SecuredPagesLayout>{children}</SecuredPagesLayout>
+          ) : isUnprotectedRoute ? (
+            <UnsecuredPagesLayout>{children}</UnsecuredPagesLayout>
+          ) : (
+            <div>{children}</div>
+          )}
+        </div>
+        <Toaster />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </AuthProvider>
   );
 };
