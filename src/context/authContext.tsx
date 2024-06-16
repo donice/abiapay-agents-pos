@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useReducer,
-  Dispatch,
-  ReactNode,
-} from "react";
+import React, { createContext, useContext, useReducer, Dispatch, ReactNode } from "react";
 import axios from "axios";
 
 // Define types and interfaces
@@ -20,13 +14,26 @@ type AuthAction =
   | { type: "SET_LOGIN_ERRORS"; payload: string | null }
   | { type: "LOGOUT" };
 
-interface AuthContextType {
-  state: AuthState;
-  dispatch: Dispatch<AuthAction>;
-}
-
 interface AuthProviderProps {
   children: ReactNode;
+}
+
+interface LoginResponse {
+  data: {
+    status: number;
+    message: string;
+    body: {
+      user_cat: string;
+      email: string;
+      phone: string;
+      name: string;
+      lga: string;
+      update_by: string;
+      state_id?: string;
+    };
+    redirect: boolean;
+    token: string;
+  };
 }
 
 // Initial state
@@ -38,9 +45,7 @@ const initialState: AuthState = {
 
 // Context and provider
 const AuthStateContext = createContext<AuthState | undefined>(undefined);
-const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(
-  undefined
-);
+const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(undefined);
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -55,8 +60,8 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     case "LOGOUT":
       return { ...state, token: null };
     default:
-      throw new Error(`Unhandled action type: `);
-    // throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type`);
+      // throw new Error(`Unhandled action type: ${action.type}`);
   }
 };
 
@@ -88,28 +93,15 @@ export const useAuthDispatch = (): Dispatch<AuthAction> => {
   return dispatch;
 };
 
-export const login = async (
-  dispatch: Dispatch<AuthAction>,
-  data: { email: string; password: string }
-) => {
+export const login = async (dispatch: Dispatch<AuthAction>, data: { email: string; password: string }) => {
   dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
-    const user = {
-      email: data.email,
-      password: data.password,
-    };
-    const loginResponse = await axios.post<{ token: string }>(
-      `${url}/api/v1/user/login`,
-      user
-    );
-    const auth = loginResponse.data.token;
-    dispatch({ type: "LOGIN", payload: auth });
-    // localStorage.setItem('ABSSIN_number', JSON.stringify(loginResponse.data.state_id));
+    const response: LoginResponse = await axios.post(`${url}/api/v1/user/login`, data);
+    const { token, body: { state_id } } = response.data;
+    dispatch({ type: "LOGIN", payload: token });
+    localStorage.setItem("ABSSIN_number", JSON.stringify(state_id));
   } catch (error) {
-    dispatch({
-      type: "SET_LOGIN_ERRORS",
-      payload: "Invalid login credentials",
-    });
+    dispatch({ type: "SET_LOGIN_ERRORS", payload: "Invalid login credentials" });
     console.error("Login error:", error);
   } finally {
     dispatch({ type: "SET_LOGIN_SUBMITTING", payload: false });
