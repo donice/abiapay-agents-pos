@@ -5,6 +5,8 @@ import { AuthProvider } from "@/src/context/authContext";
 import { protectedRoutes, unprotectedRoutes } from "@/src/routes";
 import SecuredPagesLayout from "@/src/components/layout/SecuredPagesLayout";
 import UnsecuredPagesLayout from "@/src/components/layout/UnsecuredPagesLayout";
+import { Toaster } from "react-hot-toast";
+
 
 export interface RouteConfig {
   path: string;
@@ -31,6 +33,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div>{children}</div>
         )}
       </div>
+      <Toaster />
     </AuthProvider>
   );
 };

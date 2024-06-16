@@ -5,8 +5,8 @@ import React, { useState, useEffect } from "react";
 import { FormButton, CancelButton } from "@/src/components/common/button";
 import { TextInput } from "@/src/components/common/input"; // Importing the custom input component
 import "./style.scss";
-import "../../tickets/transport/addTransportTicket/form/style.scss";
-import { useToast } from "@/src/hooks/useToast";
+import toast, { Toaster } from 'react-hot-toast';
+import { login } from "@/src/context/authContext";
 
 interface FormData {
   email: string;
@@ -21,10 +21,9 @@ const SigninForm: React.FC = () => {
 
   const [isFormValid, setIsFormValid] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
 
-  const url = process.env.BASE_URL;
-  console.log(url, "URL");
+  const url = process.env.NEXT_PUBLIC_BASE_URL;
+  // console.log(url, "URL");
 
   useEffect(() => {
     const allFieldsFilled = Object.values(formData).every(
@@ -44,10 +43,12 @@ const SigninForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    toast({ description: "Hello" });
 
-    setTimeout(() => console.log(formData), 20000);
-    setLoading(false);
+    setTimeout(() => {
+      console.log(formData);
+      setLoading(false);
+      toast.success("Form Saved")
+    }, 1000);
   };
 
   return (
@@ -72,6 +73,7 @@ const SigninForm: React.FC = () => {
       <div className="btn_container">
         <FormButton loading={loading} text="Sign in" disabled={!isFormValid} />
       </div>
+
     </form>
   );
 };

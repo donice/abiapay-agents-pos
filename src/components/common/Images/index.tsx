@@ -5,7 +5,7 @@ import Logo from "../../assets/logo.svg"
 export const AbiaLogo = () => {
   return (
     <div>
-      <Image src={Logo} alt="Abiapay Agents Logo" width={100}/>
+      <Image src={Logo} alt="Abiapay Agents Logo" width={100} loading='eager' priority={true}/>
     </div>
   )
 }
@@ -13,7 +13,7 @@ export const AbiaLogo = () => {
 export const AbiaLogoLarge = () => {
   return (
     <div>
-      <Image src={Logo} alt="Abiapay Agents Logo" width={150}/>
+      <Image src={Logo} alt="Abiapay Agents Logo" width={150} loading='eager' priority={true}/>
     </div>
   )
 }

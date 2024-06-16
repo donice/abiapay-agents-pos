@@ -34,6 +34,8 @@ const initialState: AuthState = {
 const AuthStateContext = createContext<AuthState | undefined>(undefined);
 const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(undefined);
 
+const url = process.env.NEXT_PUBLIC_BASE_URL
+
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
     case 'SET_LOGIN_SUBMITTING':
@@ -85,7 +87,7 @@ export const login = async (dispatch: Dispatch<AuthAction>, data: { email: strin
       email: data.email,
       password: data.password,
     };
-    const loginResponse = await axios.post<{ token: string }>('/api/v1/user/login', user);
+    const loginResponse = await axios.post<{ token: string }>(`${url}/api/v1/user/login`, user);
     const auth = loginResponse.data.token;
     dispatch({ type: 'LOGIN', payload: auth });
     // localStorage.setItem('ABSSIN_number', JSON.stringify(loginResponse.data.state_id));
