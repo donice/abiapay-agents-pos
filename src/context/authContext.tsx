@@ -25,29 +25,6 @@ interface LoginResponse {
   };
 }
 
-// Context and provider
-const AuthStateContext = createContext<AuthState | undefined>(undefined);
-const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(
-  undefined
-);
-
-const url = process.env.NEXT_PUBLIC_BASE_URL;
-
-const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-  switch (action.type) {
-    case "SET_LOGIN_SUBMITTING":
-      return { ...state, isSubmitting: action.payload };
-    case "LOGIN":
-      return { ...state, token: action.payload, errors: null };
-    case "SET_LOGIN_ERRORS":
-      return { ...state, errors: action.payload };
-    case "LOGOUT":
-      return { ...state, token: null };
-    default:
-      throw new Error(`Unhandled action type`);
-    // throw new Error(`Unhandled action type: ${action.type}`);
-  }
-}; 
 interface AuthState {
   isSubmitting: boolean;
   token: string | null;
@@ -70,6 +47,30 @@ type AuthAction =
 interface AuthProviderProps {
   children: ReactNode;
 }
+
+const AuthStateContext = createContext<AuthState | undefined>(undefined);
+const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(
+  undefined
+);
+
+const url = process.env.NEXT_PUBLIC_BASE_URL;
+
+const authReducer = (state: AuthState, action: AuthAction): AuthState => {
+  switch (action.type) {
+    case "SET_LOGIN_SUBMITTING":
+      return { ...state, isSubmitting: action.payload };
+    case "LOGIN":
+      return { ...state, token: action.payload, errors: null };
+    case "SET_LOGIN_ERRORS":
+      return { ...state, errors: action.payload };
+    case "LOGOUT":
+      return { ...state, token: null };
+    default:
+      throw new Error(`Unhandled action type`);
+    // throw new Error(`Unhandled action type: ${action.type}`);
+  }
+}; 
+
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
