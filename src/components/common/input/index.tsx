@@ -7,8 +7,10 @@ import {
   TbEye,
   TbEyeOff,
   TbLockCheck,
-  TbMail,
+  // TbMail,
 } from "react-icons/tb";
+import { MdOutlineAlternateEmail } from "react-icons/md";
+
 
 interface InputProps {
   input_icon?: ReactNode;
@@ -47,7 +49,7 @@ export const TextInput: React.FC<InputProps> = ({
           ) : type === "password" ? (
             <TbLockCheck />
           ) : type === "email" ? (
-            <TbMail />
+            <MdOutlineAlternateEmail />
           ) : (
             <TbCreditCard />
           )}

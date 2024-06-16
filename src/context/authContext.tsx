@@ -43,6 +43,8 @@ const initialState: AuthState = {
   errors: null,
 };
 
+// navigat
+
 // Context and provider
 const AuthStateContext = createContext<AuthState | undefined>(undefined);
 const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(undefined);

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { protectedRoutes } from "../routes";
 import { useAuthState } from "../context/authContext";
-import Loader from "../components/common/loader";
+import Redirecting from "../components/common/loader/redirecting";
 
 const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { token } = useAuthState();
@@ -17,10 +17,7 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   if (!token && protectedRoutes.includes(pathname)) {
     return (
-      <div>
-        <Loader />
-        <p> Redirecting...</p>
-      </div>
+      <Redirecting/>
     ); // Or a loading spinner
   }
 
