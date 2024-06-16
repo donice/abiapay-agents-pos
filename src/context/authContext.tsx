@@ -1,6 +1,11 @@
-import React, { createContext, useContext, useReducer, Dispatch, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  Dispatch,
+  ReactNode,
+} from "react";
 import axios from "axios";
-
 
 interface LoginResponse {
   data: {
@@ -20,33 +25,11 @@ interface LoginResponse {
   };
 }
 
-// Initial state
-const initialState: AuthState = {
-  isSubmitting: false,
-  token: null,
-  errors: null,
-};
-
-// Define types and interfaces
-interface AuthState {
-  isSubmitting: boolean;
-  token: string | null;
-  errors: string | null;
-}
-
-type AuthAction =
-  | { type: "SET_LOGIN_SUBMITTING"; payload: boolean }
-  | { type: "LOGIN"; payload: string }
-  | { type: "SET_LOGIN_ERRORS"; payload: string | null }
-  | { type: "LOGOUT" };
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
 // Context and provider
 const AuthStateContext = createContext<AuthState | undefined>(undefined);
-const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(undefined);
+const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(
+  undefined
+);
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -62,9 +45,31 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return { ...state, token: null };
     default:
       throw new Error(`Unhandled action type`);
-      // throw new Error(`Unhandled action type: ${action.type}`);
+    // throw new Error(`Unhandled action type: ${action.type}`);
   }
+}; 
+interface AuthState {
+  isSubmitting: boolean;
+  token: string | null;
+  errors: string | null;
+}
+
+// Initial state
+const initialState: AuthState = {
+  isSubmitting: false,
+  token: null,
+  errors: null,
 };
+
+type AuthAction =
+  | { type: "SET_LOGIN_SUBMITTING"; payload: boolean }
+  | { type: "LOGIN"; payload: string }
+  | { type: "SET_LOGIN_ERRORS"; payload: string | null }
+  | { type: "LOGOUT" };
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -94,15 +99,27 @@ export const useAuthDispatch = (): Dispatch<AuthAction> => {
   return dispatch;
 };
 
-export const login = async (dispatch: Dispatch<AuthAction>, data: { email: string; password: string }) => {
+export const login = async (
+  dispatch: Dispatch<AuthAction>,
+  data: { email: string; password: string }
+) => {
   dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
-    const response: LoginResponse = await axios.post(`${url}/api/v1/user/login`, data);
-    const { token, body: { state_id } } = response.data;
+    const response: LoginResponse = await axios.post(
+      `${url}/api/v1/user/login`,
+      data
+    );
+    const {
+      token,
+      body: { state_id },
+    } = response.data;
     dispatch({ type: "LOGIN", payload: token });
     localStorage.setItem("ABSSIN_number", JSON.stringify(state_id));
   } catch (error) {
-    dispatch({ type: "SET_LOGIN_ERRORS", payload: "Invalid login credentials" });
+    dispatch({
+      type: "SET_LOGIN_ERRORS",
+      payload: "Invalid login credentials",
+    });
     console.error("Login error:", error);
   } finally {
     dispatch({ type: "SET_LOGIN_SUBMITTING", payload: false });
