@@ -4,22 +4,21 @@ import WalletCard from "./WalletCard";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
 import "./style.scss";
-import CustomHeader from "@/src/components/common/header";
+import { CustomHeader } from "@/src/components/common/header";
 
 const DashbaordComponent = () => {
-
   return (
     <div className="dashboard">
       <header className="dashboard_header">
-        <CustomHeader title="Dashboard" desc="Overview of Dashboard"/>
+        <CustomHeader title="Dashboard" desc="Overview of Dashboard" />
         <div className="dashboard_header_buttons">
-          <SecondaryButton text="Akara Ekwenti" link="/tickets/transport/add"/>
-          <PrimaryButton text="Smart Tickets" link="/tickets/transport/add"/>
+          <SecondaryButton text="Akara Ekwenti" link="/tickets/transport/add" />
+          <PrimaryButton text="Smart Tickets" link="/tickets/transport/add" />
         </div>
       </header>
       <div className="dashboard_wallets">
         <WalletCard bank="access" />
-        <WalletCard bank="fidelity"/>
+        <WalletCard bank="fidelity" />
       </div>
       <div className="dashboard_stats">
         <StatsCard name="Tickets" amount="30" />
