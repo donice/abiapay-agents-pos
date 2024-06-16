@@ -116,6 +116,7 @@ export const login = async (
       body: { state_id },
     } = response.data;
     dispatch({ type: "LOGIN", payload: token });
+    toast.success(response?.data?.message)
     localStorage.setItem("ABSSIN_number", JSON.stringify(state_id));
   } catch (error: any) {
     dispatch({

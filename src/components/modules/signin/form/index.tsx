@@ -29,7 +29,7 @@ const SigninForm: React.FC = () => {
     mutationFn: (data: { email: string; password: string }) =>
       login(dispatch, data),
     onSuccess: () => {
-      // router.push("/dashboard");
+      router.push("/dashboard");
     },
     onError: (error: any) => {
       toast.error("Error Loging in");
@@ -58,7 +58,7 @@ const SigninForm: React.FC = () => {
 
     mutation.mutate(formData);
 
-    setLoading(false);
+    // setLoading(false);
   };
 
   return (
