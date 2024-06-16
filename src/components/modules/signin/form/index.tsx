@@ -1,12 +1,12 @@
-// SigninForm.tsx
-
 "use client";
 import React, { useState, useEffect } from "react";
 import { FormButton, CancelButton } from "@/src/components/common/button";
 import { TextInput } from "@/src/components/common/input"; // Importing the custom input component
 import "./style.scss";
-import toast, { Toaster } from 'react-hot-toast';
-import { login } from "@/src/context/authContext";
+import toast from "react-hot-toast";
+import { login, useAuthDispatch } from "@/src/context/authContext";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 interface FormData {
   email: string;
@@ -22,8 +22,20 @@ const SigninForm: React.FC = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const url = process.env.NEXT_PUBLIC_BASE_URL;
-  // console.log(url, "URL");
+  const dispatch = useAuthDispatch();
+  const router = useRouter();
+
+  const mutation = useMutation({
+    mutationFn: (data: { email: string; password: string }) =>
+      login(dispatch, data),
+    onSuccess: () => {
+      // router.push("/dashboard");
+    },
+    onError: (error: any) => {
+      toast.error("Error Loging in");
+      console.error("Login failed:", error);
+    },
+  });
 
   useEffect(() => {
     const allFieldsFilled = Object.values(formData).every(
@@ -44,11 +56,9 @@ const SigninForm: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    setTimeout(() => {
-      console.log(formData);
-      setLoading(false);
-      toast.success("Form Saved")
-    }, 1000);
+    mutation.mutate(formData);
+
+    setLoading(false);
   };
 
   return (
@@ -73,7 +83,6 @@ const SigninForm: React.FC = () => {
       <div className="btn_container">
         <FormButton loading={loading} text="Sign in" disabled={!isFormValid} />
       </div>
-
     </form>
   );
 };

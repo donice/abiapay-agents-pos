@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 interface LoginResponse {
   data: {
@@ -107,7 +108,7 @@ export const login = async (
   dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
     const response: LoginResponse = await axios.post(
-      `${url}/api/v1/user/login`,
+      `${url}/user/login`,
       data
     );
     const {
@@ -116,12 +117,12 @@ export const login = async (
     } = response.data;
     dispatch({ type: "LOGIN", payload: token });
     localStorage.setItem("ABSSIN_number", JSON.stringify(state_id));
-  } catch (error) {
+  } catch (error: any) {
     dispatch({
       type: "SET_LOGIN_ERRORS",
       payload: "Invalid login credentials",
     });
-    console.error("Login error:", error);
+    toast.error(error?.message)
   } finally {
     dispatch({ type: "SET_LOGIN_SUBMITTING", payload: false });
   }
