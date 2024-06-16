@@ -9,6 +9,8 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
 
+  console.log(token)
+
   useEffect(() => {
     if (!token && protectedRoutes.includes(pathname)) {
       router.push("/signin");
@@ -16,9 +18,7 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }, [token, pathname, router]);
 
   if (!token && protectedRoutes.includes(pathname)) {
-    return (
-      <Redirecting/>
-    ); // Or a loading spinner
+    return <Redirecting />;
   }
 
   return <>{children}</>;

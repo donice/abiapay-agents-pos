@@ -1,22 +1,6 @@
 import React, { createContext, useContext, useReducer, Dispatch, ReactNode } from "react";
 import axios from "axios";
 
-// Define types and interfaces
-interface AuthState {
-  isSubmitting: boolean;
-  token: string | null;
-  errors: string | null;
-}
-
-type AuthAction =
-  | { type: "SET_LOGIN_SUBMITTING"; payload: boolean }
-  | { type: "LOGIN"; payload: string }
-  | { type: "SET_LOGIN_ERRORS"; payload: string | null }
-  | { type: "LOGOUT" };
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
 
 interface LoginResponse {
   data: {
@@ -43,7 +27,22 @@ const initialState: AuthState = {
   errors: null,
 };
 
-// navigat
+// Define types and interfaces
+interface AuthState {
+  isSubmitting: boolean;
+  token: string | null;
+  errors: string | null;
+}
+
+type AuthAction =
+  | { type: "SET_LOGIN_SUBMITTING"; payload: boolean }
+  | { type: "LOGIN"; payload: string }
+  | { type: "SET_LOGIN_ERRORS"; payload: string | null }
+  | { type: "LOGOUT" };
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
 // Context and provider
 const AuthStateContext = createContext<AuthState | undefined>(undefined);
