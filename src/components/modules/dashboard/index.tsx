@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import WalletCard from "./WalletCard";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
@@ -9,28 +9,14 @@ import { fetchDashboardData } from "@/src/services/dashboardService";
 import toast from "react-hot-toast";
 import LoaderSkeleton from "../../common/loader-skeleton";
 
-const DashbaordComponent = () => {
-  const fidelityData: {
-    current_earnings: string | null;
-    wallet_balance: string | null;
-    wallet_id: string | null;
-    wallet_name: string | null;
-  } = {
+const initialState = {
+  fidelityData: {
     current_earnings: null,
     wallet_balance: null,
     wallet_id: null,
     wallet_name: null,
-  };
-
-  const accessData: {
-    account_name: string | null;
-    account_number: string | null;
-    balance: string | null;
-    bank_name: string | null;
-    earnings: string | null;
-    total_credit: string | null;
-    total_debit: string | null;
-  } = {
+  },
+  accessData: {
     account_name: null,
     account_number: null,
     balance: null,
@@ -38,14 +24,45 @@ const DashbaordComponent = () => {
     earnings: null,
     total_credit: null,
     total_debit: null,
-  };
+  },
+  loading: true,
+};
+
+const reducer = (state: any, action: any) => {
+  switch (action.type) {
+    case "FETCH_SUCCESS":
+      return {
+        ...state,
+        fidelityData: action.payload.fidelityData,
+        accessData: action.payload.accessData,
+        loading: false,
+      };
+    case "FETCH_ERROR":
+      return {
+        ...state,
+        loading: false,
+      };
+    default:
+      return state;
+  }
+};
+
+const DashboardComponent = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const getDashboardData = async () => {
     try {
       const res = await fetchDashboardData();
-      console.log(res, "Response");
+      dispatch({
+        type: "FETCH_SUCCESS",
+        payload: {
+          fidelityData: res.fidelityData,
+          accessData: res.accessData,
+        },
+      });
     } catch (error) {
       toast.error("Error fetching dashboard data");
+      dispatch({ type: "FETCH_ERROR" });
     }
   };
 
@@ -53,12 +70,13 @@ const DashbaordComponent = () => {
     getDashboardData();
   }, []);
 
+  const { fidelityData, accessData, loading } = state;
+
   return (
     <div className="dashboard">
       <header className="dashboard_header">
         <CustomHeader title={`Welcome back`} desc="Overview of Dashboard" />
-
-        {accessData && fidelityData ? (
+        {!loading ? (
           <div className="dashboard_header_buttons">
             <SecondaryButton
               text="Akara Ekwenti"
@@ -86,4 +104,4 @@ const DashbaordComponent = () => {
   );
 };
 
-export default DashbaordComponent;
+export default DashboardComponent;
