@@ -1,54 +1,70 @@
 @use "../../../../../styles/index.scss" as *;
 
-.tickets-summary {
-  margin-top: 1rem;
-  background-color: white;
-  -webkit-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
-  -moz-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
-  box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
-  border-radius: 0.5rem;
-  padding: px-to-rem(24px);
+.tickets {
+  padding: 0 1rem;
+
   @include custom-media-query("mobile", $sm) {
-    padding: px-to-rem(12px);
+    padding: 0 0.5rem;
   }
-  &_container {
-    div {
-      display: flex;
-      justify-content: space-between;
-      padding: px-to-rem(24px) 0;
-      border-bottom: $border;
 
-      &:last-of-type {
-        p:nth-child(2) {
-          color: green;
-          font-weight: 700;
-          font-size: 26px;
+  &-summary-comp {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
+    margin-top: 1.5rem;
 
-          &::before {
-            content: "₦";
+    &_header {
+      margin: 0 0 2rem 0;
+
+      @include custom-media-query("mobile", $sm) {
+        margin-bottom: 0;
+      }
+    }
+
+    &_container div {
+      .line-items {
+        display: flex;
+        justify-content: space-between;
+        padding: px-to-rem(24px) 0;
+        border-bottom: $border;
+
+        @include custom-media-query("mobile", $sm) {
+          padding: px-to-rem(14px) 0;
+        }
+
+        &:last-of-type {
+          p:nth-child(2) {
+            color: green;
+            font-weight: 700;
+            font-size: 24px;
+
+            &::before {
+              content: "₦";
+            }
+          }
+        }
+
+        p {
+          &:nth-child(1) {
+            color: $text-primary;
+            font-size: 15px;
+
+            &:last-of-type {
+              // border: 2px solid red;
+              font-weight: 700;
+            }
           }
         }
       }
 
-      p {
-        &:nth-child(1) {
-          color: $text-primary;
-
-          &:last-of-type {
-            // border: 2px solid red;
-            font-weight: 700;
-          }
-        }
+      .btn_container {
+        margin-top: 3rem;
+        max-width: $sm;
+        gap: 1rem;
+        display: flex;
+        flex-direction: row;
       }
     }
   }
-  
-  .btn_container {
-  margin-top: 3rem;
-  max-width: $sm;
-  gap: 1rem;
-  display: flex;
-  flex-direction: row;
 }
-}
-

@@ -7,7 +7,7 @@ const Redirecting = () => {
     <section className="redirecting">
       <div className="redirecting_container">
         <LargeLoader />
-        <p>Redirecting</p>
+        <p>Redirecting...</p>
       </div>
     </section>
   );

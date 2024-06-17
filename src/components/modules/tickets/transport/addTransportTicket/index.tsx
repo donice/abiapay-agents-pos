@@ -1,25 +1,27 @@
-import React from 'react'
-import {CustomHeader} from '@/src/components/common/header'
-import "./style.scss"
-import { GoBackButton } from '@/src/components/common/button'
-import AddTransportTicketForm from './form'
+import React from "react";
+import { CustomHeader } from "@/src/components/common/header";
+import "./style.scss";
+import { GoBackButton } from "@/src/components/common/button";
+import AddTransportTicketForm from "./form";
 
 const AddTransportTicketComponent = () => {
   return (
-    <div>
-      <GoBackButton link="/tickets/transport"/>
-      <div className='transport-comp'>
+    <section className="transport">
+      <GoBackButton link="/tickets/transport" />
+      <div className="transport-comp">
         <header className="transport-comp_header">
-        <CustomHeader title='Add Transport Ticket' desc='Manage/Create Transaction'/>
-      </header>
+          <CustomHeader
+            title="Add Transport Ticket"
+            desc="Manage/Create Transaction"
+          />
+        </header>
 
-      <div className='transport-comp_form'>
-        <AddTransportTicketForm/>
+        <div className="transport-comp_form">
+          <AddTransportTicketForm />
+        </div>
       </div>
-      </div>
-      
-    </div>
-  )
-}
+    </section>
+  );
+};
 
 export default AddTransportTicketComponent;

@@ -1,9 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {CustomHeader} from "@/src/components/common/header";
+import { CustomHeader } from "@/src/components/common/header";
 import { CamelCaseToTitleCase } from "@/src/components/utils/helper";
 import "./style.scss";
-import { DefaultButton, CancelButton, GoBackButton } from "@/src/components/common/button";
+import {
+  DefaultButton,
+  CancelButton,
+  GoBackButton,
+} from "@/src/components/common/button";
+import Redirecting from "@/src/components/common/loader/redirecting";
 
 const TransportTicketsSummaryComponent = () => {
   const [data, setData] = useState(null);
@@ -18,33 +23,41 @@ const TransportTicketsSummaryComponent = () => {
   }, []);
 
   return (
-    <div className="tickets">
-      <GoBackButton link="/tickets/transport/add"/>
-      <CustomHeader
-        title="Transport Ticket Details"
-        desc="Comfirm the details for your Transport Ticket Purchase"
-      />
-      <section className="tickets-summary">
-        {data ? (
-          <div className="tickets-summary_container">
-            {Object.entries(data).map(
-              ([key, value]: [key: any, value: any]) => (
-                <div key={key}>
-                  <p>{CamelCaseToTitleCase(key)}:</p>
-                  <p>{value}</p>
-                </div>
-              )
-            )}
-            
-          </div>
-        ) : (
-          <p>No transport form details available.</p>
-        )}<div className="btn_container">
-              <CancelButton link="/tickets/transport" />
-              <DefaultButton text="Proceed to Payment" link="/" />
+    <section className="tickets">
+      <GoBackButton link="/tickets/transport/add" />
+
+      <div className="tickets-summary-comp">
+        <div className="tickets-summary-comp_header">
+          <CustomHeader
+            title="Transport Ticket Details"
+            desc="Comfirm the details for your Transport Ticket Purchase"
+          />
+        </div>
+
+        <div className="tickets-summary-comp_container">
+          {data ? (
+            <div>
+              {Object.entries(data).map(
+                ([key, value]: [key: any, value: any]) => (
+                  <div key={key} className="line-items">
+                    <p>{CamelCaseToTitleCase(key)}:</p>
+                    <p>{value}</p>
+                  </div>
+                )
+              )}
             </div>
-      </section>
-    </div>
+          ) : (
+            <p>
+              <Redirecting />
+            </p>
+          )}
+        </div>
+        <div className="btn_container">
+          <CancelButton link="/tickets/transport" />
+          <DefaultButton text="Proceed to Payment" link="/" />
+        </div>
+      </div>
+    </section>
   );
 };
 

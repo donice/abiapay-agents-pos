@@ -23,7 +23,7 @@ export const LargeLoader= () => {
     <div className="loader-div">
       <RotatingLines
         visible={true}
-        width="100"
+        width="50"
         strokeColor="green"
         strokeWidth="5"
         animationDuration="0.75"

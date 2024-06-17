@@ -18,9 +18,11 @@ export interface RouteConfig {
   };
 }
 
+
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
   const isProtectedRoute = protectedRoutes.includes(pathname);
+  const isPartOfProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
   const isUnprotectedRoute = unprotectedRoutes.includes(pathname);
   const [queryClient] = useState(() => new QueryClient());
 
@@ -32,9 +34,9 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <SecuredPagesLayout>{children}</SecuredPagesLayout>
           ) : isUnprotectedRoute ? (
             <UnsecuredPagesLayout>{children}</UnsecuredPagesLayout>
-          ) : (
-            <div>{children}</div>
-          )}
+          ) : isPartOfProtectedRoute ?(
+            <SecuredPagesLayout>{children}</SecuredPagesLayout>
+          ): <section>{children}</section>}
         </div>
         <Toaster />
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
