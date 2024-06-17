@@ -1,9 +1,17 @@
-import React from "react";
+"use client"
+
+import React, { useEffect } from "react";
 import SigninForm from "./form";
 import { CustomFormHeader } from "../../common/header";
 import "./style.scss";
+import { logout, useAuthDispatch } from "@/src/context/authContext";
 
 const SigninComponent = () => {
+  useEffect(() => {
+    const dispatch = useAuthDispatch();
+    logout(dispatch);
+  }, []);
+
   return (
     <div className="sigin_component">
       <CustomFormHeader title="Sign in" desc="Signin to your Agents Portal" />

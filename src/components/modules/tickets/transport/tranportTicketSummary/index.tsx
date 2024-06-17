@@ -15,7 +15,8 @@ const TransportTicketsSummaryComponent = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedData = sessionStorage.getItem("TRANSPORT_FORM_DETAILS");
+      const isBrowser = typeof window !== 'undefined';
+      const storedData = isBrowser && sessionStorage.getItem("TRANSPORT_FORM_DETAILS");
       if (storedData) {
         setData(JSON.parse(storedData));
       }

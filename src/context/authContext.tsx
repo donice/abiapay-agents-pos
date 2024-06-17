@@ -11,20 +11,15 @@ import toast from "react-hot-toast";
 import { setToken } from "../services/setToken";
 
 interface LoginResponse {
-  data: {
-    status: number;
-    message: string;
-    body: {
-      user_cat: string;
-      email: string;
-      phone: string;
-      name: string;
-      lga: string;
-      update_by: string;
-      state_id?: string;
-    };
-    redirect: boolean;
-    token: string;
+  token: string;
+  body: {
+    user_cat: string;
+    email: string;
+    phone: string;
+    name: string;
+    lga: string;
+    update_by: string;
+    state_id?: string;
   };
 }
 
@@ -35,14 +30,18 @@ interface AuthState {
 }
 
 // Initial state
-const savedToken = window.sessionStorage.getItem("TOKEN")
-  ? sessionStorage.getItem("TOKEN")
+const isBrowser = typeof window !== 'undefined';
+
+const savedToken = isBrowser && window.sessionStorage.getItem("TOKEN")
+  ? window.sessionStorage.getItem("TOKEN")
   : null;
+
 const initialState: AuthState = {
   isSubmitting: false,
   token: savedToken,
   errors: null,
 };
+
 
 type AuthAction =
   | { type: "SET_LOGIN_SUBMITTING"; payload: boolean }
@@ -117,15 +116,14 @@ export const login = async (
 ) => {
   dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
-    const response: LoginResponse = await axios.post(`${url}/user/login`, data);
-    const {
-      token,
-      body: { state_id },
-    } = response.data;
+    const response = await axios.post(`${url}/user/login`, data);
+    const { token, body }: LoginResponse = response.data;
     dispatch({ type: "LOGIN", payload: token });
     setToken(token);
     toast.success(response?.data?.message);
-    sessionStorage.setItem("TOKEN", token);
+    isBrowser && sessionStorage.setItem("TOKEN", token);
+    isBrowser && sessionStorage.setItem("USER_DATA", JSON.stringify(body));
+
   } catch (error: any) {
     dispatch({
       type: "SET_LOGIN_ERRORS",
@@ -138,8 +136,8 @@ export const login = async (
 };
 
 export const logout = (dispatch: Dispatch<AuthAction>) => {
-  console.log("I've been clicked")
+  console.log("I've been clicked");
   dispatch({ type: "LOGOUT" });
   setToken(null);
-  sessionStorage.removeItem("TOKEN");
+  isBrowser && sessionStorage.removeItem("TOKEN");
 };

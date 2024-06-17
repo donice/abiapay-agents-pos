@@ -36,7 +36,8 @@ const AddTransportTicketForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    sessionStorage.setItem("TRANSPORT_FORM_DETAILS", JSON.stringify(formData));
+    const isBrowser = typeof window !== 'undefined';
+    isBrowser && sessionStorage.setItem("TRANSPORT_FORM_DETAILS", JSON.stringify(formData));
   };
 
   return (
