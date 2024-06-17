@@ -24,22 +24,63 @@ $border: 1px solid $gray;
     padding: 0 px-to-rem(12px);
   }
 
+  @include custom-media-query("mobile", $sm) {
+    flex-direction: row-reverse;
+  }
+
   &_logo {
     padding: 1rem 0;
     display: flex;
     align-items: center;
+
+    @include custom-media-query("mobile", $sm) {
+      display: none;
+    }
   }
 
   &_user {
     padding: 0.5rem 0;
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    font-size: 0.85rem;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: self-start;
+      span {
+        margin-top: -0.1rem;
+        color: rgb(245 158 11);
+        background-color: rgba(251, 190, 36, 0.208);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0rem 0.5rem;
+        border-radius: 0.5rem;
+        font-size: 12px;
+      }
+    }
+  }
+  .icon {
+    font-size: 36px;
+    color: $text-primary;
+  }
+
+  .settings {
+    padding: 1rem 0;
+    display: none;
+    align-items: center;
+   
+
+    @include custom-media-query("mobile", $sm) {
+      display: flex;
+    }
 
     .icon {
-      font-size: 34px;
-      color: $primary-hover;
+       font-size: 28px;
     }
   }
 }
