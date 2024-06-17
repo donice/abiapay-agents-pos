@@ -38,8 +38,8 @@ const TopNav = () => {
       </span>
       <div className="top-nav_user">
         <div>
-          <p>{user_data.name}</p>
-          <span>{user_data.user_cat}</span>
+          <p>{user_data.name || "-"}</p>
+          <span>{user_data.user_cat || "-"}</span>
         </div>
 
         <PiUserCircleDuotone className="icon" />
