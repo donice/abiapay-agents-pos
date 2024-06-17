@@ -2,10 +2,11 @@ import React from 'react'
 import "./style.scss"
 
 interface props {
-  bank: string;
+  bank: "access" | "fidelity";
+  data: any
 }
 
-const WalletCard = ({bank}: props) => {
+const WalletCard = ({bank, data}: props) => {
   return (
     <div className="wallet-card">
       <div className="wallet-card_balance">

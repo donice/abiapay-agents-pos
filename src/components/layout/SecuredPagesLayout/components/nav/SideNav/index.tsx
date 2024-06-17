@@ -4,7 +4,7 @@ import "./style.scss";
 import Link from "next/link";
 import getRoute from "@/src/hooks/getRoute";
 import {
-  TbLayoutDashboard,
+  TbHome,
   TbTicket,
   TbBasketDown,
   TbLogout2,
@@ -20,7 +20,7 @@ const nav_items: SideNavProps[] = [
   {
     name: "dashboard",
     title: "Dashboard",
-    icon: <TbLayoutDashboard className="icon" />,
+    icon: <TbHome className="icon" />,
   },
   {
     name: "tickets/transport",
