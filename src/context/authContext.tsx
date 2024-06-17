@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { setToken } from "../services/setToken";
 
 interface LoginResponse {
   data: {
@@ -79,6 +80,12 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  useEffect(() => {
+    if (state.token) {
+      setToken(state.token);
+    }
+  }, [state.token]);
+
   return (
     <AuthStateContext.Provider value={state}>
       <AuthDispatchContext.Provider value={dispatch}>
@@ -116,6 +123,7 @@ export const login = async (
       body: { state_id },
     } = response.data;
     dispatch({ type: "LOGIN", payload: token });
+    setToken(token);
     toast.success(response?.data?.message);
     sessionStorage.setItem("TOKEN", token);
   } catch (error: any) {
@@ -132,5 +140,6 @@ export const login = async (
 export const logout = (dispatch: Dispatch<AuthAction>) => {
   console.log("I've been clicked")
   dispatch({ type: "LOGOUT" });
+  setToken(null);
   sessionStorage.removeItem("TOKEN");
 };

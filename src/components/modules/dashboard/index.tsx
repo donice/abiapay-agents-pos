@@ -7,12 +7,14 @@ import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 import { fetchDashboardData } from "@/src/services/dashboardService";
 import { UseMutateAsyncFunction } from "@tanstack/react-query";
+import axiosInstance from "@/src/lib/axiosInstance";
 
 const DashbaordComponent = () => {
   useEffect(() => {
-    const data = fetchDashboardData;
-    console.log(data, "MY DATA ");
+    const res = fetchDashboardData;
   }, []);
+
+  const res = axiosInstance.post("/dashboard/data")
 
   return (
     <div className="dashboard">
