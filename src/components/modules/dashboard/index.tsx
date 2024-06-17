@@ -54,6 +54,7 @@ const DashboardComponent: React.FC = () => {
   const getDashboardData = async () => {
     try {
       const res = await fetchDashboardData();
+      console.log(res, "RESPONSEEEE");
       dispatch({
         type: "FETCH_SUCCESS",
         payload: {
@@ -77,25 +78,24 @@ const DashboardComponent: React.FC = () => {
     <div className="dashboard">
       <header className="dashboard_header">
         <CustomHeader title={`Welcome back`} desc="Overview of Dashboard" />
-        {!loading ? (
-          <div className="dashboard_header_buttons">
-            <SecondaryButton
-              text="Akara Ekwenti"
-              link="/tickets/transport/add"
-            />
-            <PrimaryButton text="Smart Tickets" link="/tickets/transport/add" />
-          </div>
-        ) : (
-          <div>
-            <LoaderSkeleton />
-            <LoaderSkeleton />
-          </div>
-        )}
+        <div className="dashboard_header_buttons">
+          <SecondaryButton text="Akara Ekwenti" link="/tickets/transport/add" />
+          <PrimaryButton text="Smart Tickets" link="/tickets/transport/add" />
+        </div>
       </header>
-      <div className="dashboard_wallets">
-        <WalletCard bank="access" data={accessData} />
-        <WalletCard bank="fidelity" data={fidelityData} />
-      </div>
+      
+      {!loading ? (
+        <div className="dashboard_wallets">
+          <WalletCard bank="access" data={accessData} />
+          <WalletCard bank="fidelity" data={fidelityData} />
+        </div>
+      ) : (
+        <div className="dashboard_wallets_skeleton">
+          <LoaderSkeleton />
+          <LoaderSkeleton />
+        </div>
+      )}
+
       <div className="dashboard_stats">
         <StatsCard name="Tickets" amount="30" />
         <StatsCard name="ABSSIN" amount="30" />

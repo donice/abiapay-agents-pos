@@ -6,7 +6,7 @@ type LoaderProps = {
   height?: string;
 };
 
-const LoaderSkeleton: React.FC<LoaderProps> = ({ width = '100px', height = '100px' }) => {
+const LoaderSkeleton: React.FC<LoaderProps> = ({ width, height = '100px' }) => {
   return (
     <div
       className={styles.loader}
