@@ -121,8 +121,6 @@ export const login = async (
     const { token, status, body }: LoginResponse = response.data;
     dispatch({ type: "LOGIN", payload: token });
 
-    console.log(token, "TOKENNNNNN")
-
     setToken(token);
     toast.success(response?.data?.message);
     useIsBrower() && sessionStorage.setItem("TOKEN", token);

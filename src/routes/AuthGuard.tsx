@@ -18,12 +18,13 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     if (!token && isProtectedRoute(pathname)) {
       router.push("/signin");
+      return 
     }
   }, [token, pathname, router]);
 
-  if (!token && isProtectedRoute(pathname)) {
-    return <Redirecting />;
-  }
+  // if (!token && isProtectedRoute(pathname)) {
+  //   return <Redirecting />;
+  // }
 
   return <>{children}</>;
 };
