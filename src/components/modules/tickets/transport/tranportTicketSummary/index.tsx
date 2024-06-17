@@ -48,9 +48,7 @@ const TransportTicketsSummaryComponent = () => {
               )}
             </div>
           ) : (
-            <div>
               <Redirecting />
-            </div>
           )}
         </div>
         <div className="btn_container">

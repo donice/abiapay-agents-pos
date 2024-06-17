@@ -4,12 +4,12 @@ import "./style.scss";
 
 const Redirecting = () => {
   return (
-    <section className="redirecting">
+    <div className="redirecting">
       <div className="redirecting_container">
         <LargeLoader />
         <p>Redirecting...</p>
       </div>
-    </section>
+    </div>
   );
 };
 

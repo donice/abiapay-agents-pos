@@ -6,9 +6,24 @@ import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 import { fetchDashboardData } from "@/src/services/dashboardService";
-import axiosInstance from "@/src/lib/axiosInstance";
+import toast from "react-hot-toast";
 
 const DashbaordComponent = () => {
+  useEffect(() => {
+    getDashboardData();
+  }, []);
+
+  const getDashboardData = async () => {
+    // try {
+    //   const data = await fetchDashboardData();
+    //   console.log(data);
+    // } catch (error: any) {
+    //   console.log("Error fetching dashboard data", error);
+    //   toast.error(error?.response?.data || "Error loading dashboard")
+    // }
+    fetchDashboardData();
+    console.log("Fetched")
+  };
 
   return (
     <div className="dashboard">
