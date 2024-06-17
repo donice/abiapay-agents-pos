@@ -1,12 +1,19 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import WalletCard from "./WalletCard";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
+import { fetchDashboardData } from "@/src/services/dashboardService";
+import { UseMutateAsyncFunction } from "@tanstack/react-query";
 
 const DashbaordComponent = () => {
+  useEffect(() => {
+    const data = fetchDashboardData;
+    console.log(data, "MY DATA ");
+  }, []);
+
   return (
     <div className="dashboard">
       <header className="dashboard_header">

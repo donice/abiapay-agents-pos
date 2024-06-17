@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { DefaultButton, CancelButton } from "@/src/components/common/button";
+import { SelectInput, TextInput } from "@/src/components/common/input";
 import "./style.scss";
 
 const AddTransportTicketForm = () => {
@@ -40,24 +41,21 @@ const AddTransportTicketForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="add-ticket">
-      <div>
-        <label htmlFor="ticketType">Ticket Type</label>
-        <select
-          name="ticketType"
-          id="ticketType"
-          className="minimal"
-          value={formData.ticketType}
-          onChange={handleChange}
-        >
-          <option disabled value="">
-            Select Ticket Type
-          </option>
-          <option value="truck">Truck</option>
-          <option value="bus">Bus</option>
-          <option value="car">Car</option>
-          <option value="bike">Bike</option>
-        </select>
-      </div>
+
+      <SelectInput
+        label="Ticket Type"
+        name="ticketType"
+        id="ticketType"
+        value={formData.ticketType}
+        onChange={handleChange}
+        options={[
+          { value: 'truck', label: 'Truck' },
+          { value: 'bus', label: 'Bus' },
+          { value: 'car', label: 'Car' },
+          { value: 'bike', label: 'Bike' },
+        ]}
+        placeholder="Select Ticket Type"
+      />
 
       <div>
         <label htmlFor="lga">L.G.A</label>
@@ -78,36 +76,30 @@ const AddTransportTicketForm = () => {
         </select>
       </div>
 
-      <div>
-        <label htmlFor="plateNumber">Vehicle Plate Number</label>
-        <input
-          type="text"
-          name="plateNumber"
-          placeholder="Enter Vehicle Plate Number"
-          value={formData.plateNumber}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="taxPayerPhone">Taxpayer Phone Number</label>
-        <input
-          type="text"
-          name="taxPayerPhone"
-          placeholder="Enter Taxpayer Phone Number"
-          value={formData.taxPayerPhone}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="taxPayerName">Taxpayer Name</label>
-        <input
-          type="text"
-          name="taxPayerName"
-          placeholder="Enter Taxpayer Name"
-          value={formData.taxPayerName}
-          onChange={handleChange}
-        />
-      </div>
+      <TextInput
+        label="Plate Nummber"
+        type="text"
+        name="plateNumber"
+        placeholder="Enter Plate Number"
+        value={formData.plateNumber}
+        onChange={handleChange}
+      />
+      <TextInput
+        label="Phone Number"
+        type="text"
+        name="taxPayerPhone"
+        placeholder="Enter Phone Number"
+        value={formData.taxPayerPhone}
+        onChange={handleChange}
+      />
+      <TextInput
+        label="Taxpayer Name"
+        type="text"
+        name="taxPayerName"
+        placeholder="Enter Taxpayer Name"
+        value={formData.taxPayerName}
+        onChange={handleChange}
+      />
 
       <div>
         <label htmlFor="paymentPeriod">Payment Period</label>
@@ -126,16 +118,14 @@ const AddTransportTicketForm = () => {
           <option value="month">1 Month</option>
         </select>
       </div>
-      <div>
-        <label htmlFor="amount">Amount</label>
-        <input
-          type="text"
-          name="amount"
-          placeholder="Enter Amount"
-          value={formData.amount}
-          onChange={handleChange}
-        />
-      </div>
+      <TextInput
+        label="Amount"
+        type="number"
+        name="Amount"
+        placeholder="Enter Amount"
+        value={formData.amount}
+        onChange={handleChange}
+      />
 
       <div className="btn_container">
         <CancelButton link="/tickets/transport" />

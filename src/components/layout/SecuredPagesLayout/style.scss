@@ -9,7 +9,10 @@
   padding: px-to-rem(36px);
   transition: width 1s ease-in-out;
   z-index: -1;
-  background-color: rgba(250, 250, 250, 0.529);
+  background-color: #fafafa87;
+  overflow: scroll;
+
+  margin: 1rem 0;
 
   @include custom-media-query("mobile", 768px) {
     width: 100%;

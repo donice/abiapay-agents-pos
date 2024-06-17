@@ -27,6 +27,7 @@
     align-items: center;
     transform: translateY(2.5rem);
     animation: fadeIn 2s forwards;
+    
     @keyframes fadeIn {
       0% {
         opacity: 0;
@@ -35,6 +36,10 @@
         opacity: 1;
         transform: translateY(0rem);
       }
+    }
+
+    @include custom-media-query("mobile", $sm) {
+      padding: 1.5rem;
     }
   }
 }

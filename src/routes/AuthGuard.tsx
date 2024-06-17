@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { protectedRoutes } from "../routes";
+import { unprotectedRoutes } from "../routes";
 import { useAuthState } from "../context/authContext";
 import Redirecting from "../components/common/loader/redirecting";
 
@@ -9,15 +9,15 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  console.log(token)
+  // console.log(token)
 
   useEffect(() => {
-    if (!token && protectedRoutes.includes(pathname)) {
+    if (!token && !unprotectedRoutes.includes(pathname)) {
       router.push("/signin");
     }
   }, [token, pathname, router]);
 
-  if (!token && protectedRoutes.includes(pathname)) {
+  if (!token && !unprotectedRoutes.includes(pathname)) {
     return <Redirecting />;
   }
 

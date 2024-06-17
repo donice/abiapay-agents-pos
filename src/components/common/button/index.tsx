@@ -81,15 +81,21 @@ export const PrimaryButton = ({ text, link }: prop) => {
   );
 };
 
-export const SecondaryButton = ({ text }: prop) => {
+export const SecondaryButton = ({ text, link }: prop) => {
   const router = useRouter();
+
+  const handleClick = (route: string) => {
+    return router.push(route);
+  };
+
   return (
-    <button className="button secondary">
+    <button className="button secondary" onClick={() => handleClick(link)}>
       <MdOutlineAdd className="icon" />
       {text}
     </button>
   );
 };
+
 export const GoBackButton = ({ link }: { link: string }) => {
   const router = useRouter();
   const handleClick = (route: string) => {

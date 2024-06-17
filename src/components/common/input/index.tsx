@@ -15,7 +15,7 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 interface InputProps {
   input_icon?: ReactNode;
   label: string;
-  type?: "text" | "password" | "email";
+  type?: "text" | "password" | "email" | "number";
   name: string;
   placeholder?: string;
   value: string;
@@ -68,6 +68,56 @@ export const TextInput: React.FC<InputProps> = ({
           {showPassword ? <TbEyeOff /> : <TbEye />}
         </span>
       )}
+    </div>
+  );
+};
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface SelectComponentProps {
+  label: string;
+  name: string;
+  id: string;
+  className?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: Option[];
+  placeholder: string;
+}
+
+
+export const SelectInput: React.FC<SelectComponentProps> = ({
+  label,
+  name,
+  id,
+  className,
+  value,
+  onChange,
+  options,
+  placeholder,
+}) => {
+  return (
+    <div className="select-container">
+      <label htmlFor={id}>{label}</label>
+      <select
+        name={name}
+        id={id}
+        className={`${className} minimal`}
+        value={value}
+        onChange={onChange}
+      >
+        <option disabled value="">
+          {placeholder}
+        </option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
