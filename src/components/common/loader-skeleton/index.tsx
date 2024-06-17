@@ -1,6 +1,5 @@
-// components/Loader.tsx
 import React from 'react';
-import styles from './Loader.module.scss';
+import styles from './loader.module.scss';
 
 type LoaderProps = {
   width?: string;
