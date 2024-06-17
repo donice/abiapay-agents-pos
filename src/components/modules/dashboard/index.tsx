@@ -19,7 +19,7 @@ const DashbaordComponent = () => {
   return (
     <div className="dashboard">
       <header className="dashboard_header">
-        <CustomHeader title="Dashboard" desc="Overview of Dashboard" />
+        <CustomHeader title={`Welcome back`} desc="Overview of Dashboard" />
         <div className="dashboard_header_buttons">
           <SecondaryButton text="Akara Ekwenti" link="/tickets/transport/add" />
           <PrimaryButton text="Smart Tickets" link="/tickets/transport/add" />

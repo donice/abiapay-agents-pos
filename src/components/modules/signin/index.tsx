@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import SigninForm from "./form";
@@ -7,10 +7,14 @@ import "./style.scss";
 import { logout, useAuthDispatch } from "@/src/context/authContext";
 
 const SigninComponent = () => {
+  const dispatch = useAuthDispatch();
   useEffect(() => {
-    const dispatch = useAuthDispatch();
-    logout(dispatch);
+    handleLogout()
   }, []);
+
+  const handleLogout = () => {
+    logout(dispatch);
+  };
 
   return (
     <div className="sigin_component">

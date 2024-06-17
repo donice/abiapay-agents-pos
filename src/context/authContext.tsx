@@ -9,6 +9,7 @@ import React, {
 import axios from "axios";
 import toast from "react-hot-toast";
 import { setToken } from "../services/setToken";
+import useIsBrower from "../hooks/useIsBrower";
 
 interface LoginResponse {
   token: string;
@@ -30,9 +31,8 @@ interface AuthState {
 }
 
 // Initial state
-const isBrowser = typeof window !== 'undefined';
 
-const savedToken = isBrowser && window.sessionStorage.getItem("TOKEN")
+const savedToken = useIsBrower() && window.sessionStorage.getItem("TOKEN")
   ? window.sessionStorage.getItem("TOKEN")
   : null;
 
@@ -121,8 +121,8 @@ export const login = async (
     dispatch({ type: "LOGIN", payload: token });
     setToken(token);
     toast.success(response?.data?.message);
-    isBrowser && sessionStorage.setItem("TOKEN", token);
-    isBrowser && sessionStorage.setItem("USER_DATA", JSON.stringify(body));
+    useIsBrower() && sessionStorage.setItem("TOKEN", token);
+    useIsBrower() && sessionStorage.setItem("USER_DATA", JSON.stringify(body));
 
   } catch (error: any) {
     dispatch({
@@ -139,5 +139,5 @@ export const logout = (dispatch: Dispatch<AuthAction>) => {
   console.log("I've been clicked");
   dispatch({ type: "LOGOUT" });
   setToken(null);
-  isBrowser && sessionStorage.removeItem("TOKEN");
+  useIsBrower() && sessionStorage.removeItem("TOKEN");
 };

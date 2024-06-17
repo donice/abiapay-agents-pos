@@ -9,14 +9,14 @@ import {
   GoBackButton,
 } from "@/src/components/common/button";
 import Redirecting from "@/src/components/common/loader/redirecting";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
 const TransportTicketsSummaryComponent = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const isBrowser = typeof window !== 'undefined';
-      const storedData = isBrowser && sessionStorage.getItem("TRANSPORT_FORM_DETAILS");
+      const storedData = useIsBrower() && sessionStorage.getItem("TRANSPORT_FORM_DETAILS");
       if (storedData) {
         setData(JSON.parse(storedData));
       }
