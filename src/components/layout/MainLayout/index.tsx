@@ -29,7 +29,6 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        <section>
           {isProtectedRoute ? (
             <SecuredPagesLayout>{children}</SecuredPagesLayout>
           ) : isUnprotectedRoute ? (
@@ -37,9 +36,8 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           ) : isPartOfProtectedRoute ?(
             <SecuredPagesLayout>{children}</SecuredPagesLayout>
           ): <section>{children}</section>}
-        </section>
+        {/* </section> */}
         <Toaster />
-        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </AuthProvider>
   );

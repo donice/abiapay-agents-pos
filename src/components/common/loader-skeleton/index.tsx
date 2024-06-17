@@ -7,7 +7,7 @@ type LoaderProps = {
   height?: string;
 };
 
-const Loader: React.FC<LoaderProps> = ({ width = '100px', height = '100px' }) => {
+const LoaderSkeleton: React.FC<LoaderProps> = ({ width = '100px', height = '100px' }) => {
   return (
     <div
       className={styles.loader}
@@ -16,4 +16,4 @@ const Loader: React.FC<LoaderProps> = ({ width = '100px', height = '100px' }) =>
   );
 };
 
-export default Loader;
+export default LoaderSkeleton;

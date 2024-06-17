@@ -1,11 +1,14 @@
-/* components/Loader.module.scss */
 .loader {
   width: var(--loader-width, 100px);
   height: var(--loader-height, 100px);
-  margin: 20px auto;
   background: linear-gradient(-45deg, #eee 0%, #ddd 50%, #eee 100%);
-  background-size: 400% 400%;
+  border-radius: 2rem;
   animation: gradientAnimation 1.5s ease infinite;
+  
+}
+
+.loader + .loader {
+  margin-top: -24px;
 }
 
 @keyframes gradientAnimation {

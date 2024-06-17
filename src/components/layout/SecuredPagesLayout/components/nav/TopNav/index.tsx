@@ -1,33 +1,34 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { AbiaLogo } from "@/src/components/common/Images";
 import { PiUserCircleDuotone } from "react-icons/pi";
 import { TbBellRinging } from "react-icons/tb";
 import useIsBrower from "@/src/hooks/useIsBrower";
+import LoaderSkeleton from "@/src/components/common/loader-skeleton";
 
 const TopNav = () => {
-  const data: string | null =
-    useIsBrower() && window.sessionStorage.getItem("USER_DATA")
-      ? window.sessionStorage.getItem("USER_DATA")
-      : null;
+  const [userData, setUserData] = useState<{
+    name?: string;
+    user_cat?: string;
+  } | null>(null);
 
-  let user_data: {
-    name?: string
-    user_cat?: string
-  } = {};
-
-  if (data) {
-    try {
-      user_data = JSON.parse(data);
-    } catch (e) {
-      console.error("Error parsing JSON data:", e);
-      user_data = {};
+  useEffect(() => {
+    if (useIsBrower()) {
+      const data = window.sessionStorage.getItem("USER_DATA");
+      if (data) {
+        try {
+          setUserData(JSON.parse(data));
+        } catch (e) {
+          console.error("Error parsing JSON data:", e);
+          setUserData({});
+        }
+      }
     }
-  }
+  }, []);
 
   return (
-    <nav className="top-nav">
+    <div className="top-nav">
       <div className="top-nav_logo">
         <a href="/dashboard" className="logo" aria-label="Abiapay Agents Logo">
           <AbiaLogo />
@@ -37,14 +38,21 @@ const TopNav = () => {
         <TbBellRinging className="icon" />
       </span>
       <div className="top-nav_user">
-        <div>
-          <p>{user_data.name || "-"}</p>
-          <span>{user_data.user_cat || "-"}</span>
-        </div>
+        {!userData ? (
+          <div className="top-nav_user_skeleton">
+            <LoaderSkeleton width="70px" height="10px" />
+            <LoaderSkeleton width="100px" height="10px" />
+          </div>
+        ) : (
+          <div className="top-nav_user_data">
+            <p>{userData?.name || "-"}</p>
+            <span>{userData?.user_cat || "-"}</span>
+          </div>
+        )}
 
         <PiUserCircleDuotone className="icon" />
       </div>
-    </nav>
+    </div>
   );
 };
 

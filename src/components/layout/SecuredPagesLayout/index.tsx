@@ -14,7 +14,7 @@ const SecuredPagesLayout: React.FC<{ children: React.ReactNode }> = ({
       <div>
         <SideNav />
         <section className="main-section">{children}</section>
-      </div>
+      </div>  
       <BottomNav />
     </AuthGuard>
   );
