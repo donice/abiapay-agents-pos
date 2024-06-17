@@ -3,8 +3,9 @@ import React, { ReactElement } from "react";
 import "./style.scss";
 import Link from "next/link";
 import getRoute from "@/src/hooks/getRoute";
+import { logout } from "@/src/context/authContext";
 import {
-  TbLayoutDashboard,
+  TbHome,
   TbTicket,
   TbBasketDown,
   TbLogout2,
@@ -20,7 +21,7 @@ const nav_items: BottomNavProps[] = [
   {
     name: "dashboard",
     title: "Overview",
-    icon: <TbLayoutDashboard className="icon" />,
+    icon: <TbHome className="icon" />,
   },
   {
     name: "tickets/transport",
@@ -47,7 +48,7 @@ const BottomNav = () => {
                 {/* <span>{item.title}</span> */}
             </Link>
           ))}
-          <div key={"logout"} className="bottom-nav_item logout">
+          <div key={"logout"} onClick={() => {console.log(); logout}} className="bottom-nav_item logout">
             <span>
               <TbLogout2 className="icon out" />
             </span>

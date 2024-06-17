@@ -4,6 +4,7 @@ import React, {
   useReducer,
   Dispatch,
   ReactNode,
+  useEffect,
 } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -33,9 +34,12 @@ interface AuthState {
 }
 
 // Initial state
+const savedToken = window.sessionStorage.getItem("TOKEN")
+  ? sessionStorage.getItem("TOKEN")
+  : null;
 const initialState: AuthState = {
   isSubmitting: false,
-  token: null,
+  token: savedToken,
   errors: null,
 };
 
@@ -70,8 +74,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       throw new Error(`Unhandled action type`);
     // throw new Error(`Unhandled action type: ${action.type}`);
   }
-}; 
-
+};
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -107,29 +110,27 @@ export const login = async (
 ) => {
   dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
-    const response: LoginResponse = await axios.post(
-      `${url}/user/login`,
-      data
-    );
+    const response: LoginResponse = await axios.post(`${url}/user/login`, data);
     const {
       token,
       body: { state_id },
     } = response.data;
     dispatch({ type: "LOGIN", payload: token });
-    toast.success(response?.data?.message)
-    localStorage.setItem("ABSSIN_number", JSON.stringify(state_id));
+    toast.success(response?.data?.message);
+    sessionStorage.setItem("TOKEN", token);
   } catch (error: any) {
     dispatch({
       type: "SET_LOGIN_ERRORS",
       payload: "Invalid login credentials",
     });
-    toast.error(error?.message)
+    toast.error(error?.message);
   } finally {
     dispatch({ type: "SET_LOGIN_SUBMITTING", payload: false });
   }
 };
 
 export const logout = (dispatch: Dispatch<AuthAction>) => {
+  console.log("I've been clicked")
   dispatch({ type: "LOGOUT" });
-  localStorage.removeItem("ABSSIN_number");
+  sessionStorage.removeItem("TOKEN");
 };
