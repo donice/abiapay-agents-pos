@@ -41,7 +41,6 @@ const AddTransportTicketForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="add-ticket">
-
       <SelectInput
         label="Ticket Type"
         name="ticketType"
@@ -49,32 +48,28 @@ const AddTransportTicketForm = () => {
         value={formData.ticketType}
         onChange={handleChange}
         options={[
-          { value: 'truck', label: 'Truck' },
-          { value: 'bus', label: 'Bus' },
-          { value: 'car', label: 'Car' },
-          { value: 'bike', label: 'Bike' },
+          { value: "truck", label: "Truck" },
+          { value: "bus", label: "Bus" },
+          { value: "car", label: "Car" },
+          { value: "bike", label: "Bike" },
         ]}
         placeholder="Select Ticket Type"
       />
 
-      <div>
-        <label htmlFor="lga">L.G.A</label>
-        <select
-          name="lga"
-          id="lga"
-          className="minimal"
-          value={formData.lga}
-          onChange={handleChange}
-        >
-          <option disabled value="">
-            Select L.G.A
-          </option>
-          <option value="lga1">LGA 1</option>
-          <option value="lga2">LGA 2</option>
-          <option value="lga3">LGA 3</option>
-          <option value="lga4">LGA 4</option>
-        </select>
-      </div>
+      <SelectInput
+        label="L.G.A"
+        name="lga"
+        id="lga"
+        value={formData.lga}
+        onChange={handleChange}
+        options={[
+          { value: "truck", label: "Truck" },
+          { value: "bus", label: "Bus" },
+          { value: "car", label: "Car" },
+          { value: "bike", label: "Bike" },
+        ]}
+        placeholder="Select L.G.A"
+      />
 
       <TextInput
         label="Plate Nummber"
@@ -101,27 +96,25 @@ const AddTransportTicketForm = () => {
         onChange={handleChange}
       />
 
-      <div>
-        <label htmlFor="paymentPeriod">Payment Period</label>
-        <select
-          name="paymentPeriod"
-          id="paymentPeriod"
-          className="minimal"
-          value={formData.paymentPeriod}
-          onChange={handleChange}
-        >
-          <option disabled value="">
-            Select Payment Period
-          </option>
-          <option value="day">1 Day</option>
-          <option value="week">1 Week</option>
-          <option value="month">1 Month</option>
-        </select>
-      </div>
+      <SelectInput
+        label="Payment Period"
+        name="paymentPeriod"
+        id="paymentPeriod"
+        value={formData.paymentPeriod}
+        onChange={handleChange}
+        options={[
+          { value: "truck", label: "Truck" },
+          { value: "bus", label: "Bus" },
+          { value: "car", label: "Car" },
+          { value: "bike", label: "Bike" },
+        ]}
+        placeholder="Select Payment Period"
+      />
+
       <TextInput
         label="Amount"
         type="number"
-        name="Amount"
+        name="amount"
         placeholder="Enter Amount"
         value={formData.amount}
         onChange={handleChange}
