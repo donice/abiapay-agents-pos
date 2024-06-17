@@ -10,13 +10,11 @@ const isToken =
     : null;
 setToken(isToken);
 
-console.log(isToken)
-
 export const fetchDashboardData = async () => {
   try {
-     await axiosInstance.post(`${url}/dashboard/data`);
-  } catch(error: any) {
-    console.log(error)
+    const res = await axiosInstance.post(`${url}/dashboard/data`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
   }
- 
 };
