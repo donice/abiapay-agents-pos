@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, Reducer } from "react";
 import WalletCard from "./WalletCard";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
@@ -8,27 +8,28 @@ import { CustomHeader } from "@/src/components/common/header";
 import { fetchDashboardData } from "@/src/services/dashboardService";
 import toast from "react-hot-toast";
 import LoaderSkeleton from "../../common/loader-skeleton";
+import { Action, State } from "../../types/dashboardTypes";
 
-const initialState = {
+const initialState: State = {
   fidelityData: {
+    total_credit: null,
+    total_debit: null,
+    balance: null,
+    earnings: null,
+    account_name: null,
+    account_number: null,
+    bank_name: null,
+  },
+  accessData: {
     current_earnings: null,
     wallet_balance: null,
     wallet_id: null,
     wallet_name: null,
   },
-  accessData: {
-    account_name: null,
-    account_number: null,
-    balance: null,
-    bank_name: null,
-    earnings: null,
-    total_credit: null,
-    total_debit: null,
-  },
   loading: true,
 };
 
-const reducer = (state: any, action: any) => {
+const reducer: Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case "FETCH_SUCCESS":
       return {
@@ -47,7 +48,7 @@ const reducer = (state: any, action: any) => {
   }
 };
 
-const DashboardComponent = () => {
+const DashboardComponent: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const getDashboardData = async () => {
@@ -56,8 +57,8 @@ const DashboardComponent = () => {
       dispatch({
         type: "FETCH_SUCCESS",
         payload: {
-          fidelityData: res.fidelityData,
-          accessData: res.accessData,
+          fidelityData: res.fidelity,
+          accessData: res.access,
         },
       });
     } catch (error) {
