@@ -9,12 +9,12 @@ const UnsecuredPagesLayout = ({
 }>) => {
   return (
 
-    <section className="unsecured-main">
+    <div className="unsecured-main">
       <a href="/dashboard" className="logo" aria-label="Abiapay Agents Logo">
         <AbiaLogoLarge />
       </a>
       <div className="unsecured-main_container">{children}</div>
-    </section>
+    </div>
   );
 };
 

@@ -38,7 +38,7 @@ const SideNav = () => {
   const route = getRoute();
 
   return (
-    <nav className="side-nav">
+    <div className="side-nav">
       <div className="side-nav_items_container">
         <div className="side-nav_items">
           {nav_items.map((item) => (
@@ -55,7 +55,7 @@ const SideNav = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </div>
   );
 };
 

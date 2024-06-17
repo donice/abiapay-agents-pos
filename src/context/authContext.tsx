@@ -12,6 +12,7 @@ import { setToken } from "../services/setToken";
 import useIsBrower from "../hooks/useIsBrower";
 
 interface LoginResponse {
+  status: number;
   token: string;
   body: {
     user_cat: string;
@@ -117,8 +118,11 @@ export const login = async (
   dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
     const response = await axios.post(`${url}/user/login`, data);
-    const { token, body }: LoginResponse = response.data;
+    const { token, status, body }: LoginResponse = response.data;
     dispatch({ type: "LOGIN", payload: token });
+
+    console.log(token, "TOKENNNNNN")
+
     setToken(token);
     toast.success(response?.data?.message);
     useIsBrower() && sessionStorage.setItem("TOKEN", token);
@@ -136,7 +140,6 @@ export const login = async (
 };
 
 export const logout = (dispatch: Dispatch<AuthAction>) => {
-  console.log("I've been clicked");
   dispatch({ type: "LOGOUT" });
   setToken(null);
   useIsBrower() && sessionStorage.removeItem("TOKEN");
