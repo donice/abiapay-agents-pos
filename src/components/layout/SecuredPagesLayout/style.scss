@@ -14,12 +14,14 @@
 
   margin: 1rem 0;
 
-  @include custom-media-query("mobile", 768px) {
+  @include custom-media-query("mobile", $md) {
     width: 100%;
     min-height: 100dvh;
     top: 0;
     padding: px-to-rem(61px) 1rem px-to-rem(106px) 1rem;
-    // overflow-y: auto;
-    // padding: 2rem px-to-rem(16px);
+  }
+
+  @include custom-media-query("mobile", $md) {
+    background-color: white;
   }
 }
