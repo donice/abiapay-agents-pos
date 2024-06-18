@@ -5,7 +5,12 @@ import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
-import { fetchDashboardData } from "@/src/services/dashboardService";
+import {
+  fetchDashboardData,
+  fetchABSSINData,
+  fetchEnumerationData,
+  fetchTransportTicketData,
+} from "@/src/services/dashboardService";
 import toast from "react-hot-toast";
 import LoaderSkeleton from "../../common/loader-skeleton";
 import { Action, State } from "../../types/dashboardTypes";
@@ -50,11 +55,13 @@ const reducer: Reducer<State, Action> = (state, action) => {
 
 const DashboardComponent: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [abssinCount, setABSSINCount]: any = React.useState(0);
+  const [enumerationCount, setEnumerationCount]: any = React.useState(null);
+  const [ttCount, setTtCount]: any = React.useState(null);
 
   const getDashboardData = async () => {
     try {
       const res = await fetchDashboardData();
-      console.log(res, "RESPONSEEEE");
       dispatch({
         type: "FETCH_SUCCESS",
         payload: {
@@ -68,8 +75,38 @@ const DashboardComponent: React.FC = () => {
     }
   };
 
+  const getABSSINData = async () => {
+    try {
+      const res = await fetchABSSINData();
+      setABSSINCount(res?.data.length);
+    } catch (error) {
+      toast.error("Cannot fetching abssin data");
+    }
+  };
+
+  const getEnumerationData = async () => {
+    try {
+      const res = await fetchEnumerationData();
+      setEnumerationCount(res?.data.length);
+    } catch (error) {
+      toast.error("Cannot fetching enumeration data");
+    }
+  };
+
+  const getTransportTicketData = async () => {
+    try {
+      const res = await fetchTransportTicketData();
+      setTtCount(res?.data.length);
+    } catch (error) {
+      toast.error("Cannot fetching enumeration data");
+    }
+  };
+
   useEffect(() => {
     getDashboardData();
+    getABSSINData();
+    getEnumerationData();
+    getTransportTicketData();
   }, []);
 
   const { fidelityData, accessData, loading } = state;
@@ -83,7 +120,7 @@ const DashboardComponent: React.FC = () => {
           <PrimaryButton text="Smart Tickets" link="/tickets/transport/add" />
         </div>
       </header>
-      
+
       {!loading ? (
         <div className="dashboard_wallets">
           <WalletCard bank="access" data={accessData} />
@@ -96,11 +133,28 @@ const DashboardComponent: React.FC = () => {
         </div>
       )}
 
-      <div className="dashboard_stats">
-        <StatsCard name="Tickets" amount="30" />
-        <StatsCard name="ABSSIN" amount="30" />
-        <StatsCard name="Enumeration" amount="30" />
-      </div>
+      {abssinCount != null && enumerationCount != null ? (
+        <div className="dashboard_stats">
+          <StatsCard
+            name="Tickets"
+            amount={ttCount == null ? 0 : ttCount.toString()}
+          />
+          <StatsCard
+            name="ABSSIN"
+            amount={abssinCount == null ? 0 : abssinCount.toString()}
+          />
+          <StatsCard
+            name="Enumeration"
+            amount={enumerationCount == null ? 0 : enumerationCount.toString()}
+          />
+        </div>
+      ) : (
+        <div className="dashboard_stats_skeleton">
+          <LoaderSkeleton height="70px" />
+          <LoaderSkeleton height="70px" />
+          <LoaderSkeleton height="70px" />
+        </div>
+      )}
     </div>
   );
 };

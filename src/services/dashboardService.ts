@@ -18,3 +18,30 @@ export const fetchDashboardData = async () => {
     console.log(error);
   }
 };
+
+export const fetchABSSINData = async () => {
+  try {
+    const res = await axiosInstance.post(`${url}/abssin/manage-abssin`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+export const fetchEnumerationData = async () => {
+  try {
+    const res = await axiosInstance.get(`${url}/enumeration/total-collected`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+export const fetchTransportTicketData = async () => {
+  try {
+    const res = await axiosInstance.post(`${url}/transport/completed-transactions`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};

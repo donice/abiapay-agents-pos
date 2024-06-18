@@ -1,15 +1,22 @@
-function formatAmount(value: number): string {
-  const absValue = Math.abs(value);
+export const formatAmount =(input: number | string): string => {
+  let num: number;
 
-  if (absValue < 1000) {
-    return value.toString();
+  if (typeof input === 'string') {
+      const cleanedInput = input.replace(/,/g, '');
+      num = parseFloat(cleanedInput);
+  } else {
+      num = input;
   }
 
-  const suffixes = ["", "K", "M", "B", "T"];
-  const suffixIndex = Math.floor(Math.log(absValue) / Math.log(1000));
+  if (isNaN(num)) {
+      return "error";
+  }
 
-  const formattedValue = (value / (1000 ** suffixIndex)).toFixed(1);
-  const formattedSuffix = suffixes[suffixIndex];
-
-  return `${formattedValue}${formattedSuffix}`;
+  if (num >= 1_000_000) {
+      return (num / 1_000_000).toFixed(3).replace(/\.0+$/, '') + 'M';
+  } else if (num >= 100_000) {
+      return (num / 1_000).toFixed(3).replace(/\.0+$/, '') + 'k';
+  } else {
+      return num.toLocaleString();
+  }
 }
