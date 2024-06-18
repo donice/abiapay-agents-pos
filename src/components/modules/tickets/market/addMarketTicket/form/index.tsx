@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { DefaultButton, CancelButton } from "@/src/components/common/button";
 import { SelectInput, TextInput } from "@/src/components/common/input";
 import "./style.scss";
+import { fetchLGAData } from "@/src/services/common";
 
 const AddMarketTicketForm = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +34,16 @@ const AddMarketTicketForm = () => {
       [name]: value,
     });
   };
+
+  const getLGAData = async () => {
+    const res = await fetchLGAData();
+    console.log(res);
+    return res;
+  };
+
+  useEffect(() => {
+    getLGAData();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

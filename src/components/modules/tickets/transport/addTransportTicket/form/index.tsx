@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { DefaultButton, CancelButton } from "@/src/components/common/button";
 import { SelectInput, TextInput } from "@/src/components/common/input";
 import "./style.scss";
+import { fetchLGAData } from "@/src/services/common";
+import toast from "react-hot-toast";
 
 const AddTransportTicketForm = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +18,7 @@ const AddTransportTicketForm = () => {
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
+  const [lga, setLga] = useState([{ value: "", label: "" }]);
 
   useEffect(() => {
     const allFieldsFilled = Object.values(formData).every(
@@ -34,10 +37,35 @@ const AddTransportTicketForm = () => {
     });
   };
 
+  const getLGAData = async () => {
+    try {
+       const { data } = await fetchLGAData();
+    const lga_from_api = data.map((item: any) => {
+      const new_arry = {
+        label: item.lgaName,
+        value: item.lgaID,
+      }
+      return new_arry;
+    });
+    setLga(lga_from_api);
+    } catch (error) {
+      toast.error("Error fetching LGA data");
+    }
+   
+  };
+
+  useEffect(() => {
+    getLGAData();
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const isBrowser = typeof window !== 'undefined';
-    isBrowser && sessionStorage.setItem("TRANSPORT_FORM_DETAILS", JSON.stringify(formData));
+    const isBrowser = typeof window !== "undefined";
+    isBrowser &&
+      sessionStorage.setItem(
+        "TRANSPORT_FORM_DETAILS",
+        JSON.stringify(formData)
+      );
   };
 
   return (
@@ -63,12 +91,7 @@ const AddTransportTicketForm = () => {
         id="lga"
         value={formData.lga}
         onChange={handleChange}
-        options={[
-          { value: "truck", label: "Truck" },
-          { value: "bus", label: "Bus" },
-          { value: "car", label: "Car" },
-          { value: "bike", label: "Bike" },
-        ]}
+        options={lga}
         placeholder="Select L.G.A"
       />
 

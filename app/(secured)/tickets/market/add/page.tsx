@@ -1,6 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next';
-import AddMarketTicketComponent from '@/src/components/modules/tickets/market/addTransportTicket';
+import AddMarketTicketComponent from '@/src/components/modules/tickets/market/addMarketTicket';
 
 export const metadata: Metadata = {
   title: "Create Market Ticket",
