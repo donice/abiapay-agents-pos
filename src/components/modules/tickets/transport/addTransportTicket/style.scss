@@ -1,10 +1,10 @@
 @use "../../../../../styles/index.scss" as *;
 
-.transport {
+.transport_add {
   padding: 0 1rem;
 
   @include custom-media-query("mobile", $sm) {
-    padding: 0 0.5rem;
+    padding: 0;
   }
 
   &-comp {

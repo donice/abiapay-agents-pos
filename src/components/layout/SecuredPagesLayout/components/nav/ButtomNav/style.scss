@@ -28,7 +28,7 @@
       width: 100%;
       height: 100%;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 0.5rem;
 
       .bottom-nav_item {
@@ -78,7 +78,7 @@
 
       .active {
         color: $primary;
-        // background-color: rgba(211, 211, 211, 0.222);
+        background-color: rgba(211, 211, 211, 0.222);
 
 
         .out {
@@ -86,5 +86,9 @@
         }
       }
     }
+  }
+
+  .plus {
+    font-size: px-to-rem(30px);
   }
 }

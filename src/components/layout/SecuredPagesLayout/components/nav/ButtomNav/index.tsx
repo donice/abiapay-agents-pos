@@ -11,6 +11,8 @@ import {
   TbLogout2,
   TbHomeFilled,
   TbBasketFilled,
+  TbSquareRoundedPlusFilled,
+  TbSquareRoundedPlus,
 } from "react-icons/tb";
 import { HiTicket } from "react-icons/hi";
 
@@ -33,6 +35,12 @@ const nav_items: BottomNavProps[] = [
     title: "Transport",
     icon: <TbTicket className="icon" />,
     icon_active: <HiTicket className="icon active" />,
+  },
+  {
+    name: "tickets",
+    title: "Add Tickets",
+    icon: <TbSquareRoundedPlus className="icon plus" />,
+    icon_active: <TbSquareRoundedPlusFilled className="icon active plus" />,
   },
   {
     name: "tickets/market",
