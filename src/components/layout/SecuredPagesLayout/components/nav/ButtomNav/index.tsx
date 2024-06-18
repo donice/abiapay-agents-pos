@@ -9,29 +9,36 @@ import {
   TbTicket,
   TbBasketDown,
   TbLogout2,
+  TbHomeFilled,
+  TbBasketFilled,
 } from "react-icons/tb";
+import { HiTicket } from "react-icons/hi";
 
 interface BottomNavProps {
   name: string;
   title: string;
-  icon?: ReactElement;
+  icon: ReactElement;
+  icon_active?: ReactElement;
 }
 
 const nav_items: BottomNavProps[] = [
   {
     name: "dashboard",
-    title: "Overview",
+    title: "Home",
     icon: <TbHome className="icon" />,
+    icon_active: <TbHomeFilled className="icon active" />,
   },
   {
     name: "tickets/transport",
     title: "Transport",
     icon: <TbTicket className="icon" />,
+    icon_active: <HiTicket className="icon active" />,
   },
   {
     name: "tickets/market",
     title: "Maket",
     icon: <TbBasketDown className="icon" />,
+    icon_active: <TbBasketFilled className="icon active" />,
   },
 ];
 
@@ -44,8 +51,7 @@ const BottomNav = () => {
         <div className="bottom-nav_items">
           {nav_items.map((item) => (
             <Link href={`/${item.name}`} key={item.name} className={`bottom-nav_item ${item.name === route ? "active" : "inactive"}`}>
-                <span>{item.icon}</span>
-                {/* <span>{item.title}</span> */}
+                <span>{item.name === route ? item.icon_active : item.icon}</span>
             </Link>
           ))}
           <div key={"logout"} onClick={() => {console.log(); logout}} className="bottom-nav_item logout">
