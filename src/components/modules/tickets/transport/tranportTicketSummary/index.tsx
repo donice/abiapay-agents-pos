@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { CustomHeader } from "@/src/components/common/header";
-import { CamelCaseToTitleCase } from "@/src/components/utils/helper";
 import "./style.scss";
 import {
   DefaultButton,
@@ -10,6 +9,7 @@ import {
 } from "@/src/components/common/button";
 import Redirecting from "@/src/components/common/loader/redirecting";
 import useIsBrower from "@/src/hooks/useIsBrower";
+import { CamelCaseToTitleCase } from "@/src/utils/helper";
 
 const TransportTicketsSummaryComponent = () => {
   const [data, setData] = useState(null);
