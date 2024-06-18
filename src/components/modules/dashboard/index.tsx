@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useReducer, Reducer } from "react";
+import React, { useEffect, useReducer, Reducer, useCallback } from "react";
 import WalletCard from "./WalletCard";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
@@ -59,7 +59,9 @@ const DashboardComponent: React.FC = () => {
   const [enumerationCount, setEnumerationCount]: any = React.useState(null);
   const [ttCount, setTtCount]: any = React.useState(null);
 
-  const getDashboardData = async () => {
+  // ! using useCallback to memoize the data coming from the services
+
+  const getDashboardData = useCallback(async () => {
     try {
       const res = await fetchDashboardData();
       dispatch({
@@ -73,34 +75,34 @@ const DashboardComponent: React.FC = () => {
       toast.error("Error fetching dashboard data");
       dispatch({ type: "FETCH_ERROR" });
     }
-  };
+  }, []);
 
-  const getABSSINData = async () => {
+  const getABSSINData = useCallback(async () => {
     try {
       const res = await fetchABSSINData();
       setABSSINCount(res?.data.length);
     } catch (error) {
       toast.error("Cannot fetching abssin data");
     }
-  };
+  }, []);
 
-  const getEnumerationData = async () => {
+  const getEnumerationData = useCallback(async () => {
     try {
       const res = await fetchEnumerationData();
       setEnumerationCount(res?.data.length);
     } catch (error) {
       toast.error("Cannot fetching enumeration data");
     }
-  };
+  }, []);
 
-  const getTransportTicketData = async () => {
+  const getTransportTicketData = useCallback(async () => {
     try {
       const res = await fetchTransportTicketData();
       setTtCount(res?.data.length);
     } catch (error) {
       toast.error("Cannot fetching enumeration data");
     }
-  };
+  }, []);
 
   useEffect(() => {
     getDashboardData();

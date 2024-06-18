@@ -6,7 +6,7 @@ import AddTransportTicketForm from "./form";
 
 const AddTransportTicketComponent = () => {
   return (
-    <section className="transport">
+    <section className="transport_add">
       <GoBackButton link="/tickets/transport" />
       <div className="transport-comp">
         <header className="transport-comp_header">
