@@ -14,6 +14,12 @@ interface Product {
 }
 
 const AddTransportTicketForm = () => {
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [lga, setLga] = useState([{ value: "", label: "" }]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<string>("");
+  const [selectedPeriod, setSelectedPeriod] = useState<string>("");
+  const [amount, setAmount] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY,
     lga: "",
@@ -31,20 +37,12 @@ const AddTransportTicketForm = () => {
     wallet_type: "",
   });
 
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [lga, setLga] = useState([{ value: "", label: "" }]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<string>('');
-  const [selectedPeriod, setSelectedPeriod] = useState<string>('');
-  const [amount, setAmount] = useState<number | null>(null);
-
   useEffect(() => {
     const allFieldsFilled = Object.values(formData).every(
       (field) => field !== ""
     );
     setIsFormValid(allFieldsFilled);
   }, [formData]);
-
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -78,7 +76,6 @@ const AddTransportTicketForm = () => {
 
       console.log(response?.data, "Vehicles Data");
       setProducts(response?.data);
-     
     } catch (error) {
       toast.error("Error fetching Vehicles");
     }
@@ -92,16 +89,18 @@ const AddTransportTicketForm = () => {
     const period = event.target.value;
     setSelectedPeriod(period);
 
-    const selectedProductData = products.find(product => product.productName === selectedProduct);
+    const selectedProductData = products.find(
+      (product) => product.productName === selectedProduct
+    );
     if (selectedProductData) {
       switch (period) {
-        case '1 Day':
+        case "1 Day":
           setAmount(selectedProductData.dailyAmount);
           break;
-        case '1 Week':
+        case "1 Week":
           setAmount(selectedProductData.weeklyAmount);
           break;
-        case '1 Month':
+        case "1 Month":
           setAmount(selectedProductData.monthlyAmount);
           break;
         default:
@@ -238,11 +237,15 @@ const AddTransportTicketForm = () => {
         placeholder="Select Wallet Type"
       />
 
-<div>
+      <div>
         <label htmlFor="product-select">Product:</label>
-        <select id="product-select" value={selectedProduct} onChange={handleProductChange}>
+        <select
+          id="product-select"
+          value={selectedProduct}
+          onChange={handleProductChange}
+        >
           <option value="">Select a product</option>
-          {products.map(product => (
+          {products.map((product) => (
             <option key={product.productName} value={product.productName}>
               {product.productName}
             </option>
@@ -251,7 +254,12 @@ const AddTransportTicketForm = () => {
       </div>
       <div>
         <label htmlFor="period-select">Payment Period:</label>
-        <select id="period-select" value={selectedPeriod} onChange={handlePeriodChange} disabled={!selectedProduct}>
+        <select
+          id="period-select"
+          value={selectedPeriod}
+          onChange={handlePeriodChange}
+          disabled={!selectedProduct}
+        >
           <option value="">Select a period</option>
           <option value="1 Day">1 Day</option>
           <option value="1 Week">1 Week</option>
@@ -261,7 +269,12 @@ const AddTransportTicketForm = () => {
       {selectedPeriod && (
         <div>
           <label htmlFor="amount-input">Amount:</label>
-          <input id="amount-input" type="number" value={amount !== null ? amount : ''} readOnly />
+          <input
+            id="amount-input"
+            type="number"
+            value={amount !== null ? amount : ""}
+            readOnly
+          />
         </div>
       )}
 
