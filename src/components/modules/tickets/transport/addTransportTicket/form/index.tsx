@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { DefaultButton, BackButton } from "@/src/components/common/button";
+import { Button, BackButton } from "@/src/components/common/button";
 import { SelectInput, FormTextInput } from "@/src/components/common/input";
 import { fetchLGAData, fetchProducts } from "@/src/services/common";
 import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
@@ -37,6 +37,7 @@ const AddTransportTicketForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<Inputs>();
 
@@ -179,86 +180,90 @@ const AddTransportTicketForm = () => {
       );
   };
 
+  // console.log(watch("taxPayerPhone"))
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
       <FormTextInput
-        {...register("plateNumber", { required: true })}
+        
         label="Plate Number"
         type="text"
         name="plateNumber"
         placeholder="Enter Plate Number"
-        value={formData.plateNumber}
-        onChange={handleChange}
+        register={register}validation={{ required: true }}
       />
-      {errors.plateNumber && <span>Feild Required</span>}
+      {errors.plateNumber && <span className="error">Feild Required</span>}
 
       <FormTextInput
-        {...register("taxPayerPhone", { required: true })}
         label="Phone Number"
         type="text"
         name="taxPayerPhone"
         placeholder="Enter Phone Number"
         value={formData.taxPayerPhone}
         onChange={handleChange}
+        register={register}validation={{ required: true }}
       />
-      {errors.taxPayerPhone && <span>Feild Required</span>}
+      {errors.taxPayerPhone && <span className="error">Feild Required</span>}
 
       <FormTextInput
-        {...register("agentEmail", { required: true })}
         label="Taxpayer Email"
         type="email"
         name="agentEmail"
         placeholder="Enter Taxpayer Email"
         value={formData.agentEmail}
-        onChange={handleChange}
+        // onChange={handleChange}
+        register={register}validation={{ required: true }}
       />
-      {errors.agentEmail && <span>Feild Required</span>}
+      {errors.agentEmail && <span className="error">Feild Required</span>}
 
       <FormTextInput
-        {...register("taxPayerName", { required: true })}
         label="Taxpayer Name"
         type="text"
         name="taxPayerName"
         placeholder="Enter Taxpayer Name"
         value={formData.taxPayerName}
-        onChange={handleChange}
+        // onChange={handleChange}
+        register={register}validation={{ required: true }}
       />
-      {errors.taxPayerName && <span>Feild Required</span>}
+      {errors.taxPayerName && <span className="error">Feild Required</span>}
 
       <SelectInput
-        {...register("lga", { required: true })}
         label="L.G.A"
         name="lga"
         id="lga"
         value={formData.lga}
         onChange={handleChange}
+        register={register}
+        validation={{ required: true }}
         options={lga}
         placeholder="Select L.G.A"
       />
-      {errors.lga && <span>Feild Required</span>}
+      {errors.lga && <span className="error">Feild Required</span>}
 
       <SelectInput
-        {...register("productCode", { required: true })}
         label="Vehicle Type"
         name="productCode"
         id="productCode"
         value={selectedProduct}
         onChange={handleProductChange}
+        register={register}
+        validation={{ required: true }}
         options={products.map((product) => ({
           value: product.productCode,
           label: product.productName,
         }))}
         placeholder="Select Vehicle Type"
       />
-      {errors.productCode && <span>Feild Required</span>}
+      {errors.productCode && <span className="error">Feild Required</span>}
 
       <SelectInput
-        {...register("paymentPeriod", { required: true })}
         label="Payment Period"
         name="paymentPeriod"
         id="paymentPeriod"
         value={selectedPeriod}
         onChange={handlePeriodChange}
+        register={register}
+        validation={{ required: true }}
         disabled={!selectedProduct}
         options={[
           {
@@ -276,43 +281,43 @@ const AddTransportTicketForm = () => {
         ]}
         placeholder="Select Payment Period"
       />
-      {errors.paymentPeriod && <span>Feild Required</span>}
+      {errors.paymentPeriod && <span className="error">Feild Required</span>}
 
       {selectedPeriod && (
         <div>
           <FormTextInput
-            {...register("amount", { required: true })}
             label="Amount"
             type="number"
             name="amount"
             placeholder="Enter Amount"
             value={formData.amount.toString()}
+            register={register}validation={{ required: true }}
           />
 
-          {errors.amount && <span>Feild Required</span>}
+          {errors.amount && <span className="error">Feild Required</span>}
         </div>
       )}
 
       <SelectInput
-        {...register("wallet_type", { required: true })}
         label="Wallet Type"
         name="wallet_type"
         id="wallet_type"
         value={formData.wallet_type}
         onChange={handleChange}
+        register={register}
+        validation={{ required: true }}
         options={[
           { value: "access", label: "Access Bank" },
           { value: "fidelity", label: "Fidelity Bank" },
         ]}
         placeholder="Select Wallet Type"
       />
-      {errors.wallet_type && <span>Feild Required</span>}
+      {errors.wallet_type && <span className="error">Feild Required</span>}
 
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
-        <DefaultButton
+        <Button
           text="Save & Continue"
-          link={`/tickets/transport/add/summary`}
           // disabled={!isFormValid}
         />
       </div>

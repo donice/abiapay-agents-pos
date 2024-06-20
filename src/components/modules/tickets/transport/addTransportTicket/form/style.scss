@@ -15,4 +15,10 @@ $form-input-border: #d5d5d5;
     display: flex;
     flex-direction: row;
   }
+
+  .error {
+    color: red;
+    font-style: italic;
+    font-size: 12px;
+  }
 }

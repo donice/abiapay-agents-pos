@@ -52,6 +52,28 @@ export const DefaultButton = ({ text, link, disabled }: prop) => {
     </button>
   );
 };
+
+export const Button = ({ text, disabled }: {
+  text: string;
+  disabled?: boolean;
+}) => {
+  const router = useRouter();
+
+  const handleClick = (route: string) => {
+    if (!disabled) {
+      router.push(route);
+    }
+  };
+
+  return (
+    <button
+      className={`button ${disabled ? "disabled" : "primary"}`}
+      disabled={disabled}
+    >
+      {text}
+    </button>
+  );
+};
 export const CancelButton = ({ link }: { link: string }) => {
   const router = useRouter();
 

@@ -18,8 +18,10 @@ interface InputProps {
   type?: "text" | "password" | "email" | "number";
   name: string;
   placeholder?: string;
-  value: string;
+  value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  register?: any;
+  validation?: any;
 }
 
 export const TextInput: React.FC<InputProps> = ({
@@ -79,6 +81,9 @@ export const FormTextInput: React.FC<InputProps> = ({
   placeholder = "",
   value,
   onChange,
+  register,
+  validation, // Add this line
+  ...rest
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleTogglePassword = () => {
@@ -98,6 +103,8 @@ export const FormTextInput: React.FC<InputProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        {...(register && register(name, validation))} // Modify this line
+        {...rest}
       />
       <span></span>
       {type === "password" && (
@@ -114,18 +121,24 @@ interface Option {
   label: string;
 }
 
+interface SelectOption {
+  label: string;
+  value: string | number;
+}
+
 interface SelectComponentProps {
   label: string;
   name: string;
   id: string;
   className?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: Option[];
-  placeholder: string;
+  value?: string | number;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: SelectOption[];
+  placeholder?: string;
   disabled?: boolean;
+  register?: any; // Add this line
+  validation?: any; // Add this line
 }
-
 
 export const SelectInput: React.FC<SelectComponentProps> = ({
   label,
@@ -137,6 +150,8 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
   options,
   placeholder,
   disabled,
+  register,
+  validation, // Add this line
 }) => {
   return (
     <div className="select-container">
@@ -148,6 +163,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
         value={value}
         disabled={disabled}
         onChange={onChange}
+        {...(register && register(name, validation))} // Modify this line
       >
         <option disabled value="">
           {placeholder}
@@ -161,3 +177,4 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
     </div>
   );
 };
+
