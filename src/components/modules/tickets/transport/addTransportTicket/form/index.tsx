@@ -74,7 +74,6 @@ const AddTransportTicketForm = () => {
     try {
       const response = await fetchProducts();
 
-      console.log(response?.data, "Vehicles Data");
       setProducts(response?.data);
     } catch (error) {
       toast.error("Error fetching Vehicles");
@@ -87,11 +86,18 @@ const AddTransportTicketForm = () => {
 
   const handlePeriodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const period = event.target.value;
+
+    setFormData({
+      ...formData,
+      paymentPeriod: period,
+    });
+
     setSelectedPeriod(period);
 
     const selectedProductData = products.find(
-      (product) => product.productName === selectedProduct
+      (product) => product.productCode == selectedProduct
     );
+
     if (selectedProductData) {
       switch (period) {
         case "1 Day":
@@ -219,22 +225,12 @@ const AddTransportTicketForm = () => {
         placeholder="Select Payment Period"
       />
       {selectedPeriod && (
-        // <div>
-        //   <label htmlFor="amount-input">Amount:</label>
-        //   <input
-        //     id="amount-input"
-        //     type="number"
-        //     value={amount !== null ? amount : ""}
-        //     readOnly
-        //   />
-        // </div>
         <FormTextInput
           label="Amount"
           type="number"
           name="amount"
           placeholder="Enter Amount"
           value={formData.amount.toString()}
-          onChange={handleChange}
         />
       )}
 
