@@ -72,6 +72,43 @@ export const TextInput: React.FC<InputProps> = ({
   );
 };
 
+export const FormTextInput: React.FC<InputProps> = ({
+  label,
+  type = "text",
+  name,
+  placeholder = "",
+  value,
+  onChange,
+}) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+  return (
+    <div className="form-input-container">
+
+      <span>
+        <label className="form-input_icon">
+        {label}
+        </label>
+      </span>
+      <input
+        type={type === "password" && showPassword ? "text" : type}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
+      <span></span>
+      {type === "password" && (
+        <span onClick={handleTogglePassword} className="form-input_toggle_icon">
+          {showPassword ? <TbEyeOff /> : <TbEye />}
+        </span>
+      )}
+    </div>
+  );
+};
+
 interface Option {
   value: string;
   label: string;

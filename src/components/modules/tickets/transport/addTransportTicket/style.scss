@@ -1,7 +1,9 @@
 @use "../../../../../styles/index.scss" as *;
 
 .transport_add {
-  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   @include custom-media-query("mobile", $sm) {
     padding: 0;

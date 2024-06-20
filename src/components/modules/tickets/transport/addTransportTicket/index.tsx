@@ -9,7 +9,7 @@ const AddTransportTicketComponent = () => {
     <section className="transport_add">
       <GoBackButton link="/tickets/transport" />
       <div className="transport-comp">
-        <header className="transport-comp_header">
+        <header className="transport_add-comp_header">
           <CustomHeader
             title="Add Transport Ticket"
             desc="Manage/Create Transaction"

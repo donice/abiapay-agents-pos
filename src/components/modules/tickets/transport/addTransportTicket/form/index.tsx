@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { DefaultButton, CancelButton } from "@/src/components/common/button";
-import { SelectInput, TextInput } from "@/src/components/common/input";
+import { SelectInput, FormTextInput } from "@/src/components/common/input";
 import "./style.scss";
 import { fetchLGAData } from "@/src/services/common";
 import toast from "react-hot-toast";
@@ -95,7 +95,7 @@ const AddTransportTicketForm = () => {
         placeholder="Select L.G.A"
       />
 
-      <TextInput
+      <FormTextInput
         label="Plate Nummber"
         type="text"
         name="plateNumber"
@@ -103,7 +103,7 @@ const AddTransportTicketForm = () => {
         value={formData.plateNumber}
         onChange={handleChange}
       />
-      <TextInput
+      <FormTextInput
         label="Phone Number"
         type="text"
         name="taxPayerPhone"
@@ -111,7 +111,7 @@ const AddTransportTicketForm = () => {
         value={formData.taxPayerPhone}
         onChange={handleChange}
       />
-      <TextInput
+      <FormTextInput
         label="Taxpayer Name"
         type="text"
         name="taxPayerName"
@@ -135,7 +135,7 @@ const AddTransportTicketForm = () => {
         placeholder="Select Payment Period"
       />
 
-      <TextInput
+      <FormTextInput
         label="Amount"
         type="number"
         name="amount"

@@ -9,6 +9,7 @@ $icon-color: #a4a4a4;
   flex-direction: column;
   gap: 0.15rem;
   position: relative;
+  
   label {
     display: flex;
     color: $form-label;
@@ -48,16 +49,63 @@ $icon-color: #a4a4a4;
     right: 1rem;
   }
 }
+$icon-color: #a4a4a4;
 
+// form input
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  position: relative;
+
+  input {
+    border: thin solid $form-input-border;
+    padding: 1.5rem 1rem 0.5rem 1rem;
+    border-radius: 5px;
+    min-width: 20rem;
+    width: 100%;
+    outline: green;
+
+    &::placeholder {
+      color: #bbbbbba5;
+      font-size: 14px;
+      font-weight: 200;
+    }
+  }
+  .form-input_icon {
+    font-size: 12px;
+    position: absolute;
+    z-index: 1;
+    color: $icon-color;
+    top: 0.5rem;
+    left: 1rem;
+  }
+
+  .form-input_toggle_icon {
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: absolute;
+    z-index: 1;
+    color: $icon-color;
+    top: 2.1rem;
+    right: 1rem;
+  }
+}
+
+// select input
 .select-container {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  
+  position: relative;
+
   label {
-    display: flex;
-    color: $form-label;
-    font-size: 0.85rem;
+    font-size: 12px;
+    position: absolute;
+    z-index: 1;
+    color: $icon-color;
+    top: 0.5rem;
+    left: 1rem;
   }
   select {
     /* styling */
@@ -67,7 +115,8 @@ $icon-color: #a4a4a4;
     display: inline-block;
     font: inherit;
     line-height: 1.5em;
-    padding: 0.5em 3.5em 0.5em 1em;
+    padding: 1.5rem 1rem 0.5rem 1rem;
+    // position: relative;
 
     /* reset */
 
