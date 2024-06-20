@@ -123,6 +123,7 @@ interface SelectComponentProps {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: Option[];
   placeholder: string;
+  disabled?: boolean;
 }
 
 
@@ -135,6 +136,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
   onChange,
   options,
   placeholder,
+  disabled,
 }) => {
   return (
     <div className="select-container">
@@ -144,6 +146,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
         id={id}
         className={`${className} minimal`}
         value={value}
+        disabled={disabled}
         onChange={onChange}
       >
         <option disabled value="">

@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import "./style.scss";
 
 interface Product {
+  productCode: string;
   productName: string;
   dailyAmount: number;
   weeklyAmount: number;
@@ -19,7 +20,6 @@ const AddTransportTicketForm = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [selectedPeriod, setSelectedPeriod] = useState<string>("");
-  const [amount, setAmount] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY,
     lga: "",
@@ -33,7 +33,7 @@ const AddTransportTicketForm = () => {
     taxPayerName: "",
     next_expiration_date: "",
     no_of_days: "",
-    amount: "",
+    amount: 0,
     wallet_type: "",
   });
 
@@ -95,16 +95,28 @@ const AddTransportTicketForm = () => {
     if (selectedProductData) {
       switch (period) {
         case "1 Day":
-          setAmount(selectedProductData.dailyAmount);
+          setFormData({
+            ...formData,
+            amount: selectedProductData.dailyAmount,
+          });
           break;
         case "1 Week":
-          setAmount(selectedProductData.weeklyAmount);
+          setFormData({
+            ...formData,
+            amount: selectedProductData.weeklyAmount,
+          });
           break;
         case "1 Month":
-          setAmount(selectedProductData.monthlyAmount);
+          setFormData({
+            ...formData,
+            amount: selectedProductData.monthlyAmount,
+          });
           break;
         default:
-          setAmount(null);
+          setFormData({
+            ...formData,
+            amount: 0,
+          });
       }
     }
   };
@@ -128,45 +140,6 @@ const AddTransportTicketForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="add-ticket">
-      <SelectInput
-        label="Vehicle Type"
-        name="productCode"
-        id="productCode"
-        value={formData.productCode}
-        onChange={handleChange}
-        options={[
-          { value: "truck", label: "Truck" },
-          { value: "bus", label: "Bus" },
-          { value: "car", label: "Car" },
-          { value: "bike", label: "Bike" },
-        ]}
-        placeholder="Select Vehicle Type"
-      />
-      <SelectInput
-        label="Payment Period"
-        name="paymentPeriod"
-        id="paymentPeriod"
-        value={formData.paymentPeriod}
-        onChange={handleChange}
-        options={[
-          { value: "truck", label: "Truck" },
-          { value: "bus", label: "Bus" },
-          { value: "car", label: "Car" },
-          { value: "bike", label: "Bike" },
-        ]}
-        placeholder="Select Payment Period"
-      />
-
-      <SelectInput
-        label="L.G.A"
-        name="lga"
-        id="lga"
-        value={formData.lga}
-        onChange={handleChange}
-        options={lga}
-        placeholder="Select L.G.A"
-      />
-
       <FormTextInput
         label="Plate Number"
         type="text"
@@ -199,30 +172,71 @@ const AddTransportTicketForm = () => {
         value={formData.taxPayerName}
         onChange={handleChange}
       />
-
+      <SelectInput
+        label="L.G.A"
+        name="lga"
+        id="lga"
+        value={formData.lga}
+        onChange={handleChange}
+        options={lga}
+        placeholder="Select L.G.A"
+      />
+      <SelectInput
+        label="Vehicle Type"
+        name="productCode"
+        id="productCode"
+        // value={formData.productCode}
+        // onChange={handleChange}
+        value={selectedProduct}
+        onChange={handleProductChange}
+        options={products.map((product) => ({
+          value: product.productCode,
+          label: product.productName,
+        }))}
+        placeholder="Select Vehicle Type"
+      />
       <SelectInput
         label="Payment Period"
-        name="paymentPeriod"
-        id="paymentPeriod"
-        value={formData.paymentPeriod}
-        onChange={handleChange}
+        name="productCode"
+        id="productCode"
+        value={selectedPeriod}
+        onChange={handlePeriodChange}
+        disabled={!selectedProduct}
         options={[
-          { value: "truck", label: "Truck" },
-          { value: "bus", label: "Bus" },
-          { value: "car", label: "Car" },
-          { value: "bike", label: "Bike" },
+          {
+            value: "1 Day",
+            label: "1 Day",
+          },
+          {
+            value: "1 Week",
+            label: "1 Week",
+          },
+          {
+            value: "1 Month",
+            label: "1 Month",
+          },
         ]}
         placeholder="Select Payment Period"
       />
-
-      <FormTextInput
-        label="Amount"
-        type="number"
-        name="amount"
-        placeholder="Enter Amount"
-        value={formData.amount}
-        onChange={handleChange}
-      />
+      {selectedPeriod && (
+        // <div>
+        //   <label htmlFor="amount-input">Amount:</label>
+        //   <input
+        //     id="amount-input"
+        //     type="number"
+        //     value={amount !== null ? amount : ""}
+        //     readOnly
+        //   />
+        // </div>
+        <FormTextInput
+          label="Amount"
+          type="number"
+          name="amount"
+          placeholder="Enter Amount"
+          value={formData.amount.toString()}
+          onChange={handleChange}
+        />
+      )}
 
       <SelectInput
         label="Wallet Type"
@@ -236,47 +250,6 @@ const AddTransportTicketForm = () => {
         ]}
         placeholder="Select Wallet Type"
       />
-
-      <div>
-        <label htmlFor="product-select">Product:</label>
-        <select
-          id="product-select"
-          value={selectedProduct}
-          onChange={handleProductChange}
-        >
-          <option value="">Select a product</option>
-          {products.map((product) => (
-            <option key={product.productName} value={product.productName}>
-              {product.productName}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor="period-select">Payment Period:</label>
-        <select
-          id="period-select"
-          value={selectedPeriod}
-          onChange={handlePeriodChange}
-          disabled={!selectedProduct}
-        >
-          <option value="">Select a period</option>
-          <option value="1 Day">1 Day</option>
-          <option value="1 Week">1 Week</option>
-          <option value="1 Month">1 Month</option>
-        </select>
-      </div>
-      {selectedPeriod && (
-        <div>
-          <label htmlFor="amount-input">Amount:</label>
-          <input
-            id="amount-input"
-            type="number"
-            value={amount !== null ? amount : ""}
-            readOnly
-          />
-        </div>
-      )}
 
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
