@@ -8,9 +8,13 @@
   border: 1px solid #86efac;
   padding: 1rem;
   border-radius: 0.7rem;
-  background-color: #f0fdf439;
+  background-color: #ffffff;
   color: $text-primary;
   font-size: 14px;
+  -webkit-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
+  -moz-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
+  box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
+
 
   &_summ {
     display: flex;
