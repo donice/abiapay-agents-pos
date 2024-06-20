@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { DefaultButton, BackButton } from "@/src/components/common/button";
 import { SelectInput, FormTextInput } from "@/src/components/common/input";
 import { fetchLGAData, fetchProducts } from "@/src/services/common";
+import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import toast from "react-hot-toast";
+import { useForm, SubmitHandler } from "react-hook-form";
 import "./style.scss";
 
 interface Product {
@@ -14,17 +16,43 @@ interface Product {
   monthlyAmount: number;
 }
 
+interface Inputs {
+  merchant_key: string;
+  lga: string;
+  transaction_date: string;
+  invoice_id: string;
+  agentEmail: string;
+  plateNumber: string;
+  paymentPeriod: string;
+  productCode: string;
+  taxPayerPhone: string;
+  taxPayerName: string;
+  next_expiration_date: string;
+  no_of_days: string;
+  amount: number;
+  wallet_type: string;
+}
+
 const AddTransportTicketForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
   const [isFormValid, setIsFormValid] = useState(false);
   const [lga, setLga] = useState([{ value: "", label: "" }]);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [selectedPeriod, setSelectedPeriod] = useState<string>("");
+
   const [formData, setFormData] = useState({
     merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY,
     lga: "",
-    transaction_date: "",
-    invoice_id: "",
+    transaction_date: new Date().toISOString().split("T")[0],
+    invoice_id: `INV${randomInvoiceGenerator()}`,
     agentEmail: "",
     plateNumber: "",
     paymentPeriod: "",
@@ -52,6 +80,8 @@ const AddTransportTicketForm = () => {
       ...formData,
       [name]: value,
     });
+
+    // console.log(formData);
   };
 
   const getLGAData = async () => {
@@ -87,10 +117,15 @@ const AddTransportTicketForm = () => {
   const handlePeriodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const period = event.target.value;
 
-    setFormData({
-      ...formData,
-      paymentPeriod: period,
+    console.log(period);
+    setFormData((prev: any) => {
+      return {
+        ...prev,
+        paymentPeriod: period,
+      };
     });
+
+    console.log(formData.paymentPeriod);
 
     setSelectedPeriod(period);
 
@@ -132,7 +167,7 @@ const AddTransportTicketForm = () => {
     getProductsData();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
 
     console.log(formData);
@@ -145,8 +180,9 @@ const AddTransportTicketForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="add-ticket">
+    <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
       <FormTextInput
+        {...register("plateNumber", { required: true })}
         label="Plate Number"
         type="text"
         name="plateNumber"
@@ -154,7 +190,10 @@ const AddTransportTicketForm = () => {
         value={formData.plateNumber}
         onChange={handleChange}
       />
+      {errors.plateNumber && <span>Feild Required</span>}
+
       <FormTextInput
+        {...register("taxPayerPhone", { required: true })}
         label="Phone Number"
         type="text"
         name="taxPayerPhone"
@@ -162,7 +201,10 @@ const AddTransportTicketForm = () => {
         value={formData.taxPayerPhone}
         onChange={handleChange}
       />
+      {errors.taxPayerPhone && <span>Feild Required</span>}
+
       <FormTextInput
+        {...register("agentEmail", { required: true })}
         label="Taxpayer Email"
         type="email"
         name="agentEmail"
@@ -170,7 +212,10 @@ const AddTransportTicketForm = () => {
         value={formData.agentEmail}
         onChange={handleChange}
       />
+      {errors.agentEmail && <span>Feild Required</span>}
+
       <FormTextInput
+        {...register("taxPayerName", { required: true })}
         label="Taxpayer Name"
         type="text"
         name="taxPayerName"
@@ -178,7 +223,10 @@ const AddTransportTicketForm = () => {
         value={formData.taxPayerName}
         onChange={handleChange}
       />
+      {errors.taxPayerName && <span>Feild Required</span>}
+
       <SelectInput
+        {...register("lga", { required: true })}
         label="L.G.A"
         name="lga"
         id="lga"
@@ -187,12 +235,13 @@ const AddTransportTicketForm = () => {
         options={lga}
         placeholder="Select L.G.A"
       />
+      {errors.lga && <span>Feild Required</span>}
+
       <SelectInput
+        {...register("productCode", { required: true })}
         label="Vehicle Type"
         name="productCode"
         id="productCode"
-        // value={formData.productCode}
-        // onChange={handleChange}
         value={selectedProduct}
         onChange={handleProductChange}
         options={products.map((product) => ({
@@ -201,10 +250,13 @@ const AddTransportTicketForm = () => {
         }))}
         placeholder="Select Vehicle Type"
       />
+      {errors.productCode && <span>Feild Required</span>}
+
       <SelectInput
+        {...register("paymentPeriod", { required: true })}
         label="Payment Period"
-        name="productCode"
-        id="productCode"
+        name="paymentPeriod"
+        id="paymentPeriod"
         value={selectedPeriod}
         onChange={handlePeriodChange}
         disabled={!selectedProduct}
@@ -224,17 +276,25 @@ const AddTransportTicketForm = () => {
         ]}
         placeholder="Select Payment Period"
       />
+      {errors.paymentPeriod && <span>Feild Required</span>}
+
       {selectedPeriod && (
-        <FormTextInput
-          label="Amount"
-          type="number"
-          name="amount"
-          placeholder="Enter Amount"
-          value={formData.amount.toString()}
-        />
+        <div>
+          <FormTextInput
+            {...register("amount", { required: true })}
+            label="Amount"
+            type="number"
+            name="amount"
+            placeholder="Enter Amount"
+            value={formData.amount.toString()}
+          />
+
+          {errors.amount && <span>Feild Required</span>}
+        </div>
       )}
 
       <SelectInput
+        {...register("wallet_type", { required: true })}
         label="Wallet Type"
         name="wallet_type"
         id="wallet_type"
@@ -246,13 +306,14 @@ const AddTransportTicketForm = () => {
         ]}
         placeholder="Select Wallet Type"
       />
+      {errors.wallet_type && <span>Feild Required</span>}
 
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
         <DefaultButton
           text="Save & Continue"
           link={`/tickets/transport/add/summary`}
-          disabled={!isFormValid}
+          // disabled={!isFormValid}
         />
       </div>
     </form>
