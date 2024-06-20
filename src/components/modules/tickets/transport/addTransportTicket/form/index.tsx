@@ -1,20 +1,27 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { DefaultButton, CancelButton } from "@/src/components/common/button";
+import { DefaultButton, BackButton } from "@/src/components/common/button";
 import { SelectInput, FormTextInput } from "@/src/components/common/input";
-import "./style.scss";
 import { fetchLGAData } from "@/src/services/common";
 import toast from "react-hot-toast";
+import "./style.scss";
 
 const AddTransportTicketForm = () => {
   const [formData, setFormData] = useState({
-    ticketType: "",
+    merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY,
     lga: "",
+    transaction_date: "",
+    invoice_id: "",
+    agentEmail: "",
     plateNumber: "",
-    taxPayerName: "",
-    taxPayerPhone: "",
     paymentPeriod: "",
+    productCode: "",
+    taxPayerPhone: "",
+    taxPayerName: "",
+    next_expiration_date: "",
+    no_of_days: "",
     amount: "",
+    wallet_type: "",
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
@@ -39,19 +46,18 @@ const AddTransportTicketForm = () => {
 
   const getLGAData = async () => {
     try {
-       const { data } = await fetchLGAData();
-    const lga_from_api = data.map((item: any) => {
-      const new_arry = {
-        label: item.lgaName,
-        value: item.lgaID,
-      }
-      return new_arry;
-    });
-    setLga(lga_from_api);
+      const { data } = await fetchLGAData();
+      const lga_from_api = data.map((item: any) => {
+        const new_arry = {
+          label: item.lgaName,
+          value: item.lgaID,
+        };
+        return new_arry;
+      });
+      setLga(lga_from_api);
     } catch (error) {
       toast.error("Error fetching LGA data");
     }
-   
   };
 
   useEffect(() => {
@@ -60,6 +66,9 @@ const AddTransportTicketForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+   
+    console.log(formData );
     const isBrowser = typeof window !== "undefined";
     isBrowser &&
       sessionStorage.setItem(
@@ -71,10 +80,10 @@ const AddTransportTicketForm = () => {
   return (
     <form onSubmit={handleSubmit} className="add-ticket">
       <SelectInput
-        label="Ticket Type"
-        name="ticketType"
-        id="ticketType"
-        value={formData.ticketType}
+        label="Vehicle Type"
+        name="productCode"
+        id="productCode"
+        value={formData.productCode}
         onChange={handleChange}
         options={[
           { value: "truck", label: "Truck" },
@@ -82,7 +91,21 @@ const AddTransportTicketForm = () => {
           { value: "car", label: "Car" },
           { value: "bike", label: "Bike" },
         ]}
-        placeholder="Select Ticket Type"
+        placeholder="Select Vehicle Type"
+      />
+      <SelectInput
+        label="Payment Period"
+        name="paymentPeriod"
+        id="paymentPeriod"
+        value={formData.paymentPeriod}
+        onChange={handleChange}
+        options={[
+          { value: "truck", label: "Truck" },
+          { value: "bus", label: "Bus" },
+          { value: "car", label: "Car" },
+          { value: "bike", label: "Bike" },
+        ]}
+        placeholder="Select Payment Period"
       />
 
       <SelectInput
@@ -96,7 +119,7 @@ const AddTransportTicketForm = () => {
       />
 
       <FormTextInput
-        label="Plate Nummber"
+        label="Plate Number"
         type="text"
         name="plateNumber"
         placeholder="Enter Plate Number"
@@ -109,6 +132,14 @@ const AddTransportTicketForm = () => {
         name="taxPayerPhone"
         placeholder="Enter Phone Number"
         value={formData.taxPayerPhone}
+        onChange={handleChange}
+      />
+      <FormTextInput
+        label="Taxpayer Email"
+        type="email"
+        name="agentEmail"
+        placeholder="Enter Taxpayer Email"
+        value={formData.agentEmail}
         onChange={handleChange}
       />
       <FormTextInput
@@ -144,11 +175,24 @@ const AddTransportTicketForm = () => {
         onChange={handleChange}
       />
 
+<SelectInput
+        label="Wallet Type"
+        name="wallet_type"
+        id="wallet_type"
+        value={formData.wallet_type}
+        onChange={handleChange}
+        options={[
+          { value: "access", label: "Access Bank" },
+          { value: "fidelity", label: "Fidelity Bank" },
+        ]}
+        placeholder="Select Wallet Type"
+      />
+
       <div className="btn_container">
-        <CancelButton link="/tickets/transport" />
+        <BackButton link="/tickets/transport" />
         <DefaultButton
           text="Save & Continue"
-          link={`/tickets/transport/summary/${formData?.plateNumber}`}
+          link={`/tickets/transport/add/summary`}
           disabled={!isFormValid}
         />
       </div>

@@ -4,10 +4,10 @@ import { CustomHeader } from "@/src/components/common/header";
 import "./style.scss";
 import {
   DefaultButton,
-  CancelButton,
+  BackButton,
   GoBackButton,
 } from "@/src/components/common/button";
-import Redirecting from "@/src/components/common/loader/redirecting";
+import { Loading } from "@/src/components/common/loader/redirecting";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
 
@@ -16,7 +16,8 @@ const TransportTicketsSummaryComponent = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedData = useIsBrower() && sessionStorage.getItem("TRANSPORT_FORM_DETAILS");
+      const storedData =
+        useIsBrower() && sessionStorage.getItem("TRANSPORT_FORM_DETAILS");
       if (storedData) {
         setData(JSON.parse(storedData));
       }
@@ -27,16 +28,16 @@ const TransportTicketsSummaryComponent = () => {
     <section className="tickets">
       <GoBackButton link="/tickets/transport/add" />
 
-      <div className="tickets-summary-comp">
-        <div className="tickets-summary-comp_header">
-          <CustomHeader
-            title="Transport Ticket Details"
-            desc="Comfirm the details for your Transport Ticket Purchase"
-          />
-        </div>
+      {data ? (
+        <div className="tickets-summary-comp">
+          <div className="tickets-summary-comp_header">
+            <CustomHeader
+              title="Transport Ticket Details"
+              desc="Comfirm the details for your Ticket Purchase"
+            />
+          </div>
 
-        <div className="tickets-summary-comp_container">
-          {data ? (
+          <div className="tickets-summary-comp_container">
             <div>
               {Object.entries(data).map(
                 ([key, value]: [key: any, value: any]) => (
@@ -46,16 +47,16 @@ const TransportTicketsSummaryComponent = () => {
                   </div>
                 )
               )}
-            </div>
-          ) : (
-              <Redirecting />
-          )}
+            </div>{" "}
+          </div>
+          <div className="btn_container">
+            <BackButton link="/tickets/transport/add" />
+            <DefaultButton text="Proceed to Payment" link="/" />
+          </div>
         </div>
-        <div className="btn_container">
-          <CancelButton link="/tickets/transport" />
-          <DefaultButton text="Proceed to Payment" link="/" />
-        </div>
-      </div>
+      ) : (
+        <Loading />
+      )}
     </section>
   );
 };

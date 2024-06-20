@@ -12,5 +12,15 @@ const Redirecting = () => {
     </section>
   );
 };
+export const Loading = () => {
+  return (
+    <section className="loading">
+      <div className="loading_container">
+        <LargeLoader />
+        <p>Loading data...</p>
+      </div>
+    </section>
+  );
+};
 
 export default Redirecting;

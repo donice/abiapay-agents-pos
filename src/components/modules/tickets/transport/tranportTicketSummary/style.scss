@@ -1,10 +1,12 @@
 @use "../../../../../styles/index.scss" as *;
 
 .tickets {
-  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   @include custom-media-query("mobile", $sm) {
-    padding: 0 0.5rem;
+    padding: 0;
   }
 
   &-summary-comp {
@@ -12,7 +14,7 @@
     flex-direction: column;
     min-height: 100vh;
     height: 100%;
-    margin-top: 1.5rem;
+    // margin-top: 1.5rem;
 
     &_header {
       margin: 0 0 2rem 0;
@@ -30,7 +32,7 @@
         border-bottom: $border;
 
         @include custom-media-query("mobile", $sm) {
-          padding: px-to-rem(14px) 0;
+          padding: px-to-rem(12px) 0;
         }
 
         &:last-of-type {

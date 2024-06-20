@@ -66,6 +66,20 @@ export const CancelButton = ({ link }: { link: string }) => {
   );
 };
 
+export const BackButton = ({ link }: { link: string }) => {
+  const router = useRouter();
+
+  const handleClick = (route: string) => {
+    return router.push(route);
+  };
+
+  return (
+    <div className="button secondary" onClick={() => handleClick(link)}>
+      Back
+    </div>
+  );
+};
+
 export const PrimaryButton = ({ text, link }: prop) => {
   const router = useRouter();
 

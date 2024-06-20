@@ -26,3 +26,22 @@
     }
   }
 }
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+
+  &_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    p {
+      font-size: 1rem;
+      color: $text-primary;
+    }
+  }
+}
