@@ -185,12 +185,13 @@ const AddTransportTicketForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
       <FormTextInput
-        
         label="Plate Number"
         type="text"
         name="plateNumber"
         placeholder="Enter Plate Number"
-        register={register}validation={{ required: true }}
+        register={register}
+        validation={{ required: true }}
+        // onChange={handleChange}
       />
       {errors.plateNumber && <span className="error">Feild Required</span>}
 
@@ -199,9 +200,9 @@ const AddTransportTicketForm = () => {
         type="text"
         name="taxPayerPhone"
         placeholder="Enter Phone Number"
-        value={formData.taxPayerPhone}
+        register={register}
+        validation={{ required: true }}
         onChange={handleChange}
-        register={register}validation={{ required: true }}
       />
       {errors.taxPayerPhone && <span className="error">Feild Required</span>}
 
@@ -210,9 +211,9 @@ const AddTransportTicketForm = () => {
         type="email"
         name="agentEmail"
         placeholder="Enter Taxpayer Email"
-        value={formData.agentEmail}
-        // onChange={handleChange}
-        register={register}validation={{ required: true }}
+        register={register}
+        validation={{ required: true }}
+        onChange={handleChange}
       />
       {errors.agentEmail && <span className="error">Feild Required</span>}
 
@@ -221,9 +222,9 @@ const AddTransportTicketForm = () => {
         type="text"
         name="taxPayerName"
         placeholder="Enter Taxpayer Name"
-        value={formData.taxPayerName}
-        // onChange={handleChange}
-        register={register}validation={{ required: true }}
+        register={register}
+        validation={{ required: true }}
+        onChange={handleChange}
       />
       {errors.taxPayerName && <span className="error">Feild Required</span>}
 
@@ -233,8 +234,6 @@ const AddTransportTicketForm = () => {
         id="lga"
         value={formData.lga}
         onChange={handleChange}
-        register={register}
-        validation={{ required: true }}
         options={lga}
         placeholder="Select L.G.A"
       />
@@ -246,8 +245,6 @@ const AddTransportTicketForm = () => {
         id="productCode"
         value={selectedProduct}
         onChange={handleProductChange}
-        register={register}
-        validation={{ required: true }}
         options={products.map((product) => ({
           value: product.productCode,
           label: product.productName,
@@ -262,8 +259,6 @@ const AddTransportTicketForm = () => {
         id="paymentPeriod"
         value={selectedPeriod}
         onChange={handlePeriodChange}
-        register={register}
-        validation={{ required: true }}
         disabled={!selectedProduct}
         options={[
           {
@@ -290,8 +285,8 @@ const AddTransportTicketForm = () => {
             type="number"
             name="amount"
             placeholder="Enter Amount"
-            value={formData.amount.toString()}
-            register={register}validation={{ required: true }}
+            register={register}
+            validation={{ required: true }}
           />
 
           {errors.amount && <span className="error">Feild Required</span>}
@@ -304,8 +299,6 @@ const AddTransportTicketForm = () => {
         id="wallet_type"
         value={formData.wallet_type}
         onChange={handleChange}
-        register={register}
-        validation={{ required: true }}
         options={[
           { value: "access", label: "Access Bank" },
           { value: "fidelity", label: "Fidelity Bank" },
