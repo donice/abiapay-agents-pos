@@ -3,6 +3,7 @@ import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
+const central_api_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
   useIsBrower() && window.sessionStorage.getItem("TOKEN")
@@ -14,6 +15,16 @@ export const fetchLGAData = async () => {
   try {
     const res = await axiosInstance.post(`${url}/state/lga`);
     return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+
+export const fetchProducts = async () => {
+  try {
+    const res = await axiosInstance.get(`${central_api_url}/agent/product-code`);
+    return res;
   } catch (error: any) {
     console.log(error);
   }

@@ -2,9 +2,16 @@
 import React, { useState, useEffect } from "react";
 import { DefaultButton, BackButton } from "@/src/components/common/button";
 import { SelectInput, FormTextInput } from "@/src/components/common/input";
-import { fetchLGAData } from "@/src/services/common";
+import { fetchLGAData, fetchProducts } from "@/src/services/common";
 import toast from "react-hot-toast";
 import "./style.scss";
+
+interface Product {
+  productName: string;
+  dailyAmount: number;
+  weeklyAmount: number;
+  monthlyAmount: number;
+}
 
 const AddTransportTicketForm = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +33,10 @@ const AddTransportTicketForm = () => {
 
   const [isFormValid, setIsFormValid] = useState(false);
   const [lga, setLga] = useState([{ value: "", label: "" }]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<string>('');
+  const [selectedPeriod, setSelectedPeriod] = useState<string>('');
+  const [amount, setAmount] = useState<number | null>(null);
 
   useEffect(() => {
     const allFieldsFilled = Object.values(formData).every(
@@ -33,6 +44,7 @@ const AddTransportTicketForm = () => {
     );
     setIsFormValid(allFieldsFilled);
   }, [formData]);
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -60,15 +72,53 @@ const AddTransportTicketForm = () => {
     }
   };
 
+  const getProductsData = async () => {
+    try {
+      const response = await fetchProducts();
+
+      console.log(response?.data, "Vehicles Data");
+      setProducts(response?.data);
+     
+    } catch (error) {
+      toast.error("Error fetching Vehicles");
+    }
+  };
+
+  const handleProductChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedProduct(event.target.value);
+  };
+
+  const handlePeriodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const period = event.target.value;
+    setSelectedPeriod(period);
+
+    const selectedProductData = products.find(product => product.productName === selectedProduct);
+    if (selectedProductData) {
+      switch (period) {
+        case '1 Day':
+          setAmount(selectedProductData.dailyAmount);
+          break;
+        case '1 Week':
+          setAmount(selectedProductData.weeklyAmount);
+          break;
+        case '1 Month':
+          setAmount(selectedProductData.monthlyAmount);
+          break;
+        default:
+          setAmount(null);
+      }
+    }
+  };
+
   useEffect(() => {
     getLGAData();
+    getProductsData();
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-   
-    console.log(formData );
+    console.log(formData);
     const isBrowser = typeof window !== "undefined";
     isBrowser &&
       sessionStorage.setItem(
@@ -175,7 +225,7 @@ const AddTransportTicketForm = () => {
         onChange={handleChange}
       />
 
-<SelectInput
+      <SelectInput
         label="Wallet Type"
         name="wallet_type"
         id="wallet_type"
@@ -187,6 +237,33 @@ const AddTransportTicketForm = () => {
         ]}
         placeholder="Select Wallet Type"
       />
+
+<div>
+        <label htmlFor="product-select">Product:</label>
+        <select id="product-select" value={selectedProduct} onChange={handleProductChange}>
+          <option value="">Select a product</option>
+          {products.map(product => (
+            <option key={product.productName} value={product.productName}>
+              {product.productName}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label htmlFor="period-select">Payment Period:</label>
+        <select id="period-select" value={selectedPeriod} onChange={handlePeriodChange} disabled={!selectedProduct}>
+          <option value="">Select a period</option>
+          <option value="1 Day">1 Day</option>
+          <option value="1 Week">1 Week</option>
+          <option value="1 Month">1 Month</option>
+        </select>
+      </div>
+      {selectedPeriod && (
+        <div>
+          <label htmlFor="amount-input">Amount:</label>
+          <input id="amount-input" type="number" value={amount !== null ? amount : ''} readOnly />
+        </div>
+      )}
 
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
