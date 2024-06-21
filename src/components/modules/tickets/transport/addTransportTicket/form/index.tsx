@@ -39,59 +39,48 @@ const AddTransportTicketForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>();
+    setValue,
+  } = useForm<Inputs>({
+    defaultValues: {
+      merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+      transaction_date: getCurrentDateTime(),
+      invoice_id: `INV${randomInvoiceGenerator()}`,
+      paymentPeriod: "",
+      productCode: "",
+      next_expiration_date: "",
+      no_of_days: "",
+      amount: 0,
+      lga: "",
+      agentEmail: "",
+      plateNumber: "",
+      taxPayerPhone: "",
+      taxPayerName: "",
+      wallet_type: "",
+    },
+  });
 
   const [lga, setLga] = useState([{ value: "", label: "" }]);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [selectedPeriod, setSelectedPeriod] = useState<string>("");
 
-  const [formData, setFormData] = useState<Inputs>({
-    merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
-    transaction_date: getCurrentDateTime(),
-    invoice_id: `INV${randomInvoiceGenerator()}`,
-    paymentPeriod: "",
-    productCode: "",
-    next_expiration_date: "",
-    no_of_days: "",
-    amount: 0,
-    lga: "",
-    agentEmail: "",
-    plateNumber: "",
-    taxPayerPhone: "",
-    taxPayerName: "",
-    wallet_type: "",
-  });
-
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log({ ...formData, ...data });
+    const formData = {
+      ...data,
+      transaction_date: getCurrentDateTime(),
+      invoice_id: `INV${randomInvoiceGenerator()}`,
+    };
+    console.log(formData);
     try {
       const res = await axios.post(
         "https://sandboxmobileapi.abiapay.ng/api/v1/transport/create-ticket",
-        { ...formData, ...data }
+        formData
       );
+      toast.success("Ticket Created Successfully");
     } catch {
       toast.error("Error Creating Ticket");
     }
-
-    // Example: Saving to sessionStorage
-    // if (typeof window !== "undefined") {
-    //   sessionStorage.setItem("TRANSPORT_FORM_DETAILS", JSON.stringify(data));
-    // }
-  };
-
-  
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
   };
 
   const getLGAData = async () => {
@@ -119,43 +108,43 @@ const AddTransportTicketForm: React.FC = () => {
   const handleProductChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const productCode = event.target.value;
     setSelectedProduct(productCode);
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      productCode: productCode,
-    }));
+    setValue("productCode", productCode);
   };
 
   const handlePeriodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const period = event.target.value;
     setSelectedPeriod(period);
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      paymentPeriod: period,
-    }));
-
+    setValue("paymentPeriod", period);
+  
     const selectedProductData = products.find(
       (product) => product.productCode === selectedProduct
     );
-
-    if (selectedProductData) {
-      let amount = 0;
-      switch (period) {
-        case "1 Day":
-          amount = selectedProductData.dailyAmount;
-          break;
-        case "1 Week":
-          amount = selectedProductData.weeklyAmount;
-          break;
-        case "1 Month":
-          amount = selectedProductData.monthlyAmount;
-          break;
-      }
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        amount,
-      }));
+  
+    let amount = 0;
+    let no_of_days = "0";
+    switch (period) {
+      case "1 Day":
+        no_of_days = "1";
+        amount = selectedProductData?.dailyAmount || 0;
+        break;
+      case "1 Week":
+        no_of_days = "7";
+        amount = selectedProductData?.weeklyAmount || 0;
+        break;
+      case "1 Month":
+        no_of_days = "30";
+        amount = selectedProductData?.monthlyAmount || 0;
+        break;
     }
+    setValue("no_of_days", no_of_days);
+  
+    const transaction_date = new Date();
+    const next_expiration_date = new Date(transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000);
+  
+    setValue("next_expiration_date", next_expiration_date.toISOString());
+    setValue("amount", amount);
   };
+  
 
   useEffect(() => {
     getLGAData();
@@ -181,7 +170,6 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Enter Phone Number"
         register={register}
         validation={{ required: true }}
-        onChange={handleChange}
       />
       {errors.taxPayerPhone && <span className="error">Field Required</span>}
 
@@ -192,7 +180,6 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Enter Taxpayer Email"
         register={register}
         validation={{ required: true }}
-        onChange={handleChange}
       />
       {errors.agentEmail && <span className="error">Field Required</span>}
 
@@ -203,7 +190,6 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Enter Taxpayer Name"
         register={register}
         validation={{ required: true }}
-        onChange={handleChange}
       />
       {errors.taxPayerName && <span className="error">Field Required</span>}
 
@@ -213,7 +199,6 @@ const AddTransportTicketForm: React.FC = () => {
         id="lga"
         register={register}
         validation={{ required: true }}
-        onChange={handleChange}
         options={lga}
         placeholder="Select L.G.A"
       />
@@ -256,7 +241,6 @@ const AddTransportTicketForm: React.FC = () => {
             name="amount"
             placeholder="Enter Amount"
             register={register}
-            value={formData.amount}
             validation={{ required: true }}
           />
           {errors.amount && <span className="error">Field Required</span>}
@@ -269,7 +253,6 @@ const AddTransportTicketForm: React.FC = () => {
         id="wallet_type"
         register={register}
         validation={{ required: true }}
-        onChange={handleChange}
         options={[
           { value: "access", label: "Access Bank" },
           { value: "fidelity", label: "Fidelity Bank" },
