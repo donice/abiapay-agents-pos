@@ -1,0 +1,51 @@
+@use "../../../../../styles/index.scss" as *;
+
+.main-table {
+  width: 100%;
+  overflow: scroll;
+}
+
+.table-container {
+  margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container thead {
+  background-color: #f0f0f0;
+}
+
+.table-container th,
+.table-container td {
+  font-weight: 500;
+  padding: 4px 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+  font-size: 14px;
+}
+
+.table-container th {
+  background-color: #f0f0f0;
+}
+
+.table-container tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.table-container tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table-container td {
+  color: #686868;
+  font-size: 14px;
+}
+
+.loading,
+.error,
+.empty {
+  text-align: center;
+  padding: 14px;
+  font-size: 1.2em;
+  color: #666;
+}
