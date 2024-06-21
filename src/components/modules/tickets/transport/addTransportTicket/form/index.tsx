@@ -6,7 +6,9 @@ import { fetchLGAData, fetchProducts } from "@/src/services/common";
 import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import toast from "react-hot-toast";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import "./style.scss";
+import axios from "axios";
 
 interface Product {
   productCode: string;
@@ -33,7 +35,7 @@ interface Inputs {
   wallet_type: string;
 }
 
-const AddTransportTicketForm = () => {
+const AddTransportTicketForm: React.FC = () => {
   const {
     register,
     handleSubmit,
@@ -41,60 +43,64 @@ const AddTransportTicketForm = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-
-  const [isFormValid, setIsFormValid] = useState(false);
   const [lga, setLga] = useState([{ value: "", label: "" }]);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [selectedPeriod, setSelectedPeriod] = useState<string>("");
 
-  const [formData, setFormData] = useState({
-    merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY,
-    lga: "",
-    transaction_date: new Date().toISOString().split("T")[0],
+  const [formData, setFormData] = useState<Inputs>({
+    merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+    transaction_date: getCurrentDateTime(),
     invoice_id: `INV${randomInvoiceGenerator()}`,
-    agentEmail: "",
-    plateNumber: "",
     paymentPeriod: "",
     productCode: "",
-    taxPayerPhone: "",
-    taxPayerName: "",
     next_expiration_date: "",
     no_of_days: "",
     amount: 0,
+    lga: "",
+    agentEmail: "",
+    plateNumber: "",
+    taxPayerPhone: "",
+    taxPayerName: "",
     wallet_type: "",
   });
 
-  useEffect(() => {
-    const allFieldsFilled = Object.values(formData).every(
-      (field) => field !== ""
-    );
-    setIsFormValid(allFieldsFilled);
-  }, [formData]);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log({ ...formData, ...data });
+    try {
+      const res = await axios.post(
+        "https://sandboxmobileapi.abiapay.ng/api/v1/transport/create-ticket",
+        { ...formData, ...data }
+      );
+    } catch {
+      toast.error("Error Creating Ticket");
+    }
+
+    // Example: Saving to sessionStorage
+    // if (typeof window !== "undefined") {
+    //   sessionStorage.setItem("TRANSPORT_FORM_DETAILS", JSON.stringify(data));
+    // }
+  };
+
+  
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    });
-
-    // console.log(formData);
+    }));
   };
 
   const getLGAData = async () => {
     try {
       const { data } = await fetchLGAData();
-      const lga_from_api = data.map((item: any) => {
-        const new_arry = {
-          label: item.lgaName,
-          value: item.lgaID,
-        };
-        return new_arry;
-      });
+      const lga_from_api = data.map((item: any) => ({
+        label: item.lgaName,
+        value: item.lgaID,
+      }));
       setLga(lga_from_api);
     } catch (error) {
       toast.error("Error fetching LGA data");
@@ -104,62 +110,50 @@ const AddTransportTicketForm = () => {
   const getProductsData = async () => {
     try {
       const response = await fetchProducts();
-
       setProducts(response?.data);
     } catch (error) {
-      toast.error("Error fetching Vehicles");
+      toast.error("Error fetching vehicles");
     }
   };
 
   const handleProductChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedProduct(event.target.value);
+    const productCode = event.target.value;
+    setSelectedProduct(productCode);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      productCode: productCode,
+    }));
   };
 
   const handlePeriodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const period = event.target.value;
-
-    console.log(period);
-    setFormData((prev: any) => {
-      return {
-        ...prev,
-        paymentPeriod: period,
-      };
-    });
-
-    console.log(formData.paymentPeriod);
-
     setSelectedPeriod(period);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      paymentPeriod: period,
+    }));
 
     const selectedProductData = products.find(
-      (product) => product.productCode == selectedProduct
+      (product) => product.productCode === selectedProduct
     );
 
     if (selectedProductData) {
+      let amount = 0;
       switch (period) {
         case "1 Day":
-          setFormData({
-            ...formData,
-            amount: selectedProductData.dailyAmount,
-          });
+          amount = selectedProductData.dailyAmount;
           break;
         case "1 Week":
-          setFormData({
-            ...formData,
-            amount: selectedProductData.weeklyAmount,
-          });
+          amount = selectedProductData.weeklyAmount;
           break;
         case "1 Month":
-          setFormData({
-            ...formData,
-            amount: selectedProductData.monthlyAmount,
-          });
+          amount = selectedProductData.monthlyAmount;
           break;
-        default:
-          setFormData({
-            ...formData,
-            amount: 0,
-          });
       }
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        amount,
+      }));
     }
   };
 
@@ -167,20 +161,6 @@ const AddTransportTicketForm = () => {
     getLGAData();
     getProductsData();
   }, []);
-
-  const handleSubmitForm = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    console.log(formData);
-    const isBrowser = typeof window !== "undefined";
-    isBrowser &&
-      sessionStorage.setItem(
-        "TRANSPORT_FORM_DETAILS",
-        JSON.stringify(formData)
-      );
-  };
-
-  // console.log(watch("taxPayerPhone"))
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
@@ -191,9 +171,8 @@ const AddTransportTicketForm = () => {
         placeholder="Enter Plate Number"
         register={register}
         validation={{ required: true }}
-        // onChange={handleChange}
       />
-      {errors.plateNumber && <span className="error">Feild Required</span>}
+      {errors.plateNumber && <span className="error">Field Required</span>}
 
       <FormTextInput
         label="Phone Number"
@@ -204,7 +183,7 @@ const AddTransportTicketForm = () => {
         validation={{ required: true }}
         onChange={handleChange}
       />
-      {errors.taxPayerPhone && <span className="error">Feild Required</span>}
+      {errors.taxPayerPhone && <span className="error">Field Required</span>}
 
       <FormTextInput
         label="Taxpayer Email"
@@ -215,7 +194,7 @@ const AddTransportTicketForm = () => {
         validation={{ required: true }}
         onChange={handleChange}
       />
-      {errors.agentEmail && <span className="error">Feild Required</span>}
+      {errors.agentEmail && <span className="error">Field Required</span>}
 
       <FormTextInput
         label="Taxpayer Name"
@@ -226,24 +205,24 @@ const AddTransportTicketForm = () => {
         validation={{ required: true }}
         onChange={handleChange}
       />
-      {errors.taxPayerName && <span className="error">Feild Required</span>}
+      {errors.taxPayerName && <span className="error">Field Required</span>}
 
       <SelectInput
         label="L.G.A"
         name="lga"
         id="lga"
-        value={formData.lga}
+        register={register}
+        validation={{ required: true }}
         onChange={handleChange}
         options={lga}
         placeholder="Select L.G.A"
       />
-      {errors.lga && <span className="error">Feild Required</span>}
+      {errors.lga && <span className="error">Field Required</span>}
 
       <SelectInput
         label="Vehicle Type"
         name="productCode"
         id="productCode"
-        value={selectedProduct}
         onChange={handleProductChange}
         options={products.map((product) => ({
           value: product.productCode,
@@ -251,7 +230,7 @@ const AddTransportTicketForm = () => {
         }))}
         placeholder="Select Vehicle Type"
       />
-      {errors.productCode && <span className="error">Feild Required</span>}
+      {errors.productCode && <span className="error">Field Required</span>}
 
       <SelectInput
         label="Payment Period"
@@ -261,22 +240,13 @@ const AddTransportTicketForm = () => {
         onChange={handlePeriodChange}
         disabled={!selectedProduct}
         options={[
-          {
-            value: "1 Day",
-            label: "1 Day",
-          },
-          {
-            value: "1 Week",
-            label: "1 Week",
-          },
-          {
-            value: "1 Month",
-            label: "1 Month",
-          },
+          { value: "1 Day", label: "1 Day" },
+          { value: "1 Week", label: "1 Week" },
+          { value: "1 Month", label: "1 Month" },
         ]}
         placeholder="Select Payment Period"
       />
-      {errors.paymentPeriod && <span className="error">Feild Required</span>}
+      {errors.paymentPeriod && <span className="error">Field Required</span>}
 
       {selectedPeriod && (
         <div>
@@ -286,10 +256,10 @@ const AddTransportTicketForm = () => {
             name="amount"
             placeholder="Enter Amount"
             register={register}
+            value={formData.amount}
             validation={{ required: true }}
           />
-
-          {errors.amount && <span className="error">Feild Required</span>}
+          {errors.amount && <span className="error">Field Required</span>}
         </div>
       )}
 
@@ -297,7 +267,8 @@ const AddTransportTicketForm = () => {
         label="Wallet Type"
         name="wallet_type"
         id="wallet_type"
-        value={formData.wallet_type}
+        register={register}
+        validation={{ required: true }}
         onChange={handleChange}
         options={[
           { value: "access", label: "Access Bank" },
@@ -305,14 +276,11 @@ const AddTransportTicketForm = () => {
         ]}
         placeholder="Select Wallet Type"
       />
-      {errors.wallet_type && <span className="error">Feild Required</span>}
+      {errors.wallet_type && <span className="error">Field Required</span>}
 
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
-        <Button
-          text="Save & Continue"
-          // disabled={!isFormValid}
-        />
+        <Button text="Save & Continue" />
       </div>
     </form>
   );

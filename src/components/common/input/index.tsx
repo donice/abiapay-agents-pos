@@ -18,7 +18,7 @@ interface InputProps {
   type?: "text" | "password" | "email" | "number";
   name: string;
   placeholder?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   register?: any;
   validation?: any;
@@ -165,7 +165,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
         onChange={onChange}
         {...(register && register(name, validation))} // Modify this line
       >
-        <option disabled value="">
+        <option disabled  value="Select">
           {placeholder}
         </option>
         {options.map((option) => (
