@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { fetchLGAData, fetchProducts } from '@/src/services/common';
-import { randomInvoiceGenerator } from '@/src/utils/randomInvoiceGenerator';
-import { getCurrentDateTime } from '@/src/utils/getCurrentDateTime';
-import toast from 'react-hot-toast';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { fetchLGAData, fetchProducts } from "@/src/services/common";
+import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
+import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
+import toast from "react-hot-toast";
+import axios from "axios";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
 interface Product {
   productCode: string;
@@ -32,7 +33,12 @@ interface Inputs {
 }
 
 export const useTransportTicketForm = () => {
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<Inputs>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<Inputs>({
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       transaction_date: getCurrentDateTime(),
@@ -63,8 +69,19 @@ export const useTransportTicketForm = () => {
       invoice_id: `INV${randomInvoiceGenerator()}`,
     };
     try {
-      await axios.post("https://sandboxmobileapi.abiapay.ng/api/v1/transport/create-ticket", formData);
-      toast.success("Ticket Created Successfully");
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/transport/create-ticket`,
+        formData
+      );
+      
+      const response = res?.data
+
+      if (response.response_code == "00") {
+        toast.success("Ticket Created Successfully");
+        useIsBrower() && sessionStorage.setItem("USER_DATA", JSON.stringify(response));
+      } else {
+        toast.error(`${response.response_message}, Try again`);
+      }
     } catch {
       toast.error("Error Creating Ticket");
     }
@@ -73,7 +90,10 @@ export const useTransportTicketForm = () => {
   const getLGAData = async () => {
     try {
       const { data } = await fetchLGAData();
-      const lga_from_api = data.map((item: any) => ({ label: item.lgaName, value: item.lgaID }));
+      const lga_from_api = data.map((item: any) => ({
+        label: item.lgaName,
+        value: item.lgaID,
+      }));
       setLga(lga_from_api);
     } catch {
       toast.error("Error fetching LGA data");
@@ -100,7 +120,9 @@ export const useTransportTicketForm = () => {
     setSelectedPeriod(period);
     setValue("paymentPeriod", period);
 
-    const selectedProductData = products.find(product => product.productCode === selectedProduct);
+    const selectedProductData = products.find(
+      (product) => product.productCode === selectedProduct
+    );
 
     let amount = 0;
     let no_of_days = "0";
@@ -121,7 +143,9 @@ export const useTransportTicketForm = () => {
     setValue("no_of_days", no_of_days);
 
     const transaction_date = new Date();
-    const next_expiration_date = new Date(transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000);
+    const next_expiration_date = new Date(
+      transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000
+    );
 
     setValue("next_expiration_date", next_expiration_date.toISOString());
     setValue("amount", amount);
@@ -142,6 +166,6 @@ export const useTransportTicketForm = () => {
     selectedPeriod,
     onSubmit,
     handleProductChange,
-    handlePeriodChange
+    handlePeriodChange,
   };
 };
