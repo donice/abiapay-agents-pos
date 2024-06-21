@@ -15,6 +15,7 @@ import {
   TbSquareRoundedPlus,
 } from "react-icons/tb";
 import { HiTicket } from "react-icons/hi";
+import { useRouter } from "next/navigation";
 
 interface BottomNavProps {
   name: string;
@@ -52,6 +53,7 @@ const nav_items: BottomNavProps[] = [
 
 const BottomNav = () => {
   const route = getRoute();
+  const router = useRouter();
 
   return (
     <div className="bottom-nav">
@@ -62,7 +64,7 @@ const BottomNav = () => {
                 <span>{item.name === route ? item.icon_active : item.icon}</span>
             </Link>
           ))}
-          <div key={"logout"} onClick={() => {console.log(); logout}} className="bottom-nav_item logout">
+          <div key={"logout"} onClick={() => {sessionStorage.clear(); router.refresh();}} className="bottom-nav_item logout">
             <span>
               <TbLogout2 className="icon out" />
             </span>

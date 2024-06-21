@@ -131,7 +131,7 @@ export const login = async (
       type: "SET_LOGIN_ERRORS",
       payload: "Invalid login credentials",
     });
-    toast.error(error?.message);
+    toast.error(error?.response?.data?.message);
   } finally {
     dispatch({ type: "SET_LOGIN_SUBMITTING", payload: false });
   }
@@ -140,5 +140,5 @@ export const login = async (
 export const logout = (dispatch: Dispatch<AuthAction>) => {
   dispatch({ type: "LOGOUT" });
   setToken(null);
-  useIsBrower() && sessionStorage.removeItem("TOKEN");
+  useIsBrower() && sessionStorage.clear();
 };

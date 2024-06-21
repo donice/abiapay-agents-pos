@@ -4,6 +4,7 @@ import { Button, BackButton } from "@/src/components/common/button";
 import "./style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useTransportTicketForm } from "./useTransportTicket";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
 const AddTransportTicketForm: React.FC = () => {
   const {
@@ -19,26 +20,17 @@ const AddTransportTicketForm: React.FC = () => {
     handlePeriodChange
   } = useTransportTicketForm();
 
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
-      <FormTextInput
-        label="Plate Number"
+       <FormTextInput
+        label="Taxpayer Name"
         type="text"
-        name="plateNumber"
-        placeholder="Enter Plate Number"
+        name="taxPayerName"
+        placeholder="Enter Taxpayer Name"
         register={register}
         validation={{ required: true }}
-        error={!!errors.plateNumber}
-      />
-      
-      <FormTextInput
-        label="Phone Number"
-        type="text"
-        name="taxPayerPhone"
-        placeholder="Enter Phone Number"
-        register={register}
-        validation={{ required: true }}
-        error={!!errors.taxPayerPhone}
+        error={!!errors.taxPayerName}
       />
       
       <FormTextInput
@@ -52,13 +44,13 @@ const AddTransportTicketForm: React.FC = () => {
       />
       
       <FormTextInput
-        label="Taxpayer Name"
+        label="Plate Number"
         type="text"
-        name="taxPayerName"
-        placeholder="Enter Taxpayer Name"
+        name="plateNumber"
+        placeholder="Enter Plate Number"
         register={register}
         validation={{ required: true }}
-        error={!!errors.taxPayerName}
+        error={!!errors.plateNumber}
       />
       
       <SelectInput

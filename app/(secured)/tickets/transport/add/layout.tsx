@@ -17,7 +17,7 @@ const TicketsLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const stepIndex = steps.indexOf(pathname);
     if (stepIndex !== -1) {
-      setProgressPerPage(Math.round((100 / steps.length) * (stepIndex + 1)));
+      setProgressPerPage(Math.round((100 / steps.length) * (stepIndex)));
     }
   }, [pathname]);
 

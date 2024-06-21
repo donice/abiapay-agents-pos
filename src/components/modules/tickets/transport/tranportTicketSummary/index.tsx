@@ -17,7 +17,7 @@ const TransportTicketsSummaryComponent = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedData =
-        useIsBrower() && sessionStorage.getItem("_TRANSPORT_INVOICE");
+        useIsBrower() && sessionStorage.getItem("TRANSPORT_INVOICE");
         // Correct it
       if (storedData) {
         setData(JSON.parse(storedData));

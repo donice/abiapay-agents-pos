@@ -33,6 +33,10 @@ interface Inputs {
   wallet_type: string;
 }
 
+
+let data = useIsBrower() && sessionStorage.getItem("USER_DATA")
+const user_data = data && JSON.parse(data)
+
 export const useTransportTicketForm = () => {
   const {
     register,
@@ -63,6 +67,11 @@ export const useTransportTicketForm = () => {
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [selectedPeriod, setSelectedPeriod] = useState<string>("");
 
+  useEffect(() => {
+    setValue("agentEmail", user_data?.email);
+    setValue("taxPayerPhone", user_data?.phone);
+    setValue("taxPayerName", user_data?.name);
+  })
   const onSubmit = async (data: Inputs) => {
     const formData = {
       ...data,
@@ -75,9 +84,11 @@ export const useTransportTicketForm = () => {
         formData
       );
 
+      console.log(formData);
+
       const response = res?.data;
 
-      if (response.response_code !== "00") {
+      if (response.response_code == "00") {
         toast.success("Ticket Created Successfully");
         useIsBrower() && sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(response));
         router.push("/tickets/transport/add/summary");

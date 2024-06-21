@@ -50,7 +50,7 @@
             flex-direction: column;
             align-items: flex-start;
             gap: -0.5rem;
-            font-size: 18px;
+            font-size: 16px;
           }
 
           span {
@@ -67,7 +67,8 @@
           color: white;
           font-size: 20px;
           @include custom-media-query("mobile", $sm) {
-            font-size: 16px;
+            display: none;
+            font-size: 14px;
             color: #fde047;
           }
         }
