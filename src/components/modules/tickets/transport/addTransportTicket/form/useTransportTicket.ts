@@ -6,6 +6,7 @@ import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
 import axios from "axios";
 import useIsBrower from "@/src/hooks/useIsBrower";
+import { useRouter } from "next/navigation";
 
 interface Product {
   productCode: string;
@@ -56,7 +57,7 @@ export const useTransportTicketForm = () => {
       wallet_type: "",
     },
   });
-
+  const router = useRouter();
   const [lga, setLga] = useState([{ value: "", label: "" }]);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
@@ -73,12 +74,13 @@ export const useTransportTicketForm = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/transport/create-ticket`,
         formData
       );
-      
-      const response = res?.data
 
-      if (response.response_code == "00") {
+      const response = res?.data;
+
+      if (response.response_code !== "00") {
         toast.success("Ticket Created Successfully");
-        useIsBrower() && sessionStorage.setItem("USER_DATA", JSON.stringify(response));
+        useIsBrower() && sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(response));
+        router.push("/tickets/transport/add/summary");
       } else {
         toast.error(`${response.response_message}, Try again`);
       }
