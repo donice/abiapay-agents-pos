@@ -22,6 +22,7 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   register?: any;
   validation?: any;
+  error?: boolean;
 }
 
 export const TextInput: React.FC<InputProps> = ({
@@ -82,6 +83,7 @@ export const FormTextInput: React.FC<InputProps> = ({
   value,
   onChange,
   register,
+  error,
   validation, // Add this line
   ...rest
 }) => {
@@ -112,6 +114,7 @@ export const FormTextInput: React.FC<InputProps> = ({
           {showPassword ? <TbEyeOff /> : <TbEye />}
         </span>
       )}
+      {error && <span className="error">Field Required</span>}
     </div>
   );
 };
@@ -138,6 +141,7 @@ interface SelectComponentProps {
   disabled?: boolean;
   register?: any; // Add this line
   validation?: any; // Add this line
+  error?: boolean;
 }
 
 export const SelectInput: React.FC<SelectComponentProps> = ({
@@ -152,6 +156,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
   disabled,
   register,
   validation, // Add this line
+  error,
 }) => {
   return (
     <div className="select-container">
@@ -174,6 +179,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
           </option>
         ))}
       </select>
+      {error && <span className="error">Field Required</span>}
     </div>
   );
 };
