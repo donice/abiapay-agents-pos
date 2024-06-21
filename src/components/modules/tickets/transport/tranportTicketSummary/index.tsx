@@ -3,27 +3,70 @@ import React, { useEffect, useState } from "react";
 import { CustomHeader } from "@/src/components/common/header";
 import "./style.scss";
 import {
-  DefaultButton,
+  Button,
   BackButton,
   GoBackButton,
 } from "@/src/components/common/button";
 import { Loading } from "@/src/components/common/loader/redirecting";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import SuccessModal from "@/src/components/common/modal";
 
 const TransportTicketsSummaryComponent = () => {
+  const router = useRouter();
   const [data, setData] = useState(null);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedData =
         useIsBrower() && sessionStorage.getItem("TRANSPORT_INVOICE");
-        // Correct it
+      // Correct it
       if (storedData) {
         setData(JSON.parse(storedData));
       }
     }
   }, []);
+
+  const handleSuble = async () => {
+    const data =
+      useIsBrower() && sessionStorage.getItem("TRANSPORT_INVOICE");
+
+    if (!data) {
+      toast.error("Error Creating Ticket");
+      return;
+    }
+
+    const formData = JSON.parse(data);
+
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/transport/create-ticket`,
+        formData
+      );
+
+      console.log(formData);
+
+      const response = res?.data;
+
+      if (response.response_code == "00") {
+        toast.success(response.response_message);
+        setShow(true);
+
+        // router.push("/tickets/transport/add/summary");
+      } else if (response.response_code == "74") {
+        toast.error(`${response.response_message}`);
+        router.push("/tickets/transport");
+      }else {
+        toast.error(`${response.response_message}, Try again`);
+      }
+    } catch {
+      toast.error("Error Creating Ticket");
+    }
+  };
 
   return (
     <section className="tickets">
@@ -52,12 +95,16 @@ const TransportTicketsSummaryComponent = () => {
           </div>
           <div className="btn_container">
             <BackButton link="/tickets/transport/add" />
-            <DefaultButton text="Proceed to Payment" link="/" />
+            <Button text="Proceed to Payment" onClick={handleSuble} />
           </div>
         </div>
       ) : (
         <Loading />
       )}
+
+      {
+        show && <SuccessModal text="Go to transport" link="/tickets/transport" />
+      }
     </section>
   );
 };

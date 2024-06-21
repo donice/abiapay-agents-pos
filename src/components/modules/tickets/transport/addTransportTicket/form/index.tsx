@@ -4,7 +4,6 @@ import { Button, BackButton } from "@/src/components/common/button";
 import "./style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useTransportTicketForm } from "./useTransportTicket";
-import useIsBrower from "@/src/hooks/useIsBrower";
 
 const AddTransportTicketForm: React.FC = () => {
   const {
@@ -28,6 +27,7 @@ const AddTransportTicketForm: React.FC = () => {
         type="text"
         name="taxPayerName"
         placeholder="Enter Taxpayer Name"
+        readOnly={true}
         register={register}
         validation={{ required: true }}
         error={!!errors.taxPayerName}
@@ -38,6 +38,7 @@ const AddTransportTicketForm: React.FC = () => {
         type="email"
         name="agentEmail"
         placeholder="Enter Taxpayer Email"
+        readOnly={true}
         register={register}
         validation={{ required: true }}
         error={!!errors.agentEmail}

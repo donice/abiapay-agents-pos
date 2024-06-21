@@ -20,6 +20,7 @@ interface InputProps {
   placeholder?: string;
   value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  readOnly?: boolean;
   register?: any;
   validation?: any;
   error?: boolean;
@@ -82,6 +83,7 @@ export const FormTextInput: React.FC<InputProps> = ({
   placeholder = "",
   value,
   onChange,
+  readOnly,
   register,
   error,
   validation, // Add this line
@@ -104,6 +106,7 @@ export const FormTextInput: React.FC<InputProps> = ({
         name={name}
         placeholder={placeholder}
         value={value}
+        readOnly={readOnly}
         onChange={onChange}
         {...(register && register(name, validation))} // Modify this line
         {...rest}

@@ -53,15 +53,22 @@ export const DefaultButton = ({ text, link, disabled }: prop) => {
   );
 };
 
-export const Button = ({ text, disabled }: {
+interface ButtonProps {
   text: string;
   disabled?: boolean;
-}) => {
-  const router = useRouter();
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
 
-  const handleClick = (route: string) => {
+export const Button = ({ text, disabled, onClick }: ButtonProps) => {
+  const router = useRouter();
+  
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!disabled) {
-      router.push(route);
+      if (onClick) {
+        onClick(event);
+      } else {
+        console.log('Button clicked, but no onClick handler provided.');
+      }
     }
   };
 
@@ -69,6 +76,7 @@ export const Button = ({ text, disabled }: {
     <button
       className={`button ${disabled ? "disabled" : "primary"}`}
       disabled={disabled}
+      onClick={handleClick}
     >
       {text}
     </button>

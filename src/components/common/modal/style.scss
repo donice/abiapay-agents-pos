@@ -1,0 +1,85 @@
+@use "../../../styles/index.scss" as *;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 20px;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden;
+  margin: 0 1rem;
+
+
+  img {
+    margin-top: -3rem;
+    
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 500;
+    color: gray;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: gray;
+
+    span {
+      color: rgb(57, 57, 57);
+      font-weight: 500;
+    }
+  }
+  .button {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.1rem;
+    padding: clamp(0.55rem, 1.2vw + 7.16px, 0.75rem)
+      clamp(0.75rem, 1.2vw + 7.16px, 1.5rem);
+    border-radius: 0.35rem;
+    transition: all 0.5s ease;
+    font-size: clamp(14px, 1.2vw + 7.16px, 16px);
+    font-weight: 300;
+  
+    @include custom-media-query("mobile", 425px) {
+      flex-direction: row;
+    }
+  }
+  
+  .primary {
+    cursor: pointer;
+    background-color: $primary;
+    color: white;
+  
+    &:hover {
+      background-color: $primary-hover;
+    }
+  }
+  
+
+  .modalContent {
+    margin-top: -3rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

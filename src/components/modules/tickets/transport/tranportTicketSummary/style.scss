@@ -31,7 +31,7 @@
         padding: px-to-rem(24px) 0;
         border-bottom: $border;
 
-        @include custom-media-query("mobile", $sm) {
+        @include custom-media-query("mobile", $md) {
           padding: px-to-rem(12px) 0;
         }
 
