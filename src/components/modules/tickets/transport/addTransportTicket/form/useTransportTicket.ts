@@ -68,8 +68,8 @@ export const useTransportTicketForm = () => {
 
   useEffect(() => {
     setValue("agentEmail", user_data?.email);
-    setValue("taxPayerPhone", user_data?.phone);
-    setValue("taxPayerName", user_data?.name);
+    // setValue("taxPayerPhone", user_data?.phone);
+    // setValue("taxPayerName", user_data?.name);
   });
   const onSubmit = async (data: Inputs) => {
     const formData = {

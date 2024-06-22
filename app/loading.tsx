@@ -1,9 +1,14 @@
-import React from 'react'
+"use client";
+import Loader from "@/src/components/common/loader";
+import React from "react";
 
 const loading = () => {
   return (
-    <div>loading...</div>
-  )
-}
+    <div>
+      Loading...
+      <Loader />
+    </div>
+  );
+};
 
-export default loading
+export default loading;

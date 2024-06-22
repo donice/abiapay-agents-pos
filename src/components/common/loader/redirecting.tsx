@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { LargeLoader } from "../loader";
 import "./style.scss";

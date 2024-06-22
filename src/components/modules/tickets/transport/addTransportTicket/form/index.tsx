@@ -27,18 +27,16 @@ const AddTransportTicketForm: React.FC = () => {
         type="text"
         name="taxPayerName"
         placeholder="Enter Taxpayer Name"
-        readOnly={true}
         register={register}
         validation={{ required: true }}
         error={!!errors.taxPayerName}
       />
       
       <FormTextInput
-        label="Taxpayer Email"
-        type="email"
-        name="agentEmail"
-        placeholder="Enter Taxpayer Email"
-        readOnly={true}
+        label="Taxpayer Number"
+        type="number"
+        name="taxPayerPhone"
+        placeholder="Enter Taxpayer Phone Number"
         register={register}
         validation={{ required: true }}
         error={!!errors.agentEmail}

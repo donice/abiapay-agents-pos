@@ -8,39 +8,42 @@ import {
   GoBackButton,
 } from "@/src/components/common/button";
 import { Loading } from "@/src/components/common/loader/redirecting";
-import useIsBrower from "@/src/hooks/useIsBrower";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
+import { formatAmount } from "@/src/utils/formatAmount";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import SuccessModal from "@/src/components/common/modal";
 
-const TransportTicketsSummaryComponent = () => {
+interface TicketData {
+  [key: string]: any;
+}
+
+const TransportTicketsSummaryComponent: React.FC = () => {
   const router = useRouter();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<TicketData | null>(null);
   const [show, setShow] = useState(false);
+
+  const [paymentRef, setPaymentRef] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedData =
-        useIsBrower() && sessionStorage.getItem("TRANSPORT_INVOICE");
-      // Correct it
+      const storedData = sessionStorage.getItem("TRANSPORT_INVOICE");
       if (storedData) {
         setData(JSON.parse(storedData));
       }
     }
   }, []);
 
-  const handleSuble = async () => {
-    const data =
-      useIsBrower() && sessionStorage.getItem("TRANSPORT_INVOICE");
+  const handleSubmit = async () => {
+    const storedData = sessionStorage.getItem("TRANSPORT_INVOICE");
 
-    if (!data) {
+    if (!storedData) {
       toast.error("Error Creating Ticket");
       return;
     }
 
-    const formData = JSON.parse(data);
+    const formData = JSON.parse(storedData);
 
     try {
       const res = await axios.post(
@@ -48,25 +51,36 @@ const TransportTicketsSummaryComponent = () => {
         formData
       );
 
-      console.log(formData);
-
       const response = res?.data;
 
-      if (response.response_code == "00") {
+      if (response.response_code === "00") {
         toast.success(response.response_message);
+        setPaymentRef(response.data.payment_ref);
         setShow(true);
-
-        // router.push("/tickets/transport/add/summary");
-      } else if (response.response_code == "74") {
-        toast.error(`${response.response_message}`);
+      } else if (response.response_code === "74") {
+        toast.error(response.response_message);
         router.push("/tickets/transport");
-      }else {
+      } else {
         toast.error(`${response.response_message}, Try again`);
       }
-    } catch {
+    } catch (error) {
+      console.error("Error creating ticket:", error);
       toast.error("Error Creating Ticket");
     }
   };
+
+  const displayKeys = [
+    "transaction_date",
+    "invoice_id",
+    "paymentPeriod",
+    "agentEmail",
+    "plateNumber",
+    "taxPayerPhone",
+    "taxPayerName",
+    "wallet_type",
+  ];
+
+  const amount = data?.amount;
 
   return (
     <section className="tickets">
@@ -77,34 +91,37 @@ const TransportTicketsSummaryComponent = () => {
           <div className="tickets-summary-comp_header">
             <CustomHeader
               title="Transport Ticket Details"
-              desc="Comfirm the details for your Ticket Purchase"
+              desc="Confirm the details for your Ticket Purchase"
             />
           </div>
 
           <div className="tickets-summary-comp_container">
             <div>
-              {Object.entries(data).map(
-                ([key, value]: [key: any, value: any]) => (
-                  <div key={key} className="line-items">
-                    <p>{CamelCaseToTitleCase(key)}:</p>
-                    <p>{value}</p>
-                  </div>
-                )
-              )}
-            </div>{" "}
+               {Object.entries(data)
+                .filter(([key]) => displayKeys.includes(key))
+                .map(([key, value]) => (
+                <div key={key} className="line-items">
+                  <p>{CamelCaseToTitleCase(key)}:</p>
+                  <p>{value}</p>
+                </div>
+              ))}
+               
+                <div key={"amount"} className="line-items">
+                  <p>Amount:</p>
+                  <p>{formatAmount(amount)}</p>
+                </div>
+            </div>
           </div>
           <div className="btn_container">
             <BackButton link="/tickets/transport/add" />
-            <Button text="Proceed to Payment" onClick={handleSuble} />
+            <Button text="Proceed to Payment" onClick={handleSubmit} />
           </div>
         </div>
       ) : (
         <Loading />
       )}
 
-      {
-        show && <SuccessModal text="Go to transport" link="/tickets/transport" />
-      }
+      {show && <SuccessModal text="Go to transport" link="/tickets/transport" id={paymentRef}/>}
     </section>
   );
 };
