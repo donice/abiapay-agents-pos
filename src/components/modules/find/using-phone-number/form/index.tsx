@@ -12,7 +12,7 @@ type Forminput = {
   page: number;
   limit: number;
 };
-const Form = () => {
+const Form = ({setTicketsData}: any) => {
   const {
     register,
     handleSubmit,
@@ -20,7 +20,7 @@ const Form = () => {
   } = useForm<Forminput>({
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
-      phone_number: "08140144620",
+      phone_number: "",
       page: 1,
       limit: 5,
     },
@@ -35,10 +35,20 @@ const Form = () => {
         name="phone_number"
         placeholder="Enter Taxpayer Phone Number"
         register={register}
-        validation={{ required: true }}
-        error={!!errors. phone_number}
+        validation={{
+          required: "Field Required",
+          minLength: {
+            value: 11,
+            message: 'Length must be above 11 characters'
+          },
+          maxLength: {
+            value: 13,
+            message: 'Length must be below 13 characters'
+          }
+        }}
+        error={errors. phone_number}
       />
-      <Button text={"Search Tickets"} />
+      <Button text={"Search Tickets"} loading={false}/>
     </form>
   );
 };

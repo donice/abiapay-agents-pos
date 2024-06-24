@@ -10,6 +10,7 @@ import {
   // TbMail,
 } from "react-icons/tb";
 import { MdOutlineAlternateEmail } from "react-icons/md";
+import { FieldError } from "react-hook-form";
 
 
 interface InputProps {
@@ -23,8 +24,9 @@ interface InputProps {
   readOnly?: boolean;
   register?: any;
   validation?: any;
-  error?: boolean;
+  error?: FieldError | undefined; // FieldError type from React Hook Form
 }
+
 
 export const TextInput: React.FC<InputProps> = ({
   input_icon,
@@ -42,7 +44,25 @@ export const TextInput: React.FC<InputProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
+  }; 
+  
+  const getErrorMessage = (error: FieldError | undefined): string => {
+    if (!error) return '';
+
+    switch (error.type) {
+      case 'required':
+        return `${label} Field Required`;
+      case 'minLength':
+        return 'Length must be above 11 characters';
+      case 'maxLength':
+        return 'Length must be below 13 characters';
+      default:
+        return '';
+    }
   };
+
+  const errorMessage = getErrorMessage(error);
+
   return (
     <div className="input-container">
       <label htmlFor={name}>
@@ -78,6 +98,7 @@ export const TextInput: React.FC<InputProps> = ({
           {showPassword ? <TbEyeOff /> : <TbEye />}
         </span>
       )}
+      {error && <span className="error">{label} Field Required</span>}
     </div>
   );
 };

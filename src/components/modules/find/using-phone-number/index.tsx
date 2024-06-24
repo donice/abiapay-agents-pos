@@ -1,3 +1,4 @@
+"use client"
 import { GoBackButton } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
 import Form from "./form";
@@ -5,6 +6,8 @@ import React from "react";
 import "../style.scss";
 
 const UsingPhoneNumberComponent = () => {
+  const [ticketsData, setTicketsData] = React.useState([]);
+
   return (
     <section className="find">
       <GoBackButton link="/dasboard" />
@@ -18,7 +21,7 @@ const UsingPhoneNumberComponent = () => {
         </header>
 
         <div className="find-comp_form">
-          <Form />
+          <Form setTicketsData={setTicketsData}/>
         </div>
       </div>
     </section>

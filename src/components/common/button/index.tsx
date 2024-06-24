@@ -56,10 +56,11 @@ export const DefaultButton = ({ text, link, disabled }: prop) => {
 interface ButtonProps {
   text: string;
   disabled?: boolean;
+  loading?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const Button = ({ text, disabled, onClick }: ButtonProps) => {
+export const Button = ({ text, disabled, onClick, loading }: ButtonProps) => {
   const router = useRouter();
   
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,6 +80,7 @@ export const Button = ({ text, disabled, onClick }: ButtonProps) => {
       onClick={handleClick}
     >
       {text}
+      {loading && <Loader />}
     </button>
   );
 };
