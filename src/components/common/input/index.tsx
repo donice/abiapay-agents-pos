@@ -42,11 +42,11 @@ export const TextInput: React.FC<InputProps> = ({
 
     switch (error.type) {
       case "required":
-        return "Field Required";
+        return `${label} Field Required`;
       case "minLength":
-        return "Length must be above 11 characters";
+        return "Length must be more";
       case "maxLength":
-        return "Length must be below 13 characters";
+        return "Length must be less";
       default:
         return "";
     }

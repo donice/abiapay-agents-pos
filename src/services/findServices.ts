@@ -36,7 +36,7 @@ export const fetchTransactionsUsingPhoneNumber = async (requestData: FetchTransa
 
 export const fetchTransactionsUsingPlateeNumber = async (requestData: FetchTransactionsUsingPlateNumberRequest) => {
   try {
-    const { data } = await axiosInstance.post(`${url}/transport/fetch-transactions-by-phone-number`, requestData);
+    const { data } = await axiosInstance.post(`${url}/transport/fetch-transactions-by-plate-number`, requestData);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);

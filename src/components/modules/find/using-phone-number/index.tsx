@@ -21,12 +21,12 @@ const UsingPhoneNumberComponent = () => {
 
   return (
     <section className="find">
-      <GoBackButton link="/dasboard" />
+      <GoBackButton link="/dashboard" />
 
       <div className="find-comp">
         <header>
           <CustomHeader
-            title="Find Tickets"
+            title="Find With Phone Number"
             desc="Enter taxpayer phone number to find tickets"
           />
         </header>

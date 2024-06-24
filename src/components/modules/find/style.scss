@@ -67,12 +67,35 @@
             display: flex;
             align-items: center;
             color: rgb(5 150 105);
-            background-color: rgba(110, 231, 183, 0.316);
+            background-color: #6ee7b751;
             border-radius: 0.5rem;
             padding: 0.1rem 0.7rem;
             gap: 0.25rem;
             font-size: 12px;
             max-width: 100px;
+
+            &:hover {
+              background-color: rgba(110, 231, 183, 0.528);
+            }
+
+            .icon {
+              font-size: 16px;
+            }
+          }
+
+          .processing {
+            color: #f59e0b;
+            background-color: #e0e86e51;
+
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border-radius: 0.5rem;
+            padding: 0.1rem 0.7rem;
+            gap: 0.25rem;
+            font-size: 12px;
+            max-width: 100px;
+
 
             &:hover {
               background-color: rgba(110, 231, 183, 0.528);
