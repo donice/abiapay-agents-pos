@@ -12,7 +12,7 @@ type Forminput = {
   page: number;
   limit: number;
 };
-const Form = ({setTicketsData}: any) => {
+const Form = ({ setTicketsData }: any) => {
   const {
     register,
     handleSubmit,
@@ -39,16 +39,17 @@ const Form = ({setTicketsData}: any) => {
           required: "Field Required",
           minLength: {
             value: 11,
-            message: 'Length must be above 11 characters'
+            message: "Length must be above 11 characters",
           },
           maxLength: {
             value: 13,
-            message: 'Length must be below 13 characters'
-          }
+            message: "Length must be below 13 characters",
+          },
         }}
-        error={errors. phone_number}
+        error={errors.phone_number}
       />
-      <Button text={"Search Tickets"} loading={false}/>
+
+      <Button text={"Search Tickets"} loading={false} />
     </form>
   );
 };

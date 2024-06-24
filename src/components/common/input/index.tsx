@@ -1,17 +1,9 @@
 // components/common/Input.tsx
-
 import React, { ReactNode, useState } from "react";
 import "./style.scss";
-import {
-  TbCreditCard,
-  TbEye,
-  TbEyeOff,
-  TbLockCheck,
-  // TbMail,
-} from "react-icons/tb";
+import { TbCreditCard, TbEye, TbEyeOff, TbLockCheck } from "react-icons/tb";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldError } from "react-hook-form";
-
 
 interface InputProps {
   input_icon?: ReactNode;
@@ -27,7 +19,6 @@ interface InputProps {
   error?: FieldError | undefined; // FieldError type from React Hook Form
 }
 
-
 export const TextInput: React.FC<InputProps> = ({
   input_icon,
   label,
@@ -38,38 +29,34 @@ export const TextInput: React.FC<InputProps> = ({
   onChange,
   register,
   error,
-  validation, // Add this line
+  validation,
   ...rest
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
-  }; 
-  
+  };
+
   const getErrorMessage = (error: FieldError | undefined): string => {
-    if (!error) return '';
+    if (!error) return "";
 
     switch (error.type) {
-      case 'required':
-        return `${label} Field Required`;
-      case 'minLength':
-        return 'Length must be above 11 characters';
-      case 'maxLength':
-        return 'Length must be below 13 characters';
+      case "required":
+        return "Field Required";
+      case "minLength":
+        return "Length must be above 11 characters";
+      case "maxLength":
+        return "Length must be below 13 characters";
       default:
-        return '';
+        return "";
     }
   };
 
-  const errorMessage = getErrorMessage(error);
+  const errorMessage = error ? getErrorMessage(error) : "";
 
   return (
     <div className="input-container">
-      <label htmlFor={name}>
-        {label}{" "}
-      </label>
-
-      {/* To add the icon to the inputs */}
+      <label htmlFor={name}>{label}</label>
       <span>
         <span className="input_icon">
           {input_icon ? (
@@ -89,16 +76,15 @@ export const TextInput: React.FC<InputProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        {...(register && register(name, validation))} // Modify this line
+        {...(register && register(name, validation))}
         {...rest}
       />
-      <span></span>
       {type === "password" && (
         <span onClick={handleTogglePassword} className="input_toggle_icon">
           {showPassword ? <TbEyeOff /> : <TbEye />}
         </span>
       )}
-      {error && <span className="error">{label} Field Required</span>}
+      {errorMessage && <span className="error">{errorMessage}</span>}
     </div>
   );
 };
@@ -122,11 +108,8 @@ export const FormTextInput: React.FC<InputProps> = ({
   };
   return (
     <div className="form-input-container">
-
       <span>
-        <label className="form-input_icon">
-        {label}
-        </label>
+        <label className="form-input_icon">{label}</label>
       </span>
       <input
         type={type === "password" && showPassword ? "text" : type}
@@ -200,7 +183,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
         onChange={onChange}
         {...(register && register(name, validation))} // Modify this line
       >
-        <option disabled  value="Select">
+        <option disabled value="Select">
           {placeholder}
         </option>
         {options.map((option) => (
@@ -213,4 +196,3 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
     </div>
   );
 };
-
