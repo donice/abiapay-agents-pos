@@ -1,15 +1,18 @@
 import React from "react";
 import "./style.scss";
 import { TbTicket, TbCreditCard, TbFolders } from "react-icons/tb";
+import { useRouter } from "next/navigation";
 
 interface props {
   icon?: string;
   name: string;
   amount: string;
+  link?: string;
 }
-const StatsCard = ({ name, amount }: props) => {
+const StatsCard = ({ name, amount, link }: props) => {
+  const router = useRouter();
   return (
-    <div className="stats-card">
+    <div className="stats-card" onClick={() => link ? router.push(link) : console.log("")}>
       <div className="stats-card_summ">
         <span>{
           name == "Tickets" ? (

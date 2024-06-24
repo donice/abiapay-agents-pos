@@ -6,6 +6,7 @@
   gap: 1.5rem;
   border-radius: 0.5rem;
 
+
   h1 {
     font-size: 20px;
     color: $primary;
@@ -18,7 +19,8 @@
     border: 2px solid $gray;
     padding: 0 1rem;
     border-radius: 0.5rem;
-
+  background-color: white;
+  
     div {
       display: flex;
       justify-content: space-between;

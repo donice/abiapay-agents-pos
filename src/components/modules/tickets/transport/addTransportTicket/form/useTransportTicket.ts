@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { useRouter } from "next/navigation";
+import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
 
 interface Product {
   productCode: string;
@@ -16,22 +17,6 @@ interface Product {
   monthlyAmount: number;
 }
 
-interface Inputs {
-  merchant_key: string;
-  lga: string;
-  transaction_date: string;
-  invoice_id: string;
-  agentEmail: string;
-  plateNumber: string;
-  paymentPeriod: string;
-  productCode: string;
-  taxPayerPhone: string;
-  taxPayerName: string;
-  next_expiration_date: string;
-  no_of_days: string;
-  amount: number;
-  wallet_type: string;
-}
 
 let data = useIsBrower() && sessionStorage.getItem("USER_DATA");
 const user_data = data && JSON.parse(data);
@@ -42,7 +27,7 @@ export const useTransportTicketForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<Inputs>({
+  } = useForm<CreateTicketPayload>({
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       transaction_date: getCurrentDateTime(),
@@ -71,7 +56,7 @@ export const useTransportTicketForm = () => {
     // setValue("taxPayerPhone", user_data?.phone);
     // setValue("taxPayerName", user_data?.name);
   });
-  const onSubmit = async (data: Inputs) => {
+  const onSubmit = async (data: CreateTicketPayload) => {
     const formData = {
       ...data,
       transaction_date: getCurrentDateTime(),

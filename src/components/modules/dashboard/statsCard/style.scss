@@ -1,6 +1,7 @@
 @use "../../../../styles/index.scss" as *;
 
 .stats-card {
+  cursor: pointer;
   $bold-primary-text: #3f3f46;
 
   display: flex;

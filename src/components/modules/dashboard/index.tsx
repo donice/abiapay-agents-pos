@@ -140,6 +140,7 @@ const DashboardComponent: React.FC = () => {
           <StatsCard
             name="Tickets"
             amount={ttCount == null ? 0 : ttCount.toString()}
+            link="/transactions"
           />
           <StatsCard
             name="ABSSIN"
