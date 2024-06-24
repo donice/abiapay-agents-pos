@@ -1,0 +1,28 @@
+import axiosInstance from "../lib/axiosInstance";
+import useIsBrower from "../hooks/useIsBrower";
+import { setToken } from "./setToken";
+
+const url = process.env.NEXT_PUBLIC_BASE_URL;
+
+const isToken =
+  useIsBrower() && window.sessionStorage.getItem("TOKEN")
+    ? window.sessionStorage.getItem("TOKEN")
+    : null;
+setToken(isToken);
+
+
+export interface FetchTransactionsRequest {
+  merchant_key: string;
+  phone_number: string;
+  page: number;
+  limit: number;
+}
+
+export const fetchTransactions = async (requestData: FetchTransactionsRequest) => {
+  try {
+    const { data } = await axiosInstance.post(`${url}/transport/fetch-transactions-by-phone-number`, requestData);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
