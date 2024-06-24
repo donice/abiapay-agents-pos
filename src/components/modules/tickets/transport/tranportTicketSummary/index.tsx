@@ -22,7 +22,7 @@ interface TicketData {
 const TransportTicketsSummaryComponent: React.FC = () => {
   const router = useRouter();
   const [data, setData] = useState<TicketData | null>(null);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
 
   const [paymentRef, setPaymentRef] = useState("");
 

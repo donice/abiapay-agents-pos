@@ -29,7 +29,7 @@ const WalletCard = ({ bank, data }: WalletCardProps) => {
       {bank === "access" ? (
         <div className="wallet-card">
           <div className="wallet-card_balance">
-            <span>Access Bank</span>
+            <span>Wallet Balance</span>
             <span>₦{formatAmount(Number(data?.wallet_balance))}</span>
             <span>Acc Number: {data?.wallet_id}</span>
           </div>
@@ -41,13 +41,13 @@ const WalletCard = ({ bank, data }: WalletCardProps) => {
           <div className="wallet-card_earnings">
             <span> Current Earnings</span>
             <span>₦{formatAmount(Number(data?.current_earnings))}</span>
-            <span>Account Name: {data?.wallet_name}</span>
+            {/* <span>Account Name: {data?.wallet_name}</span> */}
           </div>
         </div>
       ) : (
         <div className="wallet-card">
           <div className="wallet-card_balance">
-            <span>Fidelity Bank</span>
+            <span>Wallet Balance</span>
             <span>₦{formatAmount(Number(data?.balance))}</span>
             <span>Acc Number: {data?.account_number}</span>
             
@@ -60,7 +60,7 @@ const WalletCard = ({ bank, data }: WalletCardProps) => {
           <div className="wallet-card_earnings">
             <span>Current Earnings</span>
             <span>₦{formatAmount(Number(data?.earnings))}</span>
-            <span>Account Name: {data?.account_name}</span>
+            {/* <span>Account Name: {data?.account_name}</span> */}
           </div>
         </div>
       )}

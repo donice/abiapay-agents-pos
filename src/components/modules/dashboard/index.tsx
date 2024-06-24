@@ -118,8 +118,8 @@ const DashboardComponent: React.FC = () => {
       <header className="dashboard_header">
         <CustomHeader title={`Welcome back`} desc="Overview of Dashboard" />
         <div className="dashboard_header_buttons">
-          <SecondaryButton text="Akara Ekwenti" link="/tickets/transport/add" />
-          <PrimaryButton text="Smart Tickets" link="/tickets/transport/add" />
+          <SecondaryButton text="Akara Ekwenti" link="/find/using-phone-number" />
+          <PrimaryButton text="Sharp Sharp" link="/find/using-plate-number" />
         </div>
       </header>
 
