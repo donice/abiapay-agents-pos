@@ -33,7 +33,7 @@ const AddTransportTicketForm: React.FC = () => {
       />
       
       <FormTextInput
-        label="Taxpayer Number"
+        label="Taxpayer Phone Number"
         type="number"
         name="taxPayerPhone"
         placeholder="Enter Taxpayer Phone Number"

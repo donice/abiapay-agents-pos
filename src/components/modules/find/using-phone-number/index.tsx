@@ -12,7 +12,7 @@ const UsingPhoneNumberComponent = () => {
       <div className="find-comp">
         <header>
           <CustomHeader
-            title="Find Ticket"
+            title="Find Tickets"
             desc="Enter taxpayer phone number to find tickets"
           />
         </header>

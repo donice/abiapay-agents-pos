@@ -34,6 +34,10 @@ export const TextInput: React.FC<InputProps> = ({
   placeholder = "",
   value,
   onChange,
+  register,
+  error,
+  validation, // Add this line
+  ...rest
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleTogglePassword = () => {
@@ -65,6 +69,8 @@ export const TextInput: React.FC<InputProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        {...(register && register(name, validation))} // Modify this line
+        {...rest}
       />
       <span></span>
       {type === "password" && (
