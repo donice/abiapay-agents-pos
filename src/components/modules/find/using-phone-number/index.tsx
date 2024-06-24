@@ -7,13 +7,17 @@ import { formatAmount } from "@/src/utils/formatAmount";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
 import { GoVerified } from "react-icons/go";
 import Empty from "@/src/components/common/empty";
+import { useRouter } from "next/navigation";
 import "../style.scss";
 
 const UsingPhoneNumberComponent = () => {
+  const router = useRouter();
   const [ticketsData, setTicketsData] = useState(null || []);
   const [searched, setSearched] = useState(false);
 
-  console.log(ticketsData);
+  if (ticketsData) {
+    sessionStorage.setItem("TICKETS_DATA", JSON.stringify(ticketsData));
+  }
 
   return (
     <section className="find">
@@ -37,6 +41,7 @@ const UsingPhoneNumberComponent = () => {
                   <div
                     key={transaction.idagent_transactions}
                     className="ticket"
+                    onClick={() => router.push(`/find/using-phone-number/${transaction.idagent_transactions}`)}
                   >
                     <div>
                       <p>{CamelCaseToTitleCase(transaction.revenue_item)}</p>
