@@ -14,3 +14,44 @@ export interface CreateTicketPayload {
   amount: number;
   wallet_type: string;
 }
+
+export interface Transaction {
+  idagent_transactions: number;
+  state_id: string;
+  agency: string;
+  agent_user: string;
+  agent_code: string | null;
+  trans_date: string;
+  trans_ref: string;
+  rev_head: string;
+  rev_code: string;
+  payment_ref: string;
+  reference: string;
+  initialize_url: string | null;
+  paymentToken: string | null;
+  amount: string;
+  payment_period: string;
+  next_date: string;
+  no_of_days: string;
+  trans_channel: string;
+  status: string;
+  trans_type: string;
+  lga: string;
+  createtime: string;
+  vehicle_type: string | null;
+  vehicle_tonnage: string | null;
+  vehicle_content: string | null;
+  take_off_point: string | null;
+  drop_off_destination: string | null;
+  taxpayer_name: string;
+  taxpayer_email: string;
+  taxpayer_phone: string;
+  zoneLine: string | null;
+  shopNumber: string | null;
+  revenue_item: string;
+  payment_method: string;
+  plate_number: string;
+  enumeration_id: string | null;
+  comment: string | null;
+  taxoffice: string;
+}

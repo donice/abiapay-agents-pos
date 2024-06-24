@@ -38,7 +38,17 @@ const AddTransportTicketForm: React.FC = () => {
         name="taxPayerPhone"
         placeholder="Enter Taxpayer Phone Number"
         register={register}
-        validation={{ required: true }}
+        validation={{
+          required: "Field Required",
+          minLength: {
+            value: 11,
+            message: "Length must be above 11 characters",
+          },
+          maxLength: {
+            value: 11,
+            message: "Length must be below 13 characters",
+          },
+        }}
         error={errors.agentEmail}
       />
       
@@ -50,17 +60,6 @@ const AddTransportTicketForm: React.FC = () => {
         register={register}
         validation={{ required: true }}
         error={errors.plateNumber}
-      />
-      
-      <SelectInput
-        label="L.G.A"
-        name="lga"
-        id="lga"
-        register={register}
-        validation={{ required: true }}
-        options={lga}
-        placeholder="Select L.G.A"
-        error={!!errors.lga}
       />
       
       <SelectInput

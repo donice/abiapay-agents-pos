@@ -25,9 +25,9 @@ const SuccessModal: React.FC<ModalProps> = ({ id, text, link }) => {
       <div className="modal">
         <Image src={tick} width={400} alt="Success" />
         <div className="modalContent">
-          <h2>Success</h2>
+          <h2>Tranaction Success</h2>
           <p>
-            Payment <span>{id ? "for" + id : ""}</span> is successful{" "}
+            Payment <span>{id ? "for " + id : ""}</span> is successful{" "}
           </p>
           {/* {text && <p>{text}</p>} */}
           {link && (

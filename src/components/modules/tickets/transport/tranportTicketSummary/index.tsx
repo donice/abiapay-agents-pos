@@ -22,7 +22,7 @@ interface TicketData {
 const TransportTicketsSummaryComponent: React.FC = () => {
   const router = useRouter();
   const [data, setData] = useState<TicketData | null>(null);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   const [paymentRef, setPaymentRef] = useState("");
 
@@ -53,9 +53,10 @@ const TransportTicketsSummaryComponent: React.FC = () => {
 
       const response = res?.data;
 
-      if (response.response_code === "00") {
+      if (response.response_code == "00") {
         toast.success(response.response_message);
-        setPaymentRef(response.data.payment_ref);
+        setPaymentRef(response.payment_ref);
+        console.log(response.payment_ref);
         setShow(true);
       } else if (response.response_code === "74") {
         toast.error(response.response_message);

@@ -1,6 +1,6 @@
 @use "../../../styles/index.scss" as *;
 
-.find {
+.tranactions {
   padding: 1rem 0;
 
   @include custom-media-query("mobile", $sm) {
