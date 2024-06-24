@@ -29,7 +29,7 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Enter Taxpayer Name"
         register={register}
         validation={{ required: true }}
-        error={!!errors.taxPayerName}
+        error={errors.taxPayerName}
       />
       
       <FormTextInput
@@ -39,7 +39,7 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Enter Taxpayer Phone Number"
         register={register}
         validation={{ required: true }}
-        error={!!errors.agentEmail}
+        error={errors.agentEmail}
       />
       
       <FormTextInput
@@ -49,7 +49,7 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Enter Plate Number"
         register={register}
         validation={{ required: true }}
-        error={!!errors.plateNumber}
+        error={errors.plateNumber}
       />
       
       <SelectInput
@@ -101,7 +101,7 @@ const AddTransportTicketForm: React.FC = () => {
             placeholder="Enter Amount"
             register={register}
             validation={{ required: true }}
-            error={!!errors.amount}
+            error={errors.amount}
           />
         </div>
       )}

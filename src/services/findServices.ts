@@ -11,14 +11,30 @@ const isToken =
 setToken(isToken);
 
 
-export interface FetchTransactionsRequest {
+export interface FetchTransactionsUsingPhoneNumberRequest {
   merchant_key: string;
   phone_number: string;
   page: number;
   limit: number;
 }
 
-export const fetchTransactions = async (requestData: FetchTransactionsRequest) => {
+export interface FetchTransactionsUsingPlateNumberRequest {
+  merchant_key: string;
+  plate_number: string;
+  page: number;
+  limit: number;
+}
+
+export const fetchTransactionsUsingPhoneNumber = async (requestData: FetchTransactionsUsingPhoneNumberRequest) => {
+  try {
+    const { data } = await axiosInstance.post(`${url}/transport/fetch-transactions-by-phone-number`, requestData);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const fetchTransactionsUsingPlateeNumber = async (requestData: FetchTransactionsUsingPlateNumberRequest) => {
   try {
     const { data } = await axiosInstance.post(`${url}/transport/fetch-transactions-by-phone-number`, requestData);
     return data;
