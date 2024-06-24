@@ -10,6 +10,7 @@ import { CamelCaseToTitleCase } from "@/src/utils/helper";
 import { useRouter } from "next/navigation";
 import { GoVerified } from "react-icons/go";
 import { fetchTransactions } from "@/src/services/ticketsServices";
+import toast from "react-hot-toast";
 
 
 const TransactionsTable: React.FC = () => {
@@ -19,7 +20,7 @@ const TransactionsTable: React.FC = () => {
     queryFn: fetchTransactions,
   });
 
-  const fetced_data = data || [];
+  const fetced_data = data?.data || [];
 
   console.log(data?.data, "DATATATATA");
 
@@ -32,11 +33,7 @@ const TransactionsTable: React.FC = () => {
   }
 
   if (isError) {
-    return (
-      <div className={"error"}>
-        Error: {error instanceof Error ? error.message : "Unknown error"}
-      </div>
-    );
+    toast.error(error instanceof Error ? error.message : "Unknown error")
   }
 
   if (!data || data.length === 0) {
@@ -50,20 +47,20 @@ const TransactionsTable: React.FC = () => {
   return (
     <section className="main-table">
       {fetced_data.length > 0 ? (
-        <div className="find-comp_form_tickets_container">
+        <div className="main-table_form_tickets_container">
           <div className="tickets">
             {fetced_data.map((transaction: any) => (
               <div
                 key={transaction.idagent_transactions}
                 className="ticket"
-                onClick={() =>
-                  router.push(
-                    `/find/using-phone-number/${transaction.idagent_transactions}`
-                  )
-                }
+                // onClick={() =>
+                //   router.push(
+                //     `/find/using-phone-number/${transaction.idagent_transactions}`
+                //   )
+                // }
               >
                 <div>
-                  <p>{CamelCaseToTitleCase(transaction.revenue_item)}</p>
+                  <p>{transaction.revenue_item}</p>
                   <p>{transaction.agency}</p>
                   <p>{new Date(transaction.trans_date).toLocaleString()}</p>
                   <p>{transaction.reference}</p>

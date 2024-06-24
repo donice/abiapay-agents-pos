@@ -39,7 +39,7 @@
           p:nth-child(2) {
             color: green;
             font-weight: 700;
-            font-size: 24px;
+            font-size: 20px;
 
             &::before {
               content: "₦";
@@ -50,7 +50,7 @@
         p {
           &:nth-child(1) {
             color: $text-primary;
-            font-size: 15px;
+            font-size: 14px;
 
             &:last-of-type {
               // border: 2px solid red;

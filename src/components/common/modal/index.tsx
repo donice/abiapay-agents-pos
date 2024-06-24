@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import tick from "../../assets/success-tick.gif";
 import Image from "next/image";
 import "./style.scss";
-import { Button } from "../button";
+import { SecondaryButton } from "../button";
 
 interface ModalProps {
   id?: string;
@@ -25,9 +25,9 @@ const SuccessModal: React.FC<ModalProps> = ({ id, text, link }) => {
       <div className="modal">
         <Image src={tick} width={400} alt="Success" />
         <div className="modalContent">
-          <h2>Tranaction Success</h2>
+          <h2>Payment Successful</h2>
           <p>
-            Payment <span>{id ? "for " + id : ""}</span> is successful{" "}
+             <span>{id ? id : ""}</span> {" "}
           </p>
           {/* {text && <p>{text}</p>} */}
           {link && (
@@ -35,6 +35,8 @@ const SuccessModal: React.FC<ModalProps> = ({ id, text, link }) => {
               {text}
             </button>
           )}
+
+          <SecondaryButton text="Create New" link={"/tickets/transport/add"}/>
         </div>
       </div>
     </div>

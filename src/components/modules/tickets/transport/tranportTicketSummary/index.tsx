@@ -122,7 +122,7 @@ const TransportTicketsSummaryComponent: React.FC = () => {
         <Loading />
       )}
 
-      {show && <SuccessModal text="Go to transport" link="/tickets/transport" id={paymentRef}/>}
+      {show && <SuccessModal text="Go to transport" link="/tickets/transport" id={`Ref: ${paymentRef}, Valid for: ${data?.paymentPeriod}, Payment for: ${data?.productCode} `}/>}
     </section>
   );
 };
