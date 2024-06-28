@@ -24,7 +24,7 @@
     border-radius: 0.7rem;
 
     @include custom-media-query("mobile", $sm) {
-      border: 1px solid #86efac;
+      // border: 1px solid #86efac;
     }
   }
 
@@ -77,7 +77,7 @@
     @include custom-media-query("mobile", $sm) {
       // display: none;
       padding: 0;
-      width: 2rem;
+      width: 2.5rem;
     }
   }
 }

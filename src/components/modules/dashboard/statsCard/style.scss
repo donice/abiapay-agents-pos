@@ -5,7 +5,9 @@
   $bold-primary-text: #3f3f46;
 
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   border: 1px solid #86efac;
   padding: 1rem;
   border-radius: 0.7rem;
@@ -16,14 +18,14 @@
   -moz-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
   box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
 
-
   &_summ {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 0.5rem;
     span:nth-child(1) {
       color: $bold-primary-text;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 1.3rem;
     }
   }

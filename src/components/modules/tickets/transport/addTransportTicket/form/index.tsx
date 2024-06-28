@@ -4,7 +4,9 @@ import { Button, BackButton } from "@/src/components/common/button";
 import "./style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useTransportTicketForm } from "./useTransportTicket";
-
+import { useDebounce } from "@/src/hooks/useDebounce";
+import axios from "axios";
+import toast from "react-hot-toast";
 const AddTransportTicketForm: React.FC = () => {
   const {
     register,
@@ -16,13 +18,50 @@ const AddTransportTicketForm: React.FC = () => {
     selectedPeriod,
     onSubmit,
     handleProductChange,
-    handlePeriodChange
+    handlePeriodChange,
+    
   } = useTransportTicketForm();
 
+  const getPlateNumberDetails = async (plateNumber: string) => {
+    try {
+      const url = 'https://sandboxmobileapi.abiapay.ng/api/v1/transport/get-plate-number-info'
+      const response = await axios.post(url, {plate_number: plateNumber});
+      console.log(response);
+    } catch {
+      toast.error("Error fetching vehicle details");
+    }
+  };
+
+  // const debouncedGetPlateNumberDetails = useDebounce(getPlateNumberDetails);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
-       <FormTextInput
+      
+      <SelectInput
+        label="Vehicle Type"
+        name="productCode"
+        id="productCode"
+        onChange={        handleProductChange}
+        options={products.map((product) => ({
+          value: product.productCode,
+          label: product.productName,
+        }))}
+        placeholder="Select Vehicle Type"
+        error={!!errors.productCode}
+      /> 
+      
+      <FormTextInput
+        label="Plate Number"
+        type="text"
+        name="plateNumber"
+        placeholder="Enter Plate Number"
+        register={register}
+        validation={{ required: true }}
+        error={errors.plateNumber}
+        onChange={(e: any) => {console.log(e.target.value)}}
+      />
+
+      <FormTextInput
         label="Taxpayer Name"
         type="text"
         name="taxPayerName"
@@ -51,29 +90,7 @@ const AddTransportTicketForm: React.FC = () => {
         }}
         error={errors.agentEmail}
       />
-      
-      <FormTextInput
-        label="Plate Number"
-        type="text"
-        name="plateNumber"
-        placeholder="Enter Plate Number"
-        register={register}
-        validation={{ required: true }}
-        error={errors.plateNumber}
-      />
-      
-      <SelectInput
-        label="Vehicle Type"
-        name="productCode"
-        id="productCode"
-        onChange={        handleProductChange}
-        options={products.map((product) => ({
-          value: product.productCode,
-          label: product.productName,
-        }))}
-        placeholder="Select Vehicle Type"
-        error={!!errors.productCode}
-      />
+     
 
       <SelectInput
         label="Payment Period"

@@ -26,7 +26,7 @@ const StatsCard = ({ name, amount, link }: props) => {
         <span>{name}</span>
       </div>
 
-      <div className="stats-card_image"></div>
+      {/* <div className="stats-card_image"></div> */}
 
       <div className="stats-card_amount">
         <span>{amount}</span>

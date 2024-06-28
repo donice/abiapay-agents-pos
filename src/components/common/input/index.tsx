@@ -12,7 +12,7 @@ interface InputProps {
   name: string;
   placeholder?: string;
   value?: string | number;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: any;
   readOnly?: boolean;
   register?: any;
   validation?: any;
