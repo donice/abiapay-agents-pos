@@ -3,20 +3,17 @@ import React, { ReactElement } from "react";
 import "./style.scss";
 import Link from "next/link";
 import getRoute from "@/src/hooks/getRoute";
-import { logout } from "@/src/context/authContext";
 import {
   TbHome,
-  TbTicket,
-  TbBasketDown,
   TbLogout2,
   TbHomeFilled,
-  TbBasketFilled,
   TbSquareRoundedPlusFilled,
   TbSquareRoundedPlus,
   TbLineScan,
   TbTextScan2,
+  TbUserFilled,
+  TbUser,
 } from "react-icons/tb";
-import { HiTicket } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 
 interface BottomNavProps {
@@ -52,11 +49,17 @@ const nav_items: BottomNavProps[] = [
     icon_active: <TbSquareRoundedPlusFilled className="icon active plus" />,
   },
   {
-    name: "tickets/market",
-    title: "Maket",
-    icon: <TbBasketDown className="icon" />,
-    icon_active: <TbBasketFilled className="icon active" />,
+    name: "account",
+    title: "User Account",
+    icon: <TbUser className="icon" />,
+    icon_active: <TbUserFilled className="icon active" />,
   },
+  // {
+  //   name: "tickets/market",
+  //   title: "Maket",
+  //   icon: <TbBasketDown className="icon" />,
+  //   icon_active: <TbBasketFilled className="icon active" />,
+  // },
 ];
 
 const BottomNav = () => {

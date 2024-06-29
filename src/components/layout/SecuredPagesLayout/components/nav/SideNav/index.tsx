@@ -9,6 +9,7 @@ import {
   TbBasketDown,
   TbLogout2,
   TbLineScan,
+  TbUser,
 } from "react-icons/tb";
 
 interface SideNavProps {
@@ -34,9 +35,9 @@ const nav_items: SideNavProps[] = [
     icon: <TbLineScan className="icon" />,
   },
   {
-    name: "tickets/market",
-    title: "Maket Ticket",
-    icon: <TbBasketDown className="icon" />,
+    name: "account",
+    title: "User Account",
+    icon: <TbUser className="icon" />,
   },
 ];
 

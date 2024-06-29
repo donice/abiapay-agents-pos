@@ -10,6 +10,7 @@ const SigninComponent = () => {
   const dispatch = useAuthDispatch();
   useEffect(() => {
     handleLogout()
+    sessionStorage.clear();
   }, []);
 
   const handleLogout = () => {
