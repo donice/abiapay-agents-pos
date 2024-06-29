@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Metadata } from "next";
 import { CustomHeader } from "@/src/components/common/header";
-import { FcShipped, FcPaid, FcMoneyTransfer } from "react-icons/fc";
+import { FcShipped, FcPaid, FcLock } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
 
@@ -10,34 +10,34 @@ export const metadata: Metadata = {
   description: "Agents Portal Tickets Page",
 };
 
-interface TicketsProps {
+interface SettingsProps {
   name: string;
   title: string;
   desc: string;
   icon: ReactElement;
 }
 
-const tickets: TicketsProps[] = [
+const settingsItems: SettingsProps[] = [
   {
-    name: "tickets/transport",
-    title: "Transaction History",
-    desc: "View History",
-    icon: <FcMoneyTransfer className="icon" />,
+    name: "signin",
+    title: "Sign Out",
+    desc: "Exit app",
+    icon: <FcLock className="icon" />,
   },
 
 ];
 
-const AddTicketPage = () => {
+const UserAccountPage = () => {
   return (
-    <div className="account">
-      <CustomHeader title="User Account" desc={"Explore your account"} />
+    <div className="settings">
+      <CustomHeader title="Settings" desc={"Explore your settings"} />
 
-      <div className="account_items">
-        {tickets.map((item) => (
+      <div className="settings_items">
+        {settingsItems.map((item) => (
           <Link
             href={`/${item.name}`}
             key={item.name}
-            className={`account_item`}
+            className={`settings_item`}
           >
             <div >
               {" "}
@@ -54,4 +54,4 @@ const AddTicketPage = () => {
   );
 };
 
-export default AddTicketPage;
+export default UserAccountPage;

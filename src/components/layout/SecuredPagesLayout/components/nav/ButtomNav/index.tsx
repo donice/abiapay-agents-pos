@@ -13,6 +13,8 @@ import {
   TbTextScan2,
   TbUserFilled,
   TbUser,
+  TbSettings,
+  TbSettingsFilled,
 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 
@@ -49,17 +51,17 @@ const nav_items: BottomNavProps[] = [
     icon_active: <TbSquareRoundedPlusFilled className="icon active plus" />,
   },
   {
-    name: "account",
+    name: "user/account",
     title: "User Account",
     icon: <TbUser className="icon" />,
     icon_active: <TbUserFilled className="icon active" />,
   },
-  // {
-  //   name: "tickets/market",
-  //   title: "Maket",
-  //   icon: <TbBasketDown className="icon" />,
-  //   icon_active: <TbBasketFilled className="icon active" />,
-  // },
+  {
+    name: "user/settings",
+    title: "User Account",
+    icon: <TbSettings className="icon" />,
+    icon_active: <TbSettingsFilled className="icon active" />,
+  },
 ];
 
 const BottomNav = () => {
@@ -75,12 +77,11 @@ const BottomNav = () => {
                 <span>{item.name === route ? item.icon_active : item.icon}</span>
             </Link>
           ))}
-          <div key={"logout"} onClick={() => {sessionStorage.clear(); router.refresh();}} className="bottom-nav_item logout">
+          {/* <div key={"logout"} onClick={() => {sessionStorage.clear(); router.refresh();}} className="bottom-nav_item logout">
             <span>
               <TbLogout2 className="icon out" />
             </span>
-            {/* <span>Sign Out</span> */}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

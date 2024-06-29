@@ -1,12 +1,12 @@
-@use "../../../src/styles/index.scss" as *;
+@use "../../../../src/styles/index.scss" as *;
 
-.account {
+.settings {
   &_items {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 1rem;
 
-    .account_item {
+    .settings_item {
       display: flex;
       align-items: center;
       padding: 1.5rem;
