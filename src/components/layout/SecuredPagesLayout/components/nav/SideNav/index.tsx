@@ -35,7 +35,7 @@ const nav_items: SideNavProps[] = [
     icon: <TbLineScan className="icon" />,
   },
   {
-    name: "account",
+    name: "user/account",
     title: "User Account",
     icon: <TbUser className="icon" />,
   },

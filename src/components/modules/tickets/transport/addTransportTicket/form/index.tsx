@@ -1,12 +1,10 @@
 "use client"
 import React from "react";
 import { Button, BackButton } from "@/src/components/common/button";
-import "./style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useTransportTicketForm } from "./useTransportTicket";
-import { useDebounce } from "@/src/hooks/useDebounce";
-import axios from "axios";
-import toast from "react-hot-toast";
+import "./style.scss";
+
 const AddTransportTicketForm: React.FC = () => {
   const {
     register,
@@ -21,18 +19,6 @@ const AddTransportTicketForm: React.FC = () => {
     handlePeriodChange,
     
   } = useTransportTicketForm();
-
-  const getPlateNumberDetails = async (plateNumber: string) => {
-    try {
-      const url = 'https://sandboxmobileapi.abiapay.ng/api/v1/transport/get-plate-number-info'
-      const response = await axios.post(url, {plate_number: plateNumber});
-      console.log(response);
-    } catch {
-      toast.error("Error fetching vehicle details");
-    }
-  };
-
-  // const debouncedGetPlateNumberDetails = useDebounce(getPlateNumberDetails);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">

@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
+import { FcOk } from "react-icons/fc";
 import tick from "../../assets/success-tick.gif";
 import Image from "next/image";
 import "./style.scss";
@@ -23,7 +24,7 @@ const SuccessModal: React.FC<ModalProps> = ({ id, text, link }) => {
   return (
     <div className="modalOverlay">
       <div className="modal">
-        <Image src={tick} width={400} alt="Success" />
+      <FcOk className="success_icon"/>
         <div className="modalContent">
           <h2>Payment Successful</h2>
           <p>
