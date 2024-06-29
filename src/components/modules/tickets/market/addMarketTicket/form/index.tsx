@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { DefaultButton, CancelButton } from "@/src/components/common/button";
 import { SelectInput, TextInput } from "@/src/components/common/input";
-import "./style.scss";
 import { fetchLGAData } from "@/src/services/common";
+import "./style.scss";
 
 const AddMarketTicketForm = () => {
   const [formData, setFormData] = useState({

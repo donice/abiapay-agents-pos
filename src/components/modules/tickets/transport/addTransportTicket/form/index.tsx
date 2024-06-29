@@ -5,21 +5,37 @@ import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useTransportTicketForm } from "./useTransportTicket";
 import "./style.scss";
 
+interface PlateNumberInfoResponse {
+  status: boolean;
+  message: string;
+  data: {
+    id: number;
+    State: string;
+    Email: string;
+    Ref: string;
+    Name: string;
+    Phone: string;
+    PlateNumber: string;
+    contact_type: string | null;
+    datecreated: string;
+  };
+}
+
 const AddTransportTicketForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     errors,
-    lga,
     products,
     selectedProduct,
     selectedPeriod,
     onSubmit,
     handleProductChange,
     handlePeriodChange,
-    
+    setValue,
   } = useTransportTicketForm();
-
+  
+  
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
       
@@ -109,7 +125,7 @@ const AddTransportTicketForm: React.FC = () => {
       )}
 
       <SelectInput
-        label="Wallet Type"
+        label="Choose Wallet"
         name="wallet_type"
         id="wallet_type"
         register={register}

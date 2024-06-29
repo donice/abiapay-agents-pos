@@ -4,7 +4,6 @@ import { fetchLGAData, fetchProducts } from "@/src/services/common";
 import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
-import axios from "axios";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { useRouter } from "next/navigation";
 import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
@@ -16,7 +15,6 @@ interface Product {
   weeklyAmount: number;
   monthlyAmount: number;
 }
-
 
 let data = useIsBrower() && sessionStorage.getItem("USER_DATA");
 const user_data = data && JSON.parse(data);
@@ -53,9 +51,8 @@ export const useTransportTicketForm = () => {
 
   useEffect(() => {
     setValue("agentEmail", user_data?.email);
-    // setValue("taxPayerPhone", user_data?.phone);
-    // setValue("taxPayerName", user_data?.name);
   });
+
   const onSubmit = async (data: CreateTicketPayload) => {
     const formData = {
       ...data,
@@ -154,5 +151,6 @@ export const useTransportTicketForm = () => {
     onSubmit,
     handleProductChange,
     handlePeriodChange,
+    setValue, // Add setValue here
   };
 };

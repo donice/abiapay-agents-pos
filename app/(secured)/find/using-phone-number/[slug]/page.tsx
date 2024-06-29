@@ -25,7 +25,7 @@ const Dynamic = () => {
     (ticket: any) => ticket.idagent_transactions == segment
   );
 
-  console.log(ticket);
+  // console.log(ticket);
 
   const {
     register,

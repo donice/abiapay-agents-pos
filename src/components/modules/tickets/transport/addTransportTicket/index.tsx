@@ -12,7 +12,7 @@ const AddTransportTicketComponent = () => {
         <header className="transport_add-comp_header">
           <CustomHeader
             title="Add Transport Ticket"
-            desc="Manage/Create Transaction"
+            desc="Create Transport Ticket"
           />
         </header>
 
