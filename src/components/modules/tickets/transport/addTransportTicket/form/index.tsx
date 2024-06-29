@@ -1,9 +1,12 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, BackButton } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useTransportTicketForm } from "./useTransportTicket";
 import "./style.scss";
+import { useDebounce } from "@/src/hooks/useDebounce";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 interface PlateNumberInfoResponse {
   status: boolean;
@@ -34,11 +37,36 @@ const AddTransportTicketForm: React.FC = () => {
     handlePeriodChange,
     setValue,
   } = useTransportTicketForm();
-  
-  
+
+  const [plateNumber, setPlateNumber] = useState<string>("");
+  const debouncedPlateNumber = useDebounce(plateNumber, 500);
+
+  const fetchPlateNumberInfo = async (plateNumber: string) => {
+    try {
+      const response = await axios.post<PlateNumberInfoResponse>(
+        "https://sandboxmobileapi.abiapay.ng/api/v1/transport/get-plate-number-info",
+        { plateNumber }
+      );
+      if (response.data.status) {
+        const { Name, Phone } = response.data.data;
+        setValue("taxPayerName", Name);
+        setValue("taxPayerPhone", Phone);
+      } else {
+        toast.error("Failed to retrieve plate number information");
+      }
+    } catch (error) {
+      toast.error("Error fetching plate number information");
+    }
+  };
+
+  useEffect(() => {
+    if (debouncedPlateNumber) {
+      fetchPlateNumberInfo(debouncedPlateNumber);
+    }
+  }, [debouncedPlateNumber]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
-      
       <SelectInput
         label="Vehicle Type"
         name="productCode"
@@ -50,8 +78,7 @@ const AddTransportTicketForm: React.FC = () => {
         }))}
         placeholder="Select Vehicle Type"
         error={!!errors.productCode}
-      /> 
-      
+      />
       <FormTextInput
         label="Plate Number"
         type="text"
@@ -60,9 +87,8 @@ const AddTransportTicketForm: React.FC = () => {
         register={register}
         validation={{ required: true }}
         error={errors.plateNumber}
-        onChange={(e: any) => {console.log(e.target.value)}}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPlateNumber(e.target.value)}
       />
-
       <FormTextInput
         label="Taxpayer Name"
         type="text"
@@ -72,7 +98,6 @@ const AddTransportTicketForm: React.FC = () => {
         validation={{ required: true }}
         error={errors.taxPayerName}
       />
-      
       <FormTextInput
         label="Taxpayer Phone Number"
         type="number"
@@ -92,8 +117,6 @@ const AddTransportTicketForm: React.FC = () => {
         }}
         error={errors.agentEmail}
       />
-     
-
       <SelectInput
         label="Payment Period"
         name="paymentPeriod"
@@ -109,7 +132,6 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Select Payment Period"
         error={!!errors.paymentPeriod}
       />
-
       {selectedPeriod && (
         <div>
           <FormTextInput
@@ -123,7 +145,6 @@ const AddTransportTicketForm: React.FC = () => {
           />
         </div>
       )}
-
       <SelectInput
         label="Choose Wallet"
         name="wallet_type"
@@ -137,7 +158,6 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Select Wallet Type"
         error={!!errors.wallet_type}
       />
-
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
         <Button text="Save & Continue" />
@@ -147,4 +167,3 @@ const AddTransportTicketForm: React.FC = () => {
 };
 
 export default AddTransportTicketForm;
-

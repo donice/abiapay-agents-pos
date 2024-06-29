@@ -20,12 +20,7 @@ let data = useIsBrower() && sessionStorage.getItem("USER_DATA");
 const user_data = data && JSON.parse(data);
 
 export const useTransportTicketForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<CreateTicketPayload>({
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateTicketPayload>({
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       transaction_date: getCurrentDateTime(),
@@ -51,20 +46,14 @@ export const useTransportTicketForm = () => {
 
   useEffect(() => {
     setValue("agentEmail", user_data?.email);
-  });
+  }, []);
 
   const onSubmit = async (data: CreateTicketPayload) => {
-    const formData = {
-      ...data,
-      transaction_date: getCurrentDateTime(),
-      invoice_id: `INV${randomInvoiceGenerator()}`,
-    };
+    const formData = { ...data, transaction_date: getCurrentDateTime(), invoice_id: `INV${randomInvoiceGenerator()}` };
     try {
       console.log(formData);
-
       toast.success("Added Successfully");
-      useIsBrower() &&
-        sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
+      useIsBrower() && sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
       router.push("/tickets/transport/add/summary");
     } catch {
       toast.error("Error Creating Ticket");
@@ -74,10 +63,7 @@ export const useTransportTicketForm = () => {
   const getLGAData = async () => {
     try {
       const { data } = await fetchLGAData();
-      const lga_from_api = data.map((item: any) => ({
-        label: item.lgaName,
-        value: item.lgaID,
-      }));
+      const lga_from_api = data.map((item: any) => ({ label: item.lgaName, value: item.lgaID }));
       setLga(lga_from_api);
     } catch {
       toast.error("Error fetching LGA data");
@@ -104,10 +90,7 @@ export const useTransportTicketForm = () => {
     setSelectedPeriod(period);
     setValue("paymentPeriod", period);
 
-    const selectedProductData = products.find(
-      (product) => product.productCode === selectedProduct
-    );
-
+    const selectedProductData = products.find((product) => product.productCode === selectedProduct);
     let amount = 0;
     let no_of_days = "0";
     switch (period) {
@@ -127,10 +110,7 @@ export const useTransportTicketForm = () => {
     setValue("no_of_days", no_of_days);
 
     const transaction_date = new Date();
-    const next_expiration_date = new Date(
-      transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000
-    );
-
+    const next_expiration_date = new Date(transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000);
     setValue("next_expiration_date", next_expiration_date.toISOString());
     setValue("amount", amount);
   };
@@ -151,6 +131,7 @@ export const useTransportTicketForm = () => {
     onSubmit,
     handleProductChange,
     handlePeriodChange,
-    setValue, // Add setValue here
+    setValue,
   };
 };
+
