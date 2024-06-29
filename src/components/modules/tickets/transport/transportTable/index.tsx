@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { GoVerified } from "react-icons/go";
 import { fetchTransactions } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
+import { TbLoader } from "react-icons/tb";
 
 
 const TransactionsTable: React.FC = () => {
@@ -69,10 +70,10 @@ const TransactionsTable: React.FC = () => {
                   <p>N{formatAmount(transaction.amount)}</p>
                   <p
                     className={`${
-                      transaction.status === "Completed" ? "completed" : " "
+                      transaction.status === "Completed" ? "completed" : "pending"
                     }`}
                   >
-                    {transaction.status === "Completed" && <GoVerified />}
+                    {transaction.status === "Completed" ? <GoVerified /> : <TbLoader /> }
                     {transaction.status}
                   </p>
                   <p>{transaction.payment_period}</p>
