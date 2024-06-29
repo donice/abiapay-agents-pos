@@ -13,6 +13,8 @@ import {
   TbBasketFilled,
   TbSquareRoundedPlusFilled,
   TbSquareRoundedPlus,
+  TbLineScan,
+  TbTextScan2,
 } from "react-icons/tb";
 import { HiTicket } from "react-icons/hi";
 import { useRouter } from "next/navigation";
@@ -31,11 +33,17 @@ const nav_items: BottomNavProps[] = [
     icon: <TbHome className="icon" />,
     icon_active: <TbHomeFilled className="icon active" />,
   },
+  // {
+  //   name: "tickets/transport",
+  //   title: "Transport",
+  //   icon: <TbTicket className="icon" />,
+  //   icon_active: <HiTicket className="icon active" />,
+  // },
   {
-    name: "tickets/transport",
-    title: "Transport",
-    icon: <TbTicket className="icon" />,
-    icon_active: <HiTicket className="icon active" />,
+    name: "tickets/verify",
+    title: "Verify Tickets",
+    icon: <TbLineScan className="icon" />,
+    icon_active: <TbTextScan2 className="icon active" />,
   },
   {
     name: "tickets",

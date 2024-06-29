@@ -41,7 +41,7 @@ const AddTransportTicketForm: React.FC = () => {
         label="Vehicle Type"
         name="productCode"
         id="productCode"
-        onChange={        handleProductChange}
+        onChange={handleProductChange}
         options={products.map((product) => ({
           value: product.productCode,
           label: product.productName,
