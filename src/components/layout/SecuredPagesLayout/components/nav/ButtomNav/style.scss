@@ -62,7 +62,7 @@
 
       .inactive {
         &:hover {
-          background-color: rgba(211, 211, 211, 0.222);
+          background-color: #d3d3d339;
         }
       }
 
@@ -72,13 +72,13 @@
         align-items: center;
         &:hover {
           color: $primary-hover;
-          background-color: rgba(211, 211, 211, 0.222);
+          // background-color: #d3d3d339;
         }
       }
 
       .active {
         color: $primary;
-        background-color: rgba(211, 211, 211, 0.222);
+        background-color: #d3d3d339;
 
 
         .out {
