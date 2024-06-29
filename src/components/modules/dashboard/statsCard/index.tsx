@@ -12,7 +12,7 @@ interface props {
 const StatsCard = ({ name, amount, link }: props) => {
   const router = useRouter();
   return (
-    <div className="stats-card" onClick={() => link ? router.push(link) : console.log("")}>
+    <div className={ name == "Tickets" ? "stats-card green" : "stats-card"} onClick={() => link ? router.push(link) : console.log("")}>
       <div className="stats-card_summ">
         <span>{
           name == "Tickets" ? (
@@ -25,8 +25,6 @@ const StatsCard = ({ name, amount, link }: props) => {
         }</span>
         <span>{name}</span>
       </div>
-
-      {/* <div className="stats-card_image"></div> */}
 
       <div className="stats-card_amount">
         <span>{amount}</span>
