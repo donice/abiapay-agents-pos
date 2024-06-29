@@ -5,7 +5,7 @@ const TicketsWalletCard = () => {
   return (
     <div className="tickets-wallet-card">
       <div className="tickets-wallet-card_balance">
-        <span>Cash Today</span>
+        <span>Today's Collections</span>
         <span>N120,000</span>
       </div>
       
@@ -15,7 +15,7 @@ const TicketsWalletCard = () => {
 
       <div className="tickets-wallet-card_balance">
         <span>ePayments Today</span>
-        <span>N30,000</span>
+        <span>0 </span>
       </div>
       
     </div>
