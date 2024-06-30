@@ -36,6 +36,7 @@ const AddTransportTicketForm: React.FC = () => {
       if (response.data?.data.length < 1) {
         toast.error("Failed to retrieve plate number information");
       } else {
+        toast.error(response.data?.message);
         const { Name, Phone } = response.data.data;
         setValue("taxPayerName", Name);
         setValue("taxPayerPhone", Phone);
