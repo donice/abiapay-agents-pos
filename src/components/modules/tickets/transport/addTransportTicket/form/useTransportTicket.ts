@@ -20,7 +20,7 @@ let data = useIsBrower() && sessionStorage.getItem("USER_DATA");
 const user_data = data && JSON.parse(data);
 
 export const useTransportTicketForm = () => {
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateTicketPayload>({
+  const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm<CreateTicketPayload>({
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       transaction_date: getCurrentDateTime(),
@@ -122,6 +122,7 @@ export const useTransportTicketForm = () => {
 
   return {
     register,
+    watch,
     handleSubmit,
     errors,
     lga,

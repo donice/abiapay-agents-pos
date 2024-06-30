@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { Button, BackButton } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
@@ -8,25 +8,10 @@ import { useDebounce } from "@/src/hooks/useDebounce";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-interface PlateNumberInfoResponse {
-  status: boolean;
-  message: string;
-  data: {
-    id: number;
-    State: string;
-    Email: string;
-    Ref: string;
-    Name: string;
-    Phone: string;
-    PlateNumber: string;
-    contact_type: string | null;
-    datecreated: string;
-  };
-}
-
 const AddTransportTicketForm: React.FC = () => {
   const {
     register,
+    watch,
     handleSubmit,
     errors,
     products,
@@ -38,23 +23,25 @@ const AddTransportTicketForm: React.FC = () => {
     setValue,
   } = useTransportTicketForm();
 
-  const [plateNumber, setPlateNumber] = useState<string>("");
+  let plateNumber = watch("plateNumber");
   const debouncedPlateNumber = useDebounce(plateNumber, 500);
 
   const fetchPlateNumberInfo = async (plateNumber: string) => {
     try {
-      const response = await axios.post<PlateNumberInfoResponse>(
+      const response = await axios.post(
         "https://sandboxmobileapi.abiapay.ng/api/v1/transport/get-plate-number-info",
-        { plateNumber }
+        { plate_number: plateNumber }
       );
-      if (response.data.status) {
+
+      if (response.data?.data.length < 1) {
+        toast.error("Failed to retrieve plate number information");
+      } else {
         const { Name, Phone } = response.data.data;
         setValue("taxPayerName", Name);
         setValue("taxPayerPhone", Phone);
-      } else {
-        toast.error("Failed to retrieve plate number information");
       }
     } catch (error) {
+      console.error("Error fetching plate number information:", error);
       toast.error("Error fetching plate number information");
     }
   };
@@ -64,6 +51,7 @@ const AddTransportTicketForm: React.FC = () => {
       fetchPlateNumberInfo(debouncedPlateNumber);
     }
   }, [debouncedPlateNumber]);
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
@@ -79,6 +67,7 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Select Vehicle Type"
         error={!!errors.productCode}
       />
+
       <FormTextInput
         label="Plate Number"
         type="text"
@@ -87,8 +76,8 @@ const AddTransportTicketForm: React.FC = () => {
         register={register}
         validation={{ required: true }}
         error={errors.plateNumber}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPlateNumber(e.target.value)}
       />
+
       <FormTextInput
         label="Taxpayer Name"
         type="text"
@@ -115,7 +104,7 @@ const AddTransportTicketForm: React.FC = () => {
             message: "Length must be below 13 characters",
           },
         }}
-        error={errors.agentEmail}
+        error={errors.taxPayerPhone}
       />
       <SelectInput
         label="Payment Period"
