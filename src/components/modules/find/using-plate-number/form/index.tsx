@@ -51,7 +51,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
     <>
       <form className="find-ticket" onSubmit={handleSubmit(onSubmit)}>
         <TextInput
-          label="*"
+          label="Plate Number"
           input_icon={<TbSearch />}
           type="text"
           name="plate_number"

@@ -45,7 +45,7 @@ const nav_items: BottomNavProps[] = [
     icon_active: <TbTextScan2 className="icon active" />,
   },
   {
-    name: "tickets",
+    name: "tickets/add",
     title: "Add Tickets",
     icon: <TbSquareRoundedPlus className="icon plus" />,
     icon_active: <TbSquareRoundedPlusFilled className="icon active plus" />,

@@ -46,7 +46,7 @@ const Dynamic = () => {
       plateNumber: ticket[0]?.plate_number || "",
       taxPayerPhone: ticket[0]?.taxpayer_phone || "",
       taxPayerName: ticket[0]?.taxpayer_name || "",
-      wallet_type: "",
+      wallet_type: "fidelity",
     },
   });
 

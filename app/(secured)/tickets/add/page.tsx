@@ -4,10 +4,11 @@ import { CustomHeader } from "@/src/components/common/header";
 import { FcShipped, FcPaid, FcAcceptDatabase, FcMoneyTransfer } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
+import UsingPlateNumberExportComponent from "@/src/components/modules/find/using-plate-number/export_comp";
 
 export const metadata: Metadata = {
-  title: "Manage Ticket",
-  description: "Agents Portal Tickets Page",
+  title: "Create Ticket",
+  description: "Agents Portal Add  Tickets Page",
 };
 
 interface TicketsProps {
@@ -20,30 +21,20 @@ interface TicketsProps {
 const tickets: TicketsProps[] = [
   {
     name: "tickets/transport/add",
-    title: "Transport Tickets",
+    title: "Create Transport Tickets",
     desc: "Create transport ticket",
     icon: <FcShipped className="icon" />,
   },
-  {
-    name: "tickets/transport",
-    title: "Transaction History",
-    desc: "View your Tickets Transactions History",
-    icon: <FcAcceptDatabase className="icon" />,
-  },
-  {
-    name: "transfers",
-    title: "Transfer History",
-    desc: "View your Wallet Transfer History",
-    icon: <FcMoneyTransfer className="icon" />,
-  },
 ];
 
-const TicketPage = () => {
+const AddTicketPage = () => {
   return (
     <div className="ticketspage">
-      <CustomHeader title="Manage Ticket" desc={"Manage your tickets"} />
+      <CustomHeader title="Sharp Sharp" desc={"Add your tickets"} />
 
       <div className="ticketspage_items">
+        <UsingPlateNumberExportComponent />
+
         {tickets.map((item) => (
           <Link
             href={`/${item.name}`}
@@ -65,4 +56,4 @@ const TicketPage = () => {
   );
 };
 
-export default TicketPage;
+export default AddTicketPage;

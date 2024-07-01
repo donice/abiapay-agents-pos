@@ -1,6 +1,4 @@
 "use client";
-import { GoBackButton } from "@/src/components/common/button";
-import { CustomHeader } from "@/src/components/common/header";
 import Form from "./form";
 import React, { useState } from "react";
 import { formatAmount } from "@/src/utils/formatAmount";
@@ -11,7 +9,7 @@ import Empty from "@/src/components/common/empty";
 import { useRouter } from "next/navigation";
 import "../style.scss";
 
-const UsingPlateNumberComponent = () => {
+const UsingPlateNumberExportComponent = () => {
   const router = useRouter();
   const [ticketsData, setTicketsData] = useState(null || []);
   const [searched, setSearched] = useState(false);
@@ -19,19 +17,11 @@ const UsingPlateNumberComponent = () => {
   if (ticketsData) {
     sessionStorage.setItem("TICKETS_DATA", JSON.stringify(ticketsData));
   }
-  // console.log(ticketsData);
 
   return (
-    <section className="find">
-      <GoBackButton link="/dashboard" />
+    <section className="">
 
-      <div className="find-comp">
-        <header>
-          <CustomHeader
-            title="Find With Plate Number"
-            desc="Enter taxpayer plate number to find tickets"
-          />
-        </header>
+      <div className="find-comp export">
 
         <div className="find-comp_form">
           <Form setTicketsData={setTicketsData} setSearched={setSearched}/>
@@ -76,4 +66,4 @@ const UsingPlateNumberComponent = () => {
   );
 };
 
-export default UsingPlateNumberComponent;
+export default UsingPlateNumberExportComponent;
