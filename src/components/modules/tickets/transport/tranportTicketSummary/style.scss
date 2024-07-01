@@ -14,59 +14,71 @@
     flex-direction: column;
     min-height: 100vh;
     height: 100%;
-    // margin-top: 1.5rem;
 
-    &_header {
-      margin: 0 0 2rem 0;
-
-      @include custom-media-query("mobile", $sm) {
-        margin-bottom: 0;
-      }
-    }
-
-    &_container div {
-      .line-items {
+    &_container {
+      display: grid;
+      gap: 1rem;
+      &_logo,
+      &_amount {
         display: flex;
-        justify-content: space-between;
-        padding: px-to-rem(24px) 0;
-        border-bottom: $border;
+        justify-content: center;
+        border: $border;
+        border-radius: 1rem;
+        -webkit-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
+        -moz-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
+        box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
+      }
 
-        @include custom-media-query("mobile", $md) {
-          padding: px-to-rem(12px) 0;
+      &_logo {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1rem;
+      }
+      &_amount {
+        color: green;
+        border-color:rgb(187 247 208) ;
+        background-color: rgb(220 252 231);
+        font-weight: 600;
+        font-size: 30px;
+
+        padding: 1rem;
+
+        &::before {
+          content: "₦";
         }
+      }
 
-        &:last-of-type {
-          p:nth-child(2) {
-            color: green;
-            font-weight: 700;
-            font-size: 20px;
+      div {
+        .line-items {
+          display: flex;
+          justify-content: space-between;
+          padding: px-to-rem(24px) 0;
+          border-bottom: $border;
 
-            &::before {
-              content: "₦";
+          @include custom-media-query("mobile", $md) {
+            padding: px-to-rem(12px) 0;
+          }
+
+          p {
+            &:nth-child(1) {
+              color: $text-primary;
+              font-size: 14px;
+
+              &:last-of-type {
+                // border: 2px solid red;
+                font-weight: 700;
+              }
             }
           }
         }
-
-        p {
-          &:nth-child(1) {
-            color: $text-primary;
-            font-size: 14px;
-
-            &:last-of-type {
-              // border: 2px solid red;
-              font-weight: 700;
-            }
-          }
-        }
       }
-
-     
     }
-  } .btn_container {
-        margin-top: 3rem;
-        max-width: $sm;
-        gap: 1rem;
-        display: flex;
-        flex-direction: row;
-      }
+  }
+  .btn_container {
+    margin-top: 3rem;
+    max-width: $sm;
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+  }
 }

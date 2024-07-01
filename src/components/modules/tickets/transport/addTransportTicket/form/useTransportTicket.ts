@@ -54,7 +54,8 @@ export const useTransportTicketForm = () => {
   const onSubmit = async (data: CreateTicketPayload) => {
     const formData = { ...data, transaction_date: getCurrentDateTime(), invoice_id: `INV${randomInvoiceGenerator()}` };
     try {
-      console.log(formData);
+      // console.log(formData);
+      sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
 
       const res = await createNewTicket(formData);
       const response = res;

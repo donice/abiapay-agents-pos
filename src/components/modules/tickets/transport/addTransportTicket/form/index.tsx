@@ -1,17 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, BackButton } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useTransportTicketForm } from "./useTransportTicket";
 import "./style.scss";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import axios from "axios";
 import toast from "react-hot-toast";
 import SuccessModal from "@/src/components/common/modal";
+import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 
-interface TicketData {
-  [key: string]: any;
-}
 const AddTransportTicketForm: React.FC = () => {
   const {
     register,
@@ -29,32 +26,21 @@ const AddTransportTicketForm: React.FC = () => {
     paymentRef,
   } = useTransportTicketForm();
 
-  const [data, setData] = useState<TicketData | null>(null);
-
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedData = sessionStorage.getItem("TRANSPORT_INVOICE");
-      if (storedData) {
-        setData(JSON.parse(storedData));
-      }
-    }
-  }, []);
-
   let plateNumber = watch("plateNumber");
   const debouncedPlateNumber = useDebounce(plateNumber, 500);
+  const paymentPeriod = watch("paymentPeriod"),
+    productCode = watch("productCode");
 
-  const fetchPlateNumberInfo = async (plateNumber: string) => {
+  const getPlateNumberInfo = async (plateNumber: string) => {
     try {
-      const response = await axios.post(
-        "https://sandboxmobileapi.abiapay.ng/api/v1/transport/get-plate-number-info",
-        { plate_number: plateNumber }
-      );
+      const response = await fetchPlateNumberInfo(plateNumber);
 
-      toast.success(response.data?.message);
-      const { Name, Phone } = response.data.data;
-      setValue("taxPayerName", Name);
-      setValue("taxPayerPhone", Phone);
+      if (response.data?.length !== 0) {
+        toast.success(response?.message);
+        const { Name, Phone } = response.data;
+        setValue("taxPayerName", Name);
+        setValue("taxPayerPhone", Phone);
+      }
     } catch (error) {
       console.error("Error fetching plate number information:", error);
       toast.error("Error fetching plate number information");
@@ -63,7 +49,7 @@ const AddTransportTicketForm: React.FC = () => {
 
   useEffect(() => {
     if (debouncedPlateNumber) {
-      fetchPlateNumberInfo(debouncedPlateNumber);
+      getPlateNumberInfo(debouncedPlateNumber);
     }
   }, [debouncedPlateNumber]);
 
@@ -74,10 +60,13 @@ const AddTransportTicketForm: React.FC = () => {
         name="productCode"
         id="productCode"
         onChange={handleProductChange}
-        options={products && products.map((product) => ({
-          value: product.productCode,
-          label: product.productName,
-        }))}
+        options={
+          products &&
+          products.map((product) => ({
+            value: product.productCode,
+            label: product.productName,
+          }))
+        }
         placeholder="Select Ticket Type"
         error={!!errors.productCode}
       />
@@ -165,10 +154,15 @@ const AddTransportTicketForm: React.FC = () => {
       />
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
-        <Button text="Save & Continue" />
+        <Button text="Proceed Payment" />
       </div>
-      {show && <SuccessModal text="Go to transport" link="/tickets/transport" id={`Ref: ${paymentRef}, Valid for: ${data?.paymentPeriod}, Payment for: ${data?.productCode} `}/>}
-    
+      {show && (
+        <SuccessModal
+          text="View Receipt"
+          link="/tickets/transport/add/summary"
+          id={`Ref: ${paymentRef}, Valid for: ${paymentPeriod}, Payment for: ${productCode} `}
+        />
+      )}
     </form>
   );
 };

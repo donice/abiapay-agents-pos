@@ -29,3 +29,12 @@ export const fetchTransactions = async ()=> {
   }
 };
 
+export const fetchPlateNumberInfo = async ( plate_number: string )=> {
+  try {
+    const { data } = await axiosInstance.post(`${url}/transport/get-plate-number-info`, {"plate_number": plate_number});
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+

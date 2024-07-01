@@ -1,12 +1,21 @@
 import React from 'react'
 import Image from 'next/image'
 import Logo from "../../assets/logo.svg"
+import AbiaStatelogo from "../../assets/abia_logo.jpeg"
 import LogoWhite from "../../assets/logo_white.svg"
 
 export const AbiaLogo = () => {
   return (
     <div>
       <Image src={Logo} alt="Abiapay Agents Logo" width={100} loading='eager' priority={true}/>
+    </div>
+  )
+}
+
+export const AbiaStateLogo = () => {
+  return (
+    <div>
+      <Image src={AbiaStatelogo} alt="Abiapay State Logo" width={70} loading='eager' priority={true}/>
     </div>
   )
 }
