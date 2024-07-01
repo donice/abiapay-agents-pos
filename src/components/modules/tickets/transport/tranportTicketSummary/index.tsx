@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import SuccessModal from "@/src/components/common/modal";
+import { createNewTicket } from "@/src/services/ticketsServices";
 
 interface TicketData {
   [key: string]: any;

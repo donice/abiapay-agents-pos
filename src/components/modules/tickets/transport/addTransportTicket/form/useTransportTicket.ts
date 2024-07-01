@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { useRouter } from "next/navigation";
 import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
+import { createNewTicket } from "@/src/services/ticketsServices";
 
 interface Product {
   productCode: string;
@@ -29,13 +30,13 @@ export const useTransportTicketForm = () => {
       productCode: "",
       next_expiration_date: "",
       no_of_days: "",
-      amount: 0,
+      amount: "",
       lga: "",
       agentEmail: "",
       plateNumber: "",
       taxPayerPhone: "",
       taxPayerName: "",
-      wallet_type: "",
+      wallet_type: "fidelity",
     },
   });
   const router = useRouter();
@@ -43,6 +44,8 @@ export const useTransportTicketForm = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [selectedPeriod, setSelectedPeriod] = useState<string>("");
+  const [paymentRef, setPaymentRef] = useState("");
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     setValue("agentEmail", user_data?.email);
@@ -52,9 +55,25 @@ export const useTransportTicketForm = () => {
     const formData = { ...data, transaction_date: getCurrentDateTime(), invoice_id: `INV${randomInvoiceGenerator()}` };
     try {
       console.log(formData);
-      toast.success("Added Successfully");
-      useIsBrower() && sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
-      router.push("/tickets/transport/add/summary");
+
+      const res = await createNewTicket(formData);
+      const response = res;
+
+      console.log(response);
+
+      if (response.response_code == "00") {
+        toast.success(response.response_message);
+        setPaymentRef(response.payment_ref);
+        console.log(response.payment_ref);
+        setShow(true);
+      } 
+      else if (response.response_code === "74") {
+        toast.error(response.response_message);
+        router.push("/tickets/transport");
+      } else {
+        toast.error(`${response.response_message}, Try again`);
+      }
+
     } catch {
       toast.error("Error Creating Ticket");
     }
@@ -133,6 +152,8 @@ export const useTransportTicketForm = () => {
     handleProductChange,
     handlePeriodChange,
     setValue,
+    show,
+    paymentRef,
   };
 };
 

@@ -1,12 +1,12 @@
 import React, { ReactElement } from "react";
 import { Metadata } from "next";
 import { CustomHeader } from "@/src/components/common/header";
-import { FcShipped, FcPaid } from "react-icons/fc";
+import { FcShipped, FcPaid, FcAcceptDatabase, FcMoneyTransfer } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
 
 export const metadata: Metadata = {
-  title: "Add Ticket",
+  title: "Manage Ticket",
   description: "Agents Portal Tickets Page",
 };
 
@@ -25,17 +25,23 @@ const tickets: TicketsProps[] = [
     icon: <FcShipped className="icon" />,
   },
   {
-    name: "tickets/market/add",
-    title: "Market Tickets",
-    desc: "Create market ticket",
-    icon: <FcPaid className="icon" />,
+    name: "tickets/transport",
+    title: "Transaction History",
+    desc: "View your Tickets Transactions History",
+    icon: <FcAcceptDatabase className="icon" />,
+  },
+  {
+    name: "transfers",
+    title: "Transfer History",
+    desc: "View your Wallet Transfer History",
+    icon: <FcMoneyTransfer className="icon" />,
   },
 ];
 
 const AddTicketPage = () => {
   return (
     <div className="ticketspage">
-      <CustomHeader title="Add Ticket" desc={"Select ticket type"} />
+      <CustomHeader title="Manage Ticket" desc={"Manage your tickets"} />
 
       <div className="ticketspage_items">
         {tickets.map((item) => (

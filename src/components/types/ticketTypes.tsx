@@ -11,7 +11,7 @@ export interface CreateTicketPayload {
   taxPayerName: string;
   next_expiration_date: string;
   no_of_days: string;
-  amount: number;
+  amount: number | string;
   wallet_type: string;
 }
 

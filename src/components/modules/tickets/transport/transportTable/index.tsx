@@ -23,7 +23,7 @@ const TransactionsTable: React.FC = () => {
 
   const fetced_data = data?.data || [];
 
-  console.log(data?.data, "DATATATATA");
+  // console.log(data?.data, "DATATATATA");
 
   if (isLoading) {
     return (

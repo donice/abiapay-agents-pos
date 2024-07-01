@@ -7,7 +7,11 @@ import "./style.scss";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import axios from "axios";
 import toast from "react-hot-toast";
+import SuccessModal from "@/src/components/common/modal";
 
+interface TicketData {
+  [key: string]: any;
+}
 const AddTransportTicketForm: React.FC = () => {
   const {
     register,
@@ -21,7 +25,21 @@ const AddTransportTicketForm: React.FC = () => {
     handleProductChange,
     handlePeriodChange,
     setValue,
+    show,
+    paymentRef,
   } = useTransportTicketForm();
+
+  const [data, setData] = useState<TicketData | null>(null);
+
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedData = sessionStorage.getItem("TRANSPORT_INVOICE");
+      if (storedData) {
+        setData(JSON.parse(storedData));
+      }
+    }
+  }, []);
 
   let plateNumber = watch("plateNumber");
   const debouncedPlateNumber = useDebounce(plateNumber, 500);
@@ -33,14 +51,10 @@ const AddTransportTicketForm: React.FC = () => {
         { plate_number: plateNumber }
       );
 
-      if (response.data?.data.length < 1) {
-        toast.error("Failed to retrieve plate number information");
-      } else {
-        toast.success(response.data?.message);
-        const { Name, Phone } = response.data.data;
-        setValue("taxPayerName", Name);
-        setValue("taxPayerPhone", Phone);
-      }
+      toast.success(response.data?.message);
+      const { Name, Phone } = response.data.data;
+      setValue("taxPayerName", Name);
+      setValue("taxPayerPhone", Phone);
     } catch (error) {
       console.error("Error fetching plate number information:", error);
       toast.error("Error fetching plate number information");
@@ -53,19 +67,18 @@ const AddTransportTicketForm: React.FC = () => {
     }
   }, [debouncedPlateNumber]);
 
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
       <SelectInput
-        label="Vehicle Type"
+        label="Ticket Type"
         name="productCode"
         id="productCode"
         onChange={handleProductChange}
-        options={products.map((product) => ({
+        options={products && products.map((product) => ({
           value: product.productCode,
           label: product.productName,
         }))}
-        placeholder="Select Vehicle Type"
+        placeholder="Select Ticket Type"
         error={!!errors.productCode}
       />
 
@@ -79,15 +92,6 @@ const AddTransportTicketForm: React.FC = () => {
         error={errors.plateNumber}
       />
 
-      <FormTextInput
-        label="Taxpayer Name"
-        type="text"
-        name="taxPayerName"
-        placeholder="Enter Taxpayer Name"
-        register={register}
-        validation={{ required: true }}
-        error={errors.taxPayerName}
-      />
       <FormTextInput
         label="Taxpayer Phone Number"
         type="number"
@@ -107,6 +111,17 @@ const AddTransportTicketForm: React.FC = () => {
         }}
         error={errors.taxPayerPhone}
       />
+
+      <FormTextInput
+        label="Taxpayer Name"
+        type="text"
+        name="taxPayerName"
+        placeholder="Enter Taxpayer Name"
+        register={register}
+        validation={{ required: true }}
+        error={errors.taxPayerName}
+      />
+
       <SelectInput
         label="Payment Period"
         name="paymentPeriod"
@@ -115,6 +130,7 @@ const AddTransportTicketForm: React.FC = () => {
         onChange={handlePeriodChange}
         disabled={!selectedProduct}
         options={[
+          { value: "", label: "Select Payment Period" },
           { value: "1 Day", label: "1 Day" },
           { value: "1 Week", label: "1 Week" },
           { value: "1 Month", label: "1 Month" },
@@ -122,19 +138,18 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Select Payment Period"
         error={!!errors.paymentPeriod}
       />
-      {selectedPeriod && (
-        <div>
-          <FormTextInput
-            label="Amount"
-            type="number"
-            name="amount"
-            placeholder="Enter Amount"
-            register={register}
-            validation={{ required: true }}
-            error={errors.amount}
-          />
-        </div>
-      )}
+      <div>
+        <FormTextInput
+          label="Amount"
+          type="number"
+          name="amount"
+          placeholder="Enter Amount"
+          register={register}
+          readOnly
+          validation={{ required: true }}
+          error={errors.amount}
+        />
+      </div>
       <SelectInput
         label="Choose Wallet"
         name="wallet_type"
@@ -142,8 +157,8 @@ const AddTransportTicketForm: React.FC = () => {
         register={register}
         validation={{ required: true }}
         options={[
-          { value: "access", label: "Access Bank" },
           { value: "fidelity", label: "Fidelity Bank" },
+          { value: "access", label: "Access Bank" },
         ]}
         placeholder="Select Wallet Type"
         error={!!errors.wallet_type}
@@ -152,6 +167,8 @@ const AddTransportTicketForm: React.FC = () => {
         <BackButton link="/tickets/transport" />
         <Button text="Save & Continue" />
       </div>
+      {show && <SuccessModal text="Go to transport" link="/tickets/transport" id={`Ref: ${paymentRef}, Valid for: ${data?.paymentPeriod}, Payment for: ${data?.productCode} `}/>}
+    
     </form>
   );
 };
