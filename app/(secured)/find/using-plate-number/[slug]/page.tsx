@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { getLastPathSegment } from "@/src/utils/getLastPathSegment";
-import React from "react";
+import React, { useState } from "react";
 import { SelectInput } from "@/src/components/common/input";
 import { BackButton, Button } from "@/src/components/common/button";
 import "./style.scss";
@@ -14,9 +14,11 @@ import { useMutation } from "@tanstack/react-query";
 import { createNewTicket } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
+import SuccessModal from "@/src/components/common/modal";
 
 const Dynamic = () => {
   const path = usePathname();
+  const [show, setShow] = useState(false);
   const segment = getLastPathSegment(path);
   let fetched_data = sessionStorage.getItem("TICKETS_DATA");
   const data = fetched_data && JSON.parse(fetched_data);
@@ -58,6 +60,7 @@ const Dynamic = () => {
     onSuccess: (data) => {
       data.message && toast.error(getErrorMessages(data.message));
       data.response_code == "00" ? toast.success(data.response_message) : toast.error(data.response_message)
+      setShow(true);
     },
     onError: (error) => {
       console.log(error);
@@ -123,9 +126,16 @@ const Dynamic = () => {
         />
         <div className="ticket-details_form_btn">
           <Button text={"Re-Vend Ticket"} loading={isPending} />
-          <BackButton link={"/find/using-phone-number"} />
+          <BackButton link={"/find/using-plate-number"} />
         </div>
       </form>
+      {show && (
+        <SuccessModal
+          text="View Receipt"
+          link="/tickets/transport/add/summary"
+          id={`Ref: ${data?.payment_ref}, Valid for: ${ticket[0]?.payment_period}, Payment for: ${ticket[0]?.revenue_item} `}
+        />
+      )}
     </div>
   );
 };
