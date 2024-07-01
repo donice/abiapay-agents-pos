@@ -45,7 +45,7 @@ const UsingPhoneNumberComponent = () => {
                   >
                     <div>
                       <p>{CamelCaseToTitleCase(transaction.revenue_item)}</p>
-                      <p>{transaction.taxpayer_phone}</p>
+                      <p>{transaction.plate_number}</p>
                       <p>{new Date(transaction.trans_date).toLocaleString()}</p>
                       <p>{transaction.reference}</p>
                     </div>

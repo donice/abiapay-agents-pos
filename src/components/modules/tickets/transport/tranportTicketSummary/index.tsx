@@ -69,7 +69,7 @@ const TransportTicketsSummaryComponent: React.FC = () => {
                 .map(([key, value]) => (
                   <div key={key} className="line-items">
                     <p>{CamelCaseToTitleCase(key)}:</p>
-                    <p>{value}</p>
+                    <p>{key === "wallet_type" ? CamelCaseToTitleCase(value) : value}</p>
                   </div>
                 ))}
             </div>
