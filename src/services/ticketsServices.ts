@@ -1,7 +1,7 @@
 import axiosInstance from "../lib/axiosInstance";
 import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
-import { CreateTicketPayload, Transaction } from "../components/types/ticketTypes";
+import { CreateTicketPayload } from "../components/types/ticketTypes";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 

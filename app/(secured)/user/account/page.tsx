@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Metadata } from "next";
 import { CustomHeader } from "@/src/components/common/header";
-import { FcShipped, FcPaid, FcMoneyTransfer } from "react-icons/fc";
+import { FcShipped, FcPaid, FcMoneyTransfer, FcAcceptDatabase } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
 import TicketsWalletCard from "@/src/components/modules/tickets/ticketsWalletsCard";
@@ -22,7 +22,13 @@ const items: AccountsProps[] = [
   {
     name: "tickets/transport",
     title: "Transaction History",
-    desc: "View History",
+    desc: "Tickets Transactions History",
+    icon: <FcAcceptDatabase className="icon" />,
+  },
+  {
+    name: "transfers",
+    title: "Transfer History",
+    desc: "Wallet Transfer History",
     icon: <FcMoneyTransfer className="icon" />,
   },
 ];

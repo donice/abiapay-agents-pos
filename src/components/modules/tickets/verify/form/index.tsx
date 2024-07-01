@@ -2,52 +2,70 @@
 import React from "react";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
-import { useMutation } from "@tanstack/react-query";
+import {
+  verifyTicket,
+  VerifyTicketPayload,
+} from "@/src/services/verifyTickets";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import "./style.scss";
-
-interface FormData {
-  ref_type: string;
-  ref_number: string;
-}
+import toast from "react-hot-toast";
 
 const VerifyTicketsFrom = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<VerifyTicketPayload>({
+    defaultValues: {
+      agnetEmail: "",
+      referenceID: "",
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: (data: VerifyTicketPayload) => verifyTicket(data),
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success(
+        data?.message || "Ticket Verified Successfully, reach Donice to dispay"
+      );
+    },
+    onError: (error: any) => {
+      console.log(error);
+      toast.error(error.message);
+    },
+    
+  });
+
+  const onSubmit = (data: VerifyTicketPayload) => {
+    mutation.mutate(data);
+  };
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))} className="verify-tickets-form">
+    <form onSubmit={handleSubmit(onSubmit)} className="verify-tickets-form">
       <SelectInput
         label="Reference Type"
         name="ref_type"
         id="ref_type"
-        register={register}
-        validation={{ required: true }}
         options={[
           { label: "Plate Number", value: "plate_number" },
           { label: "Payment Reference", value: "payment_ref" },
         ]}
         placeholder="Select Reference Type"
-        error={!!errors.ref_type}
       />
 
       <FormTextInput
         label="Reference Number"
         type="text"
-        name="ref_number"
+        name="referenceID"
         placeholder="Enter Reference Number"
         register={register}
         validation={{ required: true }}
-        error={errors.ref_number}
-        onChange={(e: any) => {
-          console.log(e.target.value);
-        }}
+        error={errors.referenceID}
       />
 
-      <Button text="Verify Ticket" loading={false}/>
+      <Button text="Verify Ticket" loading={mutation.isPending} />
     </form>
   );
 };
