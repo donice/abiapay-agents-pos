@@ -1,24 +1,25 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import {
   verifyTicket,
   VerifyTicketPayload,
 } from "@/src/services/verifyTickets";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import "./style.scss";
 import toast from "react-hot-toast";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
-const VerifyTicketsFrom = () => {
+const VerifyTicketsFrom = ({ userData }: any) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<VerifyTicketPayload>({
     defaultValues: {
-      agnetEmail: "",
+      agentEmail: userData?.email,
       referenceID: "",
     },
   });
@@ -32,13 +33,12 @@ const VerifyTicketsFrom = () => {
       );
     },
     onError: (error: any) => {
-      console.log(error);
       toast.error(error.message);
     },
-    
   });
 
   const onSubmit = (data: VerifyTicketPayload) => {
+    console.log(data);
     mutation.mutate(data);
   };
 

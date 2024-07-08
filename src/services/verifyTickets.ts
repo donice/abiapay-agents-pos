@@ -3,7 +3,7 @@ import axiosInstance from "../lib/axiosInstance";
 const url = process.env.NEXT_PUBLIC_APP_URL;
 
 export interface VerifyTicketPayload {
-  agnetEmail: string;
+  agentEmail: string;
   referenceID: string;
 }
 
