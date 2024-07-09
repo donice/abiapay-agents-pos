@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="myForm">
+      <label for="agentEmail">Email</label><br />
+      <input type="text" name="agentEmail" id="agentEmail" /><br />
+
+      <label for="referenceID">Ref ID</label><br />
+      <input type="text" name="referenceID" id="referenceID" /><br />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      const form = document.getElementById('myForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('agentEmail').value;
+        const referenceID = document.getElementById('referenceID').value;
+        fetch('https://demo.paytax.ng/api/verifyTicket', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, referenceID })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+      });
+    </script>
+  </body>
+</html>

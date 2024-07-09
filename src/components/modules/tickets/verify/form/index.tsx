@@ -41,6 +41,7 @@ const VerifyTicketsFrom = ({ userData }: any) => {
     mutation.mutate(data);
   };
 
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="verify-tickets-form">
       <SelectInput
@@ -53,7 +54,7 @@ const VerifyTicketsFrom = ({ userData }: any) => {
         ]}
         placeholder="Select Reference Type"
       />
-      
+
       <FormTextInput
         label="Reference Number"
         type="text"
@@ -62,7 +63,7 @@ const VerifyTicketsFrom = ({ userData }: any) => {
         register={register}
         validation={{ required: true }}
         error={errors.referenceID}
-      /> 
+      />
       <Button text="Verify Ticket" loading={mutation.isPending} />
     </form>
   );
