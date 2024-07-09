@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import {
@@ -10,7 +10,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import "./style.scss";
 import toast from "react-hot-toast";
-import useIsBrower from "@/src/hooks/useIsBrower";
 
 const VerifyTicketsFrom = ({ userData }: any) => {
   const {
@@ -19,7 +18,7 @@ const VerifyTicketsFrom = ({ userData }: any) => {
     formState: { errors },
   } = useForm<VerifyTicketPayload>({
     defaultValues: {
-      agentEmail: userData?.email,
+      agentEmail: userData?.email || "",
       referenceID: "",
     },
   });
@@ -54,7 +53,7 @@ const VerifyTicketsFrom = ({ userData }: any) => {
         ]}
         placeholder="Select Reference Type"
       />
-
+      
       <FormTextInput
         label="Reference Number"
         type="text"
@@ -63,8 +62,7 @@ const VerifyTicketsFrom = ({ userData }: any) => {
         register={register}
         validation={{ required: true }}
         error={errors.referenceID}
-      />
-
+      /> 
       <Button text="Verify Ticket" loading={mutation.isPending} />
     </form>
   );

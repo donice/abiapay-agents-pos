@@ -25,6 +25,8 @@ const VerifyTicketsComponent = () => {
     }
   }, []);
 
+  console.log(userData);
+
   return (
     <section className="verify-tickets">
       <div className="verify-tickets-comp">
