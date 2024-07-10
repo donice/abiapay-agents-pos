@@ -30,7 +30,7 @@ export const fetchABSSINData = async () => {
 
 export const fetchEnumerationData = async () => {
   try {
-    const res = await axiosInstance.get(`${url}/enumeration/total-collected`);
+    const res = await axiosInstance.post(`${url}/enumeration/transport`);
     return res.data;
   } catch (error: any) {
     console.log(error);

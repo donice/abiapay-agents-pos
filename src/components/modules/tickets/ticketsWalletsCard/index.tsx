@@ -29,7 +29,7 @@ const TicketsWalletCard = () => {
     );
   }
 
-  console.log(data.data, "Data");
+  // console.log(data.data, "Data");
 
   return (
     <>
