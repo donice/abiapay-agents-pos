@@ -64,7 +64,7 @@ const VerifyTicketsComponent = () => {
           <div>
              <div className="line-items">
                 <p>Status:</p>
-                <p className="success">{details?.response_message}</p>
+                <p className="success">Active</p>
               </div>
             {Object.entries(details)
             .filter(([key]) => displayKeys.includes(key))

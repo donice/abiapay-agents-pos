@@ -12,6 +12,7 @@ import { GoVerified } from "react-icons/go";
 import { fetchTransactions } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { TbLoader } from "react-icons/tb";
+import addEllipses from "@/src/utils/addElipses";
 
 
 const TransactionsTable: React.FC = () => {
@@ -64,7 +65,7 @@ const TransactionsTable: React.FC = () => {
                   <p>{transaction.revenue_item}</p>
                   <p>{transaction.agency}</p>
                   <p>{new Date(transaction.trans_date).toLocaleString()}</p>
-                  <p>{transaction.reference}</p>
+                  <p>{addEllipses(transaction?.reference, 20)}</p>
                 </div>
                 <div>
                   <p>N{formatAmount(transaction.amount)}</p>
