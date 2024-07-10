@@ -1,11 +1,16 @@
 @use "../../../../styles/index.scss" as *;
 
 .tickets-wallet {
-  // width: fit-content;
-  gap: 0.5rem;
-  display: flex;
-  overflow: scroll;
-  // position: fixed;
+ display: grid;
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ gap: 1rem;
+
+  @include custom-media-query("mobile", $sm) {
+    // flex-direction: column;
+    gap: 0.5rem;
+    display: flex;
+    overflow: scroll;
+  }
 
   &-card {
     $bold-primary-text: #3f3f46;
@@ -16,7 +21,11 @@
     background-color: $primary;
     color: #d4d4d8;
     font-size: 12px;
-    gap: 4.75rem;
+    gap: 2.75rem;
+
+    @include custom-media-query("mobile", $sm) {
+      gap: 4.75rem;
+    }
 
     &_balance {
       display: grid;
