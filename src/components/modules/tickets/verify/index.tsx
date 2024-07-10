@@ -6,6 +6,7 @@ import "./style.scss";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import Empty from "@/src/components/common/empty";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
+import { formatDate } from "@/src/utils/formatDate";
 
 interface DetailsType {
   response_code?: string;
@@ -36,10 +37,10 @@ const VerifyTicketsComponent = () => {
 
   const displayKeys = [
     "vehicle_type",
+    "no_of_days",
     "driver_phone",
     "last_ticket_ref",
-    "no_of_days",
-
+    "last_ticket_purchase",
   ];
 
   return (
@@ -70,7 +71,7 @@ const VerifyTicketsComponent = () => {
             .map(([key, value]) => (
               <div key={key} className="line-items">
                 <p>{CamelCaseToTitleCase(key)}:</p>
-                <p>{key === "no_of_days" ? CamelCaseToTitleCase(value) : value}</p>
+                <p>{key === "no_of_days" ? CamelCaseToTitleCase(value) : key === "last_ticket_purchase" ? formatDate(value) : value}</p>
               </div>
             ))}
           </div>

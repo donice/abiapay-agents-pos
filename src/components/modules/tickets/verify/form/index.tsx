@@ -34,7 +34,7 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
     },
     onError: (error: any) => {
       toast.error(error.message);
-       console.log(error.data);
+      setDetails({});
     },
   });
 
