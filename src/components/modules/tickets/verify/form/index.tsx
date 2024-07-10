@@ -11,14 +11,14 @@ import { useForm } from "react-hook-form";
 import "./style.scss";
 import toast from "react-hot-toast";
 
-const VerifyTicketsFrom = ({ userData }: any) => {
+const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<VerifyTicketPayload>({
     defaultValues: {
-      agentEmail: "str.jtr2@yahoo.com",
+      agentEmail: userData?.email || "",
       referenceID: "",
     },
   });
@@ -27,17 +27,18 @@ const VerifyTicketsFrom = ({ userData }: any) => {
     mutationFn: (data: VerifyTicketPayload) => verifyTicket(data),
     onSuccess: (data) => {
       console.log(data);
+      setDetails(data);
       toast.success(
-        data?.message || "Ticket Verified Successfully, reach Donice to dispay"
+        data?.response_message || "Ticket Verified Successfully, reach Donice to dispay"
       );
     },
     onError: (error: any) => {
       toast.error(error.message);
+       console.log(error.data);
     },
   });
 
   const onSubmit = (data: VerifyTicketPayload) => {
-    console.log(data);
     mutation.mutate(data);
   };
 
