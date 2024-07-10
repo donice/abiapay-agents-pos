@@ -36,7 +36,7 @@ const nav_items: SideNavProps[] = [
   },
   {
     name: "user/account",
-    title: "User Account",
+    title: "My Account",
     icon: <TbUser className="icon" />,
   },
 ];

@@ -52,13 +52,13 @@ const nav_items: BottomNavProps[] = [
   },
   {
     name: "user/account",
-    title: "User Account",
+    title: "My Account",
     icon: <TbUser className="icon" />,
     icon_active: <TbUserFilled className="icon active" />,
   },
   {
     name: "user/settings",
-    title: "User Account",
+    title: "My Account",
     icon: <TbSettings className="icon" />,
     icon_active: <TbSettingsFilled className="icon active" />,
   },

@@ -36,7 +36,7 @@ const items: AccountsProps[] = [
 const UserAccountPage = () => {
   return (
     <div className="account">
-      <CustomHeader title="User Account" desc={"Explore your account"} />
+      <CustomHeader title="My Account" desc={"Explore your account"} />
 
       <div className="account_container">
         <TicketsWalletCard />
