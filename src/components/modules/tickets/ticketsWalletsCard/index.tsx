@@ -5,6 +5,7 @@ import { fetchEnumerationData } from "@/src/services/dashboardService";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/app/(secured)/loading";
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
+import { formatAmount } from "@/src/utils/formatAmount";
 
 const TicketsWalletCard = () => {
   const { data, isLoading, isError } = useQuery({
@@ -37,7 +38,7 @@ const TicketsWalletCard = () => {
           <div className="tickets-wallet-card">
             <div className="tickets-wallet-card_balance">
               <span>Today's Collections</span>
-              <span>N{data.data?.[0].total_amount}</span>
+              <span>N{formatAmount(data.data?.[0].total_amount)}</span>
             </div>
 
             <div className="tickets-wallet-card_image"></div>
@@ -50,7 +51,7 @@ const TicketsWalletCard = () => {
           <div className="tickets-wallet-card">
             <div className="tickets-wallet-card_balance">
               <span>Week's Collections</span>
-              <span>N{data.data?.[0].total_amount_monthly}</span>
+              <span>N{formatAmount(data.data?.[0].total_amount_monthly)}</span>
             </div>
 
             <div className="tickets-wallet-card_image"></div>
