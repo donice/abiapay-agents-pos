@@ -37,6 +37,21 @@
             }
 
             &:last-child {
+              font-size: 14px;
+              color: $text-primary;
+            }
+          }
+        }
+        div:last-child {
+          p {
+            font-size: 14px;
+            &:first-child {
+              font-weight: bold;
+              font-size: 16px;
+              color: green;
+            }
+
+            &:last-child {
               font-size: 12px;
               color: $text-primary;
             }

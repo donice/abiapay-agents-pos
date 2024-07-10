@@ -154,7 +154,7 @@ const AddTransportTicketForm: React.FC = () => {
       />
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
-        <Button text="Proceed Payment" />
+        <Button text="Process Payment" />
       </div>
       {show && (
         <SuccessModal

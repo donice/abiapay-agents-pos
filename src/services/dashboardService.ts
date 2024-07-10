@@ -37,6 +37,16 @@ export const fetchEnumerationData = async () => {
   }
 };
 
+
+export const fetchCollectionData = async () => {
+  try {
+    const res = await axiosInstance.get(`${url}/enumeration/total-collected`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
 export const fetchTransportTicketData = async () => {
   try {
     const res = await axiosInstance.post(`${url}/transport/completed-transactions`);

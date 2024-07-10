@@ -14,7 +14,6 @@ import toast from "react-hot-toast";
 import { TbLoader } from "react-icons/tb";
 import addEllipses from "@/src/utils/addElipses";
 
-
 const TransactionsTable: React.FC = () => {
   const router = useRouter();
   const { data, error, isLoading, isError } = useQuery({
@@ -35,7 +34,7 @@ const TransactionsTable: React.FC = () => {
   }
 
   if (isError) {
-    toast.error(error instanceof Error ? error.message : "Unknown error")
+    toast.error(error instanceof Error ? error.message : "Unknown error");
   }
 
   if (!data || data.length === 0) {
@@ -62,22 +61,31 @@ const TransactionsTable: React.FC = () => {
                 // }
               >
                 <div>
+                  <p>{transaction.trans_ref}</p>
                   <p>{transaction.revenue_item}</p>
-                  <p>{transaction.agency}</p>
-                  <p>{new Date(transaction.trans_date).toLocaleString()}</p>
-                  <p>{addEllipses(transaction?.reference, 20)}</p>
+
+                  <p>{new Date(transaction.next_date).toLocaleString()}</p>
+                  {/* <p>{addEllipses(transaction?.reference, 20)}</p> */}
+                  <p>Ref: {transaction.payment_ref}</p>
                 </div>
                 <div>
                   <p>N{formatAmount(transaction.amount)}</p>
                   <p
                     className={`${
-                      transaction.status === "Completed" ? "completed" : "pending"
+                      transaction.status === "Completed"
+                        ? "completed"
+                        : "pending"
                     }`}
                   >
-                    {transaction.status === "Completed" ? <GoVerified /> : <TbLoader /> }
+                    {transaction.status === "Completed" ? (
+                      <GoVerified />
+                    ) : (
+                      <TbLoader />
+                    )}
                     {transaction.status}
                   </p>
                   <p>{transaction.payment_period}</p>
+                  <p>{new Date(transaction.trans_date).toLocaleString()}</p>
                 </div>
               </div>
             ))}
