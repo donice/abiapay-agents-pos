@@ -12,36 +12,39 @@ import "./style.scss";
 import toast from "react-hot-toast";
 
 const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
+  const agentEmail = userData?.email;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<VerifyTicketPayload>({
     defaultValues: {
-      agentEmail: userData?.email || "",
+      agentEmail: agentEmail || "",
       referenceID: "",
     },
   });
 
   const mutation = useMutation({
-    mutationFn: (data: VerifyTicketPayload) => verifyTicket(data),
+    mutationFn: async (data: VerifyTicketPayload) => verifyTicket(data),
     onSuccess: (data) => {
       console.log(data);
       setDetails(data);
-      toast.success(
-        data?.response_message || "Ticket Verified Successfully, reach Donice to dispay"
-      );
     },
     onError: (error: any) => {
-      toast.error(error.message);
+      toast.error(error);
       setDetails({});
+      console.log(error);
+      return error;
+    },
+    onSettled(data, error, variables, context) {
+      console.log(data, error, variables, context);
     },
   });
 
   const onSubmit = (data: VerifyTicketPayload) => {
     mutation.mutate(data);
   };
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="verify-tickets-form">

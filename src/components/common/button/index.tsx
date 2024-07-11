@@ -67,9 +67,7 @@ export const Button = ({ text, disabled, onClick, loading }: ButtonProps) => {
     if (!disabled) {
       if (onClick) {
         onClick(event);
-      } else {
-        console.log('Button clicked, but no onClick handler provided.');
-      }
+      } 
     }
   };
 
