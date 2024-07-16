@@ -15,6 +15,7 @@ interface DetailsType {
 
 const VerifyTicketsComponent = () => {
   const [details, setDetails] = useState<DetailsType>({});
+  const displayDetails = details
   const [userData, setUserData] = useState<{
     name?: string;
     email?: string;
@@ -43,6 +44,8 @@ const VerifyTicketsComponent = () => {
     "last_ticket_purchase",
   ];
 
+  console.log(details, "Detailssoihjasljalk");
+
   return (
     <section className="verify-tickets">
       <div className="verify-tickets-comp">
@@ -59,14 +62,14 @@ const VerifyTicketsComponent = () => {
       </div>
 
       <div className="verify-tickets-comp_details">
-        {Object.keys(details).length < 1 ? null : details?.response_code ==
-          "00" ? (
+        {Object.keys(displayDetails).length < 1 ? null : displayDetails?.response_code ==
+          "00" || displayDetails?.response_code == "97" ? (
           <div>
              <div className="line-items">
                 <p>Status:</p>
-                <p className="success">Active</p>
+                <p className="success">{displayDetails?.response_code == "00" ? "Valid" : "Invalid"}</p>
               </div>
-            {Object.entries(details)
+            {Object.entries(displayDetails)
             .filter(([key]) => displayKeys.includes(key))
             .map(([key, value]) => (
               <div key={key} className="line-items">

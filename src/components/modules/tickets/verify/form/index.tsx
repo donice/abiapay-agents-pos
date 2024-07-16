@@ -27,19 +27,29 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
 
   const mutation = useMutation({
     mutationFn: async (data: VerifyTicketPayload) => verifyTicket(data),
-    onSuccess: (data) => {
-      console.log(data);
-      setDetails(data);
+    onSuccess: (data: any) => {
+
+      // if ("error" in data ) {
+       "error" in data && setDetails(data.error);
+        toast.error("No ticket for today");
+        console.log(data.error);
+        // setDetails(data.error);
+        return;
+      // } 
+
+      // toast.success(data.response_message);
+      // console.log(data);
+      // setDetails(data);
     },
     onError: (error: any) => {
       toast.error(error);
-      setDetails({});
+      setDetails(error.data);
       console.log(error);
       return error;
     },
-    onSettled(data, error, variables, context) {
-      console.log(data, error, variables, context);
-    },
+    // onSettled(data, error, variables, context) {
+    //   console.log(data, error, variables, context);
+    // },
   });
 
   const onSubmit = (data: VerifyTicketPayload) => {

@@ -9,13 +9,13 @@ export interface VerifyTicketPayload {
 export const verifyTicket = async (requestData: VerifyTicketPayload) => {
   try {
     const res = await https(
-      "https://rgw.apis.ng/abia/sandbox/v1/verifyTicket",
+      `${base_url}verifyTicket`,
       {
         method: "POST",
         body: JSON.stringify(requestData),
         headers: {
           "Content-Type": "application/json",
-          "X-IBM-Client-Id": "ed1042a6b25cfb721013309eeaeafc05",
+          "X-IBM-Client-Id": ibm as string,
         },
       }
     );
