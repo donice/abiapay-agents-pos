@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
@@ -7,10 +7,11 @@ import {
   verifyPlateNumber,
   VerifyPlateNumberType,
 } from "@/src/services/transportEnumerationService";
-import { getErrorMessages } from "@/src/utils/helper";
 import toast from "react-hot-toast";
+import {SuccessModal} from "@/src/components/common/modal";
 
 const VehicleData = ({ setStage }: any) => {
+  const [show, setShow] = useState(false);
   const {
     register,
     handleSubmit,
@@ -43,6 +44,7 @@ const VehicleData = ({ setStage }: any) => {
   const onSubmit = (reqData: any) => {
     mutate(reqData);
     console.log(reqData);
+    setShow(true);
     // setStage(1);
   };
 
@@ -90,6 +92,14 @@ const VehicleData = ({ setStage }: any) => {
         />
         <Button text="Save & Continue" loading={isPending} />
       </form>
+
+      {show && (
+        <SuccessModal
+          text="View Receipt"
+          link="/tickets/transport/add/summary"
+          id={`Ref: `}
+        />
+      )}
     </div>
   );
 };

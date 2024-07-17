@@ -14,7 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createNewTicket } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
-import SuccessModal from "@/src/components/common/modal";
+import {SuccessModal} from "@/src/components/common/modal";
 
 const Dynamic = () => {
   const path = usePathname();

@@ -6,7 +6,7 @@ import { useTransportTicketForm } from "./useTransportTicket";
 import "./style.scss";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import toast from "react-hot-toast";
-import SuccessModal from "@/src/components/common/modal";
+import {SuccessModal} from "@/src/components/common/modal";
 import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 
 const AddTransportTicketForm: React.FC = () => {
