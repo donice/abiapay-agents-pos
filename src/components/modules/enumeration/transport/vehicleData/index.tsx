@@ -8,10 +8,14 @@ import {
   VerifyPlateNumberType,
 } from "@/src/services/transportEnumerationService";
 import toast from "react-hot-toast";
-import {SuccessModal} from "@/src/components/common/modal";
+import { InfoModal } from "@/src/components/common/modal";
 
-const VehicleData = ({ setStage }: any) => {
-  const [show, setShow] = useState(false);
+const VehicleData = ({ setStage, setDetails }: any) => {
+  const [show, setShow] = useState({
+    mode: false,
+    status: "",
+  });
+
   const {
     register,
     handleSubmit,
@@ -31,9 +35,15 @@ const VehicleData = ({ setStage }: any) => {
     mutationKey: ["verify_plate_number"],
     onSuccess: (data) => {
       console.log(data);
-      data.response_code == "00"
-        ? toast.success("Plate Number Verified Successfully")
-        : toast.error("Error Verifying Plate Number");
+      setDetails(data?.response_data);
+      if (data.response_code == "00") {
+        toast.success("Plate Number Verified Successfully");
+        setShow({ mode: true, status: "success" });
+        setStage(1);
+      } else {
+        toast.error("Error Verifying Plate Number");
+        setShow({ mode: true, status: "error" });
+      }
     },
     onError: (error) => {
       toast.error("Error Verifying Plate Number");
@@ -44,13 +54,12 @@ const VehicleData = ({ setStage }: any) => {
   const onSubmit = (reqData: any) => {
     mutate(reqData);
     console.log(reqData);
-    setShow(true);
     // setStage(1);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="vehicledata-form">
+      <form onSubmit={handleSubmit(onSubmit)} className="enumeration-form">
         <FormTextInput
           label="Driver's Phone Number (e.g 08123456789)"
           type="number"
@@ -70,13 +79,6 @@ const VehicleData = ({ setStage }: any) => {
           error={errors.plate_number}
         />
         <SelectInput
-          label="Vehicle Category"
-          name="vehicle_category"
-          id="vehicle_category"
-          options={[{ label: "Car", value: "Car" }]}
-          placeholder="Select Vehicle Category"
-        />
-        <SelectInput
           label="Operating Park"
           name="operating_park"
           id="operating_park"
@@ -93,11 +95,22 @@ const VehicleData = ({ setStage }: any) => {
         <Button text="Save & Continue" loading={isPending} />
       </form>
 
-      {show && (
-        <SuccessModal
-          text="View Receipt"
-          link="/tickets/transport/add/summary"
-          id={`Ref: `}
+      {/* {show.mode && show.status == "success" && (
+        <InfoModal
+          status={show.status}
+          text_header="Proceed Enumeration"
+          button_text="View Receipt"
+          link="/enumeration/save"
+          text_info={`Ref: `}
+        />
+      )} */}
+      {show.mode && show.status == "error" && (
+        <InfoModal
+          status={show.status}
+          text_header="Vehicle Information Not Found"
+          button_text="Enter Vehicle Details"
+          link="/enumeration/transport/save"
+          text_info={`Cannot Proceed. Please Register Vehicle Details`}
         />
       )}
     </div>

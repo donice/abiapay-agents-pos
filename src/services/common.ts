@@ -20,6 +20,14 @@ export const fetchLGAData = async () => {
   }
 }
 
+export const fetchStates = async () => {
+  try {
+    const res = await axiosInstance.post(`${url}/state`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
 
 export const fetchProducts = async () => {
   try {

@@ -8,7 +8,7 @@ import { FieldError } from "react-hook-form";
 interface InputProps {
   input_icon?: ReactNode;
   label: string;
-  type?: "text" | "password" | "email" | "number";
+  type?: "text" | "password" | "email" | "number" | "date";
   name: string;
   placeholder?: string;
   value?: string | number;
@@ -91,7 +91,7 @@ export const TextInput: React.FC<InputProps> = ({
 
 export const FormTextInput: React.FC<InputProps> = ({
   label,
-  type = "text",
+  type,
   name,
   placeholder = "",
   value,

@@ -1,9 +1,8 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import { FcOk } from "react-icons/fc";
+import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
-import { SecondaryButton } from "../button";
-import { TbMailbox, TbMailboxOff } from "react-icons/tb";
+import { PrimaryButton, SecondaryButton } from "../button";
 
 interface SuccessModalProps {
   id?: string;
@@ -11,8 +10,8 @@ interface SuccessModalProps {
   link?: string;
 }
 
-interface InfoModal {
-  id?: string;
+interface InfoModalType {
+  button_text?: string;
   text_header?: string;
   text_info?: string;
   link?: string;
@@ -54,10 +53,10 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
     </div>
   );
 };
-export const InfoModal: React.FC<InfoModal> = ({
-  id,
-  text_header,
+export const InfoModal: React.FC<InfoModalType> = ({
   text_info,
+  text_header,
+  button_text,
   link,
   status,
 }) => {
@@ -72,22 +71,21 @@ export const InfoModal: React.FC<InfoModal> = ({
   return (
     <div className="modalOverlay">
       <div className="modal">
-        {
-          status === "success" ? <TbMailbox className="error_icon" /> : <TbMailboxOff className="success_icon" />
-        }
+        {status === "success" ? (
+          <FcAcceptDatabase className="success_icon" />
+        ) : (
+          <FcDeleteDatabase className="error_icon" />
+        )}
         <div className="modalContent">
           <h2>{text_header}</h2>
           <p>
-            <span>{id ? id : ""}</span>{" "}
+            <span>{text_info ? text_info : ""}</span>{" "}
           </p>
-          {/* {text && <p>{text}</p>} */}
           {link && (
-            <button onClick={handleClick} className="button primary">
-              {text_info}
-            </button>
+            <PrimaryButton link={link} text={button_text ? button_text : ""} />
           )}
 
-          <SecondaryButton text="Create New" link={"/tickets/transport/add"} />
+          {/* <SecondaryButton text="Create New" link={"/tickets/transport/add"} /> */}
         </div>
       </div>
     </div>
