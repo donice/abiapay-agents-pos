@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Metadata } from "next";
 import { CustomHeader } from "@/src/components/common/header";
-import { FcShipped, FcPaid, FcMoneyTransfer, FcAcceptDatabase } from "react-icons/fc";
+import { FcMoneyTransfer, FcAcceptDatabase } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
 import TicketsWalletCard from "@/src/components/modules/tickets/ticketsWalletsCard";

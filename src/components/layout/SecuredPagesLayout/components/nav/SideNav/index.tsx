@@ -6,7 +6,6 @@ import getRoute from "@/src/hooks/getRoute";
 import {
   TbHome,
   TbTicket,
-  TbBasketDown,
   TbLogout2,
   TbLineScan,
   TbUser,

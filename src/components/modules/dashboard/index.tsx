@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useReducer, Reducer, useCallback, useState } from "react";
+import React, { useEffect, useReducer, type Reducer, useCallback, useState } from "react";
 import WalletCard from "./WalletCard";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
@@ -13,7 +13,7 @@ import {
 } from "@/src/services/dashboardService";
 import toast from "react-hot-toast";
 import LoaderSkeleton from "../../common/loader-skeleton";
-import { Action, State } from "../../types/dashboardTypes";
+import type { Action, State } from "../../types/dashboardTypes";
 import useIsBrower from "@/src/hooks/useIsBrower";
 
 const initialState: State = {
@@ -137,7 +137,7 @@ const DashboardComponent: React.FC = () => {
   return (
     <div className="dashboard">
       <header className="dashboard_header">
-        <CustomHeader title={`Welcome${userData?.name && ", " + userData?.name}`} desc="Overview of Dashboard" />
+        <CustomHeader title={`Welcome${userData?.name && `, ${userData?.name}`}`} desc="Overview of Dashboard" />
         <div className="dashboard_header_buttons">
           <SecondaryButton text="Akara Ekwenti" link="/find/using-phone-number" />
           <PrimaryButton text="Sharp Sharp" link="/find/using-plate-number" />
@@ -170,6 +170,7 @@ const DashboardComponent: React.FC = () => {
           <StatsCard
             name="Enumeration"
             amount={enumerationCount == null ? 0 : enumerationCount.toString()}
+            link="/enumeration"
           />
         </div>
       ) : (

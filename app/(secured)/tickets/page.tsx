@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import { Metadata } from "next";
+import React, { type ReactElement } from "react";
+import type { Metadata } from "next";
 import { CustomHeader } from "@/src/components/common/header";
 import { FcShipped, FcPaid, FcAcceptDatabase, FcMoneyTransfer } from "react-icons/fc";
 import Link from "next/link";
@@ -48,7 +48,7 @@ const TicketPage = () => {
           <Link
             href={`/${item.name}`}
             key={item.name}
-            className={`ticketspage_item`}
+            className={"ticketspage_item"}
           >
             <div >
               {" "}

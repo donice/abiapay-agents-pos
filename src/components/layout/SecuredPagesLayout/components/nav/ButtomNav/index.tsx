@@ -5,7 +5,6 @@ import Link from "next/link";
 import getRoute from "@/src/hooks/getRoute";
 import {
   TbHome,
-  TbLogout2,
   TbHomeFilled,
   TbSquareRoundedPlusFilled,
   TbSquareRoundedPlus,
