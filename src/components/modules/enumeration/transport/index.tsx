@@ -16,7 +16,7 @@ const TransportEnumerationComponent = () => {
      
       {stage === 0 && <VehicleData setStage={setStage} setDetails={setDetails}/>}
       {stage === 1 && <OwnerData setStage={setStage} details={details}/>}
-      {stage === 2 && <DriverData setStage={setStage} />}
+      {stage === 2 && <DriverData setStage={setStage} details={details}/>}
     </section>
   );
 };

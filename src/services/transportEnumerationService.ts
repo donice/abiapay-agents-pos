@@ -32,6 +32,24 @@ export interface SaveVehicleDetailsProps {
   merchant_key: string
 }
 
+export interface CreateTicketType {
+  taxpayer_category: string,
+  abssin: string,
+  vehicle_plate_number: string,
+  taxpayer_name: string,
+  taxpayer_phone: string,
+  revenue_year: string,
+  taxpayer_location: 0,
+  operating_park: string,
+  trade_union: string,
+  vehicle_category: string,
+  owner_name: string,
+  owner_address: string,
+  daily_ticket_amount: 0,
+  enumeration_fee: string,
+  merchant_key: string
+}
+
 export const verifyPlateNumber = async (requestBody: VerifyPlateNumberType) => {
   try {
     const { data } = await axiosInstance.post(`${url}/vehicle/verify-plate-number`, requestBody);
@@ -44,6 +62,16 @@ export const verifyPlateNumber = async (requestBody: VerifyPlateNumberType) => {
 export const saveVehicleDetails = async (requestBody: SaveVehicleDetailsProps) => {
   try {
     const { data } = await axiosInstance.post(`${url}/vehicle/save-vehicle-details`, requestBody);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+
+export const createTransportEnumeration = async (requestBody: CreateTicketType) => {
+  try {
+    const { data } = await axiosInstance.post(`${url}/enumeration/create-transport-enumeration`, requestBody);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);

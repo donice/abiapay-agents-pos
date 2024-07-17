@@ -31,7 +31,7 @@ const ProgressBar = ({ stage, setStage }: any) => {
             3. Driver Data
           </div>
         </div>
-        <div className="button-container">
+        {/* <div className="button-container">
           <button
             onClick={() => setStage(stage > 0 ? stage - 1 : 0)}
             disabled={stage === 0}
@@ -44,7 +44,7 @@ const ProgressBar = ({ stage, setStage }: any) => {
           >
             Next
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
