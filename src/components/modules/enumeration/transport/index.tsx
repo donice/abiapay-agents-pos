@@ -10,8 +10,6 @@ const TransportEnumerationComponent = () => {
   const [stage, setStage] = useState(0);
   const [details, setDetails] = useState({});
 
-  console.log(details);
-
   return (
     <section>
       <ProgressBar stage={stage} setStage={setStage}/>
