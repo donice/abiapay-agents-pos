@@ -48,13 +48,6 @@ const SaveVehicleDetailsComponent = () => {
     },
   });
 
-  const { data } = useQuery({
-    queryKey: ["get_states"],
-    queryFn: () => {
-      return fetchStates();
-    },
-  });
-
   const getStates = async () => {
     try {
       const data = await fetchStates();

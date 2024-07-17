@@ -13,7 +13,7 @@ const DriverData = ({ setStage, details }: any) => {
     vehicle_plate_number: "",
     taxpayer_name: "",
     taxpayer_phone: "",
-    revenue_year: "",
+    revenue_year: "2024",
     taxpayer_location: 0,
     operating_park: "",
     trade_union: "",
@@ -34,17 +34,27 @@ const DriverData = ({ setStage, details }: any) => {
         )}
       </div>
       <FormTextInput
-        label={"Owner's ABSSIN"}
+        label={"Driver's Email"}
+        name={"abssin"}
+        // value={details?.driver.abssin || ""}
+      />
+      <FormTextInput
+        label={"Driver's ABSSIN"}
         name={"abssin"}
         value={details?.driver.abssin || ""}
       />
       <FormTextInput
-        label={"Owner's Name"}
+        label={"Driver's ABSSIN"}
+        name={"abssin"}
+        value={details?.driver.abssin || ""}
+      />
+      <FormTextInput
+        label={"Driver's Name"}
         name={"driverName"}
         value={details?.driver.driverName || ""}
       />
       <FormTextInput
-        label={"Owner's Address"}
+        label={"Driver's Address"}
         name={"driverAddress"}
         value={details?.driver.driverAddress || ""}
       />

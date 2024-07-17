@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
@@ -9,8 +9,10 @@ import {
 } from "@/src/services/transportEnumerationService";
 import toast from "react-hot-toast";
 import { InfoModal } from "@/src/components/common/modal";
+import { fetchParks } from "@/src/services/common";
 
 const VehicleData = ({ setStage, setDetails }: any) => {
+  const [parks, setParks] = useState([]);
   const [show, setShow] = useState({
     mode: false,
     status: "",
@@ -57,6 +59,30 @@ const VehicleData = ({ setStage, setDetails }: any) => {
     // setStage(1);
   };
 
+
+  const getParks = async () => {
+    try {
+      const data = await fetchParks();
+      setParks(
+        data?.map((item: any) => {
+          return {
+            label: item.park,
+            value: item.id,
+          };
+        })
+      );
+      setParks(data);
+      console.log(data);
+      console.log(parks);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getParks();
+  }, []);
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="enumeration-form">
@@ -82,7 +108,9 @@ const VehicleData = ({ setStage, setDetails }: any) => {
           label="Operating Park"
           name="operating_park"
           id="operating_park"
-          options={[{ label: "Parks", value: "Parks" }]}
+          options={
+            [{ label: "Select Operating Park", value: "" }, ...parks]
+          }
           placeholder="Select Operating Park"
         />
         <SelectInput
