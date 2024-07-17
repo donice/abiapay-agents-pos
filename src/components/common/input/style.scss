@@ -55,7 +55,7 @@ $icon-color: #a4a4a4;
 .form-input-container {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  // gap: 0.15rem;
   position: relative;
 
   input {
@@ -156,4 +156,11 @@ $icon-color: #a4a4a4;
       text-shadow: 0 0 0 #000;
     }
   }
+}
+
+
+.error {
+  color: red;
+  font-style: italic;
+  font-size: 12px;
 }
