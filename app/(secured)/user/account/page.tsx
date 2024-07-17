@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 interface AccountsProps {
-  name: string;
+  link: string;
   title: string;
   desc: string;
   icon: ReactElement;
@@ -20,13 +20,13 @@ interface AccountsProps {
 
 const items: AccountsProps[] = [
   {
-    name: "tickets/transport",
+    link: "tickets/transport",
     title: "Transaction History",
     desc: "Tickets Transactions History",
     icon: <FcAcceptDatabase className="icon" />,
   },
   {
-    name: "transfers",
+    link: "transfers",
     title: "Transfer History",
     desc: "Wallet Transfer History",
     icon: <FcMoneyTransfer className="icon" />,
@@ -44,8 +44,8 @@ const UserAccountPage = () => {
         <div className="account_items">
           {items.map((item) => (
             <Link
-              href={`/${item.name}`}
-              key={item.name}
+              href={`/${item.link}`}
+              key={item.link}
               className={`account_item`}
             >
               <div>
