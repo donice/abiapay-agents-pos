@@ -7,15 +7,8 @@ import toast from "react-hot-toast";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { useRouter } from "next/navigation";
 import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
-import { createNewTicket } from "@/src/services/ticketsServices";
+import { createNewTicket, Product } from "@/src/services/ticketsServices";
 
-interface Product {
-  productCode: string;
-  productName: string;
-  dailyAmount: number;
-  weeklyAmount: number;
-  monthlyAmount: number;
-}
 
 let data = useIsBrower() && sessionStorage.getItem("USER_DATA");
 const user_data = data && JSON.parse(data);

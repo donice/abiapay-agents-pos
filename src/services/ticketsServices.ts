@@ -11,6 +11,15 @@ const isToken =
     : null;
 setToken(isToken);
 
+
+export interface Product {
+  productCode: string;
+  productName: string;
+  dailyAmount: number;
+  weeklyAmount: number;
+  monthlyAmount: number;
+}
+
 export const createNewTicket = async (requestData: CreateTicketPayload) => {
   try {
     const { data } = await axiosInstance.post(`${url}/transport/create-ticket`, requestData);

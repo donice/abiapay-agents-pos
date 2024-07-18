@@ -2,7 +2,7 @@
 import { Button } from "@/src/components/common/button";
 import React, { useState } from "react";
 import { LuUser } from "react-icons/lu";
-import { FormTextInput } from "@/src/components/common/input";
+import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import "../style.scss";
 import { useForm } from "react-hook-form";
 import {
@@ -13,10 +13,10 @@ import {
 } from "@/src/services/transportEnumerationService";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { Product } from "@/src/services/ticketsServices";
+import { fetchProducts } from "@/src/services/common";
 
 const DriverData = ({ setStage, details, formData }: any) => {
-  // console.log("DETAILS", details);
-  // console.log("FORM DATA", formData);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SaveContactType) => {
@@ -24,8 +24,8 @@ const DriverData = ({ setStage, details, formData }: any) => {
     },
     mutationKey: ["create_transport_enumeration"],
     onSuccess: (data) => {
-      console.log(data?.response_message || "Driver's data saved successfully")
-      
+      console.log(data?.response_message || "Driver's data saved successfully");
+
       // setStage(2);
     },
     onError: (error) => {
@@ -34,7 +34,10 @@ const DriverData = ({ setStage, details, formData }: any) => {
     },
   });
 
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+  } = useForm({
     defaultValues: {
       email: "",
       name: details?.vehicle_owner.ownerName || "",
@@ -42,6 +45,8 @@ const DriverData = ({ setStage, details, formData }: any) => {
       plate_number: formData.plate_number || "",
       contact_type: "driver",
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+
+      vehicle_category: "",
     },
   });
 
@@ -55,35 +60,35 @@ const DriverData = ({ setStage, details, formData }: any) => {
     taxpayer_location: details?.vehicle_data.vehicle_model || "",
     operating_park: formData.operating_park || "",
     trade_union: formData.trade_union || "",
-    vehicle_category: "",
+    vehicle_category: "Big Bus",
     owner_name: details?.vehicle_owner.ownerName || "",
     owner_address: details?.vehicle_owner.ownerAddress || "",
-    daily_ticket_amount: 0,
-    enumeration_fee: "",
+    daily_ticket_amount: 250,
+    enumeration_fee: "1500",
     merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
   };
 
   const handleCreateTransportEnumeration = async () => {
     try {
-     const res = await createTransportEnumeration(req);
-     console.log(res)
+      const res = await createTransportEnumeration(req);
+      toast.success(res?.response_message || "Vehicle Enumerated Successfully");
+      console.log(res);
     } catch (error) {
       toast.error("Error Enumerating Vehicle");
       console.log(error);
-      
     }
-  }
+  };
 
   const onSubmit = (reqData: any) => {
     try {
       mutate(reqData);
-      handleCreateTransportEnumeration()
-
+      handleCreateTransportEnumeration();
     } catch (error) {
       console.log(error);
       toast.error("Error Enumerating Vehicle");
     }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="enumeration-form">
       <div className="user-image">
