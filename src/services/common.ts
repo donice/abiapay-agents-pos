@@ -38,6 +38,15 @@ export const fetchParks = async () => {
   }
 }
 
+export const fetchTradeUnions = async () => {
+  try {
+    const res = await axiosInstance.get(`${url}/unions`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export const fetchProducts = async () => {
   try {
     const res = await axiosInstance.get(`${central_api_url}/agent/product-code`);

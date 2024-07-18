@@ -9,13 +9,19 @@ import {
 } from "@/src/services/transportEnumerationService";
 import toast from "react-hot-toast";
 import { InfoModal } from "@/src/components/common/modal";
-import { fetchParks } from "@/src/services/common";
+import { fetchParks, fetchTradeUnions } from "@/src/services/common";
 
 const VehicleData = ({ setStage, setDetails }: any) => {
   const [parks, setParks] = useState([]);
+  const [tradeUnions, setTradeUnions] = useState([]);
   const [show, setShow] = useState({
     mode: false,
     status: "",
+  });
+
+  const [formData, setFormData] = useState({
+    operating_park: "",
+    trade_union: "",
   });
 
   const {
@@ -59,21 +65,31 @@ const VehicleData = ({ setStage, setDetails }: any) => {
     // setStage(1);
   };
 
-
   const getParks = async () => {
     try {
       const data = await fetchParks();
-      setParks(
-        data?.map((item: any) => {
-          return {
-            label: item.park,
-            value: item.id,
-          };
-        })
-      );
-      setParks(data);
-      console.log(data);
-      console.log(parks);
+      const res = data?.map((item: any) => {
+        return {
+          label: item.park,
+          value: item.park,
+        };
+      });
+      setParks(res);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const getTradeUnions = async () => {
+    try {
+      const data = await fetchTradeUnions();
+      const res = data?.map((item: any) => {
+        return {
+          label: item.unionCode,
+          value: item.unionName,
+        };
+      });
+      setTradeUnions(res);
     } catch (error: any) {
       console.log(error);
     }
@@ -81,7 +97,19 @@ const VehicleData = ({ setStage, setDetails }: any) => {
 
   useEffect(() => {
     getParks();
+    getTradeUnions();
   }, []);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  
 
   return (
     <div>
@@ -108,17 +136,19 @@ const VehicleData = ({ setStage, setDetails }: any) => {
           label="Operating Park"
           name="operating_park"
           id="operating_park"
-          options={
-            [{ label: "Select Operating Park", value: "" }, ...parks]
-          }
+          options={parks}
           placeholder="Select Operating Park"
+          onChange={handleChange}
+          register={register}
         />
         <SelectInput
           label="Trade Unions"
           name="trade_union"
           id="trade_union"
-          options={[{ label: "Trade Unions", value: "Trade Unions" }]}
+          options={tradeUnions}
           placeholder="Select Trade Unions"
+          onChange={handleChange}
+          register={register}
         />
         <Button text="Save & Continue" loading={isPending} />
       </form>
