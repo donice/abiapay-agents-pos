@@ -5,13 +5,16 @@ import { LuUser } from "react-icons/lu";
 import { FormTextInput } from "@/src/components/common/input";
 import "../style.scss";
 import { useForm } from "react-hook-form";
-import { SaveContactType, saveContact } from "@/src/services/transportEnumerationService";
+import {
+  SaveContactType,
+  saveContact,
+} from "@/src/services/transportEnumerationService";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 const DriverData = ({ setStage, details, formData }: any) => {
-  console.log(details)
-  console.log(formData)
+  console.log("DETAILS", details);
+  console.log("FORM DATA", formData);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SaveContactType) => {
@@ -19,7 +22,9 @@ const DriverData = ({ setStage, details, formData }: any) => {
     },
     mutationKey: ["save_contact"],
     onSuccess: (data) => {
-      toast.success(data?.response_message || "Driver's data saved successfully");
+      toast.success(
+        data?.response_message || "Driver's data saved successfully"
+      );
       // setStage(2);
     },
     onError: (error) => {
@@ -34,9 +39,8 @@ const DriverData = ({ setStage, details, formData }: any) => {
     } catch (error) {
       console.log(error);
     }
-    
   };
-  
+
   const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
@@ -47,9 +51,35 @@ const DriverData = ({ setStage, details, formData }: any) => {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
     },
   });
-  
+
+  const { handleSubmit: handleSubmit2 } = useForm({
+    defaultValues: {
+      taxpayer_category: "",
+      abssin: details?.vehicle_owner.abssin || "",
+      vehicle_plate_number: formData.plate_number || "",
+      taxpayer_name: details?.vehicle_owner.ownerName || "",
+      taxpayer_phone: formData.phone_number || "",
+      revenue_year: "2024",
+      taxpayer_location: details?.vehicle_data.vehicle_model || "",
+      operating_park: formData.operating_park || "",
+      trade_union: formData.trade_union || "",
+      vehicle_category: "",
+      owner_name: details?.vehicle_owner.ownerName || "",
+      owner_address: details?.vehicle_owner.ownerAddress || "",
+      daily_ticket_amount: 0,
+      enumeration_fee: "",
+      merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+    },
+  });
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="enumeration-form">
+    <form
+      onSubmit={() => {
+        handleSubmit(onSubmit);
+        handleSubmit2(onSubmit);
+      }}
+      className="enumeration-form"
+    >
       <div className="user-image">
         {details?.driver?.photoUrl ? (
           <img src={details?.driver?.photoUrl} alt="" />
