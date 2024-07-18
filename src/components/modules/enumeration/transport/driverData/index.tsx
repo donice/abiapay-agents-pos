@@ -6,23 +6,6 @@ import { FormTextInput } from "@/src/components/common/input";
 import "../style.scss";
 
 const DriverData = ({ setStage, details }: any) => {
-  const [formData, setFormData] = useState({
-    merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
-    taxpayer_category: "",
-    abssin: "",
-    vehicle_plate_number: "",
-    taxpayer_name: "",
-    taxpayer_phone: "",
-    revenue_year: "2024",
-    taxpayer_location: 0,
-    operating_park: "",
-    trade_union: "",
-    vehicle_category: "",
-    owner_name: "",
-    owner_address: "",
-    daily_ticket_amount: 0,
-    enumeration_fee: "",
-  });
 
   return (
     <div className="enumeration-form">

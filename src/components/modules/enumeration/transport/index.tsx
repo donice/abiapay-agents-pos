@@ -9,13 +9,16 @@ import ProgressBar from "./progressBar";
 const TransportEnumerationComponent = () => {
   const [stage, setStage] = useState(0);
   const [details, setDetails] = useState({});
+  const [formData, setFormData] = useState({});
+
+  console.log(formData);
 
   return (
     <section>
       <ProgressBar stage={stage} setStage={setStage}/>
      
-      {stage === 0 && <VehicleData setStage={setStage} setDetails={setDetails}/>}
-      {stage === 1 && <OwnerData setStage={setStage} details={details}/>}
+      {stage === 0 && <VehicleData setStage={setStage} setDetails={setDetails} setFormData={setFormData}/>}
+      {stage === 1 && <OwnerData setStage={setStage} details={details} formData={formData}/>}
       {stage === 2 && <DriverData setStage={setStage} details={details}/>}
     </section>
   );

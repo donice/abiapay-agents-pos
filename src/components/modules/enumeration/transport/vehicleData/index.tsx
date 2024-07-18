@@ -11,17 +11,12 @@ import toast from "react-hot-toast";
 import { InfoModal } from "@/src/components/common/modal";
 import { fetchParks, fetchTradeUnions } from "@/src/services/common";
 
-const VehicleData = ({ setStage, setDetails }: any) => {
+const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
   const [parks, setParks] = useState([]);
   const [tradeUnions, setTradeUnions] = useState([]);
   const [show, setShow] = useState({
     mode: false,
     status: "",
-  });
-
-  const [formData, setFormData] = useState({
-    operating_park: "",
-    trade_union: "",
   });
 
   const {
@@ -42,7 +37,7 @@ const VehicleData = ({ setStage, setDetails }: any) => {
     },
     mutationKey: ["verify_plate_number"],
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       setDetails(data?.response_data);
       if (data.response_code == "00") {
         toast.success("Plate Number Verified Successfully");
@@ -61,8 +56,8 @@ const VehicleData = ({ setStage, setDetails }: any) => {
 
   const onSubmit = (reqData: any) => {
     mutate(reqData);
-    console.log(reqData);
-    // setStage(1);
+    setFormData(reqData);
+    // console.log(reqData);
   };
 
   const getParks = async () => {
@@ -100,16 +95,6 @@ const VehicleData = ({ setStage, setDetails }: any) => {
     getTradeUnions();
   }, []);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-  
 
   return (
     <div>
@@ -138,7 +123,6 @@ const VehicleData = ({ setStage, setDetails }: any) => {
           id="operating_park"
           options={parks}
           placeholder="Select Operating Park"
-          onChange={handleChange}
           register={register}
         />
         <SelectInput
@@ -147,7 +131,6 @@ const VehicleData = ({ setStage, setDetails }: any) => {
           id="trade_union"
           options={tradeUnions}
           placeholder="Select Trade Unions"
-          onChange={handleChange}
           register={register}
         />
         <Button text="Save & Continue" loading={isPending} />

@@ -50,6 +50,15 @@ export interface CreateTicketType {
   merchant_key: string
 }
 
+export interface SaveContactType {
+  email: string,
+  name: string,
+  phone: string,
+  plate_number: string,
+  contact_type: string,
+  merchant_key: string
+}
+
 export const verifyPlateNumber = async (requestBody: VerifyPlateNumberType) => {
   try {
     const { data } = await axiosInstance.post(`${url}/vehicle/verify-plate-number`, requestBody);
@@ -68,10 +77,18 @@ export const saveVehicleDetails = async (requestBody: SaveVehicleDetailsProps) =
   }
 };
 
-
 export const createTransportEnumeration = async (requestBody: CreateTicketType) => {
   try {
     const { data } = await axiosInstance.post(`${url}/enumeration/create-transport-enumeration`, requestBody);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const saveContact = async (requestBody: SaveContactType) => {
+  try {
+    const { data } = await axiosInstance.post(`${url}/contact/save`, requestBody);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
