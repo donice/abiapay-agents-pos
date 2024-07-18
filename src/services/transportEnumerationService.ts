@@ -39,13 +39,13 @@ export interface CreateTicketType {
   taxpayer_name: string,
   taxpayer_phone: string,
   revenue_year: string,
-  taxpayer_location: 0,
+  taxpayer_location: string,
   operating_park: string,
   trade_union: string,
   vehicle_category: string,
   owner_name: string,
   owner_address: string,
-  daily_ticket_amount: 0,
+  daily_ticket_amount: number | string,
   enumeration_fee: string,
   merchant_key: string
 }
