@@ -31,7 +31,6 @@ const OwnerData = ({ setStage, details, formData }: any) => {
 
   const onSubmit = (reqData: any) => {
     mutate(reqData);
-    
   };
 
   const { register, handleSubmit } = useForm({
