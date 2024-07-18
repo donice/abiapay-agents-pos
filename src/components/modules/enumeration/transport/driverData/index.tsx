@@ -15,8 +15,21 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { EnumerationSuccessModal } from "@/src/components/common/modal";
 
+interface TicketsDataType {
+  response_code: string;
+  response_message: string;
+  enumeration_id: string;
+  assetCode: string;
+}
+
 const DriverData = ({ setStage, details, formData }: any) => {
-  const [show, setShow] = useState(false)
+  const [ticketData, setTicketData] = useState<TicketsDataType>({
+    response_code: "",
+    response_message: "",
+    enumeration_id: "",
+    assetCode: "",
+  });
+  const [show, setShow] = useState(false);
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SaveContactType) => {
       return saveContact(data);
@@ -67,8 +80,9 @@ const DriverData = ({ setStage, details, formData }: any) => {
   const handleCreateTransportEnumeration = async () => {
     try {
       const res = await createTransportEnumeration(req);
+      setTicketData(res.data);
       toast.success(res?.response_message || "Vehicle Enumerated Successfully");
-      setShow(true)
+      setShow(true);
       console.log(res);
     } catch (error) {
       toast.error("Error Enumerating Vehicle");
@@ -100,7 +114,6 @@ const DriverData = ({ setStage, details, formData }: any) => {
           label={"Driver's Email"}
           name={"email"}
           register={register}
-          // value={details?.driver.abssin || ""}
         />
         <FormTextInput
           label={"Driver's ABSSIN"}
@@ -129,11 +142,13 @@ const DriverData = ({ setStage, details, formData }: any) => {
           <button className="button secondary" onClick={() => setStage(1)}>
             Go Back
           </button>
-          <Button text="Complete Enumerate" loading={isPending} />
+          <Button text="Complete Enumerate" loading={isPending} disabled={isPending}/>
         </div>
       </form>
 
-     {show && <EnumerationSuccessModal />}
+      {show && (
+        <EnumerationSuccessModal text={ticketData?.assetCode || "Hello"} />
+      )}
     </>
   );
 };

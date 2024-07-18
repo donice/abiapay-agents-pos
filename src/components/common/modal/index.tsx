@@ -116,6 +116,7 @@ export const EnumerationSuccessModal: React.FC<SuccessModalProps> = ({
         </div>
         <div className="modalContentEnum">
           <div className="modalContentEnumContent">
+            <p>{text}</p>
              <img src="https://i.pinimg.com/564x/a8/69/40/a86940a4ed8a69539b341f3c414c47b3.jpg" alt="" />
           </div>
          
