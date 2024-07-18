@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/src/components/common/button";
-import React from "react";
+import React, { useState } from "react";
 import { LuUser } from "react-icons/lu";
 import { FormTextInput } from "@/src/components/common/input";
 import "../style.scss";
@@ -13,11 +13,10 @@ import {
 } from "@/src/services/transportEnumerationService";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { Product } from "@/src/services/ticketsServices";
-import { fetchProducts } from "@/src/services/common";
 import { EnumerationSuccessModal } from "@/src/components/common/modal";
 
 const DriverData = ({ setStage, details, formData }: any) => {
+  const [show, setShow] = useState(false)
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SaveContactType) => {
       return saveContact(data);
@@ -69,6 +68,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
     try {
       const res = await createTransportEnumeration(req);
       toast.success(res?.response_message || "Vehicle Enumerated Successfully");
+      setShow(true)
       console.log(res);
     } catch (error) {
       toast.error("Error Enumerating Vehicle");
@@ -133,7 +133,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
         </div>
       </form>
 
-      <EnumerationSuccessModal />
+     {show && <EnumerationSuccessModal />}
     </>
   );
 };

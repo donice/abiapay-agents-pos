@@ -22,6 +22,7 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -38,11 +39,13 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
     mutationKey: ["verify_plate_number"],
     onSuccess: (data) => {
       // console.log(data);
-      setDetails(data?.response_data);
       if (data.response_code == "00") {
         toast.success("Plate Number Verified Successfully");
         setShow({ mode: true, status: "success" });
+        setDetails(data?.response_data);
         setStage(1);
+      } else if (data.response_code == "12") {
+        toast.success(data.response_message);
       } else {
         toast.error("Error Verifying Plate Number");
         setShow({ mode: true, status: "error" });
@@ -50,6 +53,7 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
     },
     onError: (error) => {
       toast.error("Error Verifying Plate Number");
+      reset();
       console.log(error);
     },
   });
