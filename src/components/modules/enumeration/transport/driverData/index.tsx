@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/src/components/common/button";
-import React, { useState } from "react";
+import React from "react";
 import { LuUser } from "react-icons/lu";
-import { FormTextInput, SelectInput } from "@/src/components/common/input";
+import { FormTextInput } from "@/src/components/common/input";
 import "../style.scss";
 import { useForm } from "react-hook-form";
 import {
@@ -15,9 +15,9 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Product } from "@/src/services/ticketsServices";
 import { fetchProducts } from "@/src/services/common";
+import { EnumerationSuccessModal } from "@/src/components/common/modal";
 
 const DriverData = ({ setStage, details, formData }: any) => {
-
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SaveContactType) => {
       return saveContact(data);
@@ -34,10 +34,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       name: details?.vehicle_owner.ownerName || "",
@@ -90,50 +87,54 @@ const DriverData = ({ setStage, details, formData }: any) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="enumeration-form">
-      <div className="user-image">
-        {details?.driver?.photoUrl ? (
-          <img src={details?.driver?.photoUrl} alt="" />
-        ) : (
-          <LuUser className="user" />
-        )}
-      </div>
-      <FormTextInput
-        label={"Driver's Email"}
-        name={"email"}
-        register={register}
-        // value={details?.driver.abssin || ""}
-      />
-      <FormTextInput
-        label={"Driver's ABSSIN"}
-        name={"abssin"}
-        value={details?.driver.abssin || ""}
-      />
-      <FormTextInput
-        label={"Driver's Name"}
-        name={"name"}
-        register={register}
-        value={details?.driver.driverName || ""}
-      />
-      <FormTextInput
-        label={"Driver's Address"}
-        name={"driverAddress"}
-        value={details?.driver.driverAddress || ""}
-      />
-      <FormTextInput
-        label={"Phone Number"}
-        name={"phone"}
-        register={register}
-        value={details?.driver.phoneNumber || ""}
-      />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="enumeration-form">
+        <div className="user-image">
+          {details?.driver?.photoUrl ? (
+            <img src={details?.driver?.photoUrl} alt="" />
+          ) : (
+            <LuUser className="user" />
+          )}
+        </div>
+        <FormTextInput
+          label={"Driver's Email"}
+          name={"email"}
+          register={register}
+          // value={details?.driver.abssin || ""}
+        />
+        <FormTextInput
+          label={"Driver's ABSSIN"}
+          name={"abssin"}
+          value={details?.driver.abssin || ""}
+        />
+        <FormTextInput
+          label={"Driver's Name"}
+          name={"name"}
+          register={register}
+          value={details?.driver.driverName || ""}
+        />
+        <FormTextInput
+          label={"Driver's Address"}
+          name={"driverAddress"}
+          value={details?.driver.driverAddress || ""}
+        />
+        <FormTextInput
+          label={"Phone Number"}
+          name={"phone"}
+          register={register}
+          value={details?.driver.phoneNumber || ""}
+        />
 
-      <div className="button-container">
-        <button className="button secondary" onClick={() => setStage(1)}>
-          Go Back
-        </button>
-        <Button text="Enumerate Vehicle" loading={isPending} />
-      </div>
-    </form>
+        <div className="button-container">
+          <button className="button secondary" onClick={() => setStage(1)}>
+            Go Back
+          </button>
+          <Button text="Complete Enumerate" loading={isPending} />
+        </div>
+      </form>
+
+      <EnumerationSuccessModal />
+    </>
   );
 };
 

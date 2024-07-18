@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Logo from "../../assets/logo.svg"
 import AbiaStatelogo from "../../assets/abia_logo.jpeg"
 import LogoWhite from "../../assets/logo_white.svg"
+import EnumerartionLogo from "../../../../public/abia-logo.jpg"
 
 export const AbiaLogo = () => {
   return (
@@ -31,6 +32,14 @@ export const AbiaLogoLarge = () => {
   return (
     <div>
       <Image src={Logo} alt="Abiapay Agents Logo" width={150} loading='eager' priority={true}/>
+    </div>
+  )
+}
+
+export const AbiaEnumerationLarge = () => {
+  return (
+    <div>
+      <Image src={EnumerartionLogo} alt="Abiapay Agents Logo" width={150} loading='eager' priority={true}/>
     </div>
   )
 }

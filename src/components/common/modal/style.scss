@@ -27,7 +27,6 @@
   margin: 0 1rem;
   z-index: 9999;
 
-
   .success_icon {
     color: green;
     font-size: 4.5rem;
@@ -56,7 +55,7 @@
       font-weight: 500;
     }
   }
-  
+
   .button {
     width: auto;
     display: flex;
@@ -69,31 +68,65 @@
     transition: all 0.5s ease;
     font-size: clamp(14px, 1.2vw + 7.16px, 16px);
     font-weight: 300;
-  
+
     @include custom-media-query("mobile", 425px) {
       flex-direction: row;
     }
   }
 
   .button + .button {
-    margin-top: 0.5rem;
+    margin: 0.5rem;
   }
-  
+
   .primary {
     cursor: pointer;
     background-color: $primary;
     color: white;
-  
+
     &:hover {
       background-color: $primary-hover;
     }
   }
-  
 
   .modalContent {
     // margin-top: -3rem;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+  }
+
+  .modalHeader {
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: green;
+    }
+    h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: green;
+    }
+  }
+
+  .modalContentEnum {
+    background: url(../../../../public/abia-logo.jpg) no-repeat;
+    // height: 200px;
+    // width: 200px;
+    background-size: cover;
+
+    &Content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        max-width: 175px;
+      }
+    }
+  }
+  .btn-container {
+    display: flex;
+    align-items: center;
     justify-content: center;
   }
 }
