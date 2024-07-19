@@ -5,13 +5,12 @@ import React, { type ReactElement } from "react";
 import {
   FcBusinessman,
   FcReading,
-  FcShop,
 } from "react-icons/fc";
 import "./style.scss";
 
 export const metadata: Metadata = {
-  title: "Transport Enumeration",
-  description: "Enumerate Vehicles",
+  title: "ABIAPAY Identity",
+  description: "Manage all Identities tied to your ABIAPAY account",
 };
 
 interface AccountsProps {
@@ -29,25 +28,24 @@ const items: AccountsProps[] = [
     desc: "Create an ABSSIN for individual",
     icon: <FcBusinessman className="icon" />,
   },
+  // {
+  //   link: "identity/create/business",
+  //   title: "Create Business ABSSIN",
+  //   desc: "Create an ABSSIN for business",
+  //   icon: <FcShop className="icon" />,
+  // },
   {
-    // link: "identity/create/business",
-    title: "Create Business ABSSIN",
-    desc: "Create an ABSSIN for business",
-    icon: <FcShop className="icon" />,
-  },
-  {
-    // link: "identity/view/individual",
+    link: "identity/view/individual",
     title: "View Individuals",
     desc: "View all individual ABSSIN",
     icon: <FcReading className="icon" />,
   },
-  {
-    // link: "identity/view/business",
-    title: "View Business",
-    desc: "View all Business ABSSIN",
-    icon: <FcReading className="icon" />,
-  },
-
+  // {
+  //   link: "identity/view/business",
+  //   title: "View Business",
+  //   desc: "View all Business ABSSIN",
+  //   icon: <FcReading className="icon" />,
+  // },
 ];
 
 const IdentityPage = () => {

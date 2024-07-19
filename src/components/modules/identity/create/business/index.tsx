@@ -1,12 +1,4 @@
-import { Metadata } from 'next/types';
 import React from 'react'
-
-
-export const metadata: Metadata = {
-  title: "Business ABSSIN",
-  description: "Create ABSSIN for Business",
-};
-
 
 const CreateBusinessAbssinPage = () => {
   return (
