@@ -66,7 +66,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
     taxpayer_name: details?.vehicle_owner.ownerName || "",
     taxpayer_phone: formData.phone_number || "",
     revenue_year: "2024",
-    taxpayer_location: details?.vehicle_data.vehicle_model || "",
+    taxpayer_location: details?.vehicle_owner.ownerAddress || "",
     operating_park: formData.operating_park || "",
     trade_union: formData.trade_union || "",
     vehicle_category: "Big Bus",
@@ -143,7 +143,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
             Go Back
           </button>
           <Button text="Complete Enumerate" loading={isPending} disabled={isPending}/>
-        </div>
+        </div>\
       </form>
 
       {show && (

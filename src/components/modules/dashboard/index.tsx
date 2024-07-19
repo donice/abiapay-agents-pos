@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useReducer, type Reducer, useCallback, useState } from "react";
-import WalletCard from "./WalletCard";
+import WalletCard from "./walletCard";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
 import "./style.scss";
@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import LoaderSkeleton from "../../common/loader-skeleton";
 import type { Action, State } from "../../types/dashboardTypes";
 import useIsBrower from "@/src/hooks/useIsBrower";
+import QuickLink from "./quickLink";
 
 const initialState: State = {
   fidelityData: {
@@ -180,6 +181,12 @@ const DashboardComponent: React.FC = () => {
           <LoaderSkeleton height="70px" />
         </div>
       )}
+
+      <div>
+        <QuickLink name="Identity" link="/identity" />
+        {/* <QuickLink name="Enforcement" link="/identity" /> */}
+        {/* <QuickLink name="Reports" link="/identity" /> */}
+      </div>
     </div>
   );
 };

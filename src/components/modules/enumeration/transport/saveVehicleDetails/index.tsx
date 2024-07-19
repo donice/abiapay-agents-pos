@@ -55,7 +55,7 @@ const SaveVehicleDetailsComponent = () => {
         data?.data.map((item: any) => {
           return {
             label: item.state,
-            value: item.idstates,
+            value: item.state,
           };
         })
       );
