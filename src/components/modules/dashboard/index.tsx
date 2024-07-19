@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useReducer, type Reducer, useCallback, useState } from "react";
-import WalletCard from "./walletCard";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
 import "./style.scss";
@@ -16,6 +15,7 @@ import LoaderSkeleton from "../../common/loader-skeleton";
 import type { Action, State } from "../../types/dashboardTypes";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import QuickLink from "./quickLink";
+import WalletCard from "./walletCard";
 
 const initialState: State = {
   fidelityData: {
