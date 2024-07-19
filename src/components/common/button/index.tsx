@@ -9,6 +9,7 @@ interface prop {
   text: string;
   link: string;
   disabled?: boolean;
+  addIcon?: boolean;
 }
 
 export const FormButton = ({
@@ -110,7 +111,7 @@ export const BackButton = ({ link }: { link: string }) => {
   );
 };
 
-export const PrimaryButton = ({ text, link }: prop) => {
+export const PrimaryButton = ({ text, link, addIcon }: prop) => {
   const router = useRouter();
 
   const handleClick = (route: string) => {
@@ -119,7 +120,7 @@ export const PrimaryButton = ({ text, link }: prop) => {
 
   return (
     <button className="button primary" onClick={() => handleClick(link)}>
-      <MdOutlineAdd className="icon" />
+      {addIcon && <MdOutlineAdd className="icon" />} 
       {text}
     </button>
   );

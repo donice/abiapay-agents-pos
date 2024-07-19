@@ -137,17 +137,24 @@ const DriverData = ({ setStage, details, formData }: any) => {
           register={register}
           value={details?.driver.phoneNumber || ""}
         />
-
         <div className="button-container">
           <button className="button secondary" onClick={() => setStage(1)}>
             Go Back
           </button>
-          <Button text="Complete Enumerate" loading={isPending} disabled={isPending}/>
-        </div>\
+          <Button
+            text="Complete Enumerate"
+            loading={isPending}
+            disabled={isPending}
+          />
+        </div>
       </form>
 
       {show && (
-        <EnumerationSuccessModal text={ticketData?.assetCode || "A000"} id={ticketData?.enumeration_id || "12332932903"}/>
+        <EnumerationSuccessModal
+          plate_number={formData.plate_number || ""}
+          text={ticketData?.assetCode || "A000"}
+          id={ticketData?.enumeration_id || "12332932903"}
+        />
       )}
     </>
   );

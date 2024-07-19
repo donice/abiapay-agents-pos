@@ -11,6 +11,13 @@ interface SuccessModalProps {
   link?: string;
 }
 
+interface EnumerationModalProps {
+  id?: string;
+  text?: string;
+  link?: string;
+  plate_number?: string;
+}
+
 interface InfoModalType {
   button_text?: string;
   text_header?: string;
@@ -93,10 +100,11 @@ export const InfoModal: React.FC<InfoModalType> = ({
   );
 };
 
-export const EnumerationSuccessModal: React.FC<SuccessModalProps> = ({
+export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
   id,
   text,
   link,
+  plate_number
 }) => {
   const router = useRouter();
 
@@ -112,7 +120,7 @@ export const EnumerationSuccessModal: React.FC<SuccessModalProps> = ({
         <AbiaEnumerationLarge />
         <div className="modalHeader">
           <h1>ABIA STATE GOVERNMENT</h1>
-          <h2> MINISTRY OF TRANSPORTATION</h2>
+          <h2> MINISTRY OF TRANSPORT</h2>
           <h3>ENUMERATION</h3>
         </div>
         <div className="modalContentEnum"></div>
@@ -121,20 +129,21 @@ export const EnumerationSuccessModal: React.FC<SuccessModalProps> = ({
           <div className="custom_vehicle_details">
             <p className="vehicle_cat">COMMERCIAL VEHICLE</p>
             <img
-            src="https://i.pinimg.com/564x/a8/69/40/a86940a4ed8a69539b341f3c414c47b3.jpg"
-            alt=""
-          />
-          <p className="vehicle_type">MINI BUS TAXI</p>
+              src="https://i.pinimg.com/564x/a8/69/40/a86940a4ed8a69539b341f3c414c47b3.jpg"
+              alt=""
+            />
+            <p className="vehicle_type">MINI BUS TAXI</p>
           </div>
-          
+
           <div>
+            <p className="abssin_no">{id}</p>
             <span>PLATE NUMBER</span>
-            <p>{id}</p>
+            <p className="plate_number">{plate_number}</p>
           </div>
         </div>
         <div className="btn-container">
-          <SecondaryButton text="Create New" link={"/tickets/transport/add"} />
-          <PrimaryButton text={"Done"} link={"/dashboard"} />
+          <SecondaryButton text="Create New" link={"/enumeration/transport"} />
+          <PrimaryButton text={"Completed"} link={"/dashboard"} />
         </div>
       </div>
     </div>

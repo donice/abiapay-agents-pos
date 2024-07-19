@@ -96,8 +96,7 @@
   }
 
   .modalHeader {
-    display: grid;
-    gap: -1.5rem;
+    display: flex;
 
     h1 {
       font-size: 18px;
@@ -108,6 +107,11 @@
       font-size: 14px;
       font-weight: 600;
       color: green;
+    }
+
+    h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
     }
   }
 
@@ -123,13 +127,14 @@
   }
   .modalContentEnumContent {
     position: absolute;
-    margin-top: 5rem;
+    margin-top: 5.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     .assetCode {
       font-size: 1.2rem;
+      margin-left: -0.35rem;
     }
     p {
       margin-bottom: 0;
@@ -147,14 +152,14 @@
         position: absolute;
       }
       .vehicle_type {
-        right: -3rem;
+        right: -6rem;
         top: 6rem;
         transform: rotate(90deg);
         font-weight: 600;
         color: red;
       }
       .vehicle_cat {
-        left: -4.75rem;
+        left: -7.75rem;
         top: 6rem;
         transform: rotate(-90deg);
         font-weight: 600;
@@ -166,5 +171,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .abssin_no {
+    letter-spacing: 0.3rem;
+    margin-top: -0.35rem;
+  }
+
+  .plate_number {
+    font-size: 1rem;
+    font-weight: 700;
   }
 }
