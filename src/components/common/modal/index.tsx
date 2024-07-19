@@ -108,27 +108,33 @@ export const EnumerationSuccessModal: React.FC<SuccessModalProps> = ({
 
   return (
     <div className="modalOverlay">
-      <div className="modal enumeration">
+      <div className="modal">
         <AbiaEnumerationLarge />
         <div className="modalHeader">
           <h1>ABIA STATE GOVERNMENT</h1>
           <h2> MINISTRY OF TRANSPORTATION</h2>
+          <h3>ENUMERATION</h3>
         </div>
-        <div className="modalContentEnum">
-          <div className="modalContentEnumContent">
-            <p>{text}</p>
-             <img src="https://i.pinimg.com/564x/a8/69/40/a86940a4ed8a69539b341f3c414c47b3.jpg" alt="" />
+        <div className="modalContentEnum"></div>
+        <div className="modalContentEnumContent">
+          <p className="assetCode">{text}</p>
+          <div className="custom_vehicle_details">
+            <p className="vehicle_cat">COMMERCIAL VEHICLE</p>
+            <img
+            src="https://i.pinimg.com/564x/a8/69/40/a86940a4ed8a69539b341f3c414c47b3.jpg"
+            alt=""
+          />
+          <p className="vehicle_type">MINI BUS TAXI</p>
           </div>
-         
           
-
-          <div className="btn-container">
-            <SecondaryButton
-              text="Create New"
-              link={"/tickets/transport/add"}
-            />
-            <PrimaryButton text={"Done"} link={"/dashboard"} />
+          <div>
+            <span>PLATE NUMBER</span>
+            <p>{id}</p>
           </div>
+        </div>
+        <div className="btn-container">
+          <SecondaryButton text="Create New" link={"/tickets/transport/add"} />
+          <PrimaryButton text={"Done"} link={"/dashboard"} />
         </div>
       </div>
     </div>

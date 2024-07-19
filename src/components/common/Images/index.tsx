@@ -39,7 +39,7 @@ export const AbiaLogoLarge = () => {
 export const AbiaEnumerationLarge = () => {
   return (
     <div>
-      <Image src={EnumerartionLogo} alt="Abiapay Agents Logo" width={150} loading='eager' priority={true}/>
+      <Image src={EnumerartionLogo} alt="Abiapay Agents Logo" width={100} loading='eager' priority={true}/>
     </div>
   )
 }

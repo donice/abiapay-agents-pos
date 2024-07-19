@@ -96,6 +96,9 @@
   }
 
   .modalHeader {
+    display: grid;
+    gap: -1.5rem;
+
     h1 {
       font-size: 18px;
       font-weight: 600;
@@ -109,19 +112,53 @@
   }
 
   .modalContentEnum {
+    position: relative;
     width: 100%;
     min-width: 350px;
+    height: 250px;
+    background: url(../../../../public/abia-logo.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.09;
+  }
+  .modalContentEnumContent {
+    position: absolute;
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .assetCode {
+      font-size: 1.2rem;
+    }
+    p {
+      margin-bottom: 0;
+    }
+    img {
+      max-width: 150px;
+    }
 
-    &Content {
-      background: url(../../../../public/abia-logo.jpg) no-repeat;
-      background-size: cover;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      img {
-        max-width: 175px;
+    .custom_vehicle_details {
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      max-width: 15rem;
+      p {
+        position: absolute;
+      }
+      .vehicle_type {
+        right: -3rem;
+        top: 6rem;
+        transform: rotate(90deg);
+        font-weight: 600;
+        color: red;
+      }
+      .vehicle_cat {
+        left: -4.75rem;
+        top: 6rem;
+        transform: rotate(-90deg);
+        font-weight: 600;
+        color: red;
       }
     }
   }

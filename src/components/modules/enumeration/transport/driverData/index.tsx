@@ -147,7 +147,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
       </form>
 
       {show && (
-        <EnumerationSuccessModal text={ticketData?.assetCode || "Hello"} />
+        <EnumerationSuccessModal text={ticketData?.assetCode || "A000"} id={ticketData?.enumeration_id || "12332932903"}/>
       )}
     </>
   );
