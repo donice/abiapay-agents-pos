@@ -174,7 +174,6 @@
 
   .abssin_no {
     letter-spacing: 0.15rem;
-    margin-top: -0.35rem;
   }
 
   .plate_number {
@@ -186,5 +185,9 @@
   .plate_number_title {
     font-size: 1rem;
     font-weight: 500;
+  }
+
+  .qr_container {
+    width: 175px;
   }
 }

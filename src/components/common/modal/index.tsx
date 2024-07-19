@@ -5,6 +5,7 @@ import "./style.scss";
 import { PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
 import { TbPrinter } from "react-icons/tb";
+import QRCode from "react-qr-code";
 
 interface SuccessModalProps {
   id?: string;
@@ -13,6 +14,7 @@ interface SuccessModalProps {
 }
 
 interface EnumerationModalProps {
+  qr_link: string;
   id?: string;
   text?: string;
   link?: string;
@@ -105,6 +107,7 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
   id,
   text,
   link,
+  qr_link,
   plate_number,
 }) => {
   const router = useRouter();
@@ -129,10 +132,21 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
           <p className="assetCode">{text}</p>
           <div className="custom_vehicle_details">
             <p className="vehicle_cat">COMMERCIAL VEHICLE</p>
-            <img
+            {/* <img
               src="https://i.pinimg.com/564x/a8/69/40/a86940a4ed8a69539b341f3c414c47b3.jpg"
               alt=""
+            /> */}
+
+            <div className="qr_container">
+              <QRCode
+              size={256}
+              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+              value={qr_link}
+              viewBox={`0 0 256 256`}
             />
+            </div>
+
+            
             <p className="vehicle_type">MINI BUS TAXI</p>
           </div>
 
