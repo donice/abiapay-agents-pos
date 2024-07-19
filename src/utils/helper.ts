@@ -1,8 +1,10 @@
-export function CamelCaseToTitleCase(s: string): string {
+export function CamelCaseToTitleCase(s: string | null | undefined): string {
+  if (s == null) {
+    return "";
+  }
+
   s = s.replace(/_/g, " ");
-
   s = s.replace(/\b\w/g, (str) => str.toUpperCase());
-
   s = s.replace(/([a-z])([A-Z])/g, "$1 $2");
 
   const specialCases: { [key: string]: string } = {
@@ -21,6 +23,10 @@ export function CamelCaseToTitleCase(s: string): string {
   return words.join(" ");
 }
 
-export const getErrorMessages =(errors: Record<string, string>): string => {
+export const getErrorMessages = (errors: Record<string, string> | null | undefined): string => {
+  if (errors == null) {
+    return "";
+  }
+
   return Object.values(errors).join(', ');
 }
