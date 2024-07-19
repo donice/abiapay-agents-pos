@@ -4,6 +4,7 @@ import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
 import { PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
+import { TbPrinter } from "react-icons/tb";
 
 interface SuccessModalProps {
   id?: string;
@@ -104,7 +105,7 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
   id,
   text,
   link,
-  plate_number
+  plate_number,
 }) => {
   const router = useRouter();
 
@@ -137,13 +138,16 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
 
           <div>
             <p className="abssin_no">{id}</p>
-            <span>PLATE NUMBER</span>
+            <span className="plate_number_title">PLATE NUMBER</span>
             <p className="plate_number">{plate_number}</p>
           </div>
         </div>
         <div className="btn-container">
+          <button className="button secondary">
+            <TbPrinter /> Share
+          </button>
           <SecondaryButton text="Create New" link={"/enumeration/transport"} />
-          <PrimaryButton text={"Completed"} link={"/dashboard"} />
+          <PrimaryButton text={"Done"} link={"/dashboard"} />
         </div>
       </div>
     </div>

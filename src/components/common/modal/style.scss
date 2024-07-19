@@ -97,6 +97,7 @@
 
   .modalHeader {
     display: flex;
+    flex-direction: column;
 
     h1 {
       font-size: 18px;
@@ -134,7 +135,8 @@
     justify-content: center;
     .assetCode {
       font-size: 1.2rem;
-      margin-left: -0.35rem;
+      margin-bottom: -0.35rem;
+      font-weight: 700;
     }
     p {
       margin-bottom: 0;
@@ -144,9 +146,6 @@
     }
 
     .custom_vehicle_details {
-      // display: flex;
-      // justify-content: center;
-      // align-items: center;
       max-width: 15rem;
       p {
         position: absolute;
@@ -174,12 +173,18 @@
   }
 
   .abssin_no {
-    letter-spacing: 0.3rem;
+    letter-spacing: 0.15rem;
     margin-top: -0.35rem;
   }
 
   .plate_number {
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 700;
+    margin-top: -0.75rem;
+  }
+
+  .plate_number_title {
+    font-size: 1rem;
+    font-weight: 500;
   }
 }

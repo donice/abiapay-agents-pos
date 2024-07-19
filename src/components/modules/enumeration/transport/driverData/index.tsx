@@ -80,7 +80,8 @@ const DriverData = ({ setStage, details, formData }: any) => {
   const handleCreateTransportEnumeration = async () => {
     try {
       const res = await createTransportEnumeration(req);
-      setTicketData(res.data);
+      console.log("TICKETS DATA", res);
+      setTicketData(res);
       toast.success(res?.response_message || "Vehicle Enumerated Successfully");
       setShow(true);
       console.log(res);
@@ -152,8 +153,8 @@ const DriverData = ({ setStage, details, formData }: any) => {
       {show && (
         <EnumerationSuccessModal
           plate_number={formData.plate_number || ""}
-          text={ticketData?.assetCode || "A000"}
-          id={ticketData?.enumeration_id || "12332932903"}
+          text={ticketData?.assetCode || ""}
+          id={ticketData?.enumeration_id || ""}
         />
       )}
     </>
