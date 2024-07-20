@@ -14,24 +14,24 @@ const ProgressBar = ({ stage, setStage }: any) => {
           ></div>
           <div
             className={`progress-label ${stage >= 0 ? "active" : ""}`}
-            style={{ left: "10%" }}
+            style={{ left: "12.5%" }}
           >
             Personnal Data
           </div>
           <div
             className={`progress-label ${stage >= 1 ? "active" : ""}`}
-            style={{ left: "43.33%" }}
+            style={{ left: "40.33%" }}
           >
             User Data
           </div>
           <div
             className={`progress-label ${stage >= 2 ? "active" : ""}`}
-            style={{ left: "76.66%" }}
+            style={{ left: "78.66%" }}
           >
             Origin Data
           </div>
         </div>
-        <div className="button-container">
+        {/* <div className="button-container">
           <button
             onClick={() => setStage(stage > 0 ? stage - 1 : 0)}
             disabled={stage === 0}
@@ -44,7 +44,7 @@ const ProgressBar = ({ stage, setStage }: any) => {
           >
             Next
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
