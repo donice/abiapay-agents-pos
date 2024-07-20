@@ -6,22 +6,22 @@ import { useForm } from "react-hook-form";
 import {
   fetchCategory,
   fetchSector,
+  fetchStates,
   fetchTaxOffice,
 } from "@/src/services/common";
 
 const OriginData = ({ setStage, setFormData }: any) => {
   const [state, setState] = useState<any>([]);
-  const [sector, setSector] = useState<any>([]);
-  const [category, setCategory] = useState<any>([]);
 
   const getStates = async () => {
     try {
-      const { data } = await fetchTaxOffice();
+      const { data } = await fetchStates();
+      console.log(data);
       setState(
         data?.map((item: any) => {
           return {
-            label: item.name,
-            value: item.name,
+            label: item.state,
+            value: item.idstates,
           };
         })
       );
@@ -30,44 +30,9 @@ const OriginData = ({ setStage, setFormData }: any) => {
     }
   };
 
-  const getCategory = async () => {
-    try {
-      const {data} = await fetchCategory();
-      // console.log("CATEGORY", data);
-      setCategory(
-        data?.map((item: any) => {
-          return {
-            label: item.category_name,
-            value: item.category_name,
-          };
-        })
-      );
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
-  const getSector = async () => {
-    try {
-      const {data} = await fetchSector();
-      // console.log("SECTOR", data);
-      setSector(
-        data?.map((item: any) => {
-          return {
-            label: item.sector_name,
-            value: item.sector_name,
-          };
-        })
-      );
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     getStates();
-    getCategory();
-    getSector();
   }, []);
 
   const {
@@ -127,7 +92,10 @@ const OriginData = ({ setStage, setFormData }: any) => {
           error={errors.lga}
           validation={{ required: true }}
         />
-       
+       <div>
+        <span className="go_back">Residence Information</span> 
+       </div>
+
        <SelectInput
           label="State of Residence"
           name="state_of_residence"
@@ -139,20 +107,13 @@ const OriginData = ({ setStage, setFormData }: any) => {
         />
         <FormTextInput
           label="L.G.A of Residence"
-          name="lga"
-          placeholder="Enter L.G.A"
-          register={register}
-          error={errors.lga}
-          validation={{ required: true }}
-        />
-        <FormTextInput
-          label="City"
           name="city"
-          placeholder="Enter City"
+          placeholder="Enter L.G.A"
           register={register}
           error={errors.city}
           validation={{ required: true }}
         />
+       
         <FormTextInput
           label="Address"
           name="address"
