@@ -9,15 +9,15 @@ import {
   fetchTaxOffice,
 } from "@/src/services/common";
 
-const UserData = ({ setStage, setFormData }: any) => {
-  const [taxOffice, setTaxOffice] = useState<any>([]);
+const OriginData = ({ setStage, setFormData }: any) => {
+  const [state, setState] = useState<any>([]);
   const [sector, setSector] = useState<any>([]);
   const [category, setCategory] = useState<any>([]);
 
-  const getState = async () => {
+  const getStates = async () => {
     try {
       const { data } = await fetchTaxOffice();
-      setTaxOffice(
+      setState(
         data?.map((item: any) => {
           return {
             label: item.name,
@@ -65,7 +65,7 @@ const UserData = ({ setStage, setFormData }: any) => {
   };
 
   useEffect(() => {
-    getState();
+    getStates();
     getCategory();
     getSector();
   }, []);
@@ -76,15 +76,14 @@ const UserData = ({ setStage, setFormData }: any) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      birth_date: "",
-      nin: "",
-      bvn: "",
-      phone_number: "",
-      mobile_number: "",
-      tax_office: "",
-      category: "",
+      nationality: "Nigerian",
+      state_of_origin: "",
+      lga: "",
+      state_of_residence: "",
+      address: "",
+      ward: "",
       sector: "",
-      email: "",
+      city: "",
     },
   });
 
@@ -96,91 +95,83 @@ const UserData = ({ setStage, setFormData }: any) => {
         ...data,
       };
     });
-
-    setStage(2);
   };
 
   return (
     <div>
       <form className="identity-form" onSubmit={handleSubmit(onSubmit)}>
         <FormTextInput
-          label="Date of Birth"
-          name="birth_date"
-          type="date"
-          placeholder="Enter Date of Birth"
+          label="Nationality"
+          name="nationality"
+          type="text"
+          placeholder="Enter Nationality"
+          value={"Nigerian"}
           register={register}
-          error={errors.birth_date}
-          validation={{ required: true }}
-        />
-        <FormTextInput
-          label="NIN"
-          name="nin"
-          placeholder="Enter NIN"
-          register={register}
-          error={errors.nin}
-          validation={{ required: true }}
-        />
-        <FormTextInput
-          label="BVN"
-          name="bvn"
-          placeholder="Enter BVN"
-          register={register}
-          error={errors.bvn}
-          validation={{ required: true }}
-        />
-        <FormTextInput
-          label="Phone Number"
-          name="phone_number"
-          placeholder="Enter Phone Number"
-          register={register}
-          error={errors.phone_number}
-          validation={{ required: true }}
-        />
-        <FormTextInput
-          label="Mobile Number"
-          name="mobile_number"
-          placeholder="Enter Mobile Number"
-          register={register}
-          error={errors.mobile_number}
-          validation={{ required: true }}
-        />
-        <FormTextInput
-          label="Email"
-          name="email"
-          placeholder="Enter Email"
-          register={register}
-          error={errors.email}
+          error={errors.nationality}
           validation={{ required: true }}
         />
         <SelectInput
-          label="Tax Office"
-          name="tax_office"
-          id="tax_office"
+          label="State of Origin"
+          name="state_of_origin"
+          id="state_of_origin"
           register={register}
-          error={!!errors.tax_office}
+          error={!!errors.state_of_origin}
           validation={{ required: true }}
-          options={taxOffice}
+          options={state}
         />
-        <SelectInput
-          label="Category"
-          name="category"
-          id="category"
+        <FormTextInput
+          label="L.G.A of Origin"
+          name="lga"
+          placeholder="Enter L.G.A"
           register={register}
-          error={!!errors.category}
+          error={errors.lga}
           validation={{ required: true }}
-          options={category}
         />
-        <SelectInput
-          label="Occupation Sector"
-          name="sector"
-          id="sector"
+       
+       <SelectInput
+          label="State of Residence"
+          name="state_of_residence"
+          id="state_of_residence"
           register={register}
-          error={!!errors.sector}
+          error={!!errors.state_of_residence}
           validation={{ required: true }}
-          options={sector}
+          options={state}
         />
+        <FormTextInput
+          label="L.G.A of Residence"
+          name="lga"
+          placeholder="Enter L.G.A"
+          register={register}
+          error={errors.lga}
+          validation={{ required: true }}
+        />
+        <FormTextInput
+          label="City"
+          name="city"
+          placeholder="Enter City"
+          register={register}
+          error={errors.city}
+          validation={{ required: true }}
+        />
+        <FormTextInput
+          label="Address"
+          name="address"
+          placeholder="Enter Address"
+          register={register}
+          error={errors.address}
+          validation={{ required: true }}
+        />
+        <FormTextInput
+          label="Ward"
+          name="ward"
+          placeholder="Enter Ward"
+          register={register}
+          error={errors.ward}
+          validation={{ required: true }}
+        />
+
         <div className="button-container">
-          <button className="button secondary" onClick={() => setStage(0)}>
+          <button className="button secondary" onClick={() => setStage(1)}>
             Go Back
           </button>
           <Button text={"Proceed"} />
@@ -190,4 +181,4 @@ const UserData = ({ setStage, setFormData }: any) => {
   );
 };
 
-export default UserData;
+export default OriginData;

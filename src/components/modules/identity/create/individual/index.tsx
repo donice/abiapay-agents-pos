@@ -5,6 +5,7 @@ import "./style.scss";
 import PersonalData from "./personalData";
 import { createIndividualAbssinPayloadType } from "@/src/services/identityService";
 import UserData from "./userData";
+import OriginData from "./originData";
 
 const CreateIndividualAbssinComponent = () => {
   const [stage, setStage] = useState(0);
@@ -41,7 +42,7 @@ const CreateIndividualAbssinComponent = () => {
 
       {stage === 0 && <PersonalData setFormData={setFormData} setStage={setStage} />}
       {stage === 1 && <UserData setFormData={setFormData} setStage={setStage} />}
-      {stage === 2 && <div>Stage 3</div>}
+      {stage === 2 && <OriginData setFormData={setFormData} setStage={setStage} />}
     </section>
   );
 };
