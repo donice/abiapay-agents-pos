@@ -59,9 +59,10 @@ interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  children?: JSX.Element | JSX.Element[] ;
 }
 
-export const Button = ({ text, disabled, onClick, loading }: ButtonProps) => {
+export const Button = ({ text, disabled, onClick, loading, children }: ButtonProps) => {
   const router = useRouter();
   
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -78,8 +79,9 @@ export const Button = ({ text, disabled, onClick, loading }: ButtonProps) => {
       disabled={disabled}
       onClick={handleClick}
     >
-      {text}
+     {children} {text}
       {loading && <Loader />}
+      
     </button>
   );
 };

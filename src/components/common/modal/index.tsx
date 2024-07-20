@@ -160,7 +160,7 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
           {/* <button className="button secondary">
             <TbPrinter /> Share
           </button> */}
-          <SecondaryButton text="Create New" link={"/enumeration/transport"} />
+          <SecondaryButton text="Create New" link={"/enumeration"} />
           <PrimaryButton text={"Done"} link={"/dashboard"} />
         </div>
       </div>

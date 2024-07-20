@@ -2,8 +2,10 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { TbCameraPlus } from "react-icons/tb";
 import Webcam from "react-webcam";
+import axios from "axios";
+import { Button } from "@/src/components/common/button";
 
-const FaceCam: React.FC = () => {
+const FaceCam = ({setFormData}: any) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
@@ -17,24 +19,34 @@ const FaceCam: React.FC = () => {
       setImageSrc(imageSrc);
       setBase64URL(imageSrc);
       verifyFace(imageSrc);
+     
+      setFormData((prev: any) => {
+        return {
+          ...prev,
+          image: imageSrc,
+        };
+      })
     }
   };
 
   const verifyFace = async (imageSrc: string) => {
     setIsLoading(true);
     setMessage("");
+
     try {
-      const response = await fetch("/api/verify-face", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ imageSrc }),
-      });
-      const result = await response.json();
+      const response = await axios.post(
+        "/api/v1/verify-face",
+        { imageSrc },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      console.log("API RES", response);
+
+      const result = response.data;
       toast.success(result.isFace ? "Face detected!" : "No face detected!");
       setIsFaceDetected(result.isFace);
     } catch (error) {
+      console.error('Error in API call:', error);
       toast.error("Error detecting face");
       setIsFaceDetected(null);
     } finally {
@@ -51,30 +63,25 @@ const FaceCam: React.FC = () => {
 
   return (
     <div className="identity-form_image">
-      <div className="identity-form_imagecapture">
-        <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
-      </div>
-      <button onClick={capture} className="button primary">
-        <TbCameraPlus /> Capture{" "}
-      </button>
-      {imageSrc && (
+     
+      {imageSrc ? (
         <>
           <div className="identity-form_imagecapture">
             <img src={imageSrc} alt="Captured face" />
           </div>
           <button onClick={reset} className="button primary">
-            Retry
+            Capture Again
           </button>
         </>
-      )}
+      ) :  <>
+       <div className="identity-form_imagecapture">
+        <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
+      </div>
+      <Button onClick={capture} text="Capture">
+        <TbCameraPlus />
+      </Button>
+      </>}
       {isLoading && <p>Loading...</p>}
-      {/* {message && <p>{message}</p>} */}
-      {/* {base64URL && (
-        <div>
-          <p>Base64 URL:</p>
-          <textarea rows={5} cols={50} readOnly value={base64URL} />
-        </div>
-      )} */}
       {isFaceDetected !== null && (
         <div>
           {isFaceDetected ? (

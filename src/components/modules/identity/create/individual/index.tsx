@@ -4,6 +4,7 @@ import ProgressBar from "./progressBar";
 import "./style.scss";
 import PersonalData from "./personalData";
 import { createIndividualAbssinPayloadType } from "@/src/services/identityService";
+import UserData from "./userData";
 
 const CreateIndividualAbssinComponent = () => {
   const [stage, setStage] = useState(0);
@@ -38,8 +39,8 @@ const CreateIndividualAbssinComponent = () => {
     <section>
       <ProgressBar stage={stage} setStage={setStage} />
 
-      {stage === 0 && <PersonalData setFormData={setFormData} />}
-      {stage === 1 && <div>Stage 2</div>}
+      {stage === 0 && <PersonalData setFormData={setFormData} setStage={setStage} />}
+      {stage === 1 && <UserData setFormData={setFormData} setStage={setStage} />}
       {stage === 2 && <div>Stage 3</div>}
     </section>
   );

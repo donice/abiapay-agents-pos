@@ -3,9 +3,8 @@ import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
-import FaceCam from "../faceCam";
 
-const PersonalData = ({ setStage, setFormData }: any) => {
+const UserData = ({ setStage, setFormData }: any) => {
   // const [image, setImage] = useState<string | null>(null);
 
   // console.log("imageSrc", image);
@@ -16,78 +15,61 @@ const PersonalData = ({ setStage, setFormData }: any) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      first_name: "",
-      middle_name: "",
-      surname: "",
-      indv_title: "",
-      gender: "",
-      marital_status: "",
+      birth_date: "",
+      nin: "",
+      bvn: "",
+      phone_number: "",
     },
   });
 
   const onSubmit = (data: any) => {
     console.log(data);
-
     setFormData((prev: any) => {
       return {
         ...prev,
         ...data,
       };
     });
-
-    setStage(1);
   };
 
   return (
     <div>
       <form className="identity-form" onSubmit={handleSubmit(onSubmit)}>
-        {/* <div className="identity-form_image">
-          <div className="identity-form_imagecapture"></div>
-          <button className="button primary">
-            <TbCameraPlus /> Capture{" "}
-          </button>
-        </div> */}
-        <FaceCam setFormData={setFormData}/>
-        <SelectInput
-          label="Title"
-          name="indv_title"
-          id="indv_title"
-          register={register}
-          error={!!errors.indv_title}
-          validation={{ required: true }}
-          options={[
-            { value: "Mr", label: "Mr" },
-            { value: "Mrs", label: "Mrs" },
-            { value: "Miss", label: "Miss" },
-            { value: "Dr", label: "Dr" },
-            { value: "Chief", label: "Chief" },
-          ]}
-        />
+       
         <FormTextInput
-          label="First Name"
-          name="first_name"
-          placeholder="Enter first name"
+          label="Date of Birth"
+          name="birth_date"
+          type="date"
+          placeholder="Enter Date of Birth"
           register={register}
-          error={errors.first_name}
+          error={errors.birth_date}
           validation={{ required: true }}
         />
         <FormTextInput
-          label="Middle Name"
-          name="middle_name"
-          placeholder="Enter first name"
+          label="NIN"
+          name="nin"
+          placeholder="Enter NIN"
           register={register}
-          error={errors.middle_name}
+          error={errors.nin}
           validation={{ required: true }}
         />
         <FormTextInput
-          label="Last Name"
-          name="surname"
-          placeholder="Enter first name"
+          label="BVN"
+          name="bvn"
+          placeholder="Enter BVN"
           register={register}
-          error={errors.surname}
+          error={errors.bvn}
           validation={{ required: true }}
         />
-        <SelectInput
+        <FormTextInput
+          label="Phone Number"
+          name="phone_number"
+          placeholder="Enter Phone Number"
+          register={register}
+          error={errors.phone_number}
+          validation={{ required: true }}
+        />
+        {/* <SelectInput
           label="Gender"
           name="gender"
           id="gender"
@@ -98,8 +80,8 @@ const PersonalData = ({ setStage, setFormData }: any) => {
             { value: "Female", label: "Female" },
             { value: "Male", label: "Male" },
           ]}
-        />
-        <SelectInput
+        /> */}
+        {/* <SelectInput
           label="Marital Status"
           name="marital_status"
           id="marital_status"
@@ -112,11 +94,17 @@ const PersonalData = ({ setStage, setFormData }: any) => {
             { value: "Divorced", label: "Divorced" },
             { value: "Widowed", label: "Widowed" },
           ]}
-        />
-        <Button text={"Proceed"} />
+        /> */}
+        <div className="button-container">
+        <button className="button secondary" onClick={() => setStage(1)}>
+            Go Back
+          </button>
+<Button text={"Proceed"} />
+        </div>
+        
       </form>
     </div>
   );
 };
 
-export default PersonalData;
+export default UserData;
