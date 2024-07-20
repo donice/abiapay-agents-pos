@@ -73,14 +73,6 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
     });
 
     mutation.mutate(formData);
-
-    // try {
-    //   const res = await createIndividualAbssin(formData);
-    //   console.log(res);
-    // } catch (error: any) {
-    //   console.log(error);
-    //   toast.error( "Error Creating ABSSIN")
-    // }
   };
 
   return (
