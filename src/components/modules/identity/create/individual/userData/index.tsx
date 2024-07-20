@@ -35,7 +35,6 @@ const UserData = ({ setStage, setFormData }: any) => {
   return (
     <div>
       <form className="identity-form" onSubmit={handleSubmit(onSubmit)}>
-       
         <FormTextInput
           label="Date of Birth"
           name="birth_date"
@@ -96,12 +95,11 @@ const UserData = ({ setStage, setFormData }: any) => {
           ]}
         /> */}
         <div className="button-container">
-        <button className="button secondary" onClick={() => setStage(1)}>
+          <button className="button secondary" onClick={() => setStage(0)}>
             Go Back
           </button>
-<Button text={"Proceed"} />
+          <Button text={"Proceed"} />
         </div>
-        
       </form>
     </div>
   );

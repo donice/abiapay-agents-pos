@@ -55,3 +55,39 @@ export const fetchProducts = async () => {
     console.log(error);
   }
 }
+
+export const fetchVehicleType = async () => {
+  try {
+    const res = await axiosInstance.get(`${url}/parks`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+export const fetchTaxOffice = async () => {
+  try {
+    const res = await axiosInstance.get(`${url}/parks`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+export const fetchCategory = async () => {
+  try {
+    const res = await axiosInstance.get(`${url}/parks`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+export const fetchSector = async () => {
+  try {
+    const res = await axiosInstance.get(`${url}/parks`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
