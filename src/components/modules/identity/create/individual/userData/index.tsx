@@ -3,7 +3,11 @@ import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
-import { fetchTaxOffice } from "@/src/services/common";
+import {
+  fetchCategory,
+  fetchSector,
+  fetchTaxOffice,
+} from "@/src/services/common";
 
 const UserData = ({ setStage, setFormData }: any) => {
   const [taxOffice, setTaxOffice] = useState<any>([]);
@@ -26,35 +30,35 @@ const UserData = ({ setStage, setFormData }: any) => {
     }
   };
 
-  const fetchCategory = async () => {
+  const getCategory = async () => {
     try {
-      const data = await fetchCategory();
-      console.log("CATEGORY", data);
-      // setCategory(
-      //   data?.map((item: any) => {
-      //     return {
-      //       label: item.name,
-      //       value: item.idstation,
-      //     };
-      //   })
-      // );
+      const {data} = await fetchCategory();
+      // console.log("CATEGORY", data);
+      setCategory(
+        data?.map((item: any) => {
+          return {
+            label: item.category_name,
+            value: item.category_name,
+          };
+        })
+      );
     } catch (error: any) {
       console.log(error);
     }
   };
 
-  const fetchSector = async () => {
+  const getSector = async () => {
     try {
       const data = await fetchSector();
       console.log("SECTOR", data);
-      // setSector(
-      //   data?.map((item: any) => {
-      //     return {
-      //       label: item.name,
-      //       value: item.idstation,
-      //     };
-      //   })
-      // );
+      setSector(
+        data?.map((item: any) => {
+          return {
+            label: item.name,
+            value: item.idstation,
+          };
+        })
+      );
     } catch (error: any) {
       console.log(error);
     }
@@ -62,8 +66,8 @@ const UserData = ({ setStage, setFormData }: any) => {
 
   useEffect(() => {
     getTaxOffice();
-    fetchCategory();
-    fetchSector();
+    getCategory();
+    getSector();
   }, []);
 
   const {

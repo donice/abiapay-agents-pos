@@ -68,7 +68,7 @@ export const fetchTaxOffice = async () => {
 
 export const fetchCategory = async () => {
   try {
-    const res = await axiosInstance.get(`${portal_url}/cdn/category`);
+    const res = await axiosInstance.post(`${portal_url}/cdn/category`);
     return res.data;
   } catch (error: any) {
     console.log(error);

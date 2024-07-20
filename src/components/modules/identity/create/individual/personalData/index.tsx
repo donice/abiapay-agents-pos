@@ -41,12 +41,6 @@ const PersonalData = ({ setStage, setFormData }: any) => {
   return (
     <div>
       <form className="identity-form" onSubmit={handleSubmit(onSubmit)}>
-        {/* <div className="identity-form_image">
-          <div className="identity-form_imagecapture"></div>
-          <button className="button primary">
-            <TbCameraPlus /> Capture{" "}
-          </button>
-        </div> */}
         <FaceCam setFormData={setFormData}/>
         <SelectInput
           label="Title"

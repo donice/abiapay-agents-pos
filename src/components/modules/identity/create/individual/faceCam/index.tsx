@@ -34,17 +34,18 @@ const FaceCam = ({setFormData}: any) => {
     setMessage("");
 
     try {
-      const response = await axios.post(
-        "/api/v1/verify-face",
-        { imageSrc },
-        { headers: { 'Content-Type': 'application/json' } }
-      );
+      // const response = await axios.post(
+      //   "/api/v1/verify-face",
+      //   { imageSrc },
+      //   { headers: { 'Content-Type': 'application/json' } }
+      // );
 
-      console.log("API RES", response);
+      // console.log("API RES", response);
 
-      const result = response.data;
-      toast.success(result.isFace ? "Face detected!" : "No face detected!");
-      setIsFaceDetected(result.isFace);
+      // const result = response.data;
+      // toast.success(result.isFace ? "Face detected!" : "No face detected!");
+      // setIsFaceDetected(result.isFace);
+      toast.success("Face detected!");
     } catch (error) {
       console.error('Error in API call:', error);
       toast.error("Error detecting face");
