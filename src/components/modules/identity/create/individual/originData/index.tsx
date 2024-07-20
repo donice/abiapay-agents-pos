@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
-import { useForm } from "react-hook-form";
+import { FieldError, useForm } from "react-hook-form";
 import { fetchStates } from "@/src/services/common";
 import {
   createIndividualAbssin,
@@ -40,13 +40,13 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
   } = useForm({
     defaultValues: {
       nationality: "Nigerian",
-      state_of_origin: "",
-      lga: "",
-      state_of_residence: "",
-      address: "",
-      ward: "",
-      sector: "",
-      city: "",
+      state_of_origin: formData.state_of_origin || "",
+      lga: formData.lga || "",
+      state_of_residence: formData.state_of_residence || "",
+      address: formData.address || "",
+      ward: formData.ward || "",
+      sector: formData.sector || "",
+      city: formData.city || "",
     },
   });
 
@@ -70,7 +70,7 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
       };
     });
 
-    mutation.mutate(formData);
+    mutation.mutate({ ...formData, ...data });
   };
 
   return (
@@ -100,7 +100,7 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
           name="lga"
           placeholder="Enter L.G.A"
           register={register}
-          error={errors.lga}
+          error={errors.lga as FieldError}
           validation={{ required: true }}
         />
         <div>
@@ -121,7 +121,7 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
           name="city"
           placeholder="Enter L.G.A"
           register={register}
-          error={errors.city}
+          error={errors.city as FieldError}
           validation={{ required: true }}
         />
 
@@ -130,7 +130,7 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
           name="address"
           placeholder="Enter Address"
           register={register}
-          error={errors.address}
+          error={errors.address as FieldError}
           validation={{ required: true }}
         />
         <FormTextInput
@@ -138,7 +138,7 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
           name="ward"
           placeholder="Enter Ward"
           register={register}
-          error={errors.ward}
+          error={errors.ward as FieldError}
           validation={{ required: true }}
         />
 

@@ -2,22 +2,22 @@ import React, { useState } from "react";
 import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
-import { useForm } from "react-hook-form";
+import { useForm, FieldError } from "react-hook-form";
 import FaceCam from "../faceCam";
 
-const PersonalData = ({ setStage, setFormData }: any) => {
+const PersonalData = ({ setStage, setFormData, formData }: any) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      first_name: "",
-      middle_name: "",
-      surname: "",
-      indv_title: "",
-      gender: "",
-      marital_status: "",
+      first_name: formData.first_name || "",
+      middle_name: formData.middle_name || "",
+      surname: formData.surname || "",
+      indv_title: formData.indv_title || "",
+      gender: formData.gender || "",
+      marital_status: formData.marital_status || "",
     },
   });
 
@@ -58,7 +58,7 @@ const PersonalData = ({ setStage, setFormData }: any) => {
           name="first_name"
           placeholder="Enter first name"
           register={register}
-          error={errors.first_name}
+          error={errors.first_name as FieldError}
           validation={{ required: true }}
         />
         <FormTextInput
@@ -66,7 +66,7 @@ const PersonalData = ({ setStage, setFormData }: any) => {
           name="middle_name"
           placeholder="Enter first name"
           register={register}
-          error={errors.middle_name}
+          error={errors.middle_name as FieldError}
           validation={{ required: true }}
         />
         <FormTextInput
@@ -74,7 +74,7 @@ const PersonalData = ({ setStage, setFormData }: any) => {
           name="surname"
           placeholder="Enter first name"
           register={register}
-          error={errors.surname}
+          error={errors.surname as FieldError}
           validation={{ required: true }}
         />
         <SelectInput

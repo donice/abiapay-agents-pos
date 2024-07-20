@@ -1,6 +1,6 @@
 export const formatAmount = (input: number | string | undefined | null): string => {
     if (input === undefined || input === null) {
-      return "-";
+      return "0.00";
     }
   
     let num: number;

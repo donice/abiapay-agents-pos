@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
-import { useForm } from "react-hook-form";
+import { FieldError, useForm } from "react-hook-form";
 import {
   fetchCategory,
   fetchSector,
   fetchTaxOffice,
 } from "@/src/services/common";
 
-const UserData = ({ setStage, setFormData }: any) => {
+const UserData = ({ setStage, setFormData, formData }: any) => {
   const [taxOffice, setTaxOffice] = useState<any>([]);
   const [sector, setSector] = useState<any>([]);
   const [category, setCategory] = useState<any>([]);
@@ -76,15 +76,15 @@ const UserData = ({ setStage, setFormData }: any) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      birth_date: "",
-      nin: "",
-      bvn: "",
-      phone_number: "",
-      mobile_number: "",
-      tax_office: "",
-      category: "",
-      sector: "",
-      email: "",
+      birth_date: formData.birth_date || "",
+      nin: formData.nin || "",
+      bvn: formData.bvn || "",
+      phone_number: formData.phone_number || "",
+      mobile_number: formData.mobile_number || "",
+      tax_office: formData.tax_office || "",
+      category: formData.category || "",
+      sector: formData.sector || "",
+      email: formData.email || "",
     },
   });
 
@@ -108,7 +108,7 @@ const UserData = ({ setStage, setFormData }: any) => {
           type="date"
           placeholder="Enter Date of Birth"
           register={register}
-          error={errors.birth_date}
+          error={errors.birth_date as FieldError}
           validation={{ required: true }}
         />
         <FormTextInput
@@ -117,7 +117,7 @@ const UserData = ({ setStage, setFormData }: any) => {
           name="nin"
           placeholder="Enter NIN"
           register={register}
-          error={errors.nin}
+          error={errors.nin as FieldError}
           validation={{ required: true }}
         />
         <FormTextInput
@@ -126,8 +126,18 @@ const UserData = ({ setStage, setFormData }: any) => {
           name="bvn"
           placeholder="Enter BVN"
           register={register}
-          error={errors.bvn}
-          validation={{ required: true }}
+          error={errors.bvn as FieldError}
+          validation={{
+            required: true,
+            minLength: {
+              value: 11,
+              message: "Length must be above 11 characters",
+            },
+            maxLength: {
+              value: 13,
+              message: "Length must be below 13 characters",
+            },
+          }}
         />
         <FormTextInput
           type="number"
@@ -135,7 +145,7 @@ const UserData = ({ setStage, setFormData }: any) => {
           name="phone_number"
           placeholder="Enter Phone Number"
           register={register}
-          error={errors.phone_number}
+          error={errors.phone_number as FieldError}
           validation={{
             required: true,
             minLength: {
@@ -154,7 +164,7 @@ const UserData = ({ setStage, setFormData }: any) => {
           name="mobile_number"
           placeholder="Enter Mobile Number"
           register={register}
-          error={errors.mobile_number}
+          error={errors.mobile_number as FieldError}
           validation={{
             required: true,
             minLength: {
@@ -172,7 +182,7 @@ const UserData = ({ setStage, setFormData }: any) => {
           name="email"
           placeholder="Enter Email"
           register={register}
-          error={errors.email}
+          error={errors.email as FieldError}
           validation={{ required: true }}
         />
         <SelectInput
