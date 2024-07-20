@@ -21,7 +21,7 @@ const UserData = ({ setStage, setFormData }: any) => {
         data?.map((item: any) => {
           return {
             label: item.name,
-            value: item.idstation,
+            value: item.name,
           };
         })
       );
@@ -49,13 +49,13 @@ const UserData = ({ setStage, setFormData }: any) => {
 
   const getSector = async () => {
     try {
-      const data = await fetchSector();
-      console.log("SECTOR", data);
+      const {data} = await fetchSector();
+      // console.log("SECTOR", data);
       setSector(
         data?.map((item: any) => {
           return {
-            label: item.name,
-            value: item.idstation,
+            label: item.sector_name,
+            value: item.sector_name,
           };
         })
       );
@@ -80,9 +80,11 @@ const UserData = ({ setStage, setFormData }: any) => {
       nin: "",
       bvn: "",
       phone_number: "",
+      mobile_number: "",
       tax_office: "",
       category: "",
       sector: "",
+      email: "",
     },
   });
 
@@ -130,6 +132,22 @@ const UserData = ({ setStage, setFormData }: any) => {
           placeholder="Enter Phone Number"
           register={register}
           error={errors.phone_number}
+          validation={{ required: true }}
+        />
+        <FormTextInput
+          label="Mobile Number"
+          name="mobile_number"
+          placeholder="Enter Mobile Number"
+          register={register}
+          error={errors.mobile_number}
+          validation={{ required: true }}
+        />
+        <FormTextInput
+          label="Email"
+          name="email"
+          placeholder="Enter Email"
+          register={register}
+          error={errors.email}
           validation={{ required: true }}
         />
         <SelectInput

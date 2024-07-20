@@ -77,7 +77,7 @@ export const fetchCategory = async () => {
 
 export const fetchSector = async () => {
   try {
-    const res = await axiosInstance.get(`${portal_url}user/sector`);
+    const res = await axiosInstance.get(`${portal_url}/user/sector`);
     return res.data;
   } catch (error: any) {
     console.log(error);
