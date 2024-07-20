@@ -139,11 +139,11 @@ const UserData = ({ setStage, setFormData }: any) => {
           validation={{
             required: true,
             minLength: {
-              value: 5,
+              value: 11,
               message: "Length must be above 11 characters",
             },
             maxLength: {
-              value: 8,
+              value: 11,
               message: "Length must be below 13 characters",
             },
           }}

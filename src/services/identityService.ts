@@ -3,6 +3,7 @@ import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
 import { https } from "../lib/axiosInstance";
 import toast from "react-hot-toast";
+import { getErrorMessages } from "../utils/helper";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -108,7 +109,7 @@ export const createIndividualAbssin = async (requestData: createIndividualAbssin
 
     return data;
   } catch (error: any) {
-    toast.error(error?.data?.message);
+    toast.error(getErrorMessages(error?.data?.response_message) || "Error creating individual abssin account");
     console.log(error);
     throw new Error(`Error fetching transactions: ${error}`);
   }

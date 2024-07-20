@@ -43,7 +43,7 @@ const VerifyTicketsComponent = () => {
     "last_ticket_purchase",
   ];
 
-  console.log(details, "Detailssoihjasljalk");
+  // console.log(details, "Detailssoihjasljalk");
 
   return (
     <section className="verify-tickets">
