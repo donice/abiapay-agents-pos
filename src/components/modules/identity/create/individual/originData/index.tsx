@@ -54,7 +54,7 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
     mutationFn: async (data: createIndividualAbssinPayloadType) =>
       createIndividualAbssin(data),
     onSuccess: (data: any) => {
-      console.log(data.error);
+      console.log(data);
     },
     onError: (error: any) => {
       console.log("ERROR DATA", error, Object.keys(error));
