@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { TbCameraPlus } from "react-icons/tb";
+import { TbCameraPlus, TbCameraRotate } from "react-icons/tb";
 import Webcam from "react-webcam";
 import axios from "axios";
 import { Button } from "@/src/components/common/button";
@@ -69,19 +69,19 @@ const FaceCam = ({setFormData}: any) => {
           <div className="identity-form_imagecapture">
             <img src={imageSrc} alt="Captured face" />
           </div>
-          <button onClick={reset} className="button primary">
-            Capture Again
-          </button>
+          <Button text="Capture Again" onClick={reset}>
+            <TbCameraRotate className="icon"/>
+          </Button>
         </>
       ) :  <>
        <div className="identity-form_imagecapture">
         <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
       </div>
       <Button onClick={capture} text="Capture">
-        <TbCameraPlus />
+        <TbCameraPlus className="icon"/>
       </Button>
       </>}
-      {isLoading && <p>Loading...</p>}
+      {/* {isLoading && <p>Loading...</p>} */}
       {isFaceDetected !== null && (
         <div>
           {isFaceDetected ? (

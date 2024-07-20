@@ -1,13 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
+import { fetchTaxOffice } from "@/src/services/common";
 
 const UserData = ({ setStage, setFormData }: any) => {
-  // const [image, setImage] = useState<string | null>(null);
+  const [taxOffice, setTaxOffice] = useState<any>([]);
+  const [sector, setSector] = useState<any>([]);
+  const [category, setCategory] = useState<any>([]);
 
-  // console.log("imageSrc", image);
+  const getTaxOffice = async () => {
+    try {
+      const { data } = await fetchTaxOffice();
+      setTaxOffice(
+        data?.map((item: any) => {
+          return {
+            label: item.name,
+            value: item.idstation,
+          };
+        })
+      );
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const fetchCategory = async () => {
+    try {
+      const data = await fetchCategory();
+      console.log("CATEGORY", data);
+      // setCategory(
+      //   data?.map((item: any) => {
+      //     return {
+      //       label: item.name,
+      //       value: item.idstation,
+      //     };
+      //   })
+      // );
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const fetchSector = async () => {
+    try {
+      const data = await fetchSector();
+      console.log("SECTOR", data);
+      // setSector(
+      //   data?.map((item: any) => {
+      //     return {
+      //       label: item.name,
+      //       value: item.idstation,
+      //     };
+      //   })
+      // );
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTaxOffice();
+    fetchCategory();
+    fetchSector();
+  }, []);
 
   const {
     register,
@@ -19,6 +76,9 @@ const UserData = ({ setStage, setFormData }: any) => {
       nin: "",
       bvn: "",
       phone_number: "",
+      tax_office: "",
+      category: "",
+      sector: "",
     },
   });
 
@@ -68,18 +128,33 @@ const UserData = ({ setStage, setFormData }: any) => {
           error={errors.phone_number}
           validation={{ required: true }}
         />
-        {/* <SelectInput
-          label="Gender"
-          name="gender"
-          id="gender"
+        <SelectInput
+          label="Tax Office"
+          name="tax_office"
+          id="tax_office"
           register={register}
-          error={!!errors.gender}
+          error={!!errors.tax_office}
           validation={{ required: true }}
-          options={[
-            { value: "Female", label: "Female" },
-            { value: "Male", label: "Male" },
-          ]}
-        /> */}
+          options={taxOffice}
+        />
+        <SelectInput
+          label="Category"
+          name="category"
+          id="category"
+          register={register}
+          error={!!errors.category}
+          validation={{ required: true }}
+          options={category}
+        />
+        <SelectInput
+          label="Occupation Sector"
+          name="sector"
+          id="sector"
+          register={register}
+          error={!!errors.sector}
+          validation={{ required: true }}
+          options={sector}
+        />
         {/* <SelectInput
           label="Marital Status"
           name="marital_status"

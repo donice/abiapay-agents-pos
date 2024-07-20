@@ -3,6 +3,7 @@ import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
+const portal_url = process.env.NEXT_PUBLIC_PORTAL_URL;
 const central_api_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
@@ -56,18 +57,9 @@ export const fetchProducts = async () => {
   }
 }
 
-export const fetchVehicleType = async () => {
-  try {
-    const res = await axiosInstance.get(`${url}/parks`);
-    return res.data;
-  } catch (error: any) {
-    console.log(error);
-  }
-}
-
 export const fetchTaxOffice = async () => {
   try {
-    const res = await axiosInstance.get(`${url}/parks`);
+    const res = await axiosInstance.post(`${portal_url}/user/station`);
     return res.data;
   } catch (error: any) {
     console.log(error);
@@ -76,7 +68,7 @@ export const fetchTaxOffice = async () => {
 
 export const fetchCategory = async () => {
   try {
-    const res = await axiosInstance.get(`${url}/parks`);
+    const res = await axiosInstance.get(`${portal_url}/cdn/category`);
     return res.data;
   } catch (error: any) {
     console.log(error);
@@ -85,7 +77,7 @@ export const fetchCategory = async () => {
 
 export const fetchSector = async () => {
   try {
-    const res = await axiosInstance.get(`${url}/parks`);
+    const res = await axiosInstance.get(`${portal_url}user/sector`);
     return res.data;
   } catch (error: any) {
     console.log(error);
