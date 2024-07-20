@@ -12,6 +12,7 @@ const isToken =
     : null;
 setToken(isToken);
 
+
 export const fetchLGAData = async () => {
   try {
     const res = await axiosInstance.post(`${url}/state/lga`);

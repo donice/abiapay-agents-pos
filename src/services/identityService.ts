@@ -1,6 +1,8 @@
 import axiosInstance from "../lib/axiosInstance";
 import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
+import { https } from "../lib/axiosInstance";
+import toast from "react-hot-toast";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -93,9 +95,21 @@ export const validateNoIDOtp = async (requestData: verifyNoIdOtpPayloadType) => 
 
 export const createIndividualAbssin = async (requestData: createIndividualAbssinPayloadType) => {
   try {
-    const { data } = await axiosInstance.post(`${url}/abssin/validate-ids`, requestData);
+    const data = await https(
+      `${url}/abssin/register-abssin-individual`,
+      {
+        method: "POST",
+        body: JSON.stringify(requestData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    toast.error(error?.data?.message);
+    console.log(error);
+    throw new Error(`Error fetching transactions: ${error}`);
   }
 };

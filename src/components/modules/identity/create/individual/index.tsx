@@ -42,7 +42,7 @@ const CreateIndividualAbssinComponent = () => {
 
       {stage === 0 && <PersonalData setFormData={setFormData} setStage={setStage} />}
       {stage === 1 && <UserData setFormData={setFormData} setStage={setStage} />}
-      {stage === 2 && <OriginData setFormData={setFormData} setStage={setStage} />}
+      {stage === 2 && <OriginData formData={formData} setFormData={setFormData} setStage={setStage} />}
     </section>
   );
 };

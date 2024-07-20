@@ -89,7 +89,6 @@ const UserData = ({ setStage, setFormData }: any) => {
   });
 
   const onSubmit = (data: any) => {
-    console.log(data);
     setFormData((prev: any) => {
       return {
         ...prev,

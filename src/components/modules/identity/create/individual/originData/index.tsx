@@ -3,14 +3,15 @@ import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
+import { fetchStates } from "@/src/services/common";
 import {
-  fetchCategory,
-  fetchSector,
-  fetchStates,
-  fetchTaxOffice,
-} from "@/src/services/common";
+  createIndividualAbssin,
+  createIndividualAbssinPayloadType,
+} from "@/src/services/identityService";
+import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
 
-const OriginData = ({ setStage, setFormData }: any) => {
+const OriginData = ({ setStage, setFormData, formData }: any) => {
   const [state, setState] = useState<any>([]);
 
   const getStates = async () => {
@@ -29,7 +30,6 @@ const OriginData = ({ setStage, setFormData }: any) => {
       console.log(error);
     }
   };
-
 
   useEffect(() => {
     getStates();
@@ -52,14 +52,35 @@ const OriginData = ({ setStage, setFormData }: any) => {
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const mutation = useMutation({
+    mutationFn: async (data: createIndividualAbssinPayloadType) =>
+      createIndividualAbssin(data),
+    onSuccess: (data: any) => {
+      console.log(data.error);
+    },
+    onError: (error: any) => {
+      console.log("ERROR DATA", error, Object.keys(error));
+      return error;
+    },
+  });
+
+  const onSubmit = async (data: any) => {
     setFormData((prev: any) => {
       return {
         ...prev,
         ...data,
       };
     });
+
+    mutation.mutate(formData);
+
+    // try {
+    //   const res = await createIndividualAbssin(formData);
+    //   console.log(res);
+    // } catch (error: any) {
+    //   console.log(error);
+    //   toast.error( "Error Creating ABSSIN")
+    // }
   };
 
   return (
@@ -92,11 +113,11 @@ const OriginData = ({ setStage, setFormData }: any) => {
           error={errors.lga}
           validation={{ required: true }}
         />
-       <div>
-        <span className="go_back">Residence Information</span> 
-       </div>
+        <div>
+          <span className="go_back">Residence Information</span>
+        </div>
 
-       <SelectInput
+        <SelectInput
           label="State of Residence"
           name="state_of_residence"
           id="state_of_residence"
@@ -113,7 +134,7 @@ const OriginData = ({ setStage, setFormData }: any) => {
           error={errors.city}
           validation={{ required: true }}
         />
-       
+
         <FormTextInput
           label="Address"
           name="address"
@@ -135,7 +156,7 @@ const OriginData = ({ setStage, setFormData }: any) => {
           <button className="button secondary" onClick={() => setStage(1)}>
             Go Back
           </button>
-          <Button text={"Proceed"} />
+          <Button text={"Create ABSSIN"} loading={mutation.isPending} />
         </div>
       </form>
     </div>
