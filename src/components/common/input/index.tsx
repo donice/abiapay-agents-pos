@@ -106,6 +106,24 @@ export const FormTextInput: React.FC<InputProps> = ({
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
+
+  const getErrorMessage = (error: FieldError | undefined): string => {
+    if (!error) return "";
+
+    switch (error.type) {
+      case "required":
+        return `${label} Field Required`;
+      case "minLength":
+        return "Length must be more";
+      case "maxLength":
+        return "Length must be less";
+      default:
+        return "";
+    }
+  };
+
+  const errorMessage = error ? getErrorMessage(error) : "";
   return (
     <div className="form-input-container">
       <span>
@@ -127,7 +145,7 @@ export const FormTextInput: React.FC<InputProps> = ({
           {showPassword ? <TbEyeOff /> : <TbEye />}
         </span>
       )}
-      {error && <span className="error">Field Required</span>}
+      {errorMessage && <span className="error">{errorMessage}</span>}
     </div>
   );
 };

@@ -32,7 +32,7 @@ const UserData = ({ setStage, setFormData }: any) => {
 
   const getCategory = async () => {
     try {
-      const {data} = await fetchCategory();
+      const { data } = await fetchCategory();
       // console.log("CATEGORY", data);
       setCategory(
         data?.map((item: any) => {
@@ -49,7 +49,7 @@ const UserData = ({ setStage, setFormData }: any) => {
 
   const getSector = async () => {
     try {
-      const {data} = await fetchSector();
+      const { data } = await fetchSector();
       // console.log("SECTOR", data);
       setSector(
         data?.map((item: any) => {
@@ -112,6 +112,7 @@ const UserData = ({ setStage, setFormData }: any) => {
           validation={{ required: true }}
         />
         <FormTextInput
+          type="number"
           label="NIN"
           name="nin"
           placeholder="Enter NIN"
@@ -120,6 +121,7 @@ const UserData = ({ setStage, setFormData }: any) => {
           validation={{ required: true }}
         />
         <FormTextInput
+          type="number"
           label="BVN"
           name="bvn"
           placeholder="Enter BVN"
@@ -128,20 +130,42 @@ const UserData = ({ setStage, setFormData }: any) => {
           validation={{ required: true }}
         />
         <FormTextInput
+          type="number"
           label="Phone Number"
           name="phone_number"
           placeholder="Enter Phone Number"
           register={register}
           error={errors.phone_number}
-          validation={{ required: true }}
+          validation={{
+            required: true,
+            minLength: {
+              value: 5,
+              message: "Length must be above 11 characters",
+            },
+            maxLength: {
+              value: 8,
+              message: "Length must be below 13 characters",
+            },
+          }}
         />
         <FormTextInput
+          type="number"
           label="Mobile Number"
           name="mobile_number"
           placeholder="Enter Mobile Number"
           register={register}
           error={errors.mobile_number}
-          validation={{ required: true }}
+          validation={{
+            required: true,
+            minLength: {
+              value: 11,
+              message: "Length must be above 11 characters",
+            },
+            maxLength: {
+              value: 11,
+              message: "Length must be below 11 characters",
+            },
+          }}
         />
         <FormTextInput
           label="Email"

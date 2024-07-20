@@ -8,7 +8,6 @@ import {
   createIndividualAbssin,
   createIndividualAbssinPayloadType,
 } from "@/src/services/identityService";
-import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 
 const OriginData = ({ setStage, setFormData, formData }: any) => {
@@ -17,7 +16,6 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
   const getStates = async () => {
     try {
       const { data } = await fetchStates();
-      console.log(data);
       setState(
         data?.map((item: any) => {
           return {

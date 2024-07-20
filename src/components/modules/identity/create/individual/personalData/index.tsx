@@ -6,10 +6,6 @@ import { useForm } from "react-hook-form";
 import FaceCam from "../faceCam";
 
 const PersonalData = ({ setStage, setFormData }: any) => {
-  // const [image, setImage] = useState<string | null>(null);
-
-  // console.log("imageSrc", image);
-
   const {
     register,
     handleSubmit,
