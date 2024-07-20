@@ -58,6 +58,33 @@ export interface createIndividualAbssinPayloadType {
   image: string
 }
 
+export interface createBusinessAbssinPayloadType {
+  coy_name: string,
+  regist_name: string,
+  companytin: string,
+  rcno: string,
+  enterprise_reg_no: string,
+  category: string,
+  mobile_no: string,
+  e_mail: string,
+  city: string,
+  type_of_organisation: string,
+  line_of_business: string,
+  date_of_incorporation: string,
+  sector: string,
+  phone_no: string,
+  house_no: string,
+  street: string,
+  lga: string,
+  ward: string,
+  state: string,
+  date_of_commencement: string,
+  tax_office: string,
+  cdn_category_id: string,
+  password: string,
+  enter_by: string
+}
+
 export const validateID = async (requestData: validateIdPayloadType) => {
   try {
     const { data } = await axiosInstance.post(`${url}/abssin/validate-ids`, requestData);
@@ -94,7 +121,28 @@ export const validateNoIDOtp = async (requestData: verifyNoIdOtpPayloadType) => 
   }
 };
 
-export const createIndividualAbssin = async (requestData: createIndividualAbssinPayloadType) => {
+export const createIndividualAbssin = async (requestData: createBusinessAbssinPayloadType) => {
+  try {
+    const data = await https(
+      `${url}/abssin/register-abssin-individual`,
+      {
+        method: "POST",
+        body: JSON.stringify(requestData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return data;
+  } catch (error: any) {
+    toast.error(getErrorMessages(error?.data?.response_message) || "Error creating individual abssin account");
+    console.log(error);
+    throw new Error(`Error fetching transactions: ${error}`);
+  }
+};
+
+export const createBusinessAbssin = async (requestData: createIndividualAbssinPayloadType) => {
   try {
     const data = await https(
       `${url}/abssin/register-abssin-individual`,

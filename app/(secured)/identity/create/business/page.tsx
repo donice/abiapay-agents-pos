@@ -1,17 +1,16 @@
+import BusinessIndividualAbssinComponent from '@/src/components/modules/identity/create/business';
 import { Metadata } from 'next/types';
 import React from 'react'
-
 
 export const metadata: Metadata = {
   title: "Business ABSSIN",
   description: "Create ABSSIN for Business",
 };
 
-
-const CreateBusinessAbssinPage = () => {
+const BusinessIndividualAbssinPage = () => {
   return (
-    <div>CreateBusinessAbssinPage</div>
+    <div><BusinessIndividualAbssinComponent /></div>
   )
 }
 
-export default CreateBusinessAbssinPage
+export default BusinessIndividualAbssinPage

@@ -84,3 +84,21 @@ export const fetchSector = async () => {
     console.log(error);
   }
 }
+
+export const fetchBusinessType = async () => {
+  try {
+    const res = await axiosInstance.get(`${portal_url}/user/business-type`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+export const fetchOrganization = async () => {
+  try {
+    const res = await axiosInstance.get(`${portal_url}/user/sector`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}

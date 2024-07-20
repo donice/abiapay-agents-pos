@@ -5,6 +5,7 @@ import React, { type ReactElement } from "react";
 import {
   FcBusinessman,
   FcReading,
+  FcShop,
 } from "react-icons/fc";
 import "./style.scss";
 
@@ -28,12 +29,12 @@ const items: AccountsProps[] = [
     desc: "Create an ABSSIN for individual",
     icon: <FcBusinessman className="icon" />,
   },
-  // {
-  //   link: "identity/create/business",
-  //   title: "Create Business ABSSIN",
-  //   desc: "Create an ABSSIN for business",
-  //   icon: <FcShop className="icon" />,
-  // },
+  {
+    link: "identity/create/business",
+    title: "Create Business ABSSIN",
+    desc: "Create an ABSSIN for business",
+    icon: <FcShop className="icon" />,
+  },
   {
     link: "identity/view/individual",
     title: "View Individuals",
