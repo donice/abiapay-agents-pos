@@ -15,7 +15,7 @@ interface DetailsType {
 
 const VerifyTicketsComponent = () => {
   const [details, setDetails] = useState<DetailsType>({});
-  const displayDetails = details
+  const displayDetails = details;
   const [userData, setUserData] = useState<{
     name?: string;
     email?: string;
@@ -34,7 +34,6 @@ const VerifyTicketsComponent = () => {
       }
     }
   }, []);
-
 
   const displayKeys = [
     "vehicle_type",
@@ -62,21 +61,32 @@ const VerifyTicketsComponent = () => {
       </div>
 
       <div className="verify-tickets-comp_details">
-        {Object.keys(displayDetails).length < 1 ? null : displayDetails?.response_code ==
-          "00" || displayDetails?.response_code == "97" ? (
+        {displayDetails !== null &&
+        displayDetails !== undefined &&
+        Object.keys(displayDetails).length <
+          1 ? null : displayDetails?.response_code == "00" ||
+          displayDetails?.response_code == "97" ? (
           <div>
-             <div className="line-items">
-                <p>Status:</p>
-                <p className="success">{displayDetails?.response_code == "00" ? "Valid" : "Invalid"}</p>
-              </div>
+            <div className="line-items">
+              <p>Status:</p>
+              <p className="success">
+                {displayDetails?.response_code == "00" ? "Valid" : "Invalid"}
+              </p>
+            </div>
             {Object.entries(displayDetails)
-            .filter(([key]) => displayKeys.includes(key))
-            .map(([key, value]) => (
-              <div key={key} className="line-items">
-                <p>{CamelCaseToTitleCase(key)}:</p>
-                <p>{key === "no_of_days" ? CamelCaseToTitleCase(value) : key === "last_ticket_purchase" ? formatDate(value) : value}</p>
-              </div>
-            ))}
+              .filter(([key]) => displayKeys.includes(key))
+              .map(([key, value]) => (
+                <div key={key} className="line-items">
+                  <p>{CamelCaseToTitleCase(key)}:</p>
+                  <p>
+                    {key === "no_of_days"
+                      ? CamelCaseToTitleCase(value)
+                      : key === "last_ticket_purchase"
+                      ? formatDate(value)
+                      : value}
+                  </p>
+                </div>
+              ))}
           </div>
         ) : (
           <Empty />
