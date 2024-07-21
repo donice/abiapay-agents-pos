@@ -3,17 +3,11 @@ import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { FieldError, useForm } from "react-hook-form";
-import { fetchStates } from "@/src/services/common";
-import {
-  createBusinessAbssin,
-  createBusinessAbssinPayloadType,
-  createIndividualAbssin,
-  createIndividualAbssinPayloadType,
-} from "@/src/services/identityService";
-import { useMutation } from "@tanstack/react-query";
+import { fetchLGAData, fetchStates } from "@/src/services/common";
 
 const Address = ({ setStage, setFormData, formData }: any) => {
   const [state, setState] = useState<any>([]);
+  const [lga, setLga] = useState<any>([]);
 
   const getStates = async () => {
     try {
@@ -31,8 +25,25 @@ const Address = ({ setStage, setFormData, formData }: any) => {
     }
   };
 
+  const getLgas = async () => {
+    try {
+      const { data } = await fetchLGAData();
+      setLga(
+        data?.map((item: any) => {
+          return {
+            label: item.lgaName,
+            value: item.lgaID,
+          };
+        })
+      );
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getStates();
+    getLgas();
   }, []);
 
   const {
@@ -41,28 +52,26 @@ const Address = ({ setStage, setFormData, formData }: any) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      nationality: "Nigerian",
-      state_of_origin: formData.state_of_origin || "",
+      state: formData.state || "",
       lga: formData.lga || "",
-      state_of_residence: formData.state_of_residence || "",
-      address: formData.address || "",
-      ward: formData.ward || "",
-      sector: formData.sector || "",
       city: formData.city || "",
+      ward: formData.ward || "",
+      street: formData.street || "",
+      house_no: formData.house_no || "",
     },
   });
 
-  const mutation = useMutation({
-    mutationFn: async (data: createBusinessAbssinPayloadType) =>
-      createBusinessAbssin(data),
-    onSuccess: (data: any) => {
-      console.log(data);
-    },
-    onError: (error: any) => {
-      console.log("ERROR DATA", error, Object.keys(error));
-      return error;
-    },
-  });
+  // const mutation = useMutation({
+  //   mutationFn: async (data: createBusinessAbssinPayloadType) =>
+  //     createBusinessAbssin(data),
+  //   onSuccess: (data: any) => {
+  //     console.log(data);
+  //   },
+  //   onError: (error: any) => {
+  //     console.log("ERROR DATA", error, Object.keys(error));
+  //     return error;
+  //   },
+  // });
 
   const onSubmit = async (data: any) => {
     setFormData((prev: any) => {
@@ -72,67 +81,37 @@ const Address = ({ setStage, setFormData, formData }: any) => {
       };
     });
 
-    mutation.mutate({ ...formData, ...data });
+    // mutation.mutate({ ...formData, ...data });
   };
 
   return (
     <div>
       <form className="identity-form" onSubmit={handleSubmit(onSubmit)}>
-        <FormTextInput
-          label="Nationality"
-          name="nationality"
-          type="text"
-          placeholder="Enter Nationality"
-          value={"Nigerian"}
-          register={register}
-          error={errors.nationality}
-          validation={{ required: true }}
-        />
         <SelectInput
           label="State of Origin"
-          name="state_of_origin"
-          id="state_of_origin"
+          name="state"
+          id="state"
           register={register}
-          error={!!errors.state_of_origin}
+          error={!!errors.state}
           validation={{ required: true }}
           options={state}
         />
-        <FormTextInput
-          label="L.G.A of Origin"
-          name="lga"
-          placeholder="Enter L.G.A"
-          register={register}
-          error={errors.lga as FieldError}
-          validation={{ required: true }}
-        />
-        <div>
-          <span className="go_back">Residence Information</span>
-        </div>
 
         <SelectInput
-          label="State of Residence"
-          name="state_of_residence"
-          id="state_of_residence"
+          label="Business LGA"
+          name="lga"
+          id="lga"
           register={register}
-          error={!!errors.state_of_residence}
+          error={!!errors.lga}
           validation={{ required: true }}
-          options={state}
+          options={lga}
         />
         <FormTextInput
-          label="L.G.A of Residence"
+          label="City"
           name="city"
-          placeholder="Enter L.G.A"
+          placeholder="Enter City"
           register={register}
           error={errors.city as FieldError}
-          validation={{ required: true }}
-        />
-
-        <FormTextInput
-          label="Address"
-          name="address"
-          placeholder="Enter Address"
-          register={register}
-          error={errors.address as FieldError}
           validation={{ required: true }}
         />
         <FormTextInput
@@ -143,12 +122,29 @@ const Address = ({ setStage, setFormData, formData }: any) => {
           error={errors.ward as FieldError}
           validation={{ required: true }}
         />
+        <FormTextInput
+          label="Street"
+          name="street"
+          placeholder="Enter Street"
+          register={register}
+          error={errors.street as FieldError}
+          validation={{ required: true }}
+        />
+        <FormTextInput
+        type="number"
+          label="House Number"
+          name="house_no"
+          placeholder="Enter House Number"
+          register={register}
+          error={errors.house_no as FieldError}
+          validation={{ required: true }}
+        />
 
         <div className="button-container">
           <button className="button secondary" onClick={() => setStage(1)}>
             Go Back
           </button>
-          <Button text={"Create ABSSIN"} loading={mutation.isPending} />
+          <Button text={"Proceed"} />
         </div>
       </form>
     </div>
