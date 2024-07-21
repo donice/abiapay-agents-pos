@@ -6,6 +6,8 @@ import Basic from "./basic";
 import { createBusinessAbssinPayloadType } from "@/src/services/identityService";
 import Business from "./business";
 import Address from "./address";
+import { Button } from "@/src/components/common/button";
+import Summary from "./summary";
 
 const BusinessIndividualAbssinComponent = () => {
   const [stage, setStage] = useState(0);
@@ -44,7 +46,7 @@ const BusinessIndividualAbssinComponent = () => {
       {stage === 0 && <Basic formData={formData} setFormData={setFormData} setStage={setStage} />}
       {stage === 1 && <Business formData={formData} setFormData={setFormData} setStage={setStage} />}
       {stage === 2 && <Address formData={formData} setFormData={setFormData} setStage={setStage} />}
-      {stage === 3 && <div>Last</div>}
+      {stage === 3 && <Summary formData={formData} setStage={setStage} />}
     </section>
   );
 };

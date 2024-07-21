@@ -34,7 +34,7 @@ const ProgressBar = ({ stage, setStage }: any) => {
             className={`progress-label ${stage >= 3 ? "active" : ""}`}
             style={{ left: "85%" }}
           >
-            ABSSIN
+            Summary
           </div>
         </div>
        

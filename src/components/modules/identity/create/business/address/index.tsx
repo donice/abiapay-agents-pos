@@ -61,18 +61,6 @@ const Address = ({ setStage, setFormData, formData }: any) => {
     },
   });
 
-  // const mutation = useMutation({
-  //   mutationFn: async (data: createBusinessAbssinPayloadType) =>
-  //     createBusinessAbssin(data),
-  //   onSuccess: (data: any) => {
-  //     console.log(data);
-  //   },
-  //   onError: (error: any) => {
-  //     console.log("ERROR DATA", error, Object.keys(error));
-  //     return error;
-  //   },
-  // });
-
   const onSubmit = async (data: any) => {
     setFormData((prev: any) => {
       return {
@@ -80,8 +68,7 @@ const Address = ({ setStage, setFormData, formData }: any) => {
         ...data,
       };
     });
-
-    // mutation.mutate({ ...formData, ...data });
+    setStage(3);
   };
 
   return (
@@ -131,7 +118,7 @@ const Address = ({ setStage, setFormData, formData }: any) => {
           validation={{ required: true }}
         />
         <FormTextInput
-        type="number"
+          type="number"
           label="House Number"
           name="house_no"
           placeholder="Enter House Number"

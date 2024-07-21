@@ -3,21 +3,21 @@ import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { FieldError, useForm } from "react-hook-form";
-import { fetchBusinessType, fetchSector } from "@/src/services/common";
+import { fetchBusinessType, fetchCategory, fetchSector } from "@/src/services/common";
 
 const Business = ({ setStage, setFormData, formData }: any) => {
-  const [taxOffice, setTaxOffice] = useState<any>([]);
   const [sector, setSector] = useState<any>([]);
   const [businessType, setBusinessType] = useState<any>([]);
+  const [category, setCategory] = useState<any>([]);
 
   const getOrganisation = async () => {
     try {
-      const { data } = await fetchSector();
-      setTaxOffice(
+      const { data } = await fetchCategory();
+      setCategory(
         data?.map((item: any) => {
           return {
-            label: item.sector_name,
-            value: item.sector_name,
+            label: item.category_name,
+            value: item.id,
           };
         })
       );
@@ -92,7 +92,7 @@ const Business = ({ setStage, setFormData, formData }: any) => {
       };
     });
 
-    setStage(2);
+    setStage(3);
   };
 
   return (
@@ -105,7 +105,7 @@ const Business = ({ setStage, setFormData, formData }: any) => {
           register={register}
           error={!!errors.type_of_organisation}
           validation={{ required: true }}
-          options={taxOffice}
+          options={category}
         />
 
         <SelectInput
@@ -190,7 +190,7 @@ const Business = ({ setStage, setFormData, formData }: any) => {
         
 
         <div className="button-container">
-          <button className="button secondary" onClick={() => setStage(0)}>
+          <button className="button secondary" onClick={() => setStage(1)}>
             Go Back
           </button>
           <Button text={"Proceed"} />
