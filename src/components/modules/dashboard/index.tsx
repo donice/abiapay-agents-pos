@@ -167,6 +167,7 @@ const DashboardComponent: React.FC = () => {
           <StatsCard
             name="ABSSIN"
             amount={abssinCount == null ? 0 : abssinCount.toString()}
+            link="identity"
           />
           <StatsCard
             name="Enumeration"
