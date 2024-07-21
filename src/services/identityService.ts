@@ -121,7 +121,7 @@ export const validateNoIDOtp = async (requestData: verifyNoIdOtpPayloadType) => 
   }
 };
 
-export const createIndividualAbssin = async (requestData: createBusinessAbssinPayloadType) => {
+export const createIndividualAbssin = async (requestData: createIndividualAbssinPayloadType) => {
   try {
     const data = await https(
       `${url}/abssin/register-abssin-individual`,
@@ -142,7 +142,7 @@ export const createIndividualAbssin = async (requestData: createBusinessAbssinPa
   }
 };
 
-export const createBusinessAbssin = async (requestData: createIndividualAbssinPayloadType) => {
+export const createBusinessAbssin = async (requestData: createBusinessAbssinPayloadType) => {
   try {
     const data = await https(
       `${url}/abssin/register-abssin-individual`,
