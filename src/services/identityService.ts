@@ -145,7 +145,7 @@ export const createIndividualAbssin = async (requestData: createIndividualAbssin
 export const createBusinessAbssin = async (requestData: createBusinessAbssinPayloadType) => {
   try {
     const data = await https(
-      `${url}/abssin/register-abssin-individual`,
+      `${url}/abssin/register-abssin-business`,
       {
         method: "POST",
         body: JSON.stringify(requestData),

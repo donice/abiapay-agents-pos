@@ -190,7 +190,7 @@ const Business = ({ setStage, setFormData, formData }: any) => {
         
 
         <div className="button-container">
-          <button className="button secondary" onClick={() => setStage(1)}>
+          <button className="button secondary" onClick={() => setStage(0)}>
             Go Back
           </button>
           <Button text={"Proceed"} />

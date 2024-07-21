@@ -62,12 +62,7 @@ const Address = ({ setStage, setFormData, formData }: any) => {
   });
 
   const onSubmit = async (data: any) => {
-    setFormData((prev: any) => {
-      return {
-        ...prev,
-        ...data,
-      };
-    });
+    setFormData({ ...formData, ...data });
     setStage(3);
   };
 
