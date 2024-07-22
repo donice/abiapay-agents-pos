@@ -9,10 +9,10 @@
   color: $text-primary;
   font-size: 14px;
   background-color: rgb(2 44 34);
-  margin-bottom: 2rem;
+  margin-bottom: 2rem; margin-top: 1rem;
   @include custom-media-query("mobile", $sm) {
     padding: 1.5rem;
-    margin-top: 1rem;
+   
   }
 
   &_content {

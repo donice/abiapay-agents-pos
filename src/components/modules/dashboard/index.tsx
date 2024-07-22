@@ -155,11 +155,11 @@ const DashboardComponent: React.FC = () => {
         </div>
       </header>
 
-      <div>
+      {/* <div>
         <QuickLink name="Identity" link="/identity" />
-        {/* <QuickLink name="Enforcement" link="/identity" /> */}
-        {/* <QuickLink name="Reports" link="/identity" /> */}
-      </div>
+        <QuickLink name="Enforcement" link="/identity" />
+        <QuickLink name="Reports" link="/identity" />
+      </div> */}
       {!loading ? (
         <div className="dashboard_wallets">
           <WalletCard bank="access" data={accessData} />
