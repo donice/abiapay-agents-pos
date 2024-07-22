@@ -6,6 +6,8 @@ import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
 import { Button } from "@/src/components/common/button";
+import { useMutation } from "@tanstack/react-query";
+import { validateID, validateNoID } from "@/src/services/identityService";
 
 export const metadata: Metadata = {
   title: "ABIAPAY Identity",
@@ -15,25 +17,42 @@ export const metadata: Metadata = {
 const VerifyComponent = () => {
   const [selectedId, setSelectedId] = useState("");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      id: "",
-      source: "",
-      value: "",
+      // id: "",
+      // source: "",
+      // value: "",
       verify_via: "email",
+    },
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: any) => {
+      if (selectedId === "No ID") {
+        validateNoID(data);
+      } else {
+        validateID(data);
+      }
+    },
+    onSuccess: (data: any) => {
+      console.log(data);
+    },
+    onError: (error: any) => {
+      console.log(error);
     },
   });
 
   const onSubmit = async (data: any) => {
     console.log(data);
+
+    mutate({ ...data });
+    reset();
   };
 
   const handleIdChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedId(event.target.value);
+    const eventValue = event.target.value;
+    setSelectedId(eventValue);
+    console.log(eventValue);
   };
 
   return (
@@ -47,13 +66,14 @@ const VerifyComponent = () => {
           id="id"
           // register={register}
           options={[
+            { label: "Select ID", value: "" },
             { label: "No ID", value: "No ID" },
             { label: "BVN", value: "BVN" },
             { label: "NIN", value: "NIN" },
           ]}
           onChange={handleIdChange}
         />
-        
+
         {selectedId !== "No ID" && selectedId && (
           <FormTextInput
             label="Reference ID"
@@ -74,7 +94,7 @@ const VerifyComponent = () => {
           />
         )}
 
-        <Button text="Submit" />
+        <Button text="Submit" loading={isPending} />
       </form>
     </div>
   );

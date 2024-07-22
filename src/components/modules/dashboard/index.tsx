@@ -1,5 +1,11 @@
 "use client";
-import React, { useEffect, useReducer, type Reducer, useCallback, useState } from "react";
+import React, {
+  useEffect,
+  useReducer,
+  type Reducer,
+  useCallback,
+  useState,
+} from "react";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
 import "./style.scss";
@@ -37,7 +43,6 @@ const initialState: State = {
 };
 
 const reducer: Reducer<State, Action> = (state, action) => {
-
   switch (action.type) {
     case "FETCH_SUCCESS":
       return {
@@ -79,7 +84,6 @@ const DashboardComponent: React.FC = () => {
       }
     }
   }, []);
-  
 
   // ! using useCallback to memoize the data coming from the services
 
@@ -138,13 +142,24 @@ const DashboardComponent: React.FC = () => {
   return (
     <div className="dashboard">
       <header className="dashboard_header">
-        <CustomHeader title={`Welcome${userData?.name && `, ${userData?.name}`}`} desc="Overview of Dashboard" />
+        <CustomHeader
+          title={`Welcome${userData?.name && `, ${userData?.name}`}`}
+          desc="Overview of Dashboard"
+        />
         <div className="dashboard_header_buttons">
-          <SecondaryButton text="Akara Ekwenti" link="/find/using-phone-number" />
-          <PrimaryButton text="Sharp Sharp" link="/find/using-plate-number" />
+          <SecondaryButton
+            text="Akara Ekwenti"
+            link="/find/using-phone-number"
+          />
+          <PrimaryButton text="Sharp Sharp" link="/find/using-plate-number" addIcon={true} />
         </div>
       </header>
 
+      <div>
+        <QuickLink name="Identity" link="/identity" />
+        {/* <QuickLink name="Enforcement" link="/identity" /> */}
+        {/* <QuickLink name="Reports" link="/identity" /> */}
+      </div>
       {!loading ? (
         <div className="dashboard_wallets">
           <WalletCard bank="access" data={accessData} />
@@ -182,12 +197,6 @@ const DashboardComponent: React.FC = () => {
           <LoaderSkeleton height="70px" />
         </div>
       )}
-
-      <div>
-        <QuickLink name="Identity" link="/identity" />
-        {/* <QuickLink name="Enforcement" link="/identity" /> */}
-        {/* <QuickLink name="Reports" link="/identity" /> */}
-      </div>
     </div>
   );
 };

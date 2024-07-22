@@ -90,16 +90,20 @@ export const validateID = async (requestData: validateIdPayloadType) => {
     const { data } = await axiosInstance.post(`${url}/abssin/validate-ids`, requestData);
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    console.log(error);
+    toast.error(getErrorMessages(error?.data?. message) || "Error validating ID");
+    // throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
 
 export const validateNoID = async (requestData: validateNoIdPayloadType) => {
   try {
-    const { data } = await axiosInstance.post(`${url}/abssin/validate-ids`, requestData);
+    const { data } = await axiosInstance.post(`${url}/user/otp-request-no-id`, requestData);
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    console.log(error);
+    toast.error(getErrorMessages(error?.data?. message) || "Error validating ID");
+    // throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
 
