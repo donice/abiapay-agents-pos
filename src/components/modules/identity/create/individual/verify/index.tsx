@@ -85,13 +85,22 @@ const VerifyComponent = () => {
         )}
 
         {selectedId === "No ID" && (
-          <FormTextInput
-            label="Email"
-            name="value"
-            type="text"
-            placeholder="Enter Email"
-            register={register}
-          />
+          <>
+            <FormTextInput
+              label="Email"
+              name="value"
+              type="text"
+              placeholder="Enter Email"
+              register={register}
+            />
+            <FormTextInput
+              label="Phone Number"
+              name="value"
+              type="number"
+              placeholder="Enter Email"
+              register={register}
+            />
+          </>
         )}
 
         <Button text="Submit" loading={isPending} />

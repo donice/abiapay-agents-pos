@@ -36,29 +36,35 @@ const TicketsWalletCard = () => {
       {data ? (
         <figure className="tickets-wallet">
           <div className="tickets-wallet-card">
-            <div className="tickets-wallet-card_balance">
-              <span>Today's Collections</span>
-              <span>₦{formatAmount(data.data?.[0].total_amount)}</span>
-            </div>
+            <div className="ticket_container">
+              <div className="tickets-wallet-card_balance">
+                <span>Today's Collections</span>
+                <span>₦{formatAmount(data.data?.[0].total_amount)}</span>
+              </div>
 
-            <div className="tickets-wallet-card_image"></div>
+              <div className="tickets-wallet-card_image"></div>
 
-            <div className="tickets-wallet-card_balance">
-              <span>ePayments Today</span>
-              <span>{data.data?.[0].total_transaction}</span>
+              <div className="tickets-wallet-card_balance">
+                <span>Total Tickets</span>
+                <span>{data.data?.[0].total_transaction}</span>
+              </div>
             </div>
           </div>
           <div className="tickets-wallet-card">
-            <div className="tickets-wallet-card_balance">
-              <span>Week's Collections</span>
-              <span>₦{formatAmount(data.data?.[0].total_amount_monthly)}</span>
-            </div>
+            <div className="ticket_container">
+              <div className="tickets-wallet-card_balance">
+                <span>Week's Collections</span>
+                <span>
+                  ₦{formatAmount(data.data?.[0].total_amount_monthly)}
+                </span>
+              </div>
 
-            <div className="tickets-wallet-card_image"></div>
+              <div className="tickets-wallet-card_image"></div>
 
-            <div className="tickets-wallet-card_balance">
-              <span>ePayments This Week</span>
-              <span>{data.data?.[0].total_transaction_weekly}</span>
+              <div className="tickets-wallet-card_balance">
+                <span>Month's Collection</span>
+                <span>{data.data?.[0].total_transaction_weekly}</span>
+              </div>
             </div>
           </div>
         </figure>

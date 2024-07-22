@@ -1,9 +1,15 @@
 import React, { type ReactElement } from "react";
 import type { Metadata } from "next";
 import { CustomHeader } from "@/src/components/common/header";
-import { FcShipped, FcPaid, FcAcceptDatabase, FcMoneyTransfer } from "react-icons/fc";
+import {
+  FcShipped,
+  FcPaid,
+  FcAcceptDatabase,
+  FcMoneyTransfer,
+} from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
+import TicketsWalletCard from "@/src/components/modules/tickets/ticketsWalletsCard";
 
 export const metadata: Metadata = {
   title: "Manage Ticket",
@@ -41,25 +47,29 @@ const tickets: TicketsProps[] = [
 const TicketPage = () => {
   return (
     <div className="ticketspage">
-      <CustomHeader title="Manage Ticket" desc={"Manage your tickets"} />
+      <CustomHeader title="Tickets Dashboard" desc={"Manage your tickets"} />
 
-      <div className="ticketspage_items">
-        {tickets.map((item) => (
-          <Link
-            href={`/${item.name}`}
-            key={item.name}
-            className={"ticketspage_item"}
-          >
-            <div >
-              {" "}
-              <span>{item.icon}</span>
+      <div className="ticketspage_container">
+        <TicketsWalletCard />
+
+        <div className="ticketspage_items">
+          {tickets.map((item) => (
+            <Link
+              href={`/${item.name}`}
+              key={item.name}
+              className={"ticketspage_item"}
+            >
               <div>
-                <h2>{item.title}</h2>
-                <p>{item.desc}</p>
+                {" "}
+                <span>{item.icon}</span>
+                <div>
+                  <h2>{item.title}</h2>
+                  <p>{item.desc}</p>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

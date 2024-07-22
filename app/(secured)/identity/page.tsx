@@ -52,7 +52,7 @@ const items: AccountsProps[] = [
 const IdentityPage = () => {
   return (
     <div className="identity">
-      <CustomHeader title="Identity" desc={"Manage identities"} />
+      <CustomHeader title="Identity Dashboard" desc={"Manage identities"} />
 
       <div className="identity_container">
         <div className="identity_items">

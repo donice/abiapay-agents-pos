@@ -109,7 +109,17 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
           name="phone_number"
           placeholder="Enter Driver's Phone Number"
           register={register}
-          validation={{ required: true }}
+          validation={{
+            required: "Phon Number is Required",
+            minLength: {
+              value: 11,
+              message: "Length must be above 11 characters",
+            },
+            maxLength: {
+              value: 11,
+              message: "Length must be below 13 characters",
+            },
+          }}
           error={errors.phone_number}
         />
         <FormTextInput
@@ -118,7 +128,17 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
           name="plate_number"
           placeholder="Enter Vehicle Plate Number"
           register={register}
-          validation={{ required: true }}
+          validation={{
+            required: "Vehicle Number is Required",
+            minLength: {
+              value: 8,
+              message: "Length must be above 11 characters",
+            },
+            maxLength: {
+              value: 8,
+              message: "Length must be below 13 characters",
+            },
+          }}
           error={errors.plate_number}
         />
         <SelectInput
@@ -128,6 +148,7 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
           options={parks}
           placeholder="Select Operating Park"
           register={register}
+          validation={{ required: true }}
         />
         <SelectInput
           label="Trade Unions"
@@ -136,6 +157,7 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
           options={tradeUnions}
           placeholder="Select Trade Unions"
           register={register}
+          validation={{ required: true }}
         />
         <Button text="Save & Continue" loading={isPending} />
       </form>

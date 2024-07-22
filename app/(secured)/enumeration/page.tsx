@@ -54,7 +54,7 @@ const items: AccountsProps[] = [
 const EnumerationPage = () => {
   return (
     <div className="enumeration">
-      <CustomHeader title="All Enumerations" desc={"Explore your enumeration"} />
+      <CustomHeader title="Enumerations Dashboard" desc={"Explore your enumeration"} />
 
       <div className="enumeration_container">
         <TicketsWalletCard />
