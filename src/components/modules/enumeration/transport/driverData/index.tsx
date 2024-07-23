@@ -54,8 +54,6 @@ const DriverData = ({ setStage, details, formData }: any) => {
       plate_number: formData.plate_number || "",
       contact_type: "driver",
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
-
-      vehicle_category: "",
     },
   });
 
@@ -69,7 +67,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
     taxpayer_location: details?.vehicle_owner.ownerAddress || "",
     operating_park: formData.operating_park || "",
     trade_union: formData.trade_union || "",
-    vehicle_category: "Big Bus",
+    vehicle_category: formData.vehicle_category || "",
     owner_name: details?.vehicle_owner.ownerName || "",
     owner_address: details?.vehicle_owner.ownerAddress || "",
     daily_ticket_amount: 250,
@@ -156,6 +154,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
           plate_number={formData.plate_number || ""}
           text={ticketData?.assetCode || ""}
           id={ticketData?.enumeration_id || ""}
+          vehicle_category={formData.vehicle_category || ""}
         />
       )}
     </>

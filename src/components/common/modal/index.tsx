@@ -19,6 +19,7 @@ interface EnumerationModalProps {
   text?: string;
   link?: string;
   plate_number?: string;
+  vehicle_category?: string;
 }
 
 interface InfoModalType {
@@ -108,6 +109,7 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
   text,
   link,
   qr_link,
+  vehicle_category,
   plate_number,
 }) => {
   const router = useRouter();
@@ -147,7 +149,7 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
             </div>
 
             
-            <p className="vehicle_type">MINI BUS TAXI</p>
+            <p className="vehicle_type">{vehicle_category}</p>
           </div>
 
           <div>

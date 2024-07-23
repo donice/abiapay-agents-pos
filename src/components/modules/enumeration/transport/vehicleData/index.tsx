@@ -32,7 +32,7 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
       phone_number: "",
       vehicle_category: "",
       trade_union: "",
-      park: "",
+      operating_park: "",
     },
   });
 
