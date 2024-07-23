@@ -31,6 +31,15 @@ export const fetchStates = async () => {
   }
 }
 
+export const fetchVehicleCategories = async () => {
+  try {
+    const res = await axiosInstance.get(`${portal_url}/enumeration/vehicle-category`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export const fetchParks = async () => {
   try {
     const res = await axiosInstance.get(`${url}/parks`);

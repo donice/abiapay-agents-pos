@@ -9,11 +9,12 @@ import {
 } from "@/src/services/transportEnumerationService";
 import toast from "react-hot-toast";
 import { InfoModal } from "@/src/components/common/modal";
-import { fetchParks, fetchTradeUnions } from "@/src/services/common";
+import { fetchParks, fetchTradeUnions, fetchVehicleCategories } from "@/src/services/common";
 
 const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
   const [parks, setParks] = useState([]);
   const [tradeUnions, setTradeUnions] = useState([]);
+  const [vehicleCategory, setVehicleCategory] = useState([]);
   const [show, setShow] = useState({
     mode: false,
     status: "",
@@ -29,6 +30,9 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       plate_number: "",
       phone_number: "",
+      vehicle_category: "",
+      trade_union: "",
+      park: "",
     },
   });
 
@@ -61,7 +65,22 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
   const onSubmit = (reqData: any) => {
     mutate(reqData);
     setFormData(reqData);
-    // console.log(reqData);
+    console.log(reqData);
+  };
+
+  const getVehicleCategories = async () => {
+    try {
+      const data = await fetchVehicleCategories();
+      const res = data?.map((item: any) => {
+        return {
+          label: item.productName,
+          value: item.productName,
+        };
+      });
+      setVehicleCategory(res);
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   const getParks = async () => {
@@ -97,6 +116,7 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
   useEffect(() => {
     getParks();
     getTradeUnions();
+    getVehicleCategories();
   }, []);
 
 
@@ -130,16 +150,21 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
           register={register}
           validation={{
             required: "Vehicle Number is Required",
-            minLength: {
-              value: 8,
-              message: "Length must be above 11 characters",
-            },
             maxLength: {
               value: 8,
               message: "Length must be below 13 characters",
             },
           }}
           error={errors.plate_number}
+        />
+        <SelectInput
+          label="Vehicle Category"
+          name="vehicle_category"
+          id="vehicle_category"
+          options={vehicleCategory}
+          placeholder="Select Vehicle Category"
+          register={register}
+          validation={{ required: true }}
         />
         <SelectInput
           label="Operating Park"
