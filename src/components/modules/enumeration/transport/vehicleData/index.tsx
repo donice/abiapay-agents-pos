@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import { useForm } from "react-hook-form";
+import { FieldError, FieldErrorsImpl, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import {
   verifyPlateNumber,
   VerifyPlateNumberType,
 } from "@/src/services/transportEnumerationService";
 import toast from "react-hot-toast";
-import { InfoModal } from "@/src/components/common/modal";
-import { fetchParks, fetchTradeUnions, fetchVehicleCategories } from "@/src/services/common";
+import {
+  InfoModal,
+  VehicleCheckSuccessModal,
+} from "@/src/components/common/modal";
+import {
+  fetchParks,
+  fetchTradeUnions,
+  fetchVehicleCategories,
+} from "@/src/services/common";
 
-const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
+const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
   const [parks, setParks] = useState([]);
   const [tradeUnions, setTradeUnions] = useState([]);
   const [vehicleCategory, setVehicleCategory] = useState([]);
+  const [modalDetails, setModalDetails] = useState({
+    vehicle_make: "",
+    vehicle_model: "",
+    vehicle_color: "",
+    state_of_registration: "",
+    expiry_date: "",
+  });
   const [show, setShow] = useState({
     mode: false,
     status: "",
@@ -28,11 +42,11 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
   } = useForm({
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
-      plate_number: "",
-      phone_number: "",
-      vehicle_category: "",
-      trade_union: "",
-      operating_park: "",
+      plate_number: formData.plate_number || "",
+      phone_number: formData.phone_number || "",
+      vehicle_category: formData.vehicle_category || "",
+      trade_union: formData.trade_union || "",
+      operating_park: formData.operating_park || "",
     },
   });
 
@@ -47,7 +61,8 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
         toast.success("Plate Number Verified Successfully");
         setShow({ mode: true, status: "success" });
         setDetails(data?.response_data);
-        setStage(1);
+        setModalDetails(data?.response_data?.vehicle_data);
+        // setStage(1);
       } else if (data.response_code == "12") {
         toast.success(data.response_message);
       } else {
@@ -65,7 +80,6 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
   const onSubmit = (reqData: any) => {
     mutate(reqData);
     setFormData(reqData);
-    console.log(reqData);
   };
 
   const getVehicleCategories = async () => {
@@ -119,7 +133,6 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
     getVehicleCategories();
   }, []);
 
-
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="enumeration-form">
@@ -140,7 +153,7 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
               message: "Length must be below 13 characters",
             },
           }}
-          error={errors.phone_number}
+          error={errors.phone_number as FieldError}
         />
         <FormTextInput
           label="Vehicle Plate Number"
@@ -155,7 +168,7 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
               message: "Length must be below 13 characters",
             },
           }}
-          error={errors.plate_number}
+          error={errors.plate_number as FieldError}
         />
         <SelectInput
           label="Vehicle Category"
@@ -187,15 +200,6 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
         <Button text="Save & Continue" loading={isPending} />
       </form>
 
-      {/* {show.mode && show.status == "success" && (
-        <InfoModal
-          status={show.status}
-          text_header="Proceed Enumeration"
-          button_text="View Receipt"
-          link="/enumeration/save"
-          text_info={`Ref: `}
-        />
-      )} */}
       {show.mode && show.status == "error" && (
         <InfoModal
           status={show.status}
@@ -203,6 +207,21 @@ const VehicleData = ({ setStage, setDetails, setFormData }: any) => {
           button_text="Enter Vehicle Details"
           link="/enumeration/transport/save"
           text_info={`Cannot Proceed. Please Register Vehicle Details`}
+        />
+      )}
+      {show.mode && show.status == "success" && (
+        <VehicleCheckSuccessModal
+          text_header="Information Retrieved Successfully"
+          vehicle_make={modalDetails.vehicle_make}
+          vehicle_model={modalDetails.vehicle_model}
+          vehicle_color={modalDetails.vehicle_color}
+          state_of_registration={modalDetails.state_of_registration}
+          expiry_date={modalDetails.expiry_date}
+          button_text="Continue"
+          onClick={() => {
+            setShow({ mode: false, status: "" });
+            setStage(1);
+          }}
         />
       )}
     </div>

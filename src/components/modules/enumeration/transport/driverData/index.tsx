@@ -22,7 +22,10 @@ interface TicketsDataType {
   assetCode: string;
 }
 
+
+
 const DriverData = ({ setStage, details, formData }: any) => {
+  console.log(details)
   const [ticketData, setTicketData] = useState<TicketsDataType>({
     response_code: "",
     response_message: "",
@@ -49,7 +52,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
-      name: details?.vehicle_owner.ownerName || "",
+      name: details?.driver.driverName || "",
       phone: details?.vehicle_owner.phoneNumber || "",
       plate_number: formData.plate_number || "",
       contact_type: "driver",
