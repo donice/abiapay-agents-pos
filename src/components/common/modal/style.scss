@@ -192,3 +192,25 @@
     width: 175px;
   }
 }
+
+.success_icon {
+  background-color: #e6ffe6;
+  padding: 0.5rem;
+  border-radius: 100%;
+}
+
+.vehicle_items {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  text-align: left;
+  margin: 1rem 0;
+   p {
+     margin: 0;
+
+     span {
+       font-weight: 700;
+       margin-left: 0.25rem;
+     }
+   }
+}

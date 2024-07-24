@@ -2,9 +2,9 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
-import { PrimaryButton, SecondaryButton } from "../button";
+import { Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
-import { TbPrinter } from "react-icons/tb";
+import { TbPrinter, TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import QRCode from "react-qr-code";
 
 interface SuccessModalProps {
@@ -28,6 +28,17 @@ interface InfoModalType {
   text_info?: string;
   link?: string;
   status: "success" | "error";
+}
+
+interface VehicleCheckSuccessModalType {
+  text_header?: string;
+  vehicle_make?: string;
+  vehicle_model?: string;
+  vehicle_color?: string;
+  state_of_registration?: string;
+  expiry_date?: string;
+  button_text?: string;
+  onClick?: ((event: any) => void) | undefined;
 }
 
 export const SuccessModal: React.FC<SuccessModalProps> = ({
@@ -74,12 +85,6 @@ export const InfoModal: React.FC<InfoModalType> = ({
 }) => {
   const router = useRouter();
 
-  const handleClick = () => {
-    if (link) {
-      router.push(link);
-    }
-  };
-
   return (
     <div className="modalOverlay">
       <div className="modal">
@@ -96,6 +101,60 @@ export const InfoModal: React.FC<InfoModalType> = ({
           {link && (
             <PrimaryButton link={link} text={button_text ? button_text : ""} />
           )}
+
+          {/* <SecondaryButton text="Create New" link={"/tickets/transport/add"} /> */}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const VehicleCheckSuccessModal: React.FC<
+  VehicleCheckSuccessModalType
+> = ({
+  text_header,
+  vehicle_make,
+  vehicle_model,
+  vehicle_color,
+  state_of_registration,
+  expiry_date,
+  button_text,
+  onClick,
+}) => {
+  const handleClick = () => {};
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <div className="modal_icon">
+          <TbRosetteDiscountCheckFilled className="success_icon" />
+        </div>
+        
+        <div className="modalContent">
+          <h2>{text_header}</h2>
+          <div className="vehicle_items">
+             <p>
+              Vehicle Make:
+            <span>{vehicle_make} </span>
+          </p>
+          <p>
+            Vehicle Model:
+            <span>{vehicle_model}</span>{" "}
+          </p>
+          <p>
+            Vehicle Color:
+            <span>{vehicle_color}</span>{" "}
+          </p>
+          <p>
+            State Of Registration:
+            <span>{state_of_registration}</span>{" "}
+          </p>
+          <p>
+            Registration Expiry Date:
+            <span>{expiry_date}</span>{" "}
+          </p>
+          </div>
+         
+            <Button onClick={onClick}  text={button_text ? button_text : ""} />
 
           {/* <SecondaryButton text="Create New" link={"/tickets/transport/add"} /> */}
         </div>
@@ -141,14 +200,13 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
 
             <div className="qr_container">
               <QRCode
-              size={256}
-              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-              value={qr_link}
-              viewBox={`0 0 256 256`}
-            />
+                size={256}
+                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                value={qr_link}
+                viewBox={`0 0 256 256`}
+              />
             </div>
 
-            
             <p className="vehicle_type">{vehicle_category}</p>
           </div>
 

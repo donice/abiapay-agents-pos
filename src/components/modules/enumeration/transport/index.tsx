@@ -17,7 +17,7 @@ const TransportEnumerationComponent = () => {
     <section>
       <ProgressBar stage={stage} setStage={setStage}/>
      
-      {stage === 0 && <VehicleData setStage={setStage} setDetails={setDetails} setFormData={setFormData}/>}
+      {stage === 0 && <VehicleData setStage={setStage} setDetails={setDetails} formData={formData} setFormData={setFormData}/>}
       {stage === 1 && <OwnerData setStage={setStage} details={details} formData={formData}/>}
       {stage === 2 && <DriverData setStage={setStage} details={details} formData={formData}/>}
     </section>
