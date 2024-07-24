@@ -1,0 +1,153 @@
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { fetchLGAData, fetchProducts } from "@/src/services/common";
+import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
+import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
+import toast from "react-hot-toast";
+import useIsBrower from "@/src/hooks/useIsBrower";
+import { useRouter } from "next/navigation";
+import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
+import { createNewTicket, Product } from "@/src/services/ticketsServices";
+
+
+let data = useIsBrower() && sessionStorage.getItem("USER_DATA");
+const user_data = data && JSON.parse(data);
+
+export const useTransportTicketForm = () => {
+  const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm<CreateTicketPayload>({
+    defaultValues: {
+      merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+      transaction_date: getCurrentDateTime(),
+      invoice_id: `INV${randomInvoiceGenerator()}`,
+      paymentPeriod: "",
+      productCode: "",
+      next_expiration_date: "",
+      no_of_days: "",
+      amount: "",
+      lga: "",
+      agentEmail: "",
+      plateNumber: "",
+      taxPayerPhone: "",
+      taxPayerName: "",
+      wallet_type: "fidelity",
+    },
+  });
+  const router = useRouter();
+  const [lga, setLga] = useState([{ value: "", label: "" }]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<string>("");
+  const [selectedPeriod, setSelectedPeriod] = useState<string>("");
+  const [paymentRef, setPaymentRef] = useState("");
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setValue("agentEmail", user_data?.email);
+  }, []);
+
+  const onSubmit = async (data: CreateTicketPayload) => {
+    const formData = { ...data, transaction_date: getCurrentDateTime(), invoice_id: `INV${randomInvoiceGenerator()}` };
+    try {
+      // console.log(formData);
+      sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
+
+      const res = await createNewTicket(formData);
+      const response = res;
+
+      console.log(response);
+
+      if (response.response_code == "00") {
+        toast.success(response.response_message);
+        setPaymentRef(response.payment_ref);
+        console.log(response.payment_ref);
+        setShow(true);
+      } 
+      else if (response.response_code === "74") {
+        toast.error(response.response_message);
+        router.push("/tickets/transport");
+      } else {
+        toast.error(`${response.response_message}, Try again`);
+      }
+
+    } catch {
+      toast.error("Error Creating Ticket");
+    }
+  };
+
+  const getLGAData = async () => {
+    try {
+      const { data } = await fetchLGAData();
+      const lga_from_api = data.map((item: any) => ({ label: item.lgaName, value: item.lgaID }));
+      setLga(lga_from_api);
+    } catch {
+      toast.error("Error fetching LGA data");
+    }
+  };
+
+  const getProductsData = async () => {
+    try {
+      const response = await fetchProducts();
+      setProducts(response?.data);
+    } catch {
+      toast.error("Error fetching vehicles");
+    }
+  };
+
+  const handleProductChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const productCode = event.target.value;
+    setSelectedProduct(productCode);
+    setValue("productCode", productCode);
+  };
+
+  const handlePeriodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const period = event.target.value;
+    setSelectedPeriod(period);
+    setValue("paymentPeriod", period);
+
+    const selectedProductData = products.find((product) => product.productCode === selectedProduct);
+    let amount = 0;
+    let no_of_days = "0";
+    switch (period) {
+      case "1 Day":
+        no_of_days = "1";
+        amount = selectedProductData?.dailyAmount || 0;
+        break;
+      case "1 Week":
+        no_of_days = "7";
+        amount = selectedProductData?.weeklyAmount || 0;
+        break;
+      case "1 Month":
+        no_of_days = "30";
+        amount = selectedProductData?.monthlyAmount || 0;
+        break;
+    }
+    setValue("no_of_days", no_of_days);
+
+    const transaction_date = new Date();
+    const next_expiration_date = new Date(transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000);
+    setValue("next_expiration_date", next_expiration_date.toISOString());
+    setValue("amount", amount);
+  };
+
+  useEffect(() => {
+    getLGAData();
+    getProductsData();
+  }, []);
+
+  return {
+    register,
+    watch,
+    handleSubmit,
+    errors,
+    lga,
+    products,
+    selectedProduct,
+    selectedPeriod,
+    onSubmit,
+    handleProductChange,
+    handlePeriodChange,
+    setValue,
+    show,
+    paymentRef,
+  };
+};
+

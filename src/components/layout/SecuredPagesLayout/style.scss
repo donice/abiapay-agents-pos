@@ -1,0 +1,27 @@
+@use "../../../styles/index.scss" as *;
+ 
+.main-section {
+  width: 80%;
+  height: 100%;
+  right: 0;
+  top: 2.5rem;
+  position: fixed;
+  padding: px-to-rem(36px);
+  transition: width 1s ease-in-out;
+  z-index: -1;
+  background-color: #f0fdf4c7;
+  overflow: scroll;
+
+  margin: 1rem 0;
+
+  @include custom-media-query("mobile", $md) {
+    width: 100%;
+    min-height: 100dvh;
+    top: 0;
+    padding: px-to-rem(61px) 1rem px-to-rem(106px) 1rem;
+  }
+
+  @include custom-media-query("mobile", $md) {
+    background-color: white;
+  }
+}
