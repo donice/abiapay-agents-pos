@@ -91,7 +91,7 @@ const VerifyTicketsComponent = () => {
               ))}
           </div>
         ) : (
-          <Empty text="No vehicle found with the given details" />
+          <Empty text="No matching vehicle found" />
         )}
       </div>
     </section>
