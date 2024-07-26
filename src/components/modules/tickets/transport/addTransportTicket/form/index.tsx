@@ -1,4 +1,4 @@
-"use client";// Import necessary modules and components
+"use client";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { fetchLGAData, fetchProducts } from "@/src/services/common";
@@ -13,10 +13,20 @@ import { SuccessModal } from "@/src/components/common/modal";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import "./style.scss";
 import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
-import { Product, createNewTicket, fetchPlateNumberInfo } from "@/src/services/ticketsServices";
+import {
+  Product,
+  createNewTicket,
+  fetchPlateNumberInfo,
+} from "@/src/services/ticketsServices";
 
 const useTransportTicketForm = () => {
-  const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm<CreateTicketPayload>({
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<CreateTicketPayload>({
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       transaction_date: getCurrentDateTime(),
@@ -45,36 +55,44 @@ const useTransportTicketForm = () => {
 
   const data = useIsBrower() && sessionStorage.getItem("USER_DATA");
   const user_data = data && JSON.parse(data);
+  const getLGAData = async () => {
+    try {
+      const { data } = await fetchLGAData();
+      setLga(
+        data.map((item: { lgaName: any; lgaID: any }) => ({
+          label: item.lgaName,
+          value: item.lgaID,
+        }))
+      );
+    } catch {
+      toast.error("Error fetching LGA data");
+    }
+  };
+
+  const getProductsData = async () => {
+    try {
+      const response = await fetchProducts();
+      setProducts(response?.data);
+    } catch {
+      toast.error("Error fetching products");
+    }
+  };
 
   useEffect(() => {
     setValue("agentEmail", user_data?.email);
   }, [setValue, user_data]);
 
   useEffect(() => {
-    const getLGAData = async () => {
-      try {
-        const { data } = await fetchLGAData();
-        setLga(data.map((item: { lgaName: any; lgaID: any; }) => ({ label: item.lgaName, value: item.lgaID })));
-      } catch {
-        toast.error("Error fetching LGA data");
-      }
-    };
-
-    const getProductsData = async () => {
-      try {
-        const response = await fetchProducts();
-        setProducts(response?.data);
-      } catch {
-        toast.error("Error fetching products");
-      }
-    };
-
     getLGAData();
     getProductsData();
   }, []);
 
   const onSubmit = async (data: CreateTicketPayload) => {
-    const formData = { ...data, transaction_date: getCurrentDateTime(), invoice_id: `INV${randomInvoiceGenerator()}` };
+    const formData = {
+      ...data,
+      transaction_date: getCurrentDateTime(),
+      invoice_id: `INV${randomInvoiceGenerator()}`,
+    };
     try {
       sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
       const response = await createNewTicket(formData);
@@ -94,18 +112,20 @@ const useTransportTicketForm = () => {
     }
   };
 
-  const handleProductChange = (event: { target: { value: any; }; }) => {
+  const handleProductChange = (event: { target: { value: any } }) => {
     const productCode = event.target.value;
     setSelectedProduct(productCode);
     setValue("productCode", productCode);
   };
 
-  const handlePeriodChange = (event: { target: { value: any; }; }) => {
+  const handlePeriodChange = (event: { target: { value: any } }) => {
     const period = event.target.value;
     setSelectedPeriod(period);
     setValue("paymentPeriod", period);
 
-    const selectedProductData = products.find((product) => product.productCode === selectedProduct);
+    const selectedProductData = products.find(
+      (product) => product.productCode === selectedProduct
+    );
     let amount = 0;
     let no_of_days = "0";
 
@@ -126,7 +146,9 @@ const useTransportTicketForm = () => {
 
     setValue("no_of_days", no_of_days);
     const transaction_date = new Date();
-    const next_expiration_date = new Date(transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000);
+    const next_expiration_date = new Date(
+      transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000
+    );
     setValue("next_expiration_date", next_expiration_date.toISOString());
     setValue("amount", amount);
   };
@@ -196,7 +218,7 @@ const AddTransportTicketForm = () => {
         name="productCode"
         id="productCode"
         onChange={handleProductChange}
-        options={products.map(product => ({
+        options={products.map((product) => ({
           value: product.productCode,
           label: product.productName,
         }))}
@@ -260,7 +282,7 @@ const AddTransportTicketForm = () => {
         placeholder="Select Payment Period"
         error={!!errors.paymentPeriod}
       />
-      
+
       <FormTextInput
         label="Amount"
         type="number"
