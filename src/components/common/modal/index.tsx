@@ -70,7 +70,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
             </button>
           )}
 
-          <SecondaryButton text="Create New" link={"/tickets/transport/add"} />
+          <SecondaryButton text="Create New" link={"/tickets/transport"} />
         </div>
       </div>
     </div>

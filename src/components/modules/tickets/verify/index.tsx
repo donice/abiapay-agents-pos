@@ -69,9 +69,11 @@ const VerifyTicketsComponent = () => {
           <div>
             <div className="line-items">
               <p>Status:</p>
-              <p className="success">
-                {displayDetails?.response_code == "00" ? "Valid" : "Invalid"}
-              </p>
+              {displayDetails?.response_code == "00" ? (
+                <p className="success">Valid Ticket</p>
+              ) : (
+                <p className="failure">Invalid Ticket</p>
+              )}
             </div>
             {Object.entries(displayDetails)
               .filter(([key]) => displayKeys.includes(key))
@@ -89,7 +91,7 @@ const VerifyTicketsComponent = () => {
               ))}
           </div>
         ) : (
-          <Empty />
+          <Empty text="No matching vehicle found" />
         )}
       </div>
     </section>
