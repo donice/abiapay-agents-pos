@@ -76,13 +76,10 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
         validation={{
           required: true,
           minLength: {
-            value: 8,
+            value: 7,
             message: "Length must be above 11 characters",
           },
-          maxLength: {
-            value: 8,
-            message: "Length must be below 11 characters",
-          },
+         
         }}
         error={errors.referenceID}
       />
