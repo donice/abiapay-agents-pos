@@ -64,8 +64,10 @@ const VerifyTicketsComponent = () => {
         {displayDetails !== null &&
         displayDetails !== undefined &&
         Object.keys(displayDetails).length <
-          1 ? null : displayDetails?.response_code == "00" ||
-          displayDetails?.response_code == "97" ? (
+          1 ? null : (displayDetails?.response_code &&
+            displayDetails?.response_code == "00") ||
+          (displayDetails?.response_code &&
+            displayDetails?.response_code == "97") ? (
           <div>
             <div className="line-items">
               <p>Status:</p>
