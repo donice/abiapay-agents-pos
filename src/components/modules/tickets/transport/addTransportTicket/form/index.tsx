@@ -1,15 +1,155 @@
-"use client";
-import React, { useEffect } from "react";
+"use client";// Import necessary modules and components
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { fetchLGAData, fetchProducts } from "@/src/services/common";
+import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
+import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
+import toast from "react-hot-toast";
+import useIsBrower from "@/src/hooks/useIsBrower";
+import { useRouter } from "next/navigation";
 import { Button, BackButton } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import { useTransportTicketForm } from "./useTransportTicket";
-import "./style.scss";
+import { SuccessModal } from "@/src/components/common/modal";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import toast from "react-hot-toast";
-import {SuccessModal} from "@/src/components/common/modal";
-import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
+import "./style.scss";
+import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
+import { Product, createNewTicket, fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 
-const AddTransportTicketForm: React.FC = () => {
+const useTransportTicketForm = () => {
+  const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm<CreateTicketPayload>({
+    defaultValues: {
+      merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+      transaction_date: getCurrentDateTime(),
+      invoice_id: `INV${randomInvoiceGenerator()}`,
+      paymentPeriod: "",
+      productCode: "",
+      next_expiration_date: "",
+      no_of_days: "",
+      amount: "",
+      lga: "",
+      agentEmail: "",
+      plateNumber: "",
+      taxPayerPhone: "",
+      taxPayerName: "",
+      wallet_type: "fidelity",
+    },
+  });
+
+  const router = useRouter();
+  const [lga, setLga] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedPeriod, setSelectedPeriod] = useState("");
+  const [paymentRef, setPaymentRef] = useState("");
+  const [show, setShow] = useState(false);
+
+  const data = useIsBrower() && sessionStorage.getItem("USER_DATA");
+  const user_data = data && JSON.parse(data);
+
+  useEffect(() => {
+    setValue("agentEmail", user_data?.email);
+  }, [setValue, user_data]);
+
+  useEffect(() => {
+    const getLGAData = async () => {
+      try {
+        const { data } = await fetchLGAData();
+        setLga(data.map((item: { lgaName: any; lgaID: any; }) => ({ label: item.lgaName, value: item.lgaID })));
+      } catch {
+        toast.error("Error fetching LGA data");
+      }
+    };
+
+    const getProductsData = async () => {
+      try {
+        const response = await fetchProducts();
+        setProducts(response?.data);
+      } catch {
+        toast.error("Error fetching products");
+      }
+    };
+
+    getLGAData();
+    getProductsData();
+  }, []);
+
+  const onSubmit = async (data: CreateTicketPayload) => {
+    const formData = { ...data, transaction_date: getCurrentDateTime(), invoice_id: `INV${randomInvoiceGenerator()}` };
+    try {
+      sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
+      const response = await createNewTicket(formData);
+
+      if (response.response_code === "00") {
+        toast.success(response.response_message);
+        setPaymentRef(response.payment_ref);
+        setShow(true);
+      } else if (response.response_code === "74") {
+        toast.error(response.response_message);
+        router.push("/tickets/transport");
+      } else {
+        toast.error(`${response.response_message}, Try again`);
+      }
+    } catch {
+      toast.error("Error Creating Ticket");
+    }
+  };
+
+  const handleProductChange = (event: { target: { value: any; }; }) => {
+    const productCode = event.target.value;
+    setSelectedProduct(productCode);
+    setValue("productCode", productCode);
+  };
+
+  const handlePeriodChange = (event: { target: { value: any; }; }) => {
+    const period = event.target.value;
+    setSelectedPeriod(period);
+    setValue("paymentPeriod", period);
+
+    const selectedProductData = products.find((product) => product.productCode === selectedProduct);
+    let amount = 0;
+    let no_of_days = "0";
+
+    switch (period) {
+      case "1 Day":
+        no_of_days = "1";
+        amount = selectedProductData?.dailyAmount || 0;
+        break;
+      case "1 Week":
+        no_of_days = "7";
+        amount = selectedProductData?.weeklyAmount || 0;
+        break;
+      case "1 Month":
+        no_of_days = "30";
+        amount = selectedProductData?.monthlyAmount || 0;
+        break;
+    }
+
+    setValue("no_of_days", no_of_days);
+    const transaction_date = new Date();
+    const next_expiration_date = new Date(transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000);
+    setValue("next_expiration_date", next_expiration_date.toISOString());
+    setValue("amount", amount);
+  };
+
+  return {
+    register,
+    watch,
+    handleSubmit,
+    errors,
+    lga,
+    products,
+    selectedProduct,
+    selectedPeriod,
+    onSubmit,
+    handleProductChange,
+    handlePeriodChange,
+    setValue,
+    show,
+    paymentRef,
+  };
+};
+
+const AddTransportTicketForm = () => {
   const {
     register,
     watch,
@@ -26,32 +166,28 @@ const AddTransportTicketForm: React.FC = () => {
     paymentRef,
   } = useTransportTicketForm();
 
-  let plateNumber = watch("plateNumber");
+  const plateNumber = watch("plateNumber");
   const debouncedPlateNumber = useDebounce(plateNumber, 500);
-  const paymentPeriod = watch("paymentPeriod"),
-    productCode = watch("productCode");
-
-  const getPlateNumberInfo = async (plateNumber: string) => {
-    try {
-      const response = await fetchPlateNumberInfo(plateNumber);
-
-      if (response.data?.length !== 0) {
-        toast.success(response?.message);
-        const { Name, Phone } = response.data;
-        setValue("taxPayerName", Name);
-        setValue("taxPayerPhone", Phone);
-      }
-    } catch (error) {
-      console.error("Error fetching plate number information:", error);
-      toast.error("Error fetching plate number information");
-    }
-  };
 
   useEffect(() => {
     if (debouncedPlateNumber) {
+      const getPlateNumberInfo = async (plateNumber: string) => {
+        try {
+          const response = await fetchPlateNumberInfo(plateNumber);
+
+          if (response.data?.length !== 0) {
+            toast.success(response.message);
+            setValue("taxPayerName", response.data.Name);
+            setValue("taxPayerPhone", response.data.Phone);
+          }
+        } catch (error) {
+          toast.error("Error fetching plate number information");
+        }
+      };
+
       getPlateNumberInfo(debouncedPlateNumber);
     }
-  }, [debouncedPlateNumber]);
+  }, [debouncedPlateNumber, setValue]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
@@ -60,13 +196,10 @@ const AddTransportTicketForm: React.FC = () => {
         name="productCode"
         id="productCode"
         onChange={handleProductChange}
-        options={
-          products &&
-          products.map((product) => ({
-            value: product.productCode,
-            label: product.productName,
-          }))
-        }
+        options={products.map(product => ({
+          value: product.productCode,
+          label: product.productName,
+        }))}
         placeholder="Select Ticket Type"
         error={!!errors.productCode}
       />
@@ -127,18 +260,18 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Select Payment Period"
         error={!!errors.paymentPeriod}
       />
-      <div>
-        <FormTextInput
-          label="Amount"
-          type="number"
-          name="amount"
-          placeholder="Enter Amount"
-          register={register}
-          readOnly
-          validation={{ required: true }}
-          error={errors.amount}
-        />
-      </div>
+      
+      <FormTextInput
+        label="Amount"
+        type="number"
+        name="amount"
+        placeholder="Enter Amount"
+        register={register}
+        readOnly
+        validation={{ required: true }}
+        error={errors.amount}
+      />
+
       <SelectInput
         label="Choose Wallet"
         name="wallet_type"
@@ -152,15 +285,17 @@ const AddTransportTicketForm: React.FC = () => {
         placeholder="Select Wallet Type"
         error={!!errors.wallet_type}
       />
+
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
         <Button text="Process Payment" />
       </div>
+
       {show && (
         <SuccessModal
           text="View Receipt"
           link="/tickets/transport/add/summary"
-          id={`Ref: ${paymentRef}, Valid for: ${paymentPeriod}, Payment for: ${productCode} `}
+          id={`Ref: ${paymentRef}, Valid for: ${selectedPeriod}, Payment for: ${selectedProduct}`}
         />
       )}
     </form>
