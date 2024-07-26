@@ -58,7 +58,7 @@
   padding: 0.2rem 0.7rem 0.2rem 0.5rem;
   gap: 0.25rem;
   font-size: 14px;
-  max-width: 175px;
+  max-width: fit-content;
 
   &:hover {
     background-color: rgba(110, 231, 183, 0.528);

@@ -65,7 +65,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
           </p>
           {/* {text && <p>{text}</p>} */}
           {link && (
-            <button onClick={handleClick} className="button primary">
+            <button onClick={handleClick} className="button primary top">
               {text}
             </button>
           )}
