@@ -70,9 +70,9 @@ const VerifyTicketsComponent = () => {
             <div className="line-items">
               <p>Status:</p>
               {displayDetails?.response_code == "00" ? (
-                <p className="success">Valid</p>
+                <p className="success">Valid Ticket</p>
               ) : (
-                <p className="failure">Invalid</p>
+                <p className="failure">Invalid Ticket</p>
               )}
             </div>
             {Object.entries(displayDetails)
