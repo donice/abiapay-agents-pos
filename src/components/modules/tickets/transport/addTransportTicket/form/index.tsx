@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { fetchLGAData, fetchProducts } from "@/src/services/common";
+import { fetchProducts } from "@/src/services/common";
 import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
@@ -19,7 +19,16 @@ import {
   fetchPlateNumberInfo,
 } from "@/src/services/ticketsServices";
 
-const useTransportTicketForm = () => {
+const AddTransportTicketForm = ({
+  show,
+  setShow,
+  paymentRef,
+  setPaymentRef,
+  selectedPeriod,
+  setSelectedPeriod,
+  selectedProduct,
+  setSelectedProduct,
+}: any) => {
   const {
     register,
     watch,
@@ -46,29 +55,10 @@ const useTransportTicketForm = () => {
   });
 
   const router = useRouter();
-  const [lga, setLga] = useState([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [selectedPeriod, setSelectedPeriod] = useState("");
-  const [paymentRef, setPaymentRef] = useState("");
-  const [show, setShow] = useState(false);
 
   const data = useIsBrower() && sessionStorage.getItem("USER_DATA");
   const user_data = data && JSON.parse(data);
-  const getLGAData = async () => {
-    try {
-      const { data } = await fetchLGAData();
-      setLga(
-        data.map((item: { lgaName: any; lgaID: any }) => ({
-          label: item.lgaName,
-          value: item.lgaID,
-        }))
-      );
-    } catch {
-      toast.error("Error fetching LGA data");
-    }
-  };
-
   const getProductsData = async () => {
     try {
       const response = await fetchProducts();
@@ -83,7 +73,6 @@ const useTransportTicketForm = () => {
   }, [setValue, user_data]);
 
   useEffect(() => {
-    getLGAData();
     getProductsData();
   }, []);
 
@@ -152,41 +141,6 @@ const useTransportTicketForm = () => {
     setValue("next_expiration_date", next_expiration_date.toISOString());
     setValue("amount", amount);
   };
-
-  return {
-    register,
-    watch,
-    handleSubmit,
-    errors,
-    lga,
-    products,
-    selectedProduct,
-    selectedPeriod,
-    onSubmit,
-    handleProductChange,
-    handlePeriodChange,
-    setValue,
-    show,
-    paymentRef,
-  };
-};
-
-const AddTransportTicketForm = () => {
-  const {
-    register,
-    watch,
-    handleSubmit,
-    errors,
-    products,
-    selectedProduct,
-    selectedPeriod,
-    onSubmit,
-    handleProductChange,
-    handlePeriodChange,
-    setValue,
-    show,
-    paymentRef,
-  } = useTransportTicketForm();
 
   const plateNumber = watch("plateNumber");
   const debouncedPlateNumber = useDebounce(plateNumber, 500);
