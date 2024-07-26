@@ -20,7 +20,7 @@ export interface Product {
   monthlyAmount: number;
 }
 
-export const createNewTicket = async (requestData: CreateTicketPayload) => {
+export const createNewTicket = async ( requestData: CreateTicketPayload) => {
   try {
     const { data } = await axiosInstance.post(`${url}/transport/create-ticket`, requestData);
     return data;
