@@ -43,7 +43,7 @@ const TransportTicketsSummaryComponent: React.FC = () => {
 
   return (
     <section className="tickets">
-      <GoBackButton link="/tickets/transport/add/summary" />
+      <GoBackButton link="/tickets/transport" />
 
       {data ? (
         <div className="tickets-summary-comp">

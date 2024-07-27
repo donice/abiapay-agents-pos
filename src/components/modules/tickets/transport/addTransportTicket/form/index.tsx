@@ -18,6 +18,7 @@ import {
   createNewTicket,
   fetchPlateNumberInfo,
 } from "@/src/services/ticketsServices";
+import { useMutation } from "@tanstack/react-query";
 
 const AddTransportTicketForm = ({
   show,
@@ -76,16 +77,11 @@ const AddTransportTicketForm = ({
     getProductsData();
   }, []);
 
-  const onSubmit = async (data: CreateTicketPayload) => {
-    const formData = {
-      ...data,
-      transaction_date: getCurrentDateTime(),
-      invoice_id: `INV${randomInvoiceGenerator()}`,
-    };
-    try {
-      sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
-      const response = await createNewTicket(formData);
-
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: CreateTicketPayload) => {
+      return createNewTicket(data);
+    },
+    onSuccess: (response: any) => {
       if (response.response_code === "00") {
         toast.success(response.response_message);
         setPaymentRef(response.payment_ref);
@@ -96,9 +92,23 @@ const AddTransportTicketForm = ({
       } else {
         toast.error(`${response.response_message}, Try again`);
       }
-    } catch {
+    },
+    onError: () => {
       toast.error("Error Creating Ticket");
-    }
+    },
+  });
+
+
+  const onSubmit = async (data: CreateTicketPayload) => {
+    const formData = {
+      ...data,
+      transaction_date: getCurrentDateTime(),
+      invoice_id: `INV${randomInvoiceGenerator()}`,
+    };
+
+    sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
+
+    mutate(formData);
   };
 
   const handleProductChange = (event: { target: { value: any } }) => {
@@ -264,7 +274,7 @@ const AddTransportTicketForm = ({
 
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
-        <Button text="Process Payment" />
+        <Button text="Process Payment" loading={isPending} />
       </div>
 
       {show && (
