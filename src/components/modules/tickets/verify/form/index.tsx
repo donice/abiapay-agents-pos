@@ -12,15 +12,13 @@ import "./style.scss";
 import toast from "react-hot-toast";
 
 const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
-  const agentEmail = userData?.email;
-
-  const {
+ const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<VerifyTicketPayload>({
     defaultValues: {
-      agentEmail: agentEmail || "",
+      // agentEmail: userData?.email,
       referenceID: "",
     },
   });
@@ -51,7 +49,7 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
   });
 
   const onSubmit = (data: VerifyTicketPayload) => {
-    mutation.mutate(data);
+    mutation.mutate({...data, agentEmail: userData?.email});
   };
 
   return (
@@ -66,7 +64,6 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
         ]}
         placeholder="Select Reference Type"
       />
-
       <FormTextInput
         label="Reference Number"
         type="text"
