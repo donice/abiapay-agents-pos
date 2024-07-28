@@ -28,11 +28,10 @@ const items: AccountsProps[] = [
     icon: <FcInTransit className="icon" />,
   },
   {
-    // link: "enumeration/market",
+    link: "enumeration/market",
     title: "Market Enumeration",
     desc: "Enumerate market asset",
     icon: <FcShop className="icon" />,
-    comingsoon: true
   },
   {
     // link: "enumeration/market",

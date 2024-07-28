@@ -7,9 +7,10 @@ import "./style.scss";
 
 interface prop {
   text: string;
-  link: string;
+  link?: string;
   disabled?: boolean;
   addIcon?: boolean;
+  onClick?: any;
 }
 
 export const FormButton = ({
@@ -47,7 +48,7 @@ export const DefaultButton = ({ text, link, disabled }: prop) => {
     <button
       className={`button ${disabled ? "disabled" : "primary"}`}
       disabled={disabled}
-      onClick={() => handleClick(link)}
+      onClick={() => link && handleClick(link)}
     >
       {text}
     </button>
@@ -59,17 +60,23 @@ interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  children?: JSX.Element | JSX.Element[] ;
+  children?: JSX.Element | JSX.Element[];
 }
 
-export const Button = ({ text, disabled, onClick, loading, children }: ButtonProps) => {
+export const Button = ({
+  text,
+  disabled,
+  onClick,
+  loading,
+  children,
+}: ButtonProps) => {
   const router = useRouter();
-  
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!disabled) {
       if (onClick) {
         onClick(event);
-      } 
+      }
     }
   };
 
@@ -79,9 +86,8 @@ export const Button = ({ text, disabled, onClick, loading, children }: ButtonPro
       disabled={disabled}
       onClick={handleClick}
     >
-     {children} {text}
+      {children} {text}
       {loading && <Loader />}
-      
     </button>
   );
 };
@@ -121,14 +127,14 @@ export const PrimaryButton = ({ text, link, addIcon }: prop) => {
   };
 
   return (
-    <button className="button primary" onClick={() => handleClick(link)}>
-      {addIcon && <MdOutlineAdd className="icon" />} 
+    <button className="button primary" onClick={() => link && handleClick(link)}>
+      {addIcon && <MdOutlineAdd className="icon" />}
       {text}
     </button>
   );
 };
 
-export const SecondaryButton = ({ text, link }: prop) => {
+export const SecondaryButton = ({ text, link, onClick }: prop) => {
   const router = useRouter();
 
   const handleClick = (route: string) => {
@@ -136,7 +142,12 @@ export const SecondaryButton = ({ text, link }: prop) => {
   };
 
   return (
-    <button className="button secondary" onClick={() => handleClick(link)}>
+    <button
+      className="button secondary"
+      onClick={() => {
+        onClick ? onClick : link && handleClick(link);
+      }}
+    >
       <MdOutlineAdd className="icon" />
       {text}
     </button>

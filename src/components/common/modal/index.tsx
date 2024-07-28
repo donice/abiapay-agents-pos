@@ -8,9 +8,11 @@ import { TbPrinter, TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import QRCode from "react-qr-code";
 
 interface SuccessModalProps {
+  maintext?: string;
   id?: string;
   text?: string;
   link?: string;
+  onClick?: any
 }
 
 interface EnumerationModalProps {
@@ -42,6 +44,7 @@ interface VehicleCheckSuccessModalType {
 }
 
 export const SuccessModal: React.FC<SuccessModalProps> = ({
+  maintext,
   id,
   text,
   link,
@@ -59,7 +62,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
       <div className="modal">
         <FcOk className="success_icon" />
         <div className="modalContent">
-          <h2>Payment Successful</h2>
+          <h2>{maintext ? maintext : "Payment Successful"} </h2>
           <p>
             <span>{id ? id : ""}</span>{" "}
           </p>
@@ -71,6 +74,44 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
           )}
 
           <SecondaryButton text="Create New" link={"/tickets/transport"} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const EnumerationModal: React.FC<SuccessModalProps> = ({
+  maintext,
+  id,
+  text,
+  link,
+  onClick,
+}) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <FcOk className="success_icon" />
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Payment Successful"} </h2>
+          <p>
+            <span>{id ? id : ""}</span>{" "}
+          </p>
+          {/* {text && <p>{text}</p>} */}
+          {link && (
+            <button onClick={handleClick} className="button primary top">
+              {text}
+            </button>
+          )}
+
+          <SecondaryButton text="Create New" link="/enumeration" />
         </div>
       </div>
     </div>
