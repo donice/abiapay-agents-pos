@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/src/components/common/button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LuUser } from "react-icons/lu";
-import { FormTextInput } from "@/src/components/common/input";
+import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import "../style.scss";
 import { useForm } from "react-hook-form";
 import {
@@ -14,6 +14,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { EnumerationSuccessModal } from "@/src/components/common/modal";
+import { fetchLGAData } from "@/src/services/common";
 
 interface TicketsDataType {
   response_code: string;
@@ -22,10 +23,9 @@ interface TicketsDataType {
   assetCode: string;
 }
 
-
-
 const DriverData = ({ setStage, details, formData }: any) => {
-  console.log(details)
+  console.log(details);
+  const [lga, setLga] = useState([]);
   const [ticketData, setTicketData] = useState<TicketsDataType>({
     response_code: "",
     response_message: "",
@@ -56,6 +56,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
       phone: details?.vehicle_owner.phoneNumber || "",
       plate_number: formData.plate_number || "",
       contact_type: "driver",
+      taxpayer_location: formData.taxpayer_location || "",
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
     },
   });
@@ -67,7 +68,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
     taxpayer_name: details?.vehicle_owner.ownerName || "",
     taxpayer_phone: formData.phone_number || "",
     revenue_year: "2024",
-    taxpayer_location: details?.vehicle_owner.ownerAddress || "",
+    taxpayer_location: formData.taxpayer_location || "",
     operating_park: formData.operating_park || "",
     trade_union: formData.trade_union || "",
     vehicle_category: formData.vehicle_category || "",
@@ -79,17 +80,19 @@ const DriverData = ({ setStage, details, formData }: any) => {
   };
 
   const handleCreateTransportEnumeration = async () => {
-    try {
-      const res = await createTransportEnumeration(req);
-      console.log("TICKETS DATA", res);
-      setTicketData(res);
-      toast.success(res?.response_message || "Vehicle Enumerated Successfully");
-      setShow(true);
-      console.log(res);
-    } catch (error) {
-      toast.error("Error Enumerating Vehicle");
-      console.log(error);
-    }
+
+    console.log(req, "REQUEST BODY")
+    // try {
+    //   const res = await createTransportEnumeration(req);
+    //   console.log("TICKETS DATA", res);
+    //   setTicketData(res);
+    //   toast.success(res?.response_message || "Vehicle Enumerated Successfully");
+    //   setShow(true);
+    //   console.log(res);
+    // } catch (error) {
+    //   toast.error("Error Enumerating Vehicle");
+    //   console.log(error);
+    // }
   };
 
   const onSubmit = (reqData: any) => {
@@ -101,6 +104,26 @@ const DriverData = ({ setStage, details, formData }: any) => {
       toast.error("Error Enumerating Vehicle");
     }
   };
+
+  const getLgas = async () => {
+    try {
+      const { data } = await fetchLGAData();
+      setLga(
+        data?.map((item: any) => {
+          return {
+            label: item.lgaName,
+            value: item.lgaID,
+          };
+        })
+      );
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getLgas();
+  }, []);
 
   return (
     <>
@@ -138,6 +161,15 @@ const DriverData = ({ setStage, details, formData }: any) => {
           name={"phone"}
           register={register}
           value={details?.driver.phoneNumber || ""}
+        />
+        <SelectInput
+          label="LGA"
+          name="taxpayer_location"
+          id="taxpayer_location"
+          options={lga}
+          placeholder="Select LGA"
+          register={register}
+          validation={{ required: true }}
         />
         <div className="button-container">
           <button className="button secondary" onClick={() => setStage(1)}>
