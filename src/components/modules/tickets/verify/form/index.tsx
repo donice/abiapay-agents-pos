@@ -12,9 +12,10 @@ import "./style.scss";
 import toast from "react-hot-toast";
 
 const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
- const {
+  const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<VerifyTicketPayload>({
     defaultValues: {
@@ -38,6 +39,7 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
         setDetails(data);
         toast.success("Ticket verified successfully");
       }
+      reset();
       return;
     },
     onError: (error: any) => {
@@ -49,7 +51,7 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
   });
 
   const onSubmit = (data: VerifyTicketPayload) => {
-    mutation.mutate({...data, agentEmail: userData?.email});
+    mutation.mutate({ ...data, agentEmail: userData?.email });
   };
 
   return (
@@ -67,7 +69,7 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
       <FormTextInput
         label="Reference Number"
         type="text"
-        name="referenceID" 
+        name="referenceID"
         placeholder="Enter Reference Number"
         register={register}
         validation={{
@@ -76,7 +78,6 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
             value: 7,
             message: "Length must be above 11 characters",
           },
-         
         }}
         error={errors.referenceID}
       />
