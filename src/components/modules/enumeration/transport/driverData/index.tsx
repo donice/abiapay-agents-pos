@@ -188,7 +188,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
 
       {show && (
         <EnumerationSuccessModal
-          qr_link="https://sandboxweb.abiapay.ng/"
+          qr_link={`https://portal.sandbox.abiapay.com/verify-asset?assetCode=${ticketData?.assetCode}`}
           plate_number={formData.plate_number || ""}
           text={ticketData?.assetCode || ""}
           id={ticketData?.enumeration_id || ""}
