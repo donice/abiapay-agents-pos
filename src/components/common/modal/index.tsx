@@ -222,7 +222,7 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
 
   return (
     <div className="modalOverlay">
-      <div className="modal">
+      <div className="modal" id="enumeration_modal">
         <AbiaEnumerationLarge />
         <div className="modalHeader">
           <h1>ABIA STATE GOVERNMENT</h1>

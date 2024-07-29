@@ -24,8 +24,8 @@ interface TicketsDataType {
 }
 
 const DriverData = ({ setStage, details, formData }: any) => {
-  console.log(details);
   const [lga, setLga] = useState([]);
+
   const [ticketData, setTicketData] = useState<TicketsDataType>({
     response_code: "",
     response_message: "",
@@ -33,19 +33,38 @@ const DriverData = ({ setStage, details, formData }: any) => {
     assetCode: "",
   });
   const [show, setShow] = useState(false);
+
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SaveContactType) => {
       return saveContact(data);
     },
-    mutationKey: ["create_transport_enumeration"],
+    mutationKey: ["save_driver_contact"],
     onSuccess: (data) => {
-      console.log(data?.response_message || "Driver's data saved successfully");
-
-      // setStage(2);
+      console.log(data || "Driver's data saved successfully");
     },
     onError: (error) => {
       console.log(error);
       toast.error("Error Saving Driver's data");
+    },
+  });
+
+  const { mutate: mutate2 } = useMutation({
+    mutationFn: (data: CreateTicketType) => {
+      return createTransportEnumeration(data);
+    },
+    mutationKey: ["create_transport_enumeration"],
+    onSuccess: (data) => {
+      console.log(data?.response_message || "Successful Enumeration");
+      console.log("TICKETS DATA", data);
+      setTicketData(data);
+      setShow(true);
+      toast.success(
+        data?.response_message || "Vehicle Enumerated Successfully"
+      );
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Error Enumerating Vehicle");
     },
   });
 
@@ -79,26 +98,10 @@ const DriverData = ({ setStage, details, formData }: any) => {
     merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
   };
 
-  const handleCreateTransportEnumeration = async () => {
-
-    console.log(req, "REQUEST BODY")
-    // try {
-    //   const res = await createTransportEnumeration(req);
-    //   console.log("TICKETS DATA", res);
-    //   setTicketData(res);
-    //   toast.success(res?.response_message || "Vehicle Enumerated Successfully");
-    //   setShow(true);
-    //   console.log(res);
-    // } catch (error) {
-    //   toast.error("Error Enumerating Vehicle");
-    //   console.log(error);
-    // }
-  };
-
   const onSubmit = (reqData: any) => {
     try {
       mutate(reqData);
-      handleCreateTransportEnumeration();
+      mutate2({ ...req, taxpayer_location: reqData.taxpayer_location });
     } catch (error) {
       console.log(error);
       toast.error("Error Enumerating Vehicle");
