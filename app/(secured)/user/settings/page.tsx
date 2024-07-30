@@ -104,12 +104,10 @@ const otherServices: WalletItemsProps[] = [
 const UserAccountPage = () => {
   return (
     <div className="settings">
-      <CustomHeader
-        // title="Settings"
-        // desc={"Explore your settings"}
+      {/* <CustomHeader
         title="Extras"
         desc={"Explore all extra services available for you"}
-      />
+      /> */}
       <h2>My Money Transfer</h2>
       <div className="settings_items">
         {walletItems.map((item) => (
@@ -135,14 +133,15 @@ const UserAccountPage = () => {
           <em>STAY CONNECTED</em>
           <p>Don’t ever run out of Airtime and Data</p>
         </div>
-
       </div>
 
       <h2>Daily Services</h2>
       <div className="settings_items_service">
         {dailyServices.map((item) => (
           <Link
-            href={`${item.cat === "coming soon" ? "/user/settings": item.href}`}
+            href={`${
+              item.cat === "coming soon" ? "/user/settings" : item.href
+            }`}
             key={item.href}
             className={`settings_item`}
           >

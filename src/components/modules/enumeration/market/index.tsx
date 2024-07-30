@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import EnumerationDetails from "./enumerationDetails";
+import ShopkeepersDetails from "./shopkeepersDetails";
 import "./style.scss";
 import ProgressBar from "./progressBar";
-import ShopDetails from "./shopDetails";
+import EnumerationDetails from "./enumerationDetails";
 
 const MarketEnumerationComponent = () => {
   const [stage, setStage] = useState(0);
@@ -15,8 +15,8 @@ const MarketEnumerationComponent = () => {
     <section>
       <ProgressBar stage={stage} setStage={setStage}/>
      
-      {stage === 0 && <ShopDetails setStage={setStage} formData={formData} setFormData={setFormData}/>}
-      {stage === 1 && <EnumerationDetails setStage={setStage} formData={formData}/>}
+      {stage === 0 && <EnumerationDetails setStage={setStage} formData={formData} setFormData={setFormData}/>}
+      {stage === 1 && <ShopkeepersDetails setStage={setStage} formData={formData}/>}
     </section>
   );
 };
