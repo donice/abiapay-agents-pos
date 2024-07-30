@@ -18,27 +18,29 @@ export interface RouteConfig {
   };
 }
 
-
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
   const isProtectedRoute = protectedRoutes.includes(pathname);
-  const isPartOfProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
+  const isPartOfProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
   const isUnprotectedRoute = unprotectedRoutes.includes(pathname);
   const [queryClient] = useState(() => new QueryClient());
 
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-          {isProtectedRoute ? (
-            <SecuredPagesLayout>{children}</SecuredPagesLayout>
-          ) : isUnprotectedRoute ? (
-            <UnsecuredPagesLayout>{children}</UnsecuredPagesLayout>
-          ) : isPartOfProtectedRoute ?(
-            <SecuredPagesLayout>{children}</SecuredPagesLayout>
-          ): <section>{children}</section>}
-        {/* </section> */}
+        {isProtectedRoute ? (
+          <SecuredPagesLayout>{children}</SecuredPagesLayout>
+        ) : isUnprotectedRoute ? (
+          <UnsecuredPagesLayout>{children}</UnsecuredPagesLayout>
+        ) : isPartOfProtectedRoute ? (
+          <SecuredPagesLayout>{children}</SecuredPagesLayout>
+        ) : (
+          <section>{children}</section>
+        )}
         <Toaster />
-        <ReactQueryDevtools/>
+        {/* <ReactQueryDevtools/> */}
       </QueryClientProvider>
     </AuthProvider>
   );
