@@ -142,7 +142,7 @@ const UserAccountPage = () => {
       <div className="settings_items_service">
         {dailyServices.map((item) => (
           <Link
-            href={`${item.href}`}
+            href={`${item.cat === "coming soon" ? "/user/settings": item.href}`}
             key={item.href}
             className={`settings_item`}
           >
