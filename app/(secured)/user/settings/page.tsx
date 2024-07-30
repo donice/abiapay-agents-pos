@@ -108,7 +108,7 @@ const UserAccountPage = () => {
         // title="Settings"
         // desc={"Explore your settings"}
         title="Extras"
-        desc={""}
+        desc={"Explore all extra services available for you"}
       />
       <h2>My Money Transfer</h2>
       <div className="settings_items">
