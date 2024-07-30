@@ -74,61 +74,13 @@ const ShopkeepersDetails = ({ setStage, formData }: any) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="enumeration-form">
-        <FormTextInput
-          label="Annual Shop Ticket Amount (Shop Owner)"
-          type="text"
-          name="ticket_amount_shop_owner"
-          value={formData.ticket_amount_shop_owner}
-          placeholder="Enter Annual Shop Ticket Amount (Shop Owner)"
-          register={register}
-          validation={{
-            required: true,
-          }}
-          error={errors.ticket_amount_shop_owner as FieldError}
-        />
-        <FormTextInput
-          label="Annual Ticket Amount (Per Occupant)"
-          type="text"
-          name="ticket_amount_per_occupant"
-          value={formData.ticket_amount_per_occupant}
-          placeholder="Enter Annual Ticket Amount (Per Occupant)"
-          register={register}
-          validation={{
-            required: true,
-          }}
-          error={errors.ticket_amount_per_occupant as FieldError}
-        />
-        <FormTextInput
-          label="Shop Enumeration Fee"
-          type="text"
-          name="enumeration_fee"
-          value={formData.enumeration_fee}
-          placeholder="Enter Shop Enumeration Fee"
-          register={register}
-          validation={{
-            required: true,
-          }}
-          error={errors.enumeration_fee as FieldError}
-        />
-
-        <SelectInput
-          label="Payment Method"
-          name="payment_method"
-          id="payment_method"
-          options={[
-            { label: "Fidelity", value: "Fidelity" },
-            { label: "Access", value: "Access" },
-          ]}
-          placeholder="Select Payment Method"
-          register={register}
-          validation={{ required: true }}
-        />
+       
         <div className="button-container">
           <button className="button secondary" onClick={() => setStage(0)}>
             Go Back
           </button>
           <Button
-            text="Complete Enumerate"
+            text="Complete"
             loading={isPending}
             disabled={isPending}
           />

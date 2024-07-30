@@ -2,12 +2,51 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { FieldError, useForm } from "react-hook-form";
-import { fetchMarkets } from "@/src/services/marketEnumerationService";
+import {
+  createMarketEnumeration,
+  CreateMarketEnumerationType,
+  fetchMarkets,
+} from "@/src/services/marketEnumerationService";
 import { fetchLGAData } from "@/src/services/common";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { EnumerationModal } from "@/src/components/common/modal";
 
+interface ModalType {
+  response_code: string;
+  payment_reference: string;
+  enumeration_id: string;
+}
 const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
   const [markets, setMarkets] = useState([]);
   const [lga, setLga] = useState([]);
+  const [ticketData, setTicketData] = useState<ModalType>({
+    response_code: "",
+    payment_reference: "",
+    enumeration_id: "",
+  });
+  const [show, setShow] = useState(false);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: CreateMarketEnumerationType) => {
+      return createMarketEnumeration(data);
+    },
+    mutationKey: ["save_owner_contact"],
+    onSuccess: (data) => {
+      if (data.response_code) {
+        toast.success("Shop Enumerated Successfully");
+        setShow(true);
+        setTicketData(data);
+        setStage(1);
+      } else {
+        toast.error("Shop Enumeration Failed");
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Error Saving Driver's data");
+    },
+  });
 
   const {
     register,
@@ -27,12 +66,16 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
       market: formData?.market || "",
       monthly_income_range: formData?.monthly_income_range || "",
       lga: formData?.lga || "",
+      enumeration_fee: formData?.enumeration_fee || "18000",
+      ticket_amount_shop_owner: formData?.ticket_amount_shop_owner || "18000",
+      ticket_amount_per_occupant: formData?.ticket_amount_per_occupant || "18000",
+      payment_method: formData?.payment_method || "Fidelity",
     },
   });
 
   const onSubmit = (reqData: any) => {
+    mutate({ ...reqData, ...formData });
     setFormData(reqData);
-    setStage(1)
   };
 
   const getMarkets = async () => {
@@ -47,6 +90,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
       setMarkets(res);
     } catch (error: any) {
       console.log(error);
+      toast.error("Error Enumerating Vehicle");
     }
   };
 
@@ -143,6 +187,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
             { label: "Single", value: "Single" },
             { label: "Double", value: "Double" },
             { label: "Street Market", value: "Street Market" },
+            { label: "Warehouse", value: "Warehouse" },
           ]}
           placeholder="Select Shop Category"
           register={register}
@@ -161,7 +206,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
         />
         <FormTextInput
           label="Shop Number"
-          type="number"
+          type="text"
           name="shop_number"
           placeholder="Enter Shop Number"
           register={register}
@@ -190,10 +235,38 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
             { label: "100,001 - 500,000", value: "100,001 - 500,000" },
             { label: "500,001 - 1,000,000", value: "500,001 - 1,000,000" },
             { label: "1,000,001 - 5,000,000", value: "1,000,001 - 5,000,000" },
-            { label: "5,000,001 - 10,000,000", value: "5,000,001 - 10,000,000" },
+            {
+              label: "5,000,001 - 10,000,000",
+              value: "5,000,001 - 10,000,000",
+            },
             { label: "Above 10,000,000", value: "Above 10,000,000" },
           ]}
           placeholder="Select Monthly Income"
+          register={register}
+          validation={{ required: true }}
+        />
+
+        <FormTextInput
+          label="Annual Shop Ticket Amount (Shop Owner)"
+          type="text"
+          name="ticket_amount_shop_owner"
+          value={"18000"}
+          placeholder="Enter Annual Shop Ticket Amount (Shop Owner)"
+          register={register}
+          validation={{
+            required: true,
+          }}
+          // error={errors.ticket_amount_shop_owner as FieldError}
+        />
+        <SelectInput
+          label="Payment Method"
+          name="payment_method"
+          id="payment_method"
+          options={[
+            { label: "Fidelity", value: "Fidelity" },
+            { label: "Access", value: "Access" },
+          ]}
+          placeholder="Select Payment Method"
           register={register}
           validation={{ required: true }}
         />
@@ -207,8 +280,17 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           validation={{ required: true }}
         />
 
-        <Button text="Save & Continue" />
+        <Button text="Create Enumeration" loading={isPending} />
       </form>
+
+      {show && (
+        <EnumerationModal
+          id={`Pyament Ref: ${ticketData?.payment_reference}, Enumeration ID: ${ticketData?.enumeration_id}`}
+          maintext="Shop Enumerated Successfully"
+          link="/dashboard"
+          text={"Done"}
+        />
+      )}
     </div>
   );
 };
