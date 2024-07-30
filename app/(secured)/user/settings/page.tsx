@@ -83,25 +83,21 @@ const otherServices: WalletItemsProps[] = [
     href: "/settings/about",
     title: "About",
     icon: <FcInfo className="icon" />,
-    cat: "coming soon",
   },
   {
     href: "/settings/change-password",
     title: "Change password",
     icon: <FcKey className="icon" />,
-    cat: "coming soon",
   },
   {
     href: "/settings/support",
     title: "Support",
     icon: <FcButtingIn className="icon" />,
-    cat: "coming soon",
   },
   {
     href: "/signin",
     title: "Logout",
     icon: <FcLock className="icon" />,
-    cat: "coming soon",
   },
 ];
 
@@ -150,6 +146,7 @@ const UserAccountPage = () => {
             key={item.href}
             className={`settings_item`}
           >
+            {item.cat === "coming soon" && <span className="soon">soon</span>}
             <div>
               {" "}
               <span>{item.icon}</span>
