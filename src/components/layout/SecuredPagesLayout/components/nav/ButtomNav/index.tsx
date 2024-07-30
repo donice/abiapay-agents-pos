@@ -14,6 +14,8 @@ import {
   TbUser,
   TbSettings,
   TbSettingsFilled,
+  TbLayoutGridAdd,
+  TbLayoutGridFilled,
 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 
@@ -58,8 +60,8 @@ const nav_items: BottomNavProps[] = [
   {
     name: "user/settings",
     title: "My Account",
-    icon: <TbSettings className="icon" />,
-    icon_active: <TbSettingsFilled className="icon active" />,
+    icon: <TbLayoutGridAdd className="icon" />,
+    icon_active: <TbLayoutGridFilled className="icon active" />,
   },
 ];
 
