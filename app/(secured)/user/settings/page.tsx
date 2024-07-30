@@ -146,7 +146,7 @@ const UserAccountPage = () => {
       <div className="settings_items_service">
         {dailyServices.map((item) => (
           <Link
-            href={`/${item.href}`}
+            href={`${item.href}`}
             key={item.href}
             className={`settings_item`}
           >
@@ -165,7 +165,7 @@ const UserAccountPage = () => {
       <div className="settings_items_service">
         {otherServices.map((item) => (
           <Link
-            href={`/${item.href}`}
+            href={`${item.href}`}
             key={item.href}
             className={`settings_item`}
           >
