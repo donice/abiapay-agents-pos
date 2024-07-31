@@ -80,17 +80,17 @@ const dailyServices: WalletItemsProps[] = [
 
 const otherServices: WalletItemsProps[] = [
   {
-    href: "/settings/about",
+    href: "/user/settings/about",
     title: "About",
     icon: <FcInfo className="icon" />,
   },
   {
-    href: "/settings/change-password",
+    href: "/user/settings/change-password",
     title: "Change password",
     icon: <FcKey className="icon" />,
   },
   {
-    href: "/settings/support",
+    href: "/user/settings/support",
     title: "Support",
     icon: <FcButtingIn className="icon" />,
   },

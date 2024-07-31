@@ -37,7 +37,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
         toast.success("Shop Enumerated Successfully");
         setShow(true);
         setTicketData(data);
-        setStage(1);
+        // setStage(1);
       } else {
         toast.error("Shop Enumeration Failed");
       }
@@ -288,7 +288,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           id={`Pyament Ref: ${ticketData?.payment_reference}, Enumeration ID: ${ticketData?.enumeration_id}`}
           maintext="Shop Enumerated Successfully"
           link="/dashboard"
-          text={"Done"}
+          text={"Add Shopkeeper details"}
         />
       )}
     </div>
