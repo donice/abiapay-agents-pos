@@ -10,6 +10,7 @@ import {
   TbLineScan,
   TbUser,
   TbSquareRoundedPlus,
+  TbLayoutGridAdd,
 } from "react-icons/tb";
 
 interface SideNavProps {
@@ -43,6 +44,11 @@ const nav_items: SideNavProps[] = [
     name: "user/account",
     title: "My Account",
     icon: <TbUser className="icon" />,
+  },
+  {
+    name: "user/settings",
+    title: "Extras",
+    icon: <TbLayoutGridAdd className="icon" />,
   },
 ];
 

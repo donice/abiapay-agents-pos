@@ -59,7 +59,7 @@ const nav_items: BottomNavProps[] = [
   },
   {
     name: "user/settings",
-    title: "My Account",
+    title: "Extras",
     icon: <TbLayoutGridAdd className="icon" />,
     icon_active: <TbLayoutGridFilled className="icon active" />,
   },
