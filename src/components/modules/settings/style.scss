@@ -1,8 +1,28 @@
-@use "../../../../src/styles/index.scss" as *;
+@use "../../../styles/index.scss" as *;
 
 .settings {
   display: grid;
   gap: 1rem;
+
+  .userdata {
+    color: $text-primary;
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    p {
+      margin-top: -0.25rem;
+      font-size: 0.7rem;
+
+      span {
+         color: $primary;
+      }
+     
+    }
+  }
+
 
   &_banner {
     border-radius: 0.5rem;

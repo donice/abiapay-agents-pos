@@ -19,7 +19,7 @@ export const formatAmount = (input: number | string | undefined | null): string 
     if (num >= 1_000_000) {
       return (num / 1_000_000).toFixed(3).replace(/\.0+$/, '') + 'M';
     } else if (num >= 100_000) {
-      return (num / 1_000).toFixed(3).replace(/\.0+$/, '') + 'k';
+      return (num / 1_000).toFixed(3).replace(/\.0+$/, '') + ',000';
     } else {
       return num.toLocaleString();
     }
