@@ -61,7 +61,7 @@ const ConfirmEmail = ({ setStage, setFormData }: any) => {
         <FormTextInput
           label={"Email"}
           name={"email"}
-          placeholder="Enter your email"
+          placeholder="Enter agent's email"
           type="text"
           register={register}
           validation={{ required: true }}
