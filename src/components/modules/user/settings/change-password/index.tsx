@@ -7,6 +7,7 @@ import ConfirmEmail from "./confirmEmail";
 import ValidateOTP from "./validateOTP";
 import ChangePassword from "./changePassword";
 
+// This component is being called in the forgot-password page and the change-password page
 const ChangePasswordComponent = () => {
   const [stage, setStage] = useState(0);
   const [formData, setFormData] = useState({});
@@ -14,8 +15,7 @@ const ChangePasswordComponent = () => {
   console.log(formData);
 
   return (
-    <div>
-      <CustomHeader title="Change Password" desc="Reset agents password" />
+    <div className="password">
 
       <ProgressBar stage={stage} setStage={setStage} />
 

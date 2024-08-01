@@ -28,7 +28,7 @@ const ProgressBar = ({ stage, setStage }: any) => {
             className={`progress-label ${stage >= 1 ? "active" : ""}`}
             style={{ left: "76%" }}
           >
-            New Password
+            NewPassword
           </div>
           
         </div>

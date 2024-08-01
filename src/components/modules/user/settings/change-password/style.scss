@@ -1,7 +1,10 @@
 @use "../../../../../styles/index.scss" as *;
 
-
+.password {
+   margin-top: 2rem; 
+}
 .change-password {
+
   &_form {
     display: grid;
     gap: 1rem;
