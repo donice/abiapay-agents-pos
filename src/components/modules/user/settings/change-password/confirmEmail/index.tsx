@@ -59,7 +59,7 @@ const ConfirmEmail = ({ setStage, setFormData }: any) => {
     <section className="change-password">
       <form onSubmit={handleSubmit(onSubmit)} className="change-password_form">
         <FormTextInput
-          label={"Email"}
+          label={"Agent's Email"}
           name={"email"}
           placeholder="Enter agent's email"
           type="text"
