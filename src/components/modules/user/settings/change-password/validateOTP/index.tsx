@@ -18,7 +18,7 @@ const ValidateOTP = ({ setStage, setFormData, formData }: any) => {
 
   const onSubmit = (reqData: {otp: string}) => {
     console.log(reqData)
-    setFormData({...reqData});
+    setFormData({...formData, ...reqData});
     setStage(2)
   }
   return (

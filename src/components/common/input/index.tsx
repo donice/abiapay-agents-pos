@@ -118,6 +118,8 @@ export const FormTextInput: React.FC<InputProps> = ({
         return "Length must be more";
       case "maxLength":
         return "Length must be less";
+      case "validate":
+        return "Values do not match";
       default:
         return "";
     }
