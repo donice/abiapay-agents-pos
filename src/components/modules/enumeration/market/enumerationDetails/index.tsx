@@ -7,10 +7,10 @@ import {
   CreateMarketEnumerationType,
   fetchMarkets,
 } from "@/src/services/marketEnumerationService";
-import { fetchLGAData } from "@/src/services/common";
+import { fetchABSSINInfo, fetchLGAData } from "@/src/services/common";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { EnumerationModal } from "@/src/components/common/modal";
+import { useDebounce } from "@/src/hooks/useDebounce";
 
 interface ModalType {
   response_code: string;
@@ -20,12 +20,6 @@ interface ModalType {
 const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
   const [markets, setMarkets] = useState([]);
   const [lga, setLga] = useState([]);
-  const [ticketData, setTicketData] = useState<ModalType>({
-    response_code: "",
-    payment_reference: "",
-    enumeration_id: "",
-  });
-  const [show, setShow] = useState(false);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateMarketEnumerationType) => {
@@ -35,9 +29,11 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
     onSuccess: (data) => {
       if (data.response_code) {
         toast.success("Shop Enumerated Successfully");
-        setShow(true);
-        setTicketData(data);
-        // setStage(1);
+        setFormData({
+          payment_reference: data?.payment_reference,
+          enumeration_id: data?.enumeration_id,
+        });
+        setStage(1);
       } else {
         toast.error("Shop Enumeration Failed");
       }
@@ -51,6 +47,8 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -68,16 +66,16 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
       lga: formData?.lga || "",
       enumeration_fee: formData?.enumeration_fee || "18000",
       ticket_amount_shop_owner: formData?.ticket_amount_shop_owner || "18000",
-      ticket_amount_per_occupant: formData?.ticket_amount_per_occupant || "18000",
+      ticket_amount_per_occupant:
+        formData?.ticket_amount_per_occupant || "18000",
       payment_method: formData?.payment_method || "Fidelity",
     },
   });
 
   const onSubmit = (reqData: any) => {
     mutate({ ...reqData, ...formData });
-    setFormData(reqData);
+    // setFormData(enumerationDetails);
   };
-
   const getMarkets = async () => {
     try {
       const { data } = await fetchMarkets();
@@ -114,6 +112,37 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
     getMarkets();
     getLgas();
   }, []);
+
+  const abssin = watch("abssin");
+  const debouncedAbssin = useDebounce(abssin, 300);
+
+  useEffect(() => {
+    if (debouncedAbssin) {
+      const getPlateNumberInfo = async (req: string) => {
+        try {
+          const response = await fetchABSSINInfo({ id: req });
+
+          if (response.data?.length !== 0) {
+            toast.success(response.message);
+            setValue(
+              "shop_owner_name",
+              response.data.firstname +
+                " " +
+                response.data.middle_name +
+                " " +
+                response.data.lastname
+            );
+            setValue("shop_owner_phone", response.data.phone_number);
+          }
+        } catch (error) {
+          // toast.error("Error fetching plate number information");
+          console.log(error);
+        }
+      };
+
+      getPlateNumberInfo(debouncedAbssin);
+    }
+  }, [debouncedAbssin, setValue]);
 
   return (
     <div>
@@ -245,6 +274,15 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           register={register}
           validation={{ required: true }}
         />
+        <SelectInput
+          label="LGA"
+          name="lga"
+          id="lga"
+          options={lga}
+          placeholder="Select LGA"
+          register={register}
+          validation={{ required: true }}
+        />
 
         <FormTextInput
           label="Annual Shop Ticket Amount (Shop Owner)"
@@ -270,27 +308,10 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           register={register}
           validation={{ required: true }}
         />
-        <SelectInput
-          label="LGA"
-          name="lga"
-          id="lga"
-          options={lga}
-          placeholder="Select LGA"
-          register={register}
-          validation={{ required: true }}
-        />
 
         <Button text="Create Enumeration" loading={isPending} />
       </form>
 
-      {show && (
-        <EnumerationModal
-          id={`Pyament Ref: ${ticketData?.payment_reference}, Enumeration ID: ${ticketData?.enumeration_id}`}
-          maintext="Shop Enumerated Successfully"
-          link="/dashboard"
-          text={"Add Shopkeeper details"}
-        />
-      )}
     </div>
   );
 };

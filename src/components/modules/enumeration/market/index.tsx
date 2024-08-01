@@ -4,6 +4,7 @@ import ShopkeepersDetails from "./shopkeepersDetails";
 import "./style.scss";
 import ProgressBar from "./progressBar";
 import EnumerationDetails from "./enumerationDetails";
+import { CustomHeader } from "@/src/components/common/header";
 
 const MarketEnumerationComponent = () => {
   const [stage, setStage] = useState(0);
@@ -12,7 +13,8 @@ const MarketEnumerationComponent = () => {
   console.log(formData);
 
   return (
-    <section>
+    <section className="enumeration">
+      <CustomHeader title={"Market Enumeration"} desc={"Enumerate Shops in the market"} />
       <ProgressBar stage={stage} setStage={setStage}/>
      
       {stage === 0 && <EnumerationDetails setStage={setStage} formData={formData} setFormData={setFormData}/>}

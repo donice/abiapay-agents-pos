@@ -13,6 +13,17 @@ const isToken =
 setToken(isToken);
 
 
+export const fetchABSSINInfo = async (reqData: {
+  id: string
+}) => {
+  try {
+    const res = await axiosInstance.post(`${url}/abssin/abssin-info`, reqData);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export const fetchLGAData = async () => {
   try {
     const res = await axiosInstance.post(`${url}/state/lga`);
