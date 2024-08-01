@@ -53,12 +53,12 @@ const SideNav = () => {
                 <span>{item.title}</span>
             </Link>
           ))}
-          <div key={"logout"} className="side-nav_item logout">
+          <Link href={"/signin"} key={"logout"} className="side-nav_item logout">
             <span>
               <TbLogout2 className="icon out" />
             </span>
             <span>Sign Out</span>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
