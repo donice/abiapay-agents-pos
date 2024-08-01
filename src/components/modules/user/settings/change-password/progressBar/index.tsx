@@ -14,21 +14,21 @@ const ProgressBar = ({ stage, setStage }: any) => {
           ></div>
           <div
             className={`progress-label ${stage >= 0 ? "active" : ""}`}
-            style={{ left: "10%" }}
+            style={{ left: "12%" }}
           >
             Confirm Email
           </div>
           <div
             className={`progress-label ${stage >= 1 ? "active" : ""}`}
-            style={{ left: "40%" }}
+            style={{ left: "43%" }}
           >
            Validate OTP
           </div>
           <div
             className={`progress-label ${stage >= 1 ? "active" : ""}`}
-            style={{ left: "73%" }}
+            style={{ left: "76%" }}
           >
-            Change Password
+            New Password
           </div>
           
         </div>
