@@ -119,7 +119,7 @@ export const ChangePasswordModal: React.FC<SuccessModalProps> = ({
             </button>
           )}
 
-          <SecondaryButton text="Create New" link={"/settings"} />
+          {/* <SecondaryButton text="Create New" link={"/settings"} /> */}
         </div>
       </div>
     </div>
