@@ -6,6 +6,7 @@ import {
   FcPaid,
   FcAcceptDatabase,
   FcMoneyTransfer,
+  FcDiploma2,
 } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
@@ -31,15 +32,21 @@ const tickets: TicketsProps[] = [
     icon: <FcShipped className="icon" />,
   },
   {
+    name: "tickets/transport/emblem",
+    title: "Transport Emblem",
+    desc: "Create transport emblem",
+    icon: <FcDiploma2 className="icon" />,
+  },
+  {
     name: "tickets/transport",
     title: "Transaction History",
-    desc: "View your Tickets Transactions History",
+    desc: "View your tickets transactions history",
     icon: <FcAcceptDatabase className="icon" />,
   },
   {
     name: "transfers",
     title: "Transfer History",
-    desc: "View your Wallet Transfer History",
+    desc: "View your wallet transfer history",
     icon: <FcMoneyTransfer className="icon" />,
   },
 ];

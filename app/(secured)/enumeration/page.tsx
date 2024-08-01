@@ -24,7 +24,7 @@ const items: AccountsProps[] = [
   {
     link: "enumeration/transport",
     title: "Transport Enumeration",
-    desc: "Enumerate Vehicles",
+    desc: "Enumerate vehicles",
     icon: <FcInTransit className="icon" />,
   },
   {
@@ -43,7 +43,7 @@ const items: AccountsProps[] = [
   {
     // link: "enumeration/market",
     title: "Manage Enumeration",
-    desc: "Manage all Enumerations",
+    desc: "Manage all enumerations",
     icon: <FcLowPriority className="icon" />,
     comingsoon: true
   },
