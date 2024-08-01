@@ -1,6 +1,7 @@
 import axiosInstance from "../lib/axiosInstance";
 import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
+import toast from "react-hot-toast";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -32,6 +33,8 @@ export const changePasswordAPI = async (requestData: changePasswordType) => {
     const { data } = await axiosInstance.post(`${url}/user/forgot-password-otp-verification`, requestData);
     return data;
   } catch (error: any) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message || "Error validating OTP")
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };

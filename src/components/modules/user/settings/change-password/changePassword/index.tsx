@@ -1,5 +1,9 @@
-import { PrimaryButton } from "@/src/components/common/button";
+import { Button } from "@/src/components/common/button";
 import { FormTextInput } from "@/src/components/common/input";
+import {
+  ChangePasswordModal,
+  SuccessModal,
+} from "@/src/components/common/modal";
 import {
   changePasswordAPI,
   changePasswordType,
@@ -15,27 +19,24 @@ const ValidateOTP = ({ setStage, setFormData, formData }: any) => {
     message: "",
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: changePasswordType) => {
       return changePasswordAPI(data);
     },
     mutationKey: ["change-password"],
     onSuccess: (data) => {
-      if (data) {
-        toast.success("OTP sent");
-        // setStage(1);
-        console.log(data.message);
+      if (data.status == true) {
+        toast.success(data.message || "Password Changed Successfully");
         setModal({
           open: true,
           message: data.message,
         });
       } else {
-        toast.error("Password Change Failed");
+        toast.error("Error changing password");
       }
     },
     onError: (error) => {
       console.log(error);
-      toast.error("Error");
     },
   });
 
@@ -97,9 +98,19 @@ const ValidateOTP = ({ setStage, setFormData, formData }: any) => {
           <button className="button secondary" onClick={() => setStage(1)}>
             Edit OTP
           </button>
-          <PrimaryButton text="Change Password" />
+          <Button text="Change Password" loading={isPending} />
         </div>
       </form>
+
+      {modal.open === true && (
+        <ChangePasswordModal
+          maintext={modal.message}
+          id={"Changed Successfully"}
+          onClick={() => setStage(1)}
+          link="/dashboard"
+          text="Done"
+        />
+      )}
     </div>
   );
 };

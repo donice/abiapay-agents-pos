@@ -34,11 +34,11 @@ const ValidateOTP = ({ setStage, setFormData, formData }: any) => {
           validation={{
             required: true,
             minLength: {
-              value: 4,
+              value: 6,
               message: "Length must be above 3 characters",
             },
             maxLength: {
-              value: 4,
+              value: 6,
               message: "Length must be below 5 characters",
             },
           }}

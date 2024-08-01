@@ -89,6 +89,42 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
     </div>
   );
 };
+export const ChangePasswordModal: React.FC<SuccessModalProps> = ({
+  maintext,
+  id,
+  text,
+  link,
+}) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <FcOk className="success_icon" />
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Payment Successful"} </h2>
+          <p>
+            <span>{id ? id : ""}</span>{" "}
+          </p>
+          {/* {text && <p>{text}</p>} */}
+          {link && (
+            <button onClick={handleClick} className="button primary top">
+              {text}
+            </button>
+          )}
+
+          <SecondaryButton text="Create New" link={"/settings"} />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const EmailSuccessModal: React.FC<EmailSuccessModalProps> = ({
   text,
