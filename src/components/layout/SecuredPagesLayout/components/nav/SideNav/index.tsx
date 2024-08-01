@@ -9,6 +9,7 @@ import {
   TbLogout2,
   TbLineScan,
   TbUser,
+  TbSquareRoundedPlus,
 } from "react-icons/tb";
 
 interface SideNavProps {
@@ -32,6 +33,11 @@ const nav_items: SideNavProps[] = [
     name: "tickets/verify",
     title: "Verify Ticket",
     icon: <TbLineScan className="icon" />,
+  },
+  {
+    name: "tickets/add",
+    title: "Add Tickets",
+    icon: <TbSquareRoundedPlus className="icon plus" />,
   },
   {
     name: "user/account",
