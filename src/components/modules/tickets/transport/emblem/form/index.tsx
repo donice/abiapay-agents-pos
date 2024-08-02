@@ -261,8 +261,8 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         validation={{ required: true }}
         error={!!errors.wallet_type}
         options={[
-          { label: "fidelity", value: "fidelity" },
-          { label: "access", value: "access" },
+          { label: "fidelity", value: "Fidelity" },
+          { label: "access", value: "Access" },
         ]}
       />
 

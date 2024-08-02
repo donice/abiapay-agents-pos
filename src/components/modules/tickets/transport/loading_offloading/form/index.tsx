@@ -177,7 +177,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
       />
 
       <SelectInput
-        label="Vehicle Category"
+        label="Ticket Category"
         name="category"
         id="category"
         register={register}
@@ -265,8 +265,8 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         validation={{ required: true }}
         error={!!errors.wallet_type}
         options={[
-          { label: "fidelity", value: "fidelity" },
-          { label: "access", value: "access" },
+          { label: "fidelity", value: "Fidelity" },
+          { label: "access", value: "Access" },
         ]}
       />
 
