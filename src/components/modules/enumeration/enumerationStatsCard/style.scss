@@ -1,6 +1,6 @@
 @use "../../../../styles/index.scss" as *;
 
-.tickets-wallet {
+.identity-stats {
   margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -30,7 +30,7 @@
     width: 100%;
 
     @include custom-media-query("mobile", $sm) {
-      max-width: 21rem;
+      // max-width: 21rem;
     }
 
     .ticket_container {

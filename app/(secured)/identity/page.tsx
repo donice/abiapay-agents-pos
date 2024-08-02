@@ -8,6 +8,7 @@ import {
   FcShop,
 } from "react-icons/fc";
 import "./style.scss";
+import IdentityStatsCard from "@/src/components/modules/identity/identityStatsCard";
 
 export const metadata: Metadata = {
   title: "ABIAPAY Identity",
@@ -53,8 +54,10 @@ const IdentityPage = () => {
   return (
     <div className="identity">
       <CustomHeader title="Identity Dashboard" desc={"Manage identities"} />
+      
 
       <div className="identity_container">
+        <IdentityStatsCard />
         <div className="identity_items">
           {items.map((item) => (
             <Link
