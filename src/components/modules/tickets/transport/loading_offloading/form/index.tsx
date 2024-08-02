@@ -163,7 +163,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="emblem_form">
+    <form onSubmit={handleSubmit(onSubmit)} className="loading_form">
       <SelectInput
         label={"Vehicle Type"}
         name={"product_code"}

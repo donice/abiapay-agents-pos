@@ -1,27 +1,24 @@
 export const formatAmount = (input: number | string | undefined | null): string => {
-    if (input === undefined || input === null) {
+  if (input === undefined || input === null) {
       return "0.00";
-    }
-  
-    let num: number;
-  
-    if (typeof input === 'string') {
+  }
+
+  let num: number;
+
+  if (typeof input === 'string') {
       const cleanedInput = input.replace(/,/g, '');
       num = parseFloat(cleanedInput);
-    } else {
+  } else {
       num = input;
-    }
-  
-    if (isNaN(num)) {
-      return "error";
-    }
-  
-    if (num >= 1_000_000) {
-      return (num / 1_000_000).toFixed(3).replace(/\.0+$/, '') + 'M';
-    } else if (num >= 100_000) {
-      return (num / 1_000).toFixed(3).replace(/\.0+$/, '') + ',000';
-    } else {
-      return num.toLocaleString();
-    }
   }
-  
+
+  if (isNaN(num)) {
+      return "error";
+  }
+
+  if (num >= 1_000_000) {
+      return (num / 1_000_000).toFixed(3).replace(/\.0+$/, '') + 'M';
+  } else {
+      return num.toLocaleString();
+  }
+}

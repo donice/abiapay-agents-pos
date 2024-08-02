@@ -55,7 +55,7 @@ const TicketsWalletCard = () => {
               <div className="tickets-wallet-card_balance">
                 <span>Week's Collections</span>
                 <span>
-                  ₦{formatAmount(data.data?.[0].total_amount_monthly)}
+                  ₦{formatAmount(data.data?.[0].total_amount_weekly)}
                 </span>
               </div>
 

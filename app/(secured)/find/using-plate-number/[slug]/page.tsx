@@ -54,6 +54,7 @@ const Dynamic = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateTicketPayload) => {
+      sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(data));
       return createNewTicket(data);
     },
     mutationKey: ["fetch_transactions"],

@@ -1,7 +1,8 @@
 @use "../../../../../../src/styles/index.scss" as *;
 
-.emblem {
+.loading {
   &_form {
+    margin-top: 2rem;
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 1rem;
