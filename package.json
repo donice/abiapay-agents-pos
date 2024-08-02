@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@azure/cognitiveservices-face": "^5.0.0",
-    "@azure/ms-rest-js": "^2.7.0",
     "@tanstack/react-query": "^5.45.1",
     "@tanstack/react-query-devtools": "^5.44.0",
     "@tanstack/react-table": "^8.17.3",

@@ -72,19 +72,12 @@ export const Button = ({
 }: ButtonProps) => {
   const router = useRouter();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!disabled) {
-      if (onClick) {
-        onClick(event);
-      }
-    }
-  };
 
   return (
     <button
       className={`button ${disabled ? "disabled" : "primary"}`}
       disabled={disabled}
-      onClick={handleClick}
+      onClick={onClick}
     >
       {children} {text}
       {loading && <Loader />}
