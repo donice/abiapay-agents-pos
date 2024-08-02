@@ -10,7 +10,7 @@ import { GoVerified } from "react-icons/go";
 import { fetchTransactions } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { TbLoader } from "react-icons/tb";
-import { CgPlayTrackNextR } from "react-icons/cg";
+import { LuListRestart } from "react-icons/lu";
 const TransactionsTable: React.FC = () => {
   const router = useRouter();
   const { data, error, isLoading, isError } = useQuery({
@@ -80,7 +80,7 @@ const TransactionsTable: React.FC = () => {
                     {transaction.status}
                   </p>
                   <p>{transaction.payment_period}</p>
-                  <p><span><CgPlayTrackNextR className="icon"/></span><span> {new Date(transaction.next_date).toLocaleString()}</span></p>
+                  <p><span><LuListRestart className="icon"/></span><span> {new Date(transaction.next_date).toLocaleString()}</span></p>
                 </div>
               </div>
             ))}
