@@ -3,17 +3,14 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Loading } from "@/src/components/common/loader/redirecting";
 import "./style.scss";
-import { Transaction } from "@/src/components/types/ticketTypes";
 import Empty from "@/src/components/common/empty";
 import { formatAmount } from "@/src/utils/formatAmount";
-import { CamelCaseToTitleCase } from "@/src/utils/helper";
 import { useRouter } from "next/navigation";
 import { GoVerified } from "react-icons/go";
 import { fetchTransactions } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { TbLoader } from "react-icons/tb";
-import addEllipses from "@/src/utils/addElipses";
-
+import { CgPlayTrackNextR } from "react-icons/cg";
 const TransactionsTable: React.FC = () => {
   const router = useRouter();
   const { data, error, isLoading, isError } = useQuery({
@@ -22,8 +19,6 @@ const TransactionsTable: React.FC = () => {
   });
 
   const fetced_data = data?.data || [];
-
-  // console.log(data?.data, "DATATATATA");
 
   if (isLoading) {
     return (
@@ -64,7 +59,7 @@ const TransactionsTable: React.FC = () => {
                   <p>{transaction.trans_ref}</p>
                   <p>{transaction.revenue_item}</p>
 
-                  <p>{new Date(transaction.next_date).toLocaleString()}</p>
+                  <p>{new Date(transaction.createtime).toLocaleString()}</p>
                   {/* <p>{addEllipses(transaction?.reference, 20)}</p> */}
                   <p>Ref: {transaction.payment_ref}</p>
                 </div>
@@ -85,7 +80,7 @@ const TransactionsTable: React.FC = () => {
                     {transaction.status}
                   </p>
                   <p>{transaction.payment_period}</p>
-                  <p>{new Date(transaction.trans_date).toLocaleString()}</p>
+                  <p><span><CgPlayTrackNextR className="icon"/></span><span> {new Date(transaction.next_date).toLocaleString()}</span></p>
                 </div>
               </div>
             ))}
