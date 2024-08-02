@@ -216,7 +216,7 @@ export const OffloadingModal = ({
               {button_text}
             </button>
 
-          <SecondaryButton text="Create New Emblem" link="/tickets/transport/loading_offloading" />
+          <SecondaryButton text="Register New Loading/Offloading" link="/tickets/transport/loading_offloading" />
         </div>
       </div>
     </div>
