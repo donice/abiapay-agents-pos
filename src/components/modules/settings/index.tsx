@@ -124,13 +124,17 @@ const UserSettingsComponent = () => {
       /> */}
       <div className="userdata">
         <h1>{userData?.name}</h1>
-        <p>Number: <span>{userData?.phone}</span></p>
+        <p>
+          Number: <span>{userData?.phone}</span>
+        </p>
       </div>
       <h2>My Wallet Transfer</h2>
       <div className="settings_items">
         {walletItems.map((item) => (
           <Link
-            href={`/${item.href}`}
+            href={`${
+              item.cat === "coming soon" ? "/user/settings" : item.href
+            }`}
             key={item.href}
             className={`settings_item`}
           >
