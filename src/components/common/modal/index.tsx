@@ -21,7 +21,7 @@ interface EmailSuccessModalProps {
   id?: string;
   message?: string;
   link?: string;
-  buttonText: string
+  buttonText: string;
   onClick: any;
 }
 
@@ -152,6 +152,43 @@ export const EmailSuccessModal: React.FC<EmailSuccessModalProps> = ({
   );
 };
 
+export const EmblemModal = ({
+  maintext,
+  exp_date,
+  payment_ref,
+  button_text,
+  onClick,
+}: {
+  maintext?: string;
+  exp_date?: string;
+  payment_ref?: string;
+  text?: string;
+  button_text?: string;
+  onClick?: any;
+}) => {
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <FcOk className="success_icon" />
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Payment Successful"} </h2>
+          <p>
+            Payment Reference: <span>{payment_ref ? payment_ref : ""}</span>{" "}
+          </p>
+          <p>
+            Expiration Date: <span>{exp_date ? exp_date : ""}</span>{" "}
+          </p>
+            <button onClick={onClick} className="button primary top">
+              {button_text}
+            </button>
+
+          <SecondaryButton text="Create New" link="/tickets/transport/emblem" />
+        </div>
+      </div>
+    </div>
+  );
+};
 export const EnumerationModal: React.FC<SuccessModalProps> = ({
   maintext,
   id,
@@ -268,7 +305,6 @@ export const VehicleCheckSuccessModal: React.FC<
           </div>
 
           <Button onClick={onClick} text={button_text ? button_text : ""} />
-
         </div>
       </div>
     </div>

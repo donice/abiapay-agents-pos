@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import "../style.scss";
 import { useForm } from "react-hook-form";
 import {
+  createTransportEmblem,
   CreateTransportEmblemType,
   fetchEmblemProductCode,
 } from "@/src/services/emblemService";
@@ -12,23 +13,54 @@ import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { fetchLGAData } from "@/src/services/common";
+import { useMutation } from "@tanstack/react-query";
+import { getErrorMessages } from "@/src/utils/helper";
+import { EmblemModal, EnumerationModal } from "@/src/components/common/modal";
+import { useRouter } from "next/navigation";
+
+interface EmblemProduct {
+  id: number;
+  merchant_id: string;
+  business_type: string;
+  productCode: string;
+  productTag: string;
+  planCode: string;
+  productName: string;
+  category: string;
+  amount: string;
+  dailyAmount: string;
+  weeklyAmount: string;
+  monthlyAmount: string;
+  emblem: string;
+  presumptivetax: string;
+  penalty: string;
+  penalty_daily: string;
+  status: string;
+}
+
+interface LGA {
+  label: string;
+  value: string;
+}
 
 const CreateEmblemForm = () => {
-  const [embleProductCode, setEmbleProductCode] = useState([]);
-  const [lga, setLga] = useState([]);
+  const router = useRouter();
+  const [show, setShow] = useState({
+    mode: false,
+    message: "",
+    expiry_date: "",
+    payment_ref: "",
+  });
+  const [embleProductCode, setEmbleProductCode] = useState<EmblemProduct[]>([]);
+  const [lga, setLga] = useState<LGA[]>([]);
 
   const getEmblemProductCode = async () => {
     try {
       const { data } = await fetchEmblemProductCode();
-      setEmbleProductCode(
-        data?.map((item: any) => {
-          return {
-            label: item.productName,
-            value: item.productCode,
-          };
-        })
-      );
-    } catch (error) {}
+      setEmbleProductCode(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getLgas = async () => {
@@ -70,7 +102,8 @@ const CreateEmblemForm = () => {
       amount: "",
       lga: "",
       payment_period: "",
-      wallet_type: "Fidelity",
+      wallet_type: "fidelity",
+      payment_method: "fidelity",
     },
   });
 
@@ -98,8 +131,48 @@ const CreateEmblemForm = () => {
     }
   }, [debouncedPlateNumber, setValue]);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const handleEmblemTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedProductCode = event.target.value;
+    const selectedProduct: EmblemProduct | undefined = embleProductCode.find(
+      (item: EmblemProduct) => item.productCode === selectedProductCode
+    );
+
+    console.log(selectedProduct);
+    if (selectedProduct) {
+      setValue("amount", selectedProduct.emblem);
+    }
+    setValue("product_code", selectedProductCode);
+  };
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: CreateTransportEmblemType) => {
+      return createTransportEmblem(data);
+    },
+    onSuccess: (data) => {
+      if (data?.response_code) {
+        data?.response_code == "00"
+          ? toast.success(data?.response_message)
+          : toast.error(data?.response_message) && setShow({
+            mode: true,
+            message: data?.response_message,
+            expiry_date: data?.next_expiration_date,
+            payment_ref: data?.payment_ref,
+          });
+      } else {
+        toast.error(getErrorMessages(data?.message));
+      }
+      // console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const onSubmit = (reqData: any) => {
+    mutate(reqData);
+    console.log(reqData);
   };
 
   return (
@@ -108,10 +181,12 @@ const CreateEmblemForm = () => {
         label={"Emblem Type"}
         name={"product_code"}
         id={"product_code"}
-        register={register}
         validation={{ required: true }}
-        error={!!errors.product_code}
-        options={embleProductCode}
+        options={embleProductCode.map((item: EmblemProduct) => ({
+          label: item.productName,
+          value: item.productCode,
+        }))}
+        onChange={handleEmblemTypeChange}
       />
 
       <FormTextInput
@@ -192,12 +267,23 @@ const CreateEmblemForm = () => {
         validation={{ required: true }}
         error={!!errors.wallet_type}
         options={[
-          { label: "Fidelity", value: "Fidelity" },
-          { label: "Access", value: "Access" },
+          { label: "fidelity", value: "fidelity" },
+          { label: "access", value: "access" },
         ]}
       />
 
-      <Button text={"Process Now"} />
+      <Button text={"Process Now"} loading={isPending} />
+
+      {show.mode && (
+        <EmblemModal
+          maintext={show.message}
+          exp_date={show.expiry_date}
+          payment_ref={show.payment_ref}
+          onClick={() => {
+            router.push("/tickets/transport");
+          }}
+        />
+      )}
     </form>
   );
 };
