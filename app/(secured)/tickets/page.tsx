@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { CustomHeader } from "@/src/components/common/header";
 import {
   FcShipped,
-  FcPaid,
+  FcInTransit,
   FcAcceptDatabase,
   FcMoneyTransfer,
   FcDiploma2,
@@ -30,6 +30,12 @@ const tickets: TicketsProps[] = [
     title: "Transport Tickets",
     desc: "Create transport ticket",
     icon: <FcShipped className="icon" />,
+  },  
+  {
+    name: "tickets/transport/loading-offloading",
+    title: "Loading & Offloading",
+    desc: "Register Loading & Offloading Vehicles",
+    icon: <FcInTransit className="icon" />,
   },
   {
     name: "tickets/transport/emblem",

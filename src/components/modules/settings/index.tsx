@@ -12,6 +12,7 @@ import {
   FcCallback,
   FcInfo,
   FcMoneyTransfer,
+  FcExport,
 } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
@@ -92,7 +93,7 @@ const otherServices: WalletItemsProps[] = [
   {
     href: "/signin",
     title: "Logout",
-    icon: <FcUnlock className="icon" />,
+    icon: <FcExport className="icon" />,
   },
 ];
 

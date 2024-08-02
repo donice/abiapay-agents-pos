@@ -96,6 +96,15 @@ export const fetchCategory = async () => {
   }
 }
 
+export const fetchVehicleCategory = async () => {
+  try {
+    const res = await axiosInstance.get(`${portal_url}/enumeration/vehicle-category`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export const fetchSector = async () => {
   try {
     const res = await axiosInstance.get(`${portal_url}/user/sector`);
