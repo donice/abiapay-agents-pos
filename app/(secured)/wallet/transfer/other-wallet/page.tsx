@@ -2,7 +2,7 @@ import React from 'react'
 
 const OtherWalletTransferPage = () => {
   return (
-    <div>OtherWalletTransferPage</div>
+    <div>IN PROGRESS...</div>
   )
 }
 

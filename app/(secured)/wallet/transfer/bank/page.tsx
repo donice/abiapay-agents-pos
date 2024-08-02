@@ -2,7 +2,7 @@ import React from 'react'
 
 const BankTransferPage = () => {
   return (
-    <div>BankTransferPage</div>
+    <div>IN PROGRESS...</div>
   )
 }
 
