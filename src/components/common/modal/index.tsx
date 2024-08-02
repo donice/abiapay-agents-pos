@@ -183,7 +183,7 @@ export const EmblemModal = ({
               {button_text}
             </button>
 
-          <SecondaryButton text="Create New" link="/tickets/transport/emblem" />
+          <SecondaryButton text="Create New Emblem" link="/tickets/transport/emblem" />
         </div>
       </div>
     </div>

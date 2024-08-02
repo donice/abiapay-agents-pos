@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import { fetchLGAData } from "@/src/services/common";
 import { useMutation } from "@tanstack/react-query";
 import { getErrorMessages } from "@/src/utils/helper";
-import { EmblemModal, EnumerationModal } from "@/src/components/common/modal";
+import { EmblemModal } from "@/src/components/common/modal";
 import { useRouter } from "next/navigation";
 
 interface EmblemProduct {
@@ -43,14 +43,7 @@ interface LGA {
   value: string;
 }
 
-const CreateEmblemForm = () => {
-  const router = useRouter();
-  const [show, setShow] = useState({
-    mode: false,
-    message: "",
-    expiry_date: "",
-    payment_ref: "",
-  });
+const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
   const [embleProductCode, setEmbleProductCode] = useState<EmblemProduct[]>([]);
   const [lga, setLga] = useState<LGA[]>([]);
 
@@ -153,13 +146,14 @@ const CreateEmblemForm = () => {
     onSuccess: (data) => {
       if (data?.response_code) {
         data?.response_code == "00"
-          ? toast.success(data?.response_message)
-          : toast.error(data?.response_message) && setShow({
-            mode: true,
-            message: data?.response_message,
-            expiry_date: data?.next_expiration_date,
-            payment_ref: data?.payment_ref,
-          });
+          ? toast.success(data?.response_message) &&
+            setShow({
+              mode: true,
+              message: data?.response_message,
+              expiry_date: data?.next_expiration_date,
+              payment_ref: data?.payment_ref,
+            })
+          : toast.error(data?.response_message);
       } else {
         toast.error(getErrorMessages(data?.message));
       }
@@ -274,16 +268,6 @@ const CreateEmblemForm = () => {
 
       <Button text={"Process Now"} loading={isPending} />
 
-      {show.mode && (
-        <EmblemModal
-          maintext={show.message}
-          exp_date={show.expiry_date}
-          payment_ref={show.payment_ref}
-          onClick={() => {
-            router.push("/tickets/transport");
-          }}
-        />
-      )}
     </form>
   );
 };
