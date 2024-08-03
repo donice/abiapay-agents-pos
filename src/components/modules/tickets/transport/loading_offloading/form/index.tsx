@@ -88,7 +88,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
       tax_payer_name: "",
       plate_number: "",
       collection_point: "",
-      payment_period: "",
+      payment_period: "2024",
       wallet_type: "fidelity",
       next_payment_date: "1Day",
       amount: "",
@@ -243,19 +243,6 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         validation={{ required: true }}
         error={errors.amount}
         disabled
-      />
-
-      <SelectInput
-        label={"Payment Period"}
-        name={"payment_period"}
-        id={"payment_period"}
-        register={register}
-        validation={{ required: true }}
-        error={!!errors.payment_period}
-        options={[
-          { label: "2023", value: "2023" },
-          { label: "2024", value: "2024" },
-        ]}
       />
 
       <SelectInput
