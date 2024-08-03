@@ -242,6 +242,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         register={register}
         validation={{ required: true }}
         error={errors.amount}
+        disabled
       />
 
       <SelectInput
