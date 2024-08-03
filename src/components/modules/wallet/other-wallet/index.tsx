@@ -33,7 +33,7 @@ const OtherWalletsTransferComponent = () => {
             <div>
               <p className="amount">₦ {formatAmount(data?.fidelity?.balance)}</p>
               <p>
-                Wallet: <span>300058</span>
+                Wallet: <span>{data?.fidelity?.account_number}</span>
               </p>
             </div>
           </div>
@@ -49,7 +49,7 @@ const OtherWalletsTransferComponent = () => {
             <div>
               <p className="amount">₦ {formatAmount(data?.access?.wallet_balance)}</p>
               <p>
-                Wallet: <span>300058</span>
+                Wallet: <span>{data?.access?.wallet_id}</span>
               </p>
             </div>
           </div>
