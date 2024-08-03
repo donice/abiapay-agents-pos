@@ -1,8 +1,9 @@
+import OtherWalletsTransferComponent from '@/src/components/modules/wallet/other-wallet';
 import React from 'react'
 
 const OtherWalletTransferPage = () => {
   return (
-    <div>IN PROGRESS...</div>
+    <div><OtherWalletsTransferComponent /></div>
   )
 }
 
