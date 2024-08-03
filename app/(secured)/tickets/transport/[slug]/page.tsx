@@ -42,48 +42,48 @@ const Dynamic = () => {
         <div className="ticket-details_comp">
           <div>
             <p>Transaction Status</p>
-            <p>{ticket[0]?.status}</p>
+            <p>{ticket[0]?.status || "-"}</p>
           </div>
           <div>
             <p>Plate Number</p>
-            <p>{ticket[0]?.plate_number}</p>
+            <p>{ticket[0]?.plate_number || "-"}</p>
           </div>
 
           <div>
             <p>Amount</p>
-            <p>N {formatAmount(ticket[0]?.amount)}</p>
+            <p>N {formatAmount(ticket[0]?.amount) || "-"}</p>
           </div>
 
           <div>
             <p>Taxpayer Name</p>
-            <p>{ticket[0]?.taxpayer_name}</p>
+            <p>{ticket[0]?.taxpayer_name || "-"}</p>
           </div>
 
           <div>
             <p>Ticket Type</p>
-            <p>{ticket[0]?.revenue_item}</p>
+            <p>{ticket[0]?.revenue_item || "-"}</p>
           </div>
 
           <div>
             <p>Phone Number</p>
-            <p>{ticket[0]?.taxpayer_phone}</p>
+            <p>{ticket[0]?.taxpayer_phone || "-"}</p>
           </div>
 
           <div>
             <p>Payment Period</p>
-            <p>{ticket[0]?.payment_period}</p>
+            <p>{ticket[0]?.payment_period || "-"}</p>
           </div>
           <div>
             <p>Agent Name</p>
-            <p>{ticket[0]?.agent_user}</p>
+            <p>{ticket[0]?.agent_user || "-"}</p>
           </div>
           <div>
             <p>Created Time</p>
-            <p>{ticket[0]?.createtime}</p>
+            <p>{ticket[0]?.createtime || "-"}</p>
           </div>
           <div>
             <p>Payment Reference</p>
-            <p>{ticket[0]?.payment_ref}</p>
+            <p>{ticket[0]?.payment_ref || "-"}</p>
           </div>
         </div>
       )}
