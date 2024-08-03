@@ -78,7 +78,7 @@ const OtherWalletsTransferComponent = () => {
           error={errors.recipient_wallet_no}
         />
         {isPending && <p className="other-wallet_form_beneficiary"><SmallLoader/> </p>}
-        {beneficiary !== "" && (
+        {beneficiary !== "" && !isPending && (
           <div className="other-wallet_form_beneficiary">
             <p>{beneficiary}</p>
           </div>
