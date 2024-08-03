@@ -19,8 +19,8 @@ const TransferWalletCards = () => {
     },
   });
   return (
-    <section className="wallet-card">
-      <div className="wallet-card_container">
+    <section className="walletcard">
+      <div className="walletcard_container">
         <div
           onClick={() => setActiveAccount("fidelity")}
           className={`wallet ${activeAccount === "fidelity" ? "active" : ""}`}
