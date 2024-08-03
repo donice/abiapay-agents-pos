@@ -80,7 +80,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       penalty_status: "valid",
-      total_number: "",
+      total_number: "1",
       vehicle_content: "",
       product_code: "",
       category: "",
@@ -195,15 +195,6 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         ]}
       />
 
-      <FormTextInput
-        type="number"
-        label={"Total Number of Trips"}
-        name={"total_number"}
-        placeholder="Enter Total Number of Trips"
-        register={register}
-        validation={{ required: true }}
-        error={errors.total_number}
-      />
       <FormTextInput
         label={"Vehicle Content"}
         name={"vehicle_content"}
