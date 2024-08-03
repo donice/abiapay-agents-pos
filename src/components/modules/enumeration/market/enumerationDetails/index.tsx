@@ -253,7 +253,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           }}
           error={errors.shop_number as FieldError}
         />
-        
+
         <SelectInput
           label="Monthly Income"
           name="monthly_income_range"
@@ -285,8 +285,8 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           validation={{ required: true }}
         />
 
-        <FormTextInput
-        disabled
+        {/* <FormTextInput
+          disabled
           label="Annual Shop Ticket Amount (Shop Owner)"
           type="text"
           name="ticket_amount_shop_owner"
@@ -296,8 +296,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           validation={{
             required: true,
           }}
-          // error={errors.ticket_amount_shop_owner as FieldError}
-        />
+        /> */}
         <SelectInput
           label="Payment Method"
           name="payment_method"
@@ -313,7 +312,6 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
 
         <Button text="Create Enumeration" loading={isPending} />
       </form>
-
     </div>
   );
 };
