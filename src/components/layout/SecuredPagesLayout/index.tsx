@@ -13,8 +13,13 @@ const SecuredPagesLayout: React.FC<{ children: React.ReactNode }> = ({
       <TopNav />
       <div>
         <SideNav />
-        <section className="main-section">{children}</section>
-      </div>  
+        <section className="main-section">
+          {children}
+          <footer>
+            © 2024 Abia State Government. <br /> All rights reserved.
+          </footer>
+        </section>
+      </div>
       <BottomNav />
     </AuthGuard>
   );
