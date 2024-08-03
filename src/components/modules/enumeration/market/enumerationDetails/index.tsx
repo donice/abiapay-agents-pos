@@ -302,8 +302,8 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           name="payment_method"
           id="payment_method"
           options={[
-            { label: "Fidelity", value: "Fidelity" },
-            { label: "Access", value: "Access" },
+            { label: "Fidelity", value: "fidelity" },
+            { label: "Access", value: "access" },
           ]}
           placeholder="Select Payment Method"
           register={register}
