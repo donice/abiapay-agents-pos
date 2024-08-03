@@ -103,7 +103,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
       const getPlateNumberInfo = async (plateNumber: string) => {
         try {
           const response = await fetchPlateNumberInfo(plateNumber);
-          if (response.data !== 0) {
+          if (response.data.length !== 0) {
             toast.success(response.message);
             setValue("tax_payer_name", response.data.Name);
             setValue("tax_payer_phone", response.data.Phone);
