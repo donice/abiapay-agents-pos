@@ -49,11 +49,11 @@ const TransactionsTable: React.FC = () => {
               <div
                 key={transaction.idagent_transactions}
                 className="ticket"
-                // onClick={() =>
-                //   router.push(
-                //     `/find/using-phone-number/${transaction.idagent_transactions}`
-                //   )
-                // }
+                onClick={() =>
+                  router.push(
+                    `/tickets/transport/${transaction.idagent_transactions}`
+                  )
+                }
               >
                 <div>
                   <p>{transaction.trans_ref}</p>

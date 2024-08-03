@@ -14,7 +14,7 @@ const UnsecuredPagesLayout = ({
         <AbiaLogoLarge />
       </a>
       <div className="unsecured-main_container">{children}</div>
-      <footer>
+      <footer >
       © 2024 Abia State Government. <br /> All rights reserved.
       </footer>
     </div>

@@ -24,8 +24,6 @@
   @include custom-media-query("mobile", $md) {
     background-color: white;
   }
-}
-
 footer {
   position: relative;
   bottom: 0;
@@ -38,4 +36,5 @@ footer {
   @include custom-media-query("mobile", $sm) {
     display: none;
   }
+}
 }

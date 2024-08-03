@@ -107,7 +107,7 @@ export const BackButton = ({ link }: { link: string }) => {
 
   return (
     <div className="button secondary" onClick={() => handleClick(link)}>
-      Back
+      Go Back
     </div>
   );
 };
