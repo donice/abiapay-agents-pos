@@ -4,11 +4,9 @@ import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import React, { useEffect, useState } from "react";
 import "../style.scss";
 import { useForm } from "react-hook-form";
-import { fetchEmblemProductCode } from "@/src/services/emblemService";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
-import { fetchVehicleCategory } from "@/src/services/common";
 import { useMutation } from "@tanstack/react-query";
 import { getErrorMessages } from "@/src/utils/helper";
 import {
@@ -42,15 +40,18 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
 
   const getEmblemProductCode = async () => {
     try {
-      const  data = await fetchLoadingOffloadingVehicleType();
+      const data = await fetchLoadingOffloadingVehicleType();
 
       console.log(data);
-      setEmbleProductCode(data);
+      const filteredData = data.filter(
+        (item: EmblemProduct) => item.productCode == "LoadingOffloading"
+      );
+
+      setEmbleProductCode(filteredData);
     } catch (error) {
       console.error(error);
     }
   };
-
 
   useEffect(() => {
     getEmblemProductCode();
@@ -244,9 +245,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         ]}
       />
 
-      <div>
-        Amount: ₦ {watch("amount")}
-      </div>
+      <div>Amount: ₦ {watch("amount")}</div>
 
       <Button text={"Process Now"} loading={isPending} />
     </form>
