@@ -230,6 +230,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         register={register}
         validation={{ required: true }}
         error={errors.amount}
+        disabled
       />
 
       <SelectInput
