@@ -215,8 +215,9 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           options={[
             { label: "Single", value: "Single" },
             { label: "Double", value: "Double" },
-            { label: "Street Market", value: "Street Market" },
-            { label: "Warehouse", value: "Warehouse" },
+            { label: "Small Warehouse", value: "Small Warehouse" },
+            { label: "Medium Warehouse", value: "Medium Warehouse" },
+            { label: "Large Warehouse", value: "Large Warehouse" },
           ]}
           placeholder="Select Shop Category"
           register={register}
