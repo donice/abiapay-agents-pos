@@ -221,7 +221,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         validation={{ required: true }}
         error={errors.collection_point}
       />
-      <FormTextInput
+      {/* <FormTextInput
         label={"Amount"}
         name={"amount"}
         placeholder="Enter Amount"
@@ -229,7 +229,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         validation={{ required: true }}
         error={errors.amount}
         disabled
-      />
+      /> */}
 
       <SelectInput
         label={"Wallet Type"}
@@ -243,6 +243,10 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
           { label: "Access", value: "access" },
         ]}
       />
+
+      <div>
+        Amount: ₦ {watch("amount")}
+      </div>
 
       <Button text={"Process Now"} loading={isPending} />
     </form>
