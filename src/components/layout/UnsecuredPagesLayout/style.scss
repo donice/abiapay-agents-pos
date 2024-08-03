@@ -15,6 +15,13 @@
   );
   min-height: 100vh;
 
+  footer {
+    color: #166534;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: normal;
+  }
+  
   &_container {
     // width: 100%;
     max-width: $sm;
@@ -43,10 +50,5 @@
     }
   }
 
-  footer {
-    color: #166534;
-    text-align: center;
-    font-size: 0.8rem;
-    line-height: normal;
-  }
+
 }

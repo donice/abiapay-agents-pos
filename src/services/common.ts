@@ -13,6 +13,17 @@ const isToken =
 setToken(isToken);
 
 
+export const fetchABSSINInfo = async (reqData: {
+  id: string
+}) => {
+  try {
+    const res = await axiosInstance.post(`${url}/abssin/abssin-info`, reqData);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export const fetchLGAData = async () => {
   try {
     const res = await axiosInstance.post(`${url}/state/lga`);
@@ -79,6 +90,15 @@ export const fetchTaxOffice = async () => {
 export const fetchCategory = async () => {
   try {
     const res = await axiosInstance.post(`${portal_url}/cdn/category`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+export const fetchVehicleCategory = async () => {
+  try {
+    const res = await axiosInstance.get(`${portal_url}/enumeration/vehicle-category`);
     return res.data;
   } catch (error: any) {
     console.log(error);

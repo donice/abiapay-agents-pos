@@ -6,13 +6,23 @@ import { Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
 import { TbPrinter, TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import QRCode from "react-qr-code";
+import { LuMailCheck } from "react-icons/lu";
 
 interface SuccessModalProps {
   maintext?: string;
   id?: string;
   text?: string;
   link?: string;
-  onClick?: any
+  onClick?: any;
+}
+
+interface EmailSuccessModalProps {
+  text?: string;
+  id?: string;
+  message?: string;
+  link?: string;
+  buttonText: string;
+  onClick: any;
 }
 
 interface EnumerationModalProps {
@@ -79,7 +89,139 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
     </div>
   );
 };
+export const ChangePasswordModal: React.FC<SuccessModalProps> = ({
+  maintext,
+  id,
+  text,
+  link,
+}) => {
+  const router = useRouter();
 
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <FcOk className="success_icon" />
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Payment Successful"} </h2>
+          <p>
+            <span>{id ? id : ""}</span>{" "}
+          </p>
+          {/* {text && <p>{text}</p>} */}
+          {link && (
+            <button onClick={handleClick} className="button primary top">
+              {text}
+            </button>
+          )}
+
+          {/* <SecondaryButton text="Create New" link={"/settings"} /> */}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const EmailSuccessModal: React.FC<EmailSuccessModalProps> = ({
+  text,
+  // id,
+  message,
+  // link,
+  buttonText,
+  onClick,
+}) => {
+  const router = useRouter();
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <LuMailCheck className="success_icon" />
+        <div className="modalContent">
+          <h2>{text ? text : "Email Delievered"} </h2>
+          <p>{message ? message : "Email has been sent successfully"} </p>
+          <button onClick={onClick} className="button primary top">
+            {buttonText}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const EmblemModal = ({
+  maintext,
+  exp_date,
+  payment_ref,
+  button_text,
+  onClick,
+}: {
+  maintext?: string;
+  exp_date?: string;
+  payment_ref?: string;
+  text?: string;
+  button_text?: string;
+  onClick?: any;
+}) => {
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <FcOk className="success_icon" />
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Payment Successful"} </h2>
+          <p>
+            Payment Reference: <span>{payment_ref ? payment_ref : ""}</span>{" "}
+          </p>
+          <p>
+            Expiration Date: <span>{exp_date ? exp_date : ""}</span>{" "}
+          </p>
+            <button onClick={onClick} className="button primary top">
+              {button_text}
+            </button>
+
+          <SecondaryButton text="Create New Emblem" link="/tickets/transport/emblem" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const OffloadingModal = ({
+  maintext,
+  payment_ref,
+  button_text,
+  onClick,
+}: {
+  maintext?: string;
+  payment_ref?: string;
+  text?: string;
+  button_text?: string;
+  onClick?: any;
+}) => {
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <FcOk className="success_icon" />
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Payment Successful"} </h2>
+          <p>
+            Payment Reference: <span>{payment_ref ? payment_ref : ""}</span>{" "}
+          </p>
+            <button onClick={onClick} className="button primary top">
+              {button_text}
+            </button>
+
+          <SecondaryButton text="Register New Loading/Offloading" link="/tickets/transport/loading_offloading" />
+        </div>
+      </div>
+    </div>
+  );
+};
 export const EnumerationModal: React.FC<SuccessModalProps> = ({
   maintext,
   id,
@@ -169,35 +311,33 @@ export const VehicleCheckSuccessModal: React.FC<
         <div className="modal_icon">
           <TbRosetteDiscountCheckFilled className="success_icon" />
         </div>
-        
+
         <div className="modalContent">
           <h2>{text_header}</h2>
           <div className="vehicle_items">
-             <p>
+            <p>
               Vehicle Make:
-            <span>{vehicle_make} </span>
-          </p>
-          <p>
-            Vehicle Model:
-            <span>{vehicle_model}</span>{" "}
-          </p>
-          <p>
-            Vehicle Color:
-            <span>{vehicle_color}</span>{" "}
-          </p>
-          <p>
-            State Of Registration:
-            <span>{state_of_registration}</span>{" "}
-          </p>
-          <p>
-            Registration Expiry Date:
-            <span>{expiry_date}</span>{" "}
-          </p>
+              <span>{vehicle_make} </span>
+            </p>
+            <p>
+              Vehicle Model:
+              <span>{vehicle_model}</span>{" "}
+            </p>
+            <p>
+              Vehicle Color:
+              <span>{vehicle_color}</span>{" "}
+            </p>
+            <p>
+              State Of Registration:
+              <span>{state_of_registration}</span>{" "}
+            </p>
+            <p>
+              Registration Expiry Date:
+              <span>{expiry_date}</span>{" "}
+            </p>
           </div>
-         
-            <Button onClick={onClick}  text={button_text ? button_text : ""} />
 
-          {/* <SecondaryButton text="Create New" link={"/tickets/transport/add"} /> */}
+          <Button onClick={onClick} text={button_text ? button_text : ""} />
         </div>
       </div>
     </div>
@@ -222,7 +362,7 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
 
   return (
     <div className="modalOverlay">
-      <div className="modal">
+      <div className="modal" id="enumeration_modal">
         <AbiaEnumerationLarge />
         <div className="modalHeader">
           <h1>ABIA STATE GOVERNMENT</h1>
@@ -234,10 +374,6 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
           <p className="assetCode">{text}</p>
           <div className="custom_vehicle_details">
             <p className="vehicle_cat">COMMERCIAL VEHICLE</p>
-            {/* <img
-              src="https://i.pinimg.com/564x/a8/69/40/a86940a4ed8a69539b341f3c414c47b3.jpg"
-              alt=""
-            /> */}
 
             <div className="qr_container">
               <QRCode

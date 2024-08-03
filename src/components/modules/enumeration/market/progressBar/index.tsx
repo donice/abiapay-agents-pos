@@ -14,15 +14,15 @@ const ProgressBar = ({ stage, setStage }: any) => {
           ></div>
           <div
             className={`progress-label ${stage >= 0 ? "active" : ""}`}
-            style={{ left: "10%" }}
+            style={{ left: "17%" }}
           >
-            Shop Details
+            Enumeration Details
           </div>
           <div
             className={`progress-label ${stage >= 1 ? "active" : ""}`}
             style={{ left: "65%" }}
           >
-            Enumeration Details
+            Shopkeepers Details
           </div>
           
         </div>

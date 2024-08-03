@@ -5,7 +5,7 @@
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 1rem;
-
+margin-top: 2rem;
     .ticketspage_item {
       display: flex;
       align-items: center;
@@ -15,6 +15,7 @@
       cursor: pointer;
       background-color: #f0fdf4;
       box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+      
       
       .icon {
         font-size: 2rem;

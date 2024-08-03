@@ -14,21 +14,21 @@ const ProgressBar = ({ stage, setStage }: any) => {
           ></div>
           <div
             className={`progress-label ${stage >= 0 ? "active" : ""}`}
-            style={{ left: "10%" }}
+            style={{ left: "12%" }}
           >
-            1. Vehicle Data
+            Vehicle Data
           </div>
           <div
             className={`progress-label ${stage >= 1 ? "active" : ""}`}
             style={{ left: "43.33%" }}
           >
-            2. Owner's Data
+           Owner's Data
           </div>
           <div
             className={`progress-label ${stage >= 2 ? "active" : ""}`}
             style={{ left: "76.66%" }}
           >
-            3. Driver Data
+            Driver Data
           </div>
         </div>
         {/* <div className="button-container">

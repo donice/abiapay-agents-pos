@@ -6,6 +6,7 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldError } from "react-hook-form";
 
 interface InputProps {
+  disabled?: boolean;
   input_icon?: ReactNode;
   label: string;
   type?: "text" | "password" | "email" | "number" | "date";
@@ -90,6 +91,7 @@ export const TextInput: React.FC<InputProps> = ({
 };
 
 export const FormTextInput: React.FC<InputProps> = ({
+  disabled,
   label,
   type,
   name,
@@ -118,6 +120,8 @@ export const FormTextInput: React.FC<InputProps> = ({
         return "Length must be more";
       case "maxLength":
         return "Length must be less";
+      case "validate":
+        return "Values do not match";
       default:
         return "";
     }
@@ -135,6 +139,7 @@ export const FormTextInput: React.FC<InputProps> = ({
         placeholder={placeholder}
         value={value}
         readOnly={readOnly}
+        disabled={disabled}
         onChange={onChange}
         {...(register && register(name, validation))} // Modify this line
         {...rest}

@@ -2,8 +2,8 @@ import React from "react";
 import "./style.scss";
 import { formatAmount } from "@/src/utils/formatAmount";
 import Image from "next/image";
-import AccessBankLogo from "./assets/access_bank.png";
-import FidelityBankLogo from "./assets/fidelity_bank.png";
+import AccessBankLogo from "../../../assets/access_bank.png";
+import FidelityBankLogo from "../../../assets/fidelity_bank.png";
 
 interface WalletCardProps {
   bank: "access" | "fidelity";

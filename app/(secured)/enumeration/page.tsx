@@ -1,10 +1,10 @@
 import { CustomHeader } from '@/src/components/common/header';
-import TicketsWalletCard from '@/src/components/modules/tickets/ticketsWalletsCard';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import React, { type ReactElement } from 'react'
 import { FcEditImage, FcInTransit, FcLowPriority, FcShop } from 'react-icons/fc';
 import "./style.scss";
+import EnumerationStatsCard from '@/src/components/modules/enumeration/enumerationStatsCard';
 
 export const metadata: Metadata = {
   title: "Transport Enumeration",
@@ -24,7 +24,7 @@ const items: AccountsProps[] = [
   {
     link: "enumeration/transport",
     title: "Transport Enumeration",
-    desc: "Enumerate Vehicles",
+    desc: "Enumerate vehicles",
     icon: <FcInTransit className="icon" />,
   },
   {
@@ -43,7 +43,7 @@ const items: AccountsProps[] = [
   {
     // link: "enumeration/market",
     title: "Manage Enumeration",
-    desc: "Manage all Enumerations",
+    desc: "Manage all enumerations",
     icon: <FcLowPriority className="icon" />,
     comingsoon: true
   },
@@ -56,7 +56,7 @@ const EnumerationPage = () => {
       <CustomHeader title="Enumerations Dashboard" desc={"Explore your enumeration"} />
 
       <div className="enumeration_container">
-        <TicketsWalletCard />
+        <EnumerationStatsCard />
 
         <div className="enumeration_items">
           {items.map((item) => (

@@ -12,8 +12,10 @@
   &-summary-comp {
     display: flex;
     flex-direction: column;
+    align-items: center;
     min-height: 100vh;
     height: 100%;
+    padding-bottom: 5rem;
 
     &_container {
       display: grid;
@@ -32,7 +34,8 @@
       &_logo {
         flex-direction: column;
         align-items: center;
-        padding-top: 1rem;
+        padding: 1rem;
+
       }
       &_amount {
         color: green;

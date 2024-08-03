@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import { CustomHeader } from "@/src/components/common/header";
 import {
   FcShipped,
-  FcPaid,
+  FcInTransit,
   FcAcceptDatabase,
   FcMoneyTransfer,
+  FcDiploma2,
 } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
@@ -29,17 +30,29 @@ const tickets: TicketsProps[] = [
     title: "Transport Tickets",
     desc: "Create transport ticket",
     icon: <FcShipped className="icon" />,
+  },  
+  {
+    name: "tickets/transport/loading-offloading",
+    title: "Loading & Offloading",
+    desc: "Register Loading & Offloading Vehicles",
+    icon: <FcInTransit className="icon" />,
+  },
+  {
+    name: "tickets/transport/emblem",
+    title: "Transport Emblem",
+    desc: "Create transport emblem",
+    icon: <FcDiploma2 className="icon" />,
   },
   {
     name: "tickets/transport",
     title: "Transaction History",
-    desc: "View your Tickets Transactions History",
+    desc: "View your tickets transactions history",
     icon: <FcAcceptDatabase className="icon" />,
   },
   {
     name: "transfers",
     title: "Transfer History",
-    desc: "View your Wallet Transfer History",
+    desc: "View your wallet transfer history",
     icon: <FcMoneyTransfer className="icon" />,
   },
 ];

@@ -8,6 +8,7 @@ import {
   FcShop,
 } from "react-icons/fc";
 import "./style.scss";
+import IdentityStatsCard from "@/src/components/modules/identity/identityStatsCard";
 
 export const metadata: Metadata = {
   title: "ABIAPAY Identity",
@@ -29,12 +30,12 @@ const items: AccountsProps[] = [
     desc: "Create an ABSSIN for individual",
     icon: <FcBusinessman className="icon" />,
   },
-  // {
-  //   link: "identity/create/business",
-  //   title: "Create Business ABSSIN",
-  //   desc: "Create an ABSSIN for business",
-  //   icon: <FcShop className="icon" />,
-  // },
+  {
+    link: "identity/create/business",
+    title: "Create Business ABSSIN",
+    desc: "Create an ABSSIN for business",
+    icon: <FcShop className="icon" />,
+  },
   {
     link: "identity/view/individual",
     title: "View Individuals",
@@ -53,8 +54,10 @@ const IdentityPage = () => {
   return (
     <div className="identity">
       <CustomHeader title="Identity Dashboard" desc={"Manage identities"} />
+      
 
       <div className="identity_container">
+        <IdentityStatsCard />
         <div className="identity_items">
           {items.map((item) => (
             <Link

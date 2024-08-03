@@ -9,6 +9,8 @@ import {
   TbLogout2,
   TbLineScan,
   TbUser,
+  TbSquareRoundedPlus,
+  TbLayoutGridAdd,
 } from "react-icons/tb";
 
 interface SideNavProps {
@@ -34,9 +36,19 @@ const nav_items: SideNavProps[] = [
     icon: <TbLineScan className="icon" />,
   },
   {
+    name: "tickets/add",
+    title: "Add Tickets",
+    icon: <TbSquareRoundedPlus className="icon plus" />,
+  },
+  {
     name: "user/account",
     title: "My Account",
     icon: <TbUser className="icon" />,
+  },
+  {
+    name: "user/settings",
+    title: "Extras",
+    icon: <TbLayoutGridAdd className="icon" />,
   },
 ];
 
@@ -53,12 +65,12 @@ const SideNav = () => {
                 <span>{item.title}</span>
             </Link>
           ))}
-          <div key={"logout"} className="side-nav_item logout">
+          <Link href={"/signin"} key={"logout"} className="side-nav_item logout">
             <span>
               <TbLogout2 className="icon out" />
             </span>
             <span>Sign Out</span>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

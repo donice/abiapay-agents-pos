@@ -43,10 +43,12 @@
     font-size: 18px;
     font-weight: 600;
     color: $text-primary;
+    margin-top: -0.5rem;
   }
 
+
   p {
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     font-size: 12px;
     color: gray;
 
@@ -174,7 +176,7 @@
   }
 
   .abssin_no {
-    letter-spacing: 0.15rem;
+    letter-spacing: 0.35rem;
   }
 
   .plate_number {
@@ -205,13 +207,21 @@
   gap: 0.5rem;
   text-align: left;
   margin: 1rem 0;
-   p {
-     margin: 0;
+  p {
+    margin: 0;
 
-     span {
-       font-weight: 500;
-       margin-left: 0.5rem;
-       font-size: 0.85rem;
-     }
-   }
+    span {
+      font-weight: 500;
+      margin-left: 0.5rem;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+#enumeration_modal {
+  gap: 0.75rem;
+
+  .btn-container {
+    gap: 1rem;
+  }
 }

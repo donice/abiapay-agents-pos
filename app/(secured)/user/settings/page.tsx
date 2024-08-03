@@ -1,57 +1,15 @@
-import React, { ReactElement } from "react";
 import { Metadata } from "next";
-import { CustomHeader } from "@/src/components/common/header";
-import { FcShipped, FcPaid, FcLock } from "react-icons/fc";
-import Link from "next/link";
-import "./style.scss";
+import UserAccountComponent from "@/src/components/modules/settings";
 
 export const metadata: Metadata = {
   title: "Add Ticket",
   description: "Agents Portal Tickets Page",
 };
 
-interface SettingsProps {
-  name: string;
-  title: string;
-  desc: string;
-  icon: ReactElement;
+const Settings = () => {
+  return (
+    <div><UserAccountComponent/></div>
+  )
 }
 
-const settingsItems: SettingsProps[] = [
-  {
-    name: "signin",
-    title: "Sign Out",
-    desc: "Exit app",
-    icon: <FcLock className="icon" />,
-  },
-
-];
-
-const UserAccountPage = () => {
-  return (
-    <div className="settings">
-      <CustomHeader title="Settings" desc={"Explore your settings"} />
-
-      <div className="settings_items">
-        {settingsItems.map((item) => (
-          <Link
-            href={`/${item.name}`}
-            key={item.name}
-            className={`settings_item`}
-          >
-            <div >
-              {" "}
-              <span>{item.icon}</span>
-              <div>
-                <h2>{item.title}</h2>
-                <p>{item.desc}</p>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default UserAccountPage;
+export default Settings

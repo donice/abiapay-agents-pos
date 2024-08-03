@@ -9,11 +9,12 @@ import {
   TbSquareRoundedPlusFilled,
   TbSquareRoundedPlus,
   TbLineScan,
-  TbTextScan2,
   TbUserFilled,
   TbUser,
-  TbSettings,
-  TbSettingsFilled,
+  TbLayoutGridAdd,
+  TbLayoutGridFilled,
+  TbZoomScanFilled,
+  TbTicket,
 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 
@@ -29,37 +30,37 @@ const nav_items: BottomNavProps[] = [
     name: "dashboard",
     title: "Home",
     icon: <TbHome className="icon" />,
-    icon_active: <TbHomeFilled className="icon active" />,
+    icon_active: <TbHomeFilled className="icon" />,
   },
   // {
   //   name: "tickets/transport",
   //   title: "Transport",
   //   icon: <TbTicket className="icon" />,
-  //   icon_active: <HiTicket className="icon active" />,
+  //   icon_active: <HiTicket className="icon" />,
   // },
   {
     name: "tickets/verify",
     title: "Verify Tickets",
     icon: <TbLineScan className="icon" />,
-    icon_active: <TbTextScan2 className="icon active" />,
+    icon_active: <TbZoomScanFilled className="icon" />,
   },
   {
     name: "tickets/add",
     title: "Add Tickets",
     icon: <TbSquareRoundedPlus className="icon plus" />,
-    icon_active: <TbSquareRoundedPlusFilled className="icon active plus" />,
+    icon_active: <TbSquareRoundedPlusFilled className="icon plus" />,
   },
   {
     name: "user/account",
     title: "My Account",
     icon: <TbUser className="icon" />,
-    icon_active: <TbUserFilled className="icon active" />,
+    icon_active: <TbUserFilled className="icon" />,
   },
   {
     name: "user/settings",
-    title: "My Account",
-    icon: <TbSettings className="icon" />,
-    icon_active: <TbSettingsFilled className="icon active" />,
+    title: "Extras",
+    icon: <TbLayoutGridAdd className="icon" />,
+    icon_active: <TbLayoutGridFilled className="icon" />,
   },
 ];
 

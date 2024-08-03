@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/src/components/common/button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LuUser } from "react-icons/lu";
-import { FormTextInput } from "@/src/components/common/input";
+import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import "../style.scss";
 import { useForm } from "react-hook-form";
 import {
@@ -14,6 +14,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { EnumerationSuccessModal } from "@/src/components/common/modal";
+import { fetchLGAData } from "@/src/services/common";
 
 interface TicketsDataType {
   response_code: string;
@@ -22,10 +23,9 @@ interface TicketsDataType {
   assetCode: string;
 }
 
-
-
 const DriverData = ({ setStage, details, formData }: any) => {
-  console.log(details)
+  const [lga, setLga] = useState([]);
+
   const [ticketData, setTicketData] = useState<TicketsDataType>({
     response_code: "",
     response_message: "",
@@ -33,19 +33,38 @@ const DriverData = ({ setStage, details, formData }: any) => {
     assetCode: "",
   });
   const [show, setShow] = useState(false);
+
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SaveContactType) => {
       return saveContact(data);
     },
-    mutationKey: ["create_transport_enumeration"],
+    mutationKey: ["save_driver_contact"],
     onSuccess: (data) => {
-      console.log(data?.response_message || "Driver's data saved successfully");
-
-      // setStage(2);
+      console.log(data || "Driver's data saved successfully");
     },
     onError: (error) => {
       console.log(error);
       toast.error("Error Saving Driver's data");
+    },
+  });
+
+  const { mutate: mutate2 } = useMutation({
+    mutationFn: (data: CreateTicketType) => {
+      return createTransportEnumeration(data);
+    },
+    mutationKey: ["create_transport_enumeration"],
+    onSuccess: (data) => {
+      console.log(data?.response_message || "Successful Enumeration");
+      console.log("TICKETS DATA", data);
+      setTicketData(data);
+      setShow(true);
+      toast.success(
+        data?.response_message || "Vehicle Enumerated Successfully"
+      );
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Error Enumerating Vehicle");
     },
   });
 
@@ -56,6 +75,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
       phone: details?.vehicle_owner.phoneNumber || "",
       plate_number: formData.plate_number || "",
       contact_type: "driver",
+      taxpayer_location: formData.taxpayer_location || "",
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
     },
   });
@@ -67,7 +87,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
     taxpayer_name: details?.vehicle_owner.ownerName || "",
     taxpayer_phone: formData.phone_number || "",
     revenue_year: "2024",
-    taxpayer_location: details?.vehicle_owner.ownerAddress || "",
+    taxpayer_location: formData.taxpayer_location || "",
     operating_park: formData.operating_park || "",
     trade_union: formData.trade_union || "",
     vehicle_category: formData.vehicle_category || "",
@@ -78,29 +98,35 @@ const DriverData = ({ setStage, details, formData }: any) => {
     merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
   };
 
-  const handleCreateTransportEnumeration = async () => {
+  const onSubmit = (reqData: any) => {
     try {
-      const res = await createTransportEnumeration(req);
-      console.log("TICKETS DATA", res);
-      setTicketData(res);
-      toast.success(res?.response_message || "Vehicle Enumerated Successfully");
-      setShow(true);
-      console.log(res);
+      mutate(reqData);
+      mutate2({ ...req, taxpayer_location: reqData.taxpayer_location });
     } catch (error) {
+      console.log(error);
       toast.error("Error Enumerating Vehicle");
+    }
+  };
+
+  const getLgas = async () => {
+    try {
+      const { data } = await fetchLGAData();
+      setLga(
+        data?.map((item: any) => {
+          return {
+            label: item.lgaName,
+            value: item.lgaID,
+          };
+        })
+      );
+    } catch (error: any) {
       console.log(error);
     }
   };
 
-  const onSubmit = (reqData: any) => {
-    try {
-      mutate(reqData);
-      handleCreateTransportEnumeration();
-    } catch (error) {
-      console.log(error);
-      toast.error("Error Enumerating Vehicle");
-    }
-  };
+  useEffect(() => {
+    getLgas();
+  }, []);
 
   return (
     <>
@@ -139,6 +165,15 @@ const DriverData = ({ setStage, details, formData }: any) => {
           register={register}
           value={details?.driver.phoneNumber || ""}
         />
+        <SelectInput
+          label="LGA"
+          name="taxpayer_location"
+          id="taxpayer_location"
+          options={lga}
+          placeholder="Select LGA"
+          register={register}
+          validation={{ required: true }}
+        />
         <div className="button-container">
           <button className="button secondary" onClick={() => setStage(1)}>
             Go Back
@@ -153,7 +188,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
 
       {show && (
         <EnumerationSuccessModal
-          qr_link="https://sandboxweb.abiapay.ng/"
+          qr_link={`https://portal.sandbox.abiapay.com/verify-asset?assetCode=${ticketData?.assetCode}`}
           plate_number={formData.plate_number || ""}
           text={ticketData?.assetCode || ""}
           id={ticketData?.enumeration_id || ""}

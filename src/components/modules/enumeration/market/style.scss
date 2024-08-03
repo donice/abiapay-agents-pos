@@ -1,6 +1,7 @@
 @use "../../../../styles/index.scss" as *;
 
 .progress {
+  margin-top: 2rem;
   .progress-container {
     display: flex;
     flex-direction: column;
@@ -64,12 +65,17 @@
   }
 }
 
+.enumeration {
+  margin-bottom: 5rem;
+}
+
 .enumeration-form {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 0.75rem;
 
   @include custom-media-query("mobile", $sm) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     align-items: center;
   }
 }
@@ -95,4 +101,16 @@
 .button-container {
   display: flex;
   gap: 1rem;
+}
+
+.formdata {margin-bottom: 1rem;
+  p {
+    font-size: 14px;
+    color: $text-primary;
+
+    span {
+      font-weight: 700;
+      color: $primary;
+    }
+  }
 }

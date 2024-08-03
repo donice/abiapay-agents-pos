@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    // margin-bottom: 2rem;
 
     @include custom-media-query("mobile", $sm) {
       flex-direction: column;
@@ -82,7 +82,7 @@
     gap: 1rem;
 
     @include custom-media-query("mobile", $sm) {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 }
