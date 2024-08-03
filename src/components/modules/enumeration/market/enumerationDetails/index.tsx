@@ -286,6 +286,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
         />
 
         <FormTextInput
+        disabled
           label="Annual Shop Ticket Amount (Shop Owner)"
           type="text"
           name="ticket_amount_shop_owner"
