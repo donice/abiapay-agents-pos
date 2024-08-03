@@ -14,6 +14,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
 import { fetchTransactions } from "@/src/services/ticketsServices";
+import { Loading } from "@/src/components/common/loader/redirecting";
 
 const Dynamic = () => {
   const path = usePathname();
@@ -38,7 +39,7 @@ const Dynamic = () => {
   return (
     <div className="ticket-details">
       <h1>Transaction Details</h1>
-      {data?.data && (
+      {data?.data ? (
         <div className="ticket-details_comp">
           <div>
             <p>Transaction Status</p>
@@ -86,7 +87,7 @@ const Dynamic = () => {
             <p>{ticket[0]?.payment_ref || "-"}</p>
           </div>
         </div>
-      )}
+      ): <Loading /> }
 
       <div className="ticket-details_form_btn">
         <BackButton link={"/tickets/transport"} />
