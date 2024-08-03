@@ -222,6 +222,15 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           register={register}
           validation={{ required: true }}
         />
+        <SelectInput
+          label="Market"
+          name="market"
+          id="market"
+          options={markets}
+          placeholder="Select Market"
+          register={register}
+          validation={{ required: true }}
+        />
         <FormTextInput
           label="Zone/Line"
           type="text"
@@ -244,15 +253,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           }}
           error={errors.shop_number as FieldError}
         />
-        <SelectInput
-          label="Market"
-          name="market"
-          id="market"
-          options={markets}
-          placeholder="Select Market"
-          register={register}
-          validation={{ required: true }}
-        />
+        
         <SelectInput
           label="Monthly Income"
           name="monthly_income_range"

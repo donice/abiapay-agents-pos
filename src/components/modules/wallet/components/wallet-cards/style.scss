@@ -1,6 +1,6 @@
 @use "../../../../../styles/index.scss" as *;
 
-.wallet-card{
+.wallet-card {
   &_container {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
