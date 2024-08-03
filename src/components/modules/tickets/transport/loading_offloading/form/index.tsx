@@ -183,7 +183,16 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         register={register}
         error={!!errors.category}
         validation={{ required: true }}
-        options={category}
+        options={[
+          {
+            label: "Loading",
+            value: "loading",
+          },
+          {
+            label: "Offloading",
+            value: "offloading",
+          },
+        ]}
       />
 
       <FormTextInput
