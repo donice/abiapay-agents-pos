@@ -13,6 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import { getErrorMessages } from "@/src/utils/helper";
 import {
   createLoadingOffLoading,
+  fetchLoadingOffloadingVehicleType,
   LoadingOffloadingType,
 } from "@/src/services/loadingOffloadingSevrvice";
 
@@ -38,36 +39,21 @@ interface EmblemProduct {
 
 const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
   const [embleProductCode, setEmbleProductCode] = useState<EmblemProduct[]>([]);
-  const [category, setCategory] = useState<any>([]);
 
   const getEmblemProductCode = async () => {
     try {
-      const { data } = await fetchEmblemProductCode();
+      const  data = await fetchLoadingOffloadingVehicleType();
+
+      console.log(data);
       setEmbleProductCode(data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getCategory = async () => {
-    try {
-      const data = await fetchVehicleCategory();
-      setCategory(
-        data?.map((item: any) => {
-          return {
-            value: item.productCode,
-            label: item.productName,
-          };
-        })
-      );
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     getEmblemProductCode();
-    getCategory();
   }, []);
 
   const {
@@ -126,7 +112,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
     );
 
     if (selectedProduct) {
-      setValue("amount", selectedProduct.dailyAmount);
+      setValue("amount", selectedProduct.amount);
     }
     setValue("product_code", selectedProductCode);
   };
