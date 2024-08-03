@@ -79,9 +79,9 @@ const TransactionsTable: React.FC = () => {
                     )}
                     {transaction.status}
                   </p>
-                  <p>{transaction.payment_period}</p>
-                  <p><span><LuListRestart className="icon"/></span><span> {new Date(transaction.next_date).toLocaleString()}</span></p>
-                </div>
+                  
+                  <p className="next_date"><span><LuListRestart className="icon"/></span><span> {new Date(transaction.next_date).toLocaleString()}</span></p>
+                <p>Valid for: {transaction.payment_period}</p></div>
               </div>
             ))}
           </div>
