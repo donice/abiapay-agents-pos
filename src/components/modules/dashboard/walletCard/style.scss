@@ -83,19 +83,19 @@
   }
 }
 .ticketwallet-card {
-  // $bold-primary-text: #3f3f46;
-  // display: grid;
-  // grid-template-columns: repeat(5, minmax(0, 1fr));
-  // justify-content: space-between;
-  // border: 1px solid #86efac;
-  // padding: 1rem;
-  // border-radius: 0.7rem;
-  // background-color: #ffffff;
-  // color: $text-primary;
-  // font-size: clamp(10px, 1.2vw + 7.16px, 13px);
-  // -webkit-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
-  // -moz-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
-  // box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
+  $bold-primary-text: #3f3f46;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  justify-content: space-between;
+  border: 1px solid #86efac;
+  padding: 1rem;
+  border-radius: 0.7rem;
+  background-color: #ffffff;
+  color: $text-primary;
+  font-size: clamp(10px, 1.2vw + 7.16px, 13px);
+  -webkit-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
+  -moz-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
+  box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
 
   div:nth-child(1) {
     grid-column: span 2 / span 2;
@@ -124,7 +124,7 @@
     display: grid;
 
     span:nth-child(2) {
-      color: $bold-primary-text;
+      color: $text-primary;
       font-weight: 600;
       font-size: 1.3rem;
       font-size: clamp(1.1rem, 1.2vw + 7.16px, 1.3rem);
@@ -139,7 +139,7 @@
     }
 
     span:nth-child(2) {
-      color: $bold-primary-text;
+      color: $text-primary;
       font-weight: 600;
       font-size: 1.3rem;
       font-size: clamp(1.1rem, 1.2vw + 7.16px, 1.3rem);
