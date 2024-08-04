@@ -50,6 +50,7 @@
   }
   &_earnings {
     display: grid;
+    align-items: end;
 
     span:nth-child(1) {
       margin-bottom: 0rem;
