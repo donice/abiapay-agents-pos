@@ -1,5 +1,5 @@
 import React from "react";
-import TicketsWalletCard from "../ticketsWalletsCard";
+import TicketsWalletCard from "../ticketsStatsCard";
 import { SecondaryButton } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
 import "./style.scss";
