@@ -3,7 +3,6 @@ import React from "react";
 import "./style.scss";
 import { fetchCollectionData } from "@/src/services/dashboardService";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "@/app/(secured)/loading";
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
 import { formatAmount } from "@/src/utils/formatAmount";
 
@@ -15,8 +14,8 @@ const IdentityStatsCard = () => {
 
   if (isLoading) {
     return (
-      <div className={"loading"}>
-        <Loading />
+      <div>
+        <LoaderSkeleton height="100px" />
       </div>
     );
   }
