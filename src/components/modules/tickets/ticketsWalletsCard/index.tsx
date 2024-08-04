@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
 import { formatAmount } from "@/src/utils/formatAmount";
 
-const TicketsWalletCard = () => {
+const TicketsStatsCard = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["ticketsWalletData"],
     queryFn: fetchCollectionData,
@@ -74,4 +74,4 @@ const TicketsWalletCard = () => {
   );
 };
 
-export default TicketsWalletCard;
+export default TicketsStatsCard;

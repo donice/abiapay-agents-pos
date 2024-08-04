@@ -22,7 +22,7 @@ interface WalletCardProps {
   };
 }
 
-const WalletCard = ({ bank, data }: WalletCardProps) => {
+export const WalletCard = ({ bank, data }: WalletCardProps) => {
   return (
     <>
       {" "}
@@ -68,4 +68,50 @@ const WalletCard = ({ bank, data }: WalletCardProps) => {
   );
 };
 
-export default WalletCard;
+export const TicketsWalletCard = ({ bank, data }: WalletCardProps) => {
+  return (
+    <>
+      {" "}
+      {bank === "access" ? (
+        <div className="ticketwallet-card">
+          <div className="ticketwallet-card_balance">
+            <span>Wallet Balance</span>
+            <span>₦{formatAmount(Number(data?.wallet_balance))}</span>
+            <span>Acc Number: {data?.wallet_id}</span>
+          </div>
+
+          <div className="ticketwallet-card_image">
+            <Image src={AccessBankLogo} alt="access bank logo" />
+          </div>
+
+          <div className="ticketwallet-card_earnings">
+            <span> Current Earnings</span>
+            <span>₦{formatAmount(Number(data?.current_earnings))}</span>
+            <span>Total Collected: <br /> ₦{formatAmount(Number(0))}</span>
+          </div>
+        </div>
+      ) : (
+        <div className="ticketwallet-card">
+          <div className="ticketwallet-card_balance">
+            <span>Wallet Balance</span>
+            <span>₦{formatAmount(Number(data?.balance))}</span>
+            <span>Acc Number: {data?.account_number}</span>
+            
+          </div>
+
+          <div className="ticketwallet-card_image">
+            <Image src={FidelityBankLogo} alt="fidelity bank logo" />
+          </div>
+
+          <div className="ticketwallet-card_earnings">
+            <span>Current Earnings</span>
+            <span>₦{formatAmount(Number(data?.earnings))}</span>
+            <span>Total Collected: <br /> ₦{formatAmount(Number(0))}</span>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+
