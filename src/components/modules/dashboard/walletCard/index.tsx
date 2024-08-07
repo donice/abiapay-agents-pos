@@ -39,7 +39,7 @@ export const WalletCard = ({ bank, data }: WalletCardProps) => {
           <div className="wallet-card_balance">
             <span>Wallet Balance</span>
             <span className="amount">₦{formatAmount(Number(data?.wallet_balance))}</span>
-            <span className="wallet_id">Acc Number: {data?.wallet_id}</span>
+            <span className="wallet_id">Wallet ID: {data?.wallet_id}</span>
           </div>
 
           <div className="wallet-card_image">
@@ -59,7 +59,7 @@ export const WalletCard = ({ bank, data }: WalletCardProps) => {
           <div className="wallet-card_balance">
             <span>Wallet Balance</span>
             <span>₦{formatAmount(Number(data?.balance))}</span>
-            <span>Acc Number: {data?.account_number}</span>
+            <span>Wallet ID: {data?.account_number}</span>
           </div>
 
           <div className="wallet-card_image">
