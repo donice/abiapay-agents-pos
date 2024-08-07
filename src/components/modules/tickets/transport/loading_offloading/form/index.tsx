@@ -4,15 +4,14 @@ import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import React, { useEffect, useState } from "react";
 import "../style.scss";
 import { useForm } from "react-hook-form";
-import { fetchEmblemProductCode } from "@/src/services/emblemService";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
-import { fetchVehicleCategory } from "@/src/services/common";
 import { useMutation } from "@tanstack/react-query";
 import { getErrorMessages } from "@/src/utils/helper";
 import {
   createLoadingOffLoading,
+  fetchLoadingOffloadingVehicleType,
   LoadingOffloadingType,
 } from "@/src/services/loadingOffloadingSevrvice";
 
@@ -38,36 +37,24 @@ interface EmblemProduct {
 
 const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
   const [embleProductCode, setEmbleProductCode] = useState<EmblemProduct[]>([]);
-  const [category, setCategory] = useState<any>([]);
 
   const getEmblemProductCode = async () => {
     try {
-      const { data } = await fetchEmblemProductCode();
-      setEmbleProductCode(data);
+      const data = await fetchLoadingOffloadingVehicleType();
+
+      console.log(data);
+      const filteredData = data.filter(
+        (item: EmblemProduct) => item.productCode == "LoadingOffloading"
+      );
+
+      setEmbleProductCode(filteredData);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getCategory = async () => {
-    try {
-      const data = await fetchVehicleCategory();
-      setCategory(
-        data?.map((item: any) => {
-          return {
-            value: item.productCode,
-            label: item.productName,
-          };
-        })
-      );
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     getEmblemProductCode();
-    getCategory();
   }, []);
 
   const {
@@ -126,7 +113,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
     );
 
     if (selectedProduct) {
-      setValue("amount", selectedProduct.dailyAmount);
+      setValue("amount", selectedProduct.amount);
     }
     setValue("product_code", selectedProductCode);
   };
@@ -235,7 +222,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         validation={{ required: true }}
         error={errors.collection_point}
       />
-      <FormTextInput
+      {/* <FormTextInput
         label={"Amount"}
         name={"amount"}
         placeholder="Enter Amount"
@@ -243,7 +230,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
         validation={{ required: true }}
         error={errors.amount}
         disabled
-      />
+      /> */}
 
       <SelectInput
         label={"Wallet Type"}
@@ -257,6 +244,8 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
           { label: "Access", value: "access" },
         ]}
       />
+
+      <div>Amount: ₦ {watch("amount")}</div>
 
       <Button text={"Process Now"} loading={isPending} />
     </form>

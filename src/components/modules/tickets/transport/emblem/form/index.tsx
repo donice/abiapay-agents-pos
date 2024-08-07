@@ -207,22 +207,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         validation={{ required: true }}
         error={errors.customer_name}
       />
-      <FormTextInput
-        label={"Taxpayer Email"}
-        name={"customer_email"}
-        placeholder="Enter Taxpayer Email"
-        register={register}
-        validation={{ required: true }}
-        error={errors.customer_email}
-      />
-      {/* <FormTextInput
-        label={"Description"}
-        name={"description"}
-        placeholder="Enter Description"
-        register={register}
-        validation={{ required: true }}
-        error={errors.description}
-      /> */}
+    
       <FormTextInput
         label={"Amount"}
         name={"amount"}

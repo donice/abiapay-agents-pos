@@ -18,6 +18,21 @@ const Loader = () => {
   );
 };
 
+export const SmallLoader= () => {
+  return (
+    <div className="loader-div">
+      <RotatingLines
+        visible={true}
+        width="15"
+        strokeColor="black"
+        strokeWidth="5"
+        animationDuration="0.75"
+        ariaLabel="rotating-lines-loading"
+      />
+    </div>
+  );
+};
+
 export const LargeLoader= () => {
   return (
     <div className="loader-div">

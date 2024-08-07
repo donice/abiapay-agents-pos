@@ -20,8 +20,7 @@ import toast from "react-hot-toast";
 import LoaderSkeleton from "../../common/loader-skeleton";
 import type { Action, State } from "../../types/dashboardTypes";
 import useIsBrower from "@/src/hooks/useIsBrower";
-import QuickLink from "./quickLink";
-import WalletCard from "./walletCard";
+import { WalletCard } from "./walletCard";
 
 const initialState: State = {
   fidelityData: {
@@ -151,7 +150,11 @@ const DashboardComponent: React.FC = () => {
             text="Akara Ekwenti"
             link="/find/using-phone-number"
           />
-          <PrimaryButton text="Sharp Sharp" link="/find/using-plate-number" addIcon={true} />
+          <PrimaryButton
+            text="Sharp Sharp"
+            link="/find/using-plate-number"
+            addIcon={true}
+          />
         </div>
       </header>
 

@@ -68,7 +68,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
       ticket_amount_shop_owner: formData?.ticket_amount_shop_owner || "18000",
       ticket_amount_per_occupant:
         formData?.ticket_amount_per_occupant || "18000",
-      payment_method: formData?.payment_method || "Fidelity",
+      payment_method: formData?.payment_method || "fidelity",
     },
   });
 
@@ -276,7 +276,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           register={register}
           validation={{ required: true }}
         />
-        <SelectInput
+        {/* <SelectInput
           label="LGA"
           name="lga"
           id="lga"
@@ -284,7 +284,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           placeholder="Select LGA"
           register={register}
           validation={{ required: true }}
-        />
+        /> */}
 
         {/* <FormTextInput
           disabled
@@ -298,7 +298,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
             required: true,
           }}
         /> */}
-        <SelectInput
+        {/* <SelectInput
           label="Payment Method"
           name="payment_method"
           id="payment_method"
@@ -309,7 +309,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           placeholder="Select Payment Method"
           register={register}
           validation={{ required: true }}
-        />
+        /> */}
 
         <Button text="Create Enumeration" loading={isPending} />
       </form>

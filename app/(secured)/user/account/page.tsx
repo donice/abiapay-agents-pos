@@ -4,7 +4,7 @@ import { CustomHeader } from "@/src/components/common/header";
 import { FcMoneyTransfer, FcAcceptDatabase } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
-import TicketsWalletCard from "@/src/components/modules/tickets/ticketsWalletsCard";
+import TicketsWalletCard from "@/src/components/modules/tickets/ticketsStatsCard";
 
 export const metadata: Metadata = {
   title: "Add Ticket",

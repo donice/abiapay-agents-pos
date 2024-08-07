@@ -10,7 +10,9 @@ import {
 } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
-import TicketsWalletCard from "@/src/components/modules/tickets/ticketsWalletsCard";
+import TicketsStatsCard from "@/src/components/modules/tickets/ticketsStatsCard";
+import { TicketsWalletCard } from "@/src/components/modules/dashboard/walletCard";
+import TicketsWalletCards from "@/src/components/modules/tickets/ticketsWalletCards";
 
 export const metadata: Metadata = {
   title: "Manage Ticket",
@@ -30,7 +32,7 @@ const tickets: TicketsProps[] = [
     title: "Transport Tickets",
     desc: "Create transport ticket",
     icon: <FcShipped className="icon" />,
-  },  
+  },
   {
     name: "tickets/transport/loading-offloading",
     title: "Loading & Offloading",
@@ -63,7 +65,8 @@ const TicketPage = () => {
       <CustomHeader title="Tickets Dashboard" desc={"Manage your tickets"} />
 
       <div className="ticketspage_container">
-        <TicketsWalletCard />
+        <TicketsWalletCards />
+        <TicketsStatsCard />
 
         <div className="ticketspage_items">
           {tickets.map((item) => (
