@@ -50,7 +50,7 @@ export const WalletCard = ({ bank, data }: WalletCardProps) => {
             <span> Current Earnings</span>
             <span>₦{formatAmount(Number(data?.current_earnings))}</span>
             <span>
-              Total Collected: <br /> ₦{formatAmount(Number(0))}
+              {/* Total Collected: <br /> ₦{formatAmount(Number(0))} */}
             </span>
           </div>
         </div>
@@ -70,7 +70,7 @@ export const WalletCard = ({ bank, data }: WalletCardProps) => {
             <span>Current Earnings</span>
             <span>₦{formatAmount(Number(data?.earnings))}</span>
             <span>
-              Total Collected: <br /> ₦{formatAmount(Number(0))}
+              {/* Total Collected: <br /> ₦{formatAmount(Number(0))} */}
             </span>
           </div>
         </div>
