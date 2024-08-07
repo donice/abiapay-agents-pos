@@ -10,9 +10,8 @@ import {
 } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
-import TicketsStatsCard from "@/src/components/modules/tickets/ticketsStatsCard";
-import { TicketsWalletCard } from "@/src/components/modules/dashboard/walletCard";
 import TicketsWalletCards from "@/src/components/modules/tickets/ticketsWalletCards";
+import TicketsStatsCard from "@/src/components/modules/tickets/ticketsStatsCard";
 
 export const metadata: Metadata = {
   title: "Manage Ticket",
@@ -66,7 +65,7 @@ const TicketPage = () => {
 
       <div className="ticketspage_container">
         <TicketsWalletCards />
-        <TicketsStatsCard />
+        {/* <TicketsStatsCard /> */}
 
         <div className="ticketspage_items">
           {tickets.map((item) => (

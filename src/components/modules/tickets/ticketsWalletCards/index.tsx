@@ -1,29 +1,11 @@
 "use client";
 import React from "react";
-import { fetchDashboardData } from "@/src/services/dashboardService";
+import { fetchCollectionData, fetchDashboardData } from "@/src/services/dashboardService";
 import { useQuery } from "@tanstack/react-query";
 import { TicketsWalletCard } from "../../dashboard/walletCard";
 import { State } from "@/src/components/types/dashboardTypes";
 import "./style.scss";
-
-const initialState: State = {
-  fidelityData: {
-    total_credit: null,
-    total_debit: null,
-    balance: null,
-    earnings: null,
-    account_name: null,
-    account_number: null,
-    bank_name: null,
-  },
-  accessData: {
-    current_earnings: null,
-    wallet_balance: null,
-    wallet_id: null,
-    wallet_name: null,
-  },
-  loading: true,
-};
+import LoaderSkeleton from "@/src/components/common/loader-skeleton";
 
 
 const TicketsWalletCards = () => {
@@ -34,7 +16,29 @@ const TicketsWalletCards = () => {
     },
   });
 
-  console.log(data);
+  const { data: ticketData, isLoading, isError } = useQuery({
+    queryKey: ["ticketsWalletData"],
+    queryFn: fetchCollectionData,
+  });
+
+  console.log(ticketData)
+  
+  if (isLoading) {
+    return (
+      <div>
+        <LoaderSkeleton height="100px" />
+      </div>
+    );
+  }
+  
+  if (isError) {
+    return (
+      <div>
+        <p>Error</p>
+      </div>
+    );
+  }
+  
 
   return (
     <div className="ticketspage_wallet">
@@ -52,6 +56,11 @@ const TicketsWalletCards = () => {
           wallet_balance: data?.access?.wallet_balance,
           wallet_id: data?.access?.wallet_id,
           wallet_name: data?.access?.wallet_name,
+
+          this_month_count: ticketData?.data[0]?.total_transaction_monthly,
+          this_month_amount: ticketData?.data[0]?.total_amount_monthly,
+          this_week_count: ticketData?.data[0]?.total_transaction_weekly,
+          this_week_amount: ticketData?.data[0]?.total_amount_weekly
         }}
       />
       <TicketsWalletCard
@@ -68,6 +77,11 @@ const TicketsWalletCards = () => {
           wallet_balance: data?.fidelity?.balance,
           wallet_id: data?.fidelity?.account_number,
           wallet_name: data?.fidelity?.account_name,
+
+          this_month_count: ticketData?.data[0]?.total_transaction_monthly,
+          this_month_amount: ticketData?.data[0]?.total_amount_monthly,
+          this_week_count: ticketData?.data[0]?.total_transaction_weekly,
+          this_week_amount: ticketData?.data[0]?.total_amount_weekly
         }}
       />
     </div>

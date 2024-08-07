@@ -115,13 +115,15 @@
   }
 
   &_earnings {
-    margin-top: -2.3rem;
+    margin-top: -10.75rem;
+    display: grid;
+    gap: 6.25rem;
   }
 
   &_balance {
     grid-column: span 2 / span 2;
     display: grid;
-    gap: 2.5rem;
+    gap: 4.75rem;
   }
 
   img {

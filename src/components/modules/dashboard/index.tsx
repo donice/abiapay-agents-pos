@@ -21,6 +21,14 @@ import LoaderSkeleton from "../../common/loader-skeleton";
 import type { Action, State } from "../../types/dashboardTypes";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { WalletCard } from "./walletCard";
+import { fetchTransactions } from "@/src/services/ticketsServices";
+
+function filterByTodaysDate(transactions: any[]) {
+  const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+  return transactions.filter(transaction => {
+      return transaction.trans_date.split('T')[0] === today;
+  });
+}
 
 const initialState: State = {
   fidelityData: {
@@ -122,8 +130,10 @@ const DashboardComponent: React.FC = () => {
 
   const getTransportTicketData = useCallback(async () => {
     try {
-      const res = await fetchTransportTicketData();
-      setTtCount(res?.data.length);
+      const res = await fetchTransactions();
+      const todaysTickets = filterByTodaysDate(res?.data)
+      setTtCount(todaysTickets.length);
+
     } catch (error) {
       toast.error("Cannot fetching enumeration data");
     }
@@ -143,7 +153,7 @@ const DashboardComponent: React.FC = () => {
       <header className="dashboard_header">
         <CustomHeader
           title={`Welcome${userData?.name && `, ${userData?.name}`}`}
-          desc="Overview of Dashboard"
+          desc="Overview of your dashboard"
         />
         <div className="dashboard_header_buttons">
           <SecondaryButton
