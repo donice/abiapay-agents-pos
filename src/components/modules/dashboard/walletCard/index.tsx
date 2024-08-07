@@ -2,10 +2,10 @@ import React from "react";
 import "./style.scss";
 import { formatAmount } from "@/src/utils/formatAmount";
 import Image from "next/image";
-import AccessBankLogo from "../../../assets/access_white.png";
-import FidelityBankLogo from "../../../assets/fidelity_white.png";
-
-
+import AccessBankLogo from "../../../assets/access_bank.png";
+import FidelityBankLogo from "../../../assets/fidelity_bank.png";
+import AccessBankWhiteLogo from "../../../assets/access_white.png";
+import FidelityBankWhiteLogo from "../../../assets/fidelity_white.png";
 
 interface WalletCardProps {
   bank: "access" | "fidelity";
@@ -21,6 +21,11 @@ interface WalletCardProps {
     wallet_balance?: string | null;
     wallet_id?: string | null;
     wallet_name?: string | null;
+
+    this_week_count?: string | null;
+    this_month_count?: string | null;
+    this_week_amount?: string | null;
+    this_month_amount?: string | null;
   };
 }
 
@@ -82,7 +87,7 @@ export const TicketsWalletCard = ({ bank, data }: WalletCardProps) => {
         <div className="ticketwallet-card access">
           <div className="ticketwallet-card_balance">
             <div className="ticketwallet-card_balance_image">
-              <Image src={AccessBankLogo} alt="access bank logo" />
+              <Image src={AccessBankWhiteLogo} alt="access bank logo" />
             </div>{" "}
             <div>
               <p className="amount">₦{formatAmount(Number(data?.wallet_balance))}</p>
@@ -92,9 +97,11 @@ export const TicketsWalletCard = ({ bank, data }: WalletCardProps) => {
           </div>
 
           <div className="ticketwallet-card_earnings">
-            {/* <p>₦{formatAmount(Number(data?.current_earnings))}</p> */}
+          <p className="current_earnings">
+            This Week<br />{data?.this_week_count} Tickets / ₦{formatAmount(Number(data?.this_week_amount))}
+            </p>
             <p className="current_earnings">
-              Total Collected <br /> ₦{formatAmount(Number(data?.total_debit))}
+            This Month<br />{data?.this_month_count} Tickets / ₦{formatAmount(Number(data?.this_month_amount))}
             </p>
           </div>
         </div>
@@ -102,7 +109,7 @@ export const TicketsWalletCard = ({ bank, data }: WalletCardProps) => {
         <div className="ticketwallet-card fidelity">
           <div className="ticketwallet-card_balance">
             <div className="ticketwallet-card_balance_image">
-              <Image src={FidelityBankLogo} alt="fidelity bank logo" />
+              <Image src={FidelityBankWhiteLogo} alt="fidelity bank logo" />
             </div>{" "}
             <div>
               <p className="amount">₦{formatAmount(Number(data?.balance))}</p>
@@ -112,9 +119,11 @@ export const TicketsWalletCard = ({ bank, data }: WalletCardProps) => {
           </div>
 
           <div className="ticketwallet-card_earnings">
-            {/* <p>₦{formatAmount(Number(data?.earnings))}</p> */}
             <p className="current_earnings">
-              Total Collected <br /> ₦{formatAmount(Number(data?.total_debit))}
+            This Week<br />{data?.this_week_count} Tickets / ₦{formatAmount(Number(data?.this_week_amount))}
+            </p>
+            <p className="current_earnings">
+            This Month<br />{data?.this_month_count} Tickets / ₦{formatAmount(Number(data?.this_month_amount))}
             </p>
           </div>
         </div>

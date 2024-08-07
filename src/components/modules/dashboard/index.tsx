@@ -143,7 +143,7 @@ const DashboardComponent: React.FC = () => {
       <header className="dashboard_header">
         <CustomHeader
           title={`Welcome${userData?.name && `, ${userData?.name}`}`}
-          desc="Overview of Dashboard"
+          desc="Overview of your dashboard"
         />
         <div className="dashboard_header_buttons">
           <SecondaryButton
