@@ -6,6 +6,7 @@ import { useForm, FieldError } from "react-hook-form";
 import FaceCam from "../faceCam";
 
 const PersonalData = ({ setStage, setFormData, formData }: any) => {
+  console.log(formData);
   const {
     register,
     handleSubmit,
