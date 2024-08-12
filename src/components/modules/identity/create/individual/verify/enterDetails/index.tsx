@@ -16,13 +16,14 @@ export const metadata: Metadata = {
   description: "Manage all Identities tied to your ABIAPAY account",
 };
 
-const EnterDetailsComponent = ({ selectedId, setSelectedId }: any) => {
+const EnterDetailsComponent = () => {
   const pathname = usePathname();
   const [show, setShow] = useState({
     mode: false,
     message: "",
   });
   const [isPending, setIsPending] = useState(false);
+   const [selectedId, setSelectedId] = useState("");
 
   const {
     register: registerID,

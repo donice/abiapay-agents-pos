@@ -2,26 +2,16 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import EnterDetailsComponent from "./enterDetails";
-import ValidateOtpComponent from "./validateOtp/page";
+import ValidateOtpComponent from "./validateOtp";
 import { getLastPathSegment } from "@/src/utils/getLastPathSegment";
 
 const VerifyComponent = () => {
   const pathname = usePathname();
   const path = getLastPathSegment(pathname);
-  const [selectedId, setSelectedId] = useState("");
-  
-  console.log(selectedId)
 
   return (
     <div>
-      {path == "verify" ? (
-        <EnterDetailsComponent
-          setSelectedId={setSelectedId}
-          selectedId={selectedId}
-        />
-      ) : (
-        <ValidateOtpComponent selectedId={selectedId} />
-      )}
+      {path == "verify" ? <EnterDetailsComponent /> : <ValidateOtpComponent />}
     </div>
   );
 };

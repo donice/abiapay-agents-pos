@@ -120,7 +120,7 @@ export const OtpSuccessModal= ({
           </p>
           {/* {buttontext && <p>{buttontext}</p>} */}
           {link && (
-            <button onClick={handleClick} className="button secondary top">
+            <button onClick={handleClick} className="button primary top">
               {buttontext? buttontext : "Validate OTP"}
             </button>
           )}
