@@ -8,15 +8,21 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/src/components/common/button";
 import { validateID, validateNoID } from "@/src/services/identityService";
 import toast from "react-hot-toast";
+import { OtpSuccessModal } from "@/src/components/common/modal";
+import { usePathname } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "ABIAPAY Identity",
   description: "Manage all Identities tied to your ABIAPAY account",
 };
 
-const EnterDetailsComponent = ({selectedId, setSelectedId}: any) => {
+const EnterDetailsComponent = ({ selectedId, setSelectedId }: any) => {
+  const pathname = usePathname();
+  const [show, setShow] = useState({
+    mode: false,
+    message: "",
+  });
   const [isPending, setIsPending] = useState(false);
-  // const [selectedId, setSelectedId] = useState("");
 
   const {
     register: registerID,
@@ -48,15 +54,17 @@ const EnterDetailsComponent = ({selectedId, setSelectedId}: any) => {
         const res = await validateNoID(data);
 
         res.status == true
-          ? toast.success(res.message)
+          ? toast.success(res.message) &&
+          setShow({ mode: true, message: res.message })
           : toast.error(
               res.message || "Error validating Number, try again later"
             );
       } else {
         const res = await validateID(data);
 
-        res.response_code == "00" 
-          ? toast.success(res.response_message)
+        res.response_code == "00"
+          ? toast.success(res.response_message) &&
+            setShow({ mode: true, message: res.response_message })
           : toast.error(
               res.response_message || "Error validating ID, try again later"
             );
@@ -95,7 +103,7 @@ const EnterDetailsComponent = ({selectedId, setSelectedId}: any) => {
         className="identity-form"
       >
         <SelectInput
-          label="Reference Source"
+          label="Select ID Type"
           name="id"
           id="id"
           options={[
@@ -145,6 +153,15 @@ const EnterDetailsComponent = ({selectedId, setSelectedId}: any) => {
           disabled={isPending || selectedId === ""}
         />
       </form>
+
+      {show.mode && (
+        <OtpSuccessModal
+          maintext={show?.message}
+          subtext="Click the button below to validate the OTP sent to you"
+          buttontext="Validate OTP"
+          link={`${pathname}/validate-otp`}
+        />
+      )}
     </div>
   );
 };

@@ -9,13 +9,18 @@ const VerifyComponent = () => {
   const pathname = usePathname();
   const path = getLastPathSegment(pathname);
   const [selectedId, setSelectedId] = useState("");
+  
+  console.log(selectedId)
 
   return (
     <div>
-      {path == "validate-otp" ? (
-        <ValidateOtpComponent selectedId={selectedId} />
+      {path == "verify" ? (
+        <EnterDetailsComponent
+          setSelectedId={setSelectedId}
+          selectedId={selectedId}
+        />
       ) : (
-        <EnterDetailsComponent setSelectedId={setSelectedId} selectedId={selectedId} />
+        <ValidateOtpComponent selectedId={selectedId} />
       )}
     </div>
   );

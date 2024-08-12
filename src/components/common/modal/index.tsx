@@ -4,7 +4,7 @@ import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
 import { Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
-import { TbPrinter, TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { TbPasswordMobilePhone, TbPrinter, TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import QRCode from "react-qr-code";
 import { LuMailCheck } from "react-icons/lu";
 
@@ -84,6 +84,47 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
           )}
 
           <SecondaryButton text="Create New" link={"/tickets/transport"} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const OtpSuccessModal= ({
+  maintext,
+  subtext,
+  buttontext,
+  link,
+} : {
+  maintext?: string;
+  subtext?: string;
+  buttontext?: string;
+  link: string;
+}) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <TbPasswordMobilePhone className="success_icon" />
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Otp Sent Successfully"} </h2>
+          <p>
+            <span>{subtext ? subtext : ""}</span>{" "}
+          </p>
+          {/* {buttontext && <p>{buttontext}</p>} */}
+          {link && (
+            <button onClick={handleClick} className="button secondary top">
+              {buttontext? buttontext : "Validate OTP"}
+            </button>
+          )}
+
         </div>
       </div>
     </div>

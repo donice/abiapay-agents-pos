@@ -4,7 +4,7 @@ import React from 'react'
 
 export const metadata: Metadata = {
   title: "Individual ABSSIN",
-  description: "Create ABSSIN for Individual",
+  description: "Create Individual ABSSIN for Individual",
 };
 
 const CreateIndividualAbssinPage = () => {
