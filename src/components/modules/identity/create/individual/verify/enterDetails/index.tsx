@@ -86,7 +86,6 @@ const EnterDetailsComponent = () => {
 
   const handleIdChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const eventValue = event.target.value;
-    console.log(eventValue);
     setValueID("source", eventValue);
     setSelectedId(eventValue);
   };
@@ -160,7 +159,7 @@ const EnterDetailsComponent = () => {
           maintext={show?.message}
           subtext="Click the button below to validate the OTP sent to you"
           buttontext="Validate OTP"
-          link={`${pathname}/validate-otp`}
+          link={`${pathname}/validate-otp?source=${selectedId}`}
         />
       )}
     </div>

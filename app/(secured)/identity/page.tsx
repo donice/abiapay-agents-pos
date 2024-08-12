@@ -25,11 +25,11 @@ interface AccountsProps {
 
 const items: AccountsProps[] = [
   {
-    // link: "identity/create/individual",
+    link: "identity/create/individual/verify",
     title: "Create Individual ABSSIN",
     desc: "Create an ABSSIN for individual",
     icon: <FcBusinessman className="icon" />,
-    comingsoon: true
+    // comingsoon: true
   },
   {
     link: "identity/create/business",
