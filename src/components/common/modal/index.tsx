@@ -4,7 +4,7 @@ import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
 import { Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
-import { TbPasswordMobilePhone, TbPrinter, TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { TbPasswordMobilePhone, TbProgressCheck, TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import QRCode from "react-qr-code";
 import { LuMailCheck } from "react-icons/lu";
 
@@ -91,11 +91,13 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
 };
 
 export const OtpSuccessModal= ({
+  mode,
   maintext,
   subtext,
   buttontext,
   link,
 } : {
+  mode?: string;
   maintext?: string;
   subtext?: string;
   buttontext?: string;
@@ -112,7 +114,7 @@ export const OtpSuccessModal= ({
   return (
     <div className="modalOverlay">
       <div className="modal">
-        <TbPasswordMobilePhone className="success_icon" />
+        {mode == "verified" ? <TbProgressCheck className="success_icon" /> : <TbPasswordMobilePhone className="success_icon" />}
         <div className="modalContent">
           <h2>{maintext ? maintext : "Otp Sent Successfully"} </h2>
           <p>

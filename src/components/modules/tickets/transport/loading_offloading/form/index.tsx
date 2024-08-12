@@ -41,10 +41,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
   const getEmblemProductCode = async () => {
     try {
       const data = await fetchLoadingOffloadingVehicleType();
-
-      console.log(data);
       setEmbleProductCode(data);
-      
     } catch (error) {
       console.error(error);
     }

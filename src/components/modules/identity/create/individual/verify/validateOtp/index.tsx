@@ -10,10 +10,12 @@ import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { OtpSuccessModal } from "@/src/components/common/modal";
 import Unauthorized from "@/src/components/common/unauthorized";
+import { getHash } from "@/src/hooks/getHash";
 
 const ValidateOtpComponent = () => {
   const querySearch = useSearchParams();
   const source = querySearch.get("source");
+  console.log("SOURCE", source);
 
   const [show, setShow] = useState({
     mode: false,
@@ -32,7 +34,7 @@ const ValidateOtpComponent = () => {
           },
     onSuccess: (data: any) => {
       data.status == true
-        ? toast.success(data.response_message)
+        ? toast.success(data.response_message) && setShow({ mode: true, message: data.response_message })
         : toast.error(data.response_message);
     },
 
@@ -114,10 +116,11 @@ const ValidateOtpComponent = () => {
 
           {show.mode && (
             <OtpSuccessModal
-              maintext={show?.message}
-              subtext="Click the button below to validate the OTP sent to you"
-              buttontext="Validate OTP"
-              link={`/identity/create/individual`}
+            mode="verified"
+              maintext={`OTP ${show?.message}`}
+              subtext="Click 'Continue' to proceed your ABSSIN creation" 
+              buttontext="Continue"
+              link={`/identity/create/individual?source=${source}&_id=${getHash(source)}`}
             />
           )}
         </div>
@@ -126,6 +129,8 @@ const ValidateOtpComponent = () => {
           <Unauthorized text="You don't have access to this page"/>
         </div>
       )}{" "}
+
+
     </>
   );
 };

@@ -1,4 +1,4 @@
-export const hashStringToAlphanumeric = (str: string): string => {
+export const getHash = (str: string): string => {
   let hash = 0;
   if (str.length === 0) return "";
 
@@ -9,4 +9,8 @@ export const hashStringToAlphanumeric = (str: string): string => {
   }
 
   return Math.abs(hash).toString(36);
+}
+
+export const decodeHash = (hash: string): number => {
+  return parseInt(hash, 36);
 }

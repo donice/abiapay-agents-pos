@@ -10,6 +10,7 @@ import { validateID, validateNoID } from "@/src/services/identityService";
 import toast from "react-hot-toast";
 import { OtpSuccessModal } from "@/src/components/common/modal";
 import { usePathname } from "next/navigation";
+import { getHash } from "@/src/hooks/getHash";
 
 export const metadata: Metadata = {
   title: "ABIAPAY Identity",
@@ -29,6 +30,7 @@ const EnterDetailsComponent = () => {
     register: registerID,
     handleSubmit: handleSubmitID,
     setValue: setValueID,
+    watch: watchID,
     formState: { errors: errorsID },
   } = useForm({
     defaultValues: {
@@ -36,6 +38,8 @@ const EnterDetailsComponent = () => {
       source: "",
     },
   });
+
+  const id_type = watchID("id");
 
   const {
     register: registerNoID,
@@ -159,7 +163,7 @@ const EnterDetailsComponent = () => {
           maintext={show?.message}
           subtext="Click the button below to validate the OTP sent to you"
           buttontext="Validate OTP"
-          link={`${pathname}/validate-otp?source=${selectedId}`}
+          link={`/identity/create/individual?source=${selectedId}&_id=${getHash(id_type)}`}
         />
       )}
     </div>
