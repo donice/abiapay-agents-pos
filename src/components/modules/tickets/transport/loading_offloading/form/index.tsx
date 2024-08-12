@@ -43,11 +43,8 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
       const data = await fetchLoadingOffloadingVehicleType();
 
       console.log(data);
-      const filteredData = data.filter(
-        (item: EmblemProduct) => item.productCode == "LoadingOffloading"
-      );
-
-      setEmbleProductCode(filteredData);
+      setEmbleProductCode(data);
+      
     } catch (error) {
       console.error(error);
     }
