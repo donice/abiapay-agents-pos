@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FormTextInput } from "@/src/components/common/input";
-import { Button } from "@/src/components/common/button";
+import { BackButton, Button } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
 import "../../style.scss";
 import { useMutation } from "@tanstack/react-query";
@@ -15,7 +15,6 @@ const ValidateOtpComponent = () => {
   const querySearch = useSearchParams();
   const source = querySearch.get("source");
 
-  console.log("SOURCE", source);
   const [show, setShow] = useState({
     mode: false,
     message: "",
@@ -35,6 +34,11 @@ const ValidateOtpComponent = () => {
       data.status == true
         ? toast.success(data.response_message)
         : toast.error(data.response_message);
+    },
+
+    onError: (error: any) => {
+      console.log("ERROR DATA", error);
+      return error;
     },
   });
 
@@ -81,7 +85,7 @@ const ValidateOtpComponent = () => {
             {source == "No ID" ? (
               <FormTextInput
                 label={"OTP"}
-                name="value"
+                name="otp"
                 type="password"
                 placeholder={"Enter OTP"}
                 register={registerNoID}
@@ -97,11 +101,15 @@ const ValidateOtpComponent = () => {
                 error={errorsID.code}
               />
             )}
-            <Button
+            <div className="button-container">
+              <BackButton link="/identity/create/individual/verify" />
+              <Button
               text={"Validate OTP"}
               loading={isPending}
               disabled={isPending}
             />
+            </div>
+            
           </form>
 
           {show.mode && (

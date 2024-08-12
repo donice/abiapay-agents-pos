@@ -115,13 +115,22 @@ export const validateIDOtp = async (requestData: verifyIdOtpPayloadType) => {
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
-
 export const validateNoIDOtp = async (requestData: verifyNoIdOtpPayloadType) => {
   try {
-    const { data } = await axiosInstance.post(`${url}/abssin/verifying-no-id-otp`, requestData);
-    return data;
+    const res = await https(
+      `${url}/user/verifying-no-id-otp`,
+      {
+        method: "POST",
+        body: JSON.stringify(requestData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    console.log(error?.data?.message);
+    toast.error(error?.data?.message)
+    throw new Error(`${error?.data?.message}`);
   }
 };
 
