@@ -8,3 +8,13 @@ export const formatDate = (dateString: string): string => {
 
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 };
+
+export const transformDate = (dateString: string): string => {
+    const [a, b, c] = dateString.split(/[-/]/).map(Number);
+    const year = a > 31 ? a : c;
+    const day = c > 31 ? a : b > 12 ? b : c;
+    const month = [a, b, c].find(part => part !== year && part !== day);
+
+    return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+}
+

@@ -57,13 +57,10 @@ const CreateIndividualAbssinComponent = () => {
             return await getNINInfo(data);
           }
         : async (data: any) => {
-            return toast.error("Invalid Source");
+            return console.log(data);
           },
     onSuccess: (data: any) => {
       if (source === "bvn") {
-        // toast.success(data.message);
-        console.log(data?.data?.title);
-
         setFormData((prev: any) => {
           return {
             ...prev,
@@ -71,7 +68,7 @@ const CreateIndividualAbssinComponent = () => {
             first_name: data?.data?.firstname,
             middle_name: data?.data?.middlename,
             surname: data?.data?.lastname,
-            birth_date: data?.data?.birthdata,
+            birth_date: data?.data?.birthdate,
             email: data?.data?.email,
             gender: data?.data?.gender,
             nin: data?.data?.nin,
@@ -111,7 +108,7 @@ const CreateIndividualAbssinComponent = () => {
       )}
       {stage === 1 && (
         <UserData
-          formData={formData}
+          formData={formData}x
           setFormData={setFormData}
           setStage={setStage}
         />

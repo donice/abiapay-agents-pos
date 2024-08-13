@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
@@ -11,6 +11,7 @@ const PersonalData = ({ setStage, setFormData, formData }: any) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       first_name: formData.first_name || "",
@@ -21,6 +22,15 @@ const PersonalData = ({ setStage, setFormData, formData }: any) => {
       marital_status: formData.marital_status || "",
     },
   });
+
+  useEffect(() => {
+    setValue("first_name", formData.first_name);
+    setValue("middle_name", formData.middle_name);
+    setValue("surname", formData.surname);
+    setValue("indv_title", formData.indv_title);
+    setValue("gender", formData.gender);
+    setValue("marital_status", formData.marital_status);
+  }, [formData]);
 
   const onSubmit = (data: any) => {
     console.log(data);

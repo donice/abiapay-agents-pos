@@ -8,11 +8,14 @@ import {
   fetchSector,
   fetchTaxOffice,
 } from "@/src/services/common";
+import { transformDate } from "@/src/utils/formatDate";
 
 const UserData = ({ setStage, setFormData, formData }: any) => {
   const [taxOffice, setTaxOffice] = useState<any>([]);
   const [sector, setSector] = useState<any>([]);
   const [category, setCategory] = useState<any>([]);
+
+  console.log(formData);
 
   const getState = async () => {
     try {
@@ -64,15 +67,10 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
     }
   };
 
-  useEffect(() => {
-    getState();
-    getCategory();
-    getSector();
-  }, []);
-
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -88,7 +86,14 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
     },
   });
 
+  useEffect(() => {
+    setValue("birth_date", transformDate(formData.birth_date));
+    getState();
+    getCategory();
+    getSector();
+  }, []);
   const onSubmit = (data: any) => {
+    console.log("DATA", data);
     setFormData((prev: any) => {
       return {
         ...prev,
@@ -116,7 +121,7 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
           label="NIN"
           name="nin"
           placeholder="Enter NIN"
-          register={register}
+          // register={register}
           error={errors.nin as FieldError}
           validation={{ required: true }}
         />

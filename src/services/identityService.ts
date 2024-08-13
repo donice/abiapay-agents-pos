@@ -163,6 +163,7 @@ export const validateNoIDOtp = async (
         "Content-Type": "application/json",
       },
     });
+    return res;
   } catch (error: any) {
     console.log(error?.data?.message);
     toast.error(error?.data?.message);

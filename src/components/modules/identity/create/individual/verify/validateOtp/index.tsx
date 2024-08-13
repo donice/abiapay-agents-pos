@@ -22,7 +22,7 @@ const ValidateOtpComponent = () => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationKey: ["validate_otp_for_abssin_creation"],
+    mutationKey: ["verify_otp_for_abssin_creation"],
     mutationFn:
       source == "No ID"
         ? (data: any) => {
@@ -32,7 +32,10 @@ const ValidateOtpComponent = () => {
             return validateIDOtp(data);
           },
     onSuccess: (data: any) => {
-      data.status == true
+      console.log("DATA", data);
+      source == "No ID"
+      ?  data.status == true && setShow({ mode: true, message: data.message }) 
+      :  data.status == true
         ? toast.success(data.response_message) && setShow({ mode: true, message: data.response_message })
         : toast.error(data.response_message);
     },
@@ -56,7 +59,6 @@ const ValidateOtpComponent = () => {
   const {
     register: registerID,
     handleSubmit: handleSubmitID,
-    watch: watchID,
     formState: { errors: errorsID },
   } = useForm({
     defaultValues: {
