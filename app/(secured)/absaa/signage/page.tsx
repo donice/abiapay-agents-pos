@@ -24,24 +24,41 @@ interface AccountsProps {
 
 const items: AccountsProps[] = [
   {
-    link: "signage/create/individual/verify",
-    title: "Create Individual ABSSIN",
-    desc: "Create an ABSSIN for individual",
+    // link: "signage/create/individual/verify",
+    title: "Signage Enumeration",
+    desc: "Create enumeration for signage",
     icon: <FcBusinessman className="icon" />,
-    // comingsoon: true
+    comingsoon: true
   },
   {
-    link: "signage/create/business",
-    title: "Create Business ABSSIN",
-    desc: "Create an ABSSIN for business",
-    icon: <FcShop className="icon" />,
+    // link: "signage/create/individual/verify",
+    title: "Signage Road",
+    desc: "Create enumeration for road",
+    icon: <FcBusinessman className="icon" />,
+    comingsoon: true
   },
   {
-    link: "signage/view/individual",
-    title: "View Individuals",
-    desc: "View all individual ABSSIN",
-    icon: <FcReading className="icon" />,
+    // link: "signage/create/individual/verify",
+    title: "Signage Rate",
+    desc: "Create enumeration for rate",
+    icon: <FcBusinessman className="icon" />,
+    comingsoon: true
   },
+  {
+    // link: "signage/create/individual/verify",
+    title: "Road Category",
+    desc: "Create road category",
+    icon: <FcBusinessman className="icon" />,
+    comingsoon: true
+  },
+  {
+    // link: "signage/create/individual/verify",
+    title: "Signage Category",
+    desc: "Create category for signage",
+    icon: <FcBusinessman className="icon" />,
+    comingsoon: true
+  },
+
   // {
   //   link: "signage/view/business",
   //   title: "View Business",
@@ -53,7 +70,7 @@ const items: AccountsProps[] = [
 const SignagePage = () => {
   return (
     <div className="signage">
-      <CustomHeader title="Identity Dashboard" desc={"Manage identities"} />
+      <CustomHeader title="ABSSA Dashboard" desc={"Manage identities"} />
       
 
       <div className="signage_container">
