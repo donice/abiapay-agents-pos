@@ -1,4 +1,4 @@
-import SignageEnumerationComponent from '@/src/components/modules/absaa/signage/signage-enumeration/page'
+import SignageEnumerationComponent from '@/src/components/modules/absaa/signage/signage-enumeration'
 import React from 'react'
 
 const SignagePage = () => {

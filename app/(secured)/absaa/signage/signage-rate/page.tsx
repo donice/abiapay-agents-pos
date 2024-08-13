@@ -1,4 +1,4 @@
-import SignageRateComponent from '@/src/components/modules/absaa/signage/signage-rate/page'
+import SignageRateComponent from '@/src/components/modules/absaa/signage/signage-rate'
 import React from 'react'
 
 const SignagePage = () => {

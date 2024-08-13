@@ -1,4 +1,4 @@
-import SignageCategoryComponent from '@/src/components/modules/absaa/signage/signage-category/page'
+import SignageCategoryComponent from '@/src/components/modules/absaa/signage/signage-category'
 import React from 'react'
 
 const SignagePage = () => {
