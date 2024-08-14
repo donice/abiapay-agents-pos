@@ -12,7 +12,6 @@ import UserData from "./userData";
 import OriginData from "./originData";
 import { useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
 const CreateIndividualAbssinComponent = () => {
   const querySearch = useSearchParams();
@@ -45,6 +44,7 @@ const CreateIndividualAbssinComponent = () => {
     mobile_number: "",
     image: "",
   });
+
 
   const { mutate } = useMutation({
     mutationFn:

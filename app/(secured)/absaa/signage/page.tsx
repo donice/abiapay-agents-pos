@@ -10,8 +10,8 @@ import {
 import "./style.scss";
 
 export const metadata: Metadata = {
-  title: "ABIAPAY Identity",
-  description: "Manage all Identities tied to your ABIAPAY account",
+  title: "ABSSAA Signages",
+  description: "Manage all signages done by ABSAA",
 };
 
 interface AccountsProps {
@@ -24,35 +24,35 @@ interface AccountsProps {
 
 const items: AccountsProps[] = [
   {
-    // link: "signage/create/individual/verify",
+    // link: "signage/signage/",
     title: "Signage Enumeration",
     desc: "Create enumeration for signage",
     icon: <FcBusinessman className="icon" />,
     comingsoon: true
   },
   {
-    // link: "signage/create/individual/verify",
+    // link: "signage/signage/",
     title: "Signage Road",
     desc: "Create enumeration for road",
     icon: <FcBusinessman className="icon" />,
     comingsoon: true
   },
   {
-    // link: "signage/create/individual/verify",
+    // link: "signage/signage/",
     title: "Signage Rate",
     desc: "Create enumeration for rate",
     icon: <FcBusinessman className="icon" />,
     comingsoon: true
   },
   {
-    // link: "signage/create/individual/verify",
+    // link: "signage/signage/",
     title: "Road Category",
     desc: "Create road category",
     icon: <FcBusinessman className="icon" />,
     comingsoon: true
   },
   {
-    // link: "signage/create/individual/verify",
+    // link: "signage/signage/",
     title: "Signage Category",
     desc: "Create category for signage",
     icon: <FcBusinessman className="icon" />,
@@ -70,7 +70,7 @@ const items: AccountsProps[] = [
 const SignagePage = () => {
   return (
     <div className="signage">
-      <CustomHeader title="ABSSA Dashboard" desc={"Manage identities"} />
+      <CustomHeader title="ABSSA Dashboard" desc={"Manage all signages done by ABSAA"} />
       
 
       <div className="signage_container">
@@ -78,7 +78,7 @@ const SignagePage = () => {
         <div className="signage_items">
           {items.map((item) => (
             <Link
-              href={`/${item.link ? item.link : "signage"}`}
+              href={`/${item.link ? item.link : "absaa/signage"}`}
               key={item.link}
               className={`signage_item`}
             >

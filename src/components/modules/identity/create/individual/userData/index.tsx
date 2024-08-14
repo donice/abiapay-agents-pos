@@ -8,14 +8,12 @@ import {
   fetchSector,
   fetchTaxOffice,
 } from "@/src/services/common";
-import { transformDate } from "@/src/utils/formatDate";
+import { submitDate, transformDate } from "@/src/utils/formatDate";
 
 const UserData = ({ setStage, setFormData, formData }: any) => {
   const [taxOffice, setTaxOffice] = useState<any>([]);
   const [sector, setSector] = useState<any>([]);
   const [category, setCategory] = useState<any>([]);
-
-  console.log(formData);
 
   const getState = async () => {
     try {
@@ -71,6 +69,7 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -86,23 +85,32 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
     },
   });
 
+  console.log(formData.birth_date);
+
   useEffect(() => {
+    //! Please dont touch this
     setValue("birth_date", transformDate(formData.birth_date));
     getState();
     getCategory();
     getSector();
   }, []);
+
+  console.log(watch("birth_date"));
+
   const onSubmit = (data: any) => {
     console.log("DATA", data);
     setFormData((prev: any) => {
       return {
         ...prev,
         ...data,
+        birth_date: submitDate(watch("birth_date")),
       };
     });
 
     setStage(2);
   };
+
+  // console.log(formData.birth_date);
 
   return (
     <div>
