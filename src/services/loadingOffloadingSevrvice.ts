@@ -30,7 +30,7 @@ export interface LoadingOffloadingType {
 
 export const fetchLoadingOffloadingVehicleType = async ( )=> {
   try {
-    const { data } = await axiosInstance.get(`${central_api_url}/agent/concessionaires-product-codes`);
+    const { data } = await axiosInstance.get(`${central_api_url}/agent/concessionaires-product-codes?category=LoadingOffloading`);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);

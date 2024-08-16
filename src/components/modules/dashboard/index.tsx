@@ -15,6 +15,7 @@ import {
   fetchABSSINData,
   fetchEnumerationData,
   fetchTransportTicketData,
+  fetchTotalABSSIN,
 } from "@/src/services/dashboardService";
 import toast from "react-hot-toast";
 import LoaderSkeleton from "../../common/loader-skeleton";
@@ -119,6 +120,15 @@ const DashboardComponent: React.FC = () => {
     }
   }, []);
 
+  const getTotalABSSIN = useCallback(async () => {
+    try {
+      const res = await fetchTotalABSSIN();
+      setABSSINCount(res?.data.length);
+    } catch (error) {
+      toast.error("Cannot fetching abssin data");
+    }
+  }, []);
+
   const getEnumerationData = useCallback(async () => {
     try {
       const res = await fetchEnumerationData();
@@ -144,6 +154,7 @@ const DashboardComponent: React.FC = () => {
     getABSSINData();
     getEnumerationData();
     getTransportTicketData();
+    getTotalABSSIN();
   }, []);
 
   const { fidelityData, accessData, loading } = state;

@@ -4,7 +4,14 @@ import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
 import { Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
-import { TbPrinter, TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import {
+  TbCreditCardOff,
+  TbCreditCardPay,
+  TbPasswordMobilePhone,
+  TbProgressCheck,
+  TbRosetteDiscountCheckFilled,
+  TbSquareRoundedCheck,
+} from "react-icons/tb";
 import QRCode from "react-qr-code";
 import { LuMailCheck } from "react-icons/lu";
 
@@ -89,6 +96,110 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
     </div>
   );
 };
+
+export const OtpSuccessModal = ({
+  mode,
+  maintext,
+  subtext,
+  buttontext,
+  link,
+}: {
+  mode?: string;
+  maintext?: string;
+  subtext?: string;
+  buttontext?: string;
+  link: string;
+}) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        {mode == "verified" ? (
+          <TbProgressCheck className="success_icon" />
+        ) : (
+          <TbPasswordMobilePhone className="success_icon" />
+        )}
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Otp Sent Successfully"} </h2>
+          <p>
+            <span>{subtext ? subtext : ""}</span>{" "}
+          </p>
+          {/* {buttontext && <p>{buttontext}</p>} */}
+          {link && (
+            <button onClick={handleClick} className="button primary top">
+              {buttontext ? buttontext : "Validate OTP"}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const AbssinSuccessModal = ({
+  mode,
+  maintext,
+  subtext,
+  buttontext,
+  link,
+}: {
+  mode?: string;
+  maintext?: string;
+  subtext?: string;
+  buttontext?: string;
+  link: string;
+}) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        {mode == "success" ? (
+          <TbSquareRoundedCheck className="success_icon" />
+        ) : (
+          <TbSquareRoundedCheck className="success_icon" />
+        )}
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Congratulations! 🎉"} </h2>
+          <p>
+            <span>{"Your ABSSIN creation has been successful"}</span>{" "}
+          </p>
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="button primary top"
+          >
+            Done
+          </button>
+          {link && (
+            <button onClick={handleClick} className="button primary top">
+              {buttontext ? buttontext : "Create Another ABSSIN"}
+            </button>
+          )}
+          <button
+            onClick={() => router.push("/enumeration/transport")}
+            className="button primary top"
+          >
+            Enumerate Vehicle
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ChangePasswordModal: React.FC<SuccessModalProps> = ({
   maintext,
   id,
@@ -166,7 +277,6 @@ export const EmblemModal = ({
   button_text?: string;
   onClick?: any;
 }) => {
-
   return (
     <div className="modalOverlay">
       <div className="modal">
@@ -179,9 +289,9 @@ export const EmblemModal = ({
           <p>
             Expiration Date: <span>{exp_date ? exp_date : ""}</span>{" "}
           </p>
-            <button onClick={onClick} className="button primary top">
-              {button_text}
-            </button>
+          <button onClick={onClick} className="button primary top">
+            {button_text}
+          </button>
 
           <SecondaryButton text="Create New Emblem" link="/tickets/transport" />
         </div>
@@ -202,7 +312,6 @@ export const OffloadingModal = ({
   button_text?: string;
   onClick?: any;
 }) => {
-
   return (
     <div className="modalOverlay">
       <div className="modal">
@@ -212,11 +321,14 @@ export const OffloadingModal = ({
           <p>
             Payment Reference: <span>{payment_ref ? payment_ref : ""}</span>{" "}
           </p>
-            <button onClick={onClick} className="button primary top">
-              {button_text}
-            </button>
+          <button onClick={onClick} className="button primary top">
+            {button_text}
+          </button>
 
-          <SecondaryButton text="Register New Loading/Offloading" link="/tickets/transport/loading_offloading" />
+          <SecondaryButton
+            text="Register New Loading/Offloading"
+            link="/tickets/transport/loading_offloading"
+          />
         </div>
       </div>
     </div>
@@ -264,7 +376,6 @@ export const InfoModal: React.FC<InfoModalType> = ({
   text_header,
   button_text,
   link,
-  status,
 }) => {
   const router = useRouter();
 
@@ -279,6 +390,39 @@ export const InfoModal: React.FC<InfoModalType> = ({
         <div className="modalContent">
           <h2>{text_header}</h2>
           <p>
+            <span>{text_info ? text_info : ""}</span>{" "}
+          </p>
+          {link && (
+            <PrimaryButton link={link} text={button_text ? button_text : ""} />
+          )}
+
+          {/* <SecondaryButton text="Create New" link={"/tickets/transport/add"} /> */}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const ErrorModal: React.FC<InfoModalType> = ({
+  text_info,
+  text_header,
+  button_text,
+  link,
+}: {
+  button_text?: string;
+  text_header?: string;
+  text_info?: string;
+  link?: string;
+}) => {
+  const router = useRouter();
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <TbCreditCardOff className="error_icon" />
+        <div className="modalContent">
+          <h2>{text_header ? text_header : "Error Validating Info"}</h2>
+          <p className="error_p">
             <span>{text_info ? text_info : ""}</span>{" "}
           </p>
           {link && (

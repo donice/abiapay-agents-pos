@@ -1,0 +1,104 @@
+import { CustomHeader } from "@/src/components/common/header";
+import type { Metadata } from "next";
+import Link from "next/link";
+import React, { type ReactElement } from "react";
+import {
+  FcBusinessman,
+  FcReading,
+  FcShop,
+} from "react-icons/fc";
+import "./style.scss";
+
+export const metadata: Metadata = {
+  title: "ABSSAA Signages",
+  description: "Manage all signages done by ABSAA",
+};
+
+interface AccountsProps {
+  link?: string;
+  title: string;
+  desc: string;
+  icon: ReactElement;
+  comingsoon?: boolean;
+}
+
+const items: AccountsProps[] = [
+  {
+    // link: "signage/signage/",
+    title: "Signage Enumeration",
+    desc: "Create enumeration for signage",
+    icon: <FcBusinessman className="icon" />,
+    comingsoon: true
+  },
+  {
+    // link: "signage/signage/",
+    title: "Signage Road",
+    desc: "Create enumeration for road",
+    icon: <FcBusinessman className="icon" />,
+    comingsoon: true
+  },
+  {
+    // link: "signage/signage/",
+    title: "Signage Rate",
+    desc: "Create enumeration for rate",
+    icon: <FcBusinessman className="icon" />,
+    comingsoon: true
+  },
+  {
+    // link: "signage/signage/",
+    title: "Road Category",
+    desc: "Create road category",
+    icon: <FcBusinessman className="icon" />,
+    comingsoon: true
+  },
+  {
+    // link: "signage/signage/",
+    title: "Signage Category",
+    desc: "Create category for signage",
+    icon: <FcBusinessman className="icon" />,
+    comingsoon: true
+  },
+
+  // {
+  //   link: "signage/view/business",
+  //   title: "View Business",
+  //   desc: "View all Business ABSSIN",
+  //   icon: <FcReading className="icon" />,
+  // },
+];
+
+const SignagePage = () => {
+  return (
+    <div className="signage">
+      <CustomHeader title="ABSSA Dashboard" desc={"Manage all signages done by ABSAA"} />
+      
+
+      <div className="signage_container">
+        {/* <IdentityStatsCard /> */}
+        <div className="signage_items">
+          {items.map((item) => (
+            <Link
+              href={`/${item.link ? item.link : "absaa/signage"}`}
+              key={item.link}
+              className={`signage_item`}
+            >
+              {item.comingsoon ? (
+                <div className="comingsoon">Coming Soon</div>
+              ) : null}
+              <div>
+                {" "}
+                <span>{item.icon}</span>
+                <div>
+                  <h2>{item.title}</h2>
+                  <p>{item.desc}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SignagePage;

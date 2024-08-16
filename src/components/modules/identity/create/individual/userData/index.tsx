@@ -8,8 +8,15 @@ import {
   fetchSector,
   fetchTaxOffice,
 } from "@/src/services/common";
+import { submitDate, transformDate } from "@/src/utils/formatDate";
+import { useSearchParams } from "next/navigation";
 
-const UserData = ({ setStage, setFormData, formData }: any) => {
+const UserData = ({ setStage, setFormData, formData }: any) => {    
+  const querySearch = useSearchParams();
+  const source = querySearch.get("source");
+  
+  // NO_ID_DATA
+
   const [taxOffice, setTaxOffice] = useState<any>([]);
   const [sector, setSector] = useState<any>([]);
   const [category, setCategory] = useState<any>([]);
@@ -64,15 +71,11 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
     }
   };
 
-  useEffect(() => {
-    getState();
-    getCategory();
-    getSector();
-  }, []);
-
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -88,16 +91,32 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
     },
   });
 
+  console.log(formData.birth_date);
+
+  useEffect(() => {
+    //! Please dont touch this
+    setValue("birth_date", transformDate(formData.birth_date));
+    getState();
+    getCategory();
+    getSector();
+  }, []);
+
+  console.log(watch("birth_date"));
+
   const onSubmit = (data: any) => {
+    console.log("DATA", data);
     setFormData((prev: any) => {
       return {
         ...prev,
         ...data,
+        birth_date: submitDate(watch("birth_date")),
       };
     });
 
     setStage(2);
   };
+
+  // console.log(formData.birth_date);
 
   return (
     <div>
@@ -111,39 +130,38 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
           error={errors.birth_date as FieldError}
           validation={{ required: true }}
         />
-        <FormTextInput
-          type="number"
-          label="NIN"
-          name="nin"
-          placeholder="Enter NIN"
-          register={register}
-          error={errors.nin as FieldError}
-          validation={{ required: true }}
-        />
-        <FormTextInput
-          type="number"
-          label="BVN"
-          name="bvn"
-          placeholder="Enter BVN"
-          register={register}
-          error={errors.bvn as FieldError}
-          validation={{
-            required: true,
-            minLength: {
-              value: 11,
-              message: "Length must be above 11 characters",
-            },
-            maxLength: {
-              value: 13,
-              message: "Length must be below 13 characters",
-            },
-          }}
-        />
+        {source !== "No ID" && <>
+          <FormTextInput
+            type="number"
+            label="NIN"
+            name="nin"
+            placeholder="Enter NIN"
+            register={register}
+          />
+          <FormTextInput
+            type="number"
+            label="BVN"
+            name="bvn"
+            placeholder="Enter BVN"
+            register={register}
+            validation={{
+              minLength: {
+                value: 11,
+                message: "Length must be above 11 characters",
+              },
+              maxLength: {
+                value: 13,
+                message: "Length must be below 13 characters",
+              },
+            }}
+          />
+        </>}
         <FormTextInput
           type="number"
           label="Phone Number"
           name="phone_number"
           placeholder="Enter Phone Number"
+          value={formData.phone_number}
           register={register}
           error={errors.phone_number as FieldError}
           validation={{
@@ -181,6 +199,7 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
           label="Email"
           name="email"
           placeholder="Enter Email"
+          value={formData.email}
           register={register}
           error={errors.email as FieldError}
           validation={{ required: true }}

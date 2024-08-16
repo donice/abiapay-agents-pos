@@ -4,7 +4,7 @@ import React from 'react'
 
 export const metadata: Metadata = {
   title: "Business ABSSIN",
-  description: "Create ABSSIN for Business",
+  description: "Create Business ABSSIN for Business",
 };
 
 const BusinessIndividualAbssinPage = () => {
