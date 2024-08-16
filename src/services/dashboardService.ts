@@ -28,6 +28,15 @@ export const fetchABSSINData = async () => {
   }
 };
 
+export const fetchTotalABSSIN = async () => {
+  try {
+    const res = await axiosInstance.post(`${url}/abssin/manage-individual`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
 export const fetchEnumerationData = async () => {
   try {
     const res = await axiosInstance.post(`${url}/enumeration/transport`);

@@ -175,7 +175,7 @@ export const AbssinSuccessModal = ({
         <div className="modalContent">
           <h2>{maintext ? maintext : "Congratulations! 🎉"} </h2>
           <p>
-            <span>{subtext ? subtext : "Your ABSSIN creation has been successful"}</span>{" "}
+            <span>{"Your ABSSIN creation has been successful"}</span>{" "}
           </p>
           <button
             onClick={() => router.push("/dashboard")}

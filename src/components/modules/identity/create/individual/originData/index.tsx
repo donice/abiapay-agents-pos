@@ -183,7 +183,7 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
 
       {
         show.mode && (
-          <AbssinSuccessModal link={"/identity/create/individual"} subtext={show.message}  />
+          <AbssinSuccessModal link={"/identity/create/individual"}  />
         )
       }
     </div>
