@@ -52,10 +52,12 @@ const EnterDetailsComponent = () => {
   });
 
   const validateOTP = async (data: any) => {
+    console.log("DATA", data);
+    sessionStorage.setItem("NO_ID_DATA", JSON.stringify(data));
     setIsPending(true);
     try {
       if (selectedId === "No ID") {
-        const res = await validateNoID(data);
+        const res = await validateNoID({value: data.value, verify_via: data.verify_via});
 
         res.status == true
           ? toast.success(res.message) &&
@@ -137,6 +139,7 @@ const EnterDetailsComponent = () => {
               name="email"
               type="text"
               placeholder="Enter Email"
+              register={registerNoID}
             />
             <FormTextInput
               label="Phone Number"

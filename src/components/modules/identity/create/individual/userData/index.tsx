@@ -11,10 +11,11 @@ import {
 import { submitDate, transformDate } from "@/src/utils/formatDate";
 import { useSearchParams } from "next/navigation";
 
-const UserData = ({ setStage, setFormData, formData }: any) => {
+const UserData = ({ setStage, setFormData, formData }: any) => {    
   const querySearch = useSearchParams();
   const source = querySearch.get("source");
-  const _id = querySearch.get("_id");
+  
+  // NO_ID_DATA
 
   const [taxOffice, setTaxOffice] = useState<any>([]);
   const [sector, setSector] = useState<any>([]);
@@ -160,6 +161,7 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
           label="Phone Number"
           name="phone_number"
           placeholder="Enter Phone Number"
+          value={formData.phone_number}
           register={register}
           error={errors.phone_number as FieldError}
           validation={{
@@ -197,6 +199,7 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
           label="Email"
           name="email"
           placeholder="Enter Email"
+          value={formData.email}
           register={register}
           error={errors.email as FieldError}
           validation={{ required: true }}

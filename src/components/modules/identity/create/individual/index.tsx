@@ -12,11 +12,19 @@ import UserData from "./userData";
 import OriginData from "./originData";
 import { useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
 const CreateIndividualAbssinComponent = () => {
+  const noIdDetails =
+  useIsBrower() && window.sessionStorage.getItem("NO_ID_DATA")
+    ? window.sessionStorage.getItem("NO_ID_DATA")
+    : null;
+    const details = noIdDetails && JSON.parse(noIdDetails);
   const querySearch = useSearchParams();
   const source = querySearch.get("source");
   const _id = querySearch.get("_id");
+
+  console.log("NO_ID_DATA", details);
 
   const [stage, setStage] = useState(0);
   const [formData, setFormData] = useState<createIndividualAbssinPayloadType>({
@@ -25,7 +33,7 @@ const CreateIndividualAbssinComponent = () => {
     middle_name: "",
     surname: "",
     birth_date: "",
-    email: "",
+    email: details && details.email || "",
     gender: "",
     nin: "",
     nationality: "",
@@ -37,7 +45,7 @@ const CreateIndividualAbssinComponent = () => {
     ward: "",
     address: "",
     lga: "",
-    phone_number: "",
+    phone_number: details && details.value || "",
     sector: "",
     category: "",
     tax_office: "",
