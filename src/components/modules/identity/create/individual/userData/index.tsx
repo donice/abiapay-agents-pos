@@ -129,9 +129,9 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
           label="NIN"
           name="nin"
           placeholder="Enter NIN"
-          // register={register}
-          error={errors.nin as FieldError}
-          validation={{ required: true }}
+          register={register}
+          // error={errors.nin as FieldError}
+          // validation={{ required: true }}
         />
         <FormTextInput
           type="number"

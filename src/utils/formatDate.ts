@@ -28,5 +28,5 @@ export const submitDate = (dateString: string | undefined | null): string => {
   const day = c > 31 ? a : b > 12 ? b : c;
   const month = [a, b, c].find((part) => part !== year && part !== day);
 
-  return `${String(day).padStart(2,"0")}/${String(month).padStart(2, "0")}/${year}`;
+  return `${String(day).padStart(2,"0")}-${String(month).padStart(2, "0")}-${year}`;
 };

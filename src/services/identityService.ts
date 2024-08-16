@@ -173,6 +173,7 @@ export const validateNoIDOtp = async (
 
 export const createIndividualAbssin = async (
   requestData: createIndividualAbssinPayloadType
+
 ) => {
   try {
     const data = await https(`${url}/abssin/register-abssin-individual`, {
@@ -180,6 +181,7 @@ export const createIndividualAbssin = async (
       body: JSON.stringify(requestData),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${window.sessionStorage.getItem("TOKEN") || isToken || ""}`,
       },
     });
 

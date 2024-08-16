@@ -4,7 +4,12 @@ import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
 import { Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
-import { TbPasswordMobilePhone, TbProgressCheck, TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import {
+  TbCreditCardPay,
+  TbPasswordMobilePhone,
+  TbProgressCheck,
+  TbRosetteDiscountCheckFilled,
+} from "react-icons/tb";
 import QRCode from "react-qr-code";
 import { LuMailCheck } from "react-icons/lu";
 
@@ -90,13 +95,13 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
   );
 };
 
-export const OtpSuccessModal= ({
+export const OtpSuccessModal = ({
   mode,
   maintext,
   subtext,
   buttontext,
   link,
-} : {
+}: {
   mode?: string;
   maintext?: string;
   subtext?: string;
@@ -114,7 +119,11 @@ export const OtpSuccessModal= ({
   return (
     <div className="modalOverlay">
       <div className="modal">
-        {mode == "verified" ? <TbProgressCheck className="success_icon" /> : <TbPasswordMobilePhone className="success_icon" />}
+        {mode == "verified" ? (
+          <TbProgressCheck className="success_icon" />
+        ) : (
+          <TbPasswordMobilePhone className="success_icon" />
+        )}
         <div className="modalContent">
           <h2>{maintext ? maintext : "Otp Sent Successfully"} </h2>
           <p>
@@ -123,15 +132,66 @@ export const OtpSuccessModal= ({
           {/* {buttontext && <p>{buttontext}</p>} */}
           {link && (
             <button onClick={handleClick} className="button primary top">
-              {buttontext? buttontext : "Validate OTP"}
+              {buttontext ? buttontext : "Validate OTP"}
             </button>
           )}
-
         </div>
       </div>
     </div>
   );
 };
+
+export const AbssinSuccessModal = ({
+  mode,
+  maintext,
+  subtext,
+  buttontext,
+  link,
+}: {
+  mode?: string;
+  maintext?: string;
+  subtext?: string;
+  buttontext?: string;
+  link: string;
+}) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        {mode == "success" ? (
+          <TbCreditCardPay className="success_icon" />
+        ) : (
+          <TbCreditCardPay className="success_icon" />
+        )}
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "ABSSIN Created Successful"} </h2>
+          <p>
+            <span>{subtext ? subtext : ""}</span>{" "}
+          </p>
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="button secondary top"
+          >
+            Done
+          </button>
+          {link && (
+            <button onClick={handleClick} className="button primary top">
+              {buttontext ? buttontext : "Create Another ABSSIN"}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ChangePasswordModal: React.FC<SuccessModalProps> = ({
   maintext,
   id,
@@ -209,7 +269,6 @@ export const EmblemModal = ({
   button_text?: string;
   onClick?: any;
 }) => {
-
   return (
     <div className="modalOverlay">
       <div className="modal">
@@ -222,9 +281,9 @@ export const EmblemModal = ({
           <p>
             Expiration Date: <span>{exp_date ? exp_date : ""}</span>{" "}
           </p>
-            <button onClick={onClick} className="button primary top">
-              {button_text}
-            </button>
+          <button onClick={onClick} className="button primary top">
+            {button_text}
+          </button>
 
           <SecondaryButton text="Create New Emblem" link="/tickets/transport" />
         </div>
@@ -245,7 +304,6 @@ export const OffloadingModal = ({
   button_text?: string;
   onClick?: any;
 }) => {
-
   return (
     <div className="modalOverlay">
       <div className="modal">
@@ -255,11 +313,14 @@ export const OffloadingModal = ({
           <p>
             Payment Reference: <span>{payment_ref ? payment_ref : ""}</span>{" "}
           </p>
-            <button onClick={onClick} className="button primary top">
-              {button_text}
-            </button>
+          <button onClick={onClick} className="button primary top">
+            {button_text}
+          </button>
 
-          <SecondaryButton text="Register New Loading/Offloading" link="/tickets/transport/loading_offloading" />
+          <SecondaryButton
+            text="Register New Loading/Offloading"
+            link="/tickets/transport/loading_offloading"
+          />
         </div>
       </div>
     </div>

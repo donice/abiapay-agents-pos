@@ -3,15 +3,22 @@ import "../style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { FieldError, useForm } from "react-hook-form";
-import { fetchStates } from "@/src/services/common";
+import { fetchLGAData, fetchStates } from "@/src/services/common";
 import {
   createIndividualAbssin,
   createIndividualAbssinPayloadType,
 } from "@/src/services/identityService";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { AbssinSuccessModal, SuccessModal } from "@/src/components/common/modal";
 
 const OriginData = ({ setStage, setFormData, formData }: any) => {
   const [state, setState] = useState<any>([]);
+  const [lga, setLga] = useState<any>([]);
+  const [show, setShow] = useState({
+    mode: false,
+    message: "",
+  });
 
   const getStates = async () => {
     try {
@@ -20,7 +27,23 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
         data?.map((item: any) => {
           return {
             label: item.state,
-            value: item.idstates,
+            value: item.state,
+            // value: item.idstates,
+          };
+        })
+      );
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+  const getLgas = async () => {
+    try {
+      const { data } = await fetchLGAData();
+      setLga(
+        data?.map((item: any) => {
+          return {
+            label: item.lgaName,
+            value: item.lgaID,
           };
         })
       );
@@ -31,6 +54,7 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
 
   useEffect(() => {
     getStates();
+    getLgas();
   }, []);
 
   const {
@@ -55,6 +79,8 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
       createIndividualAbssin(data),
     onSuccess: (data: any) => {
       console.log(data);
+      toast.success("Successfully created");
+      setShow({ mode: true, message: data?.message });
     },
     onError: (error: any) => {
       console.log("ERROR DATA", error, Object.keys(error));
@@ -63,12 +89,15 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
   });
 
   const onSubmit = async (data: any) => {
+    console.log(data);
     setFormData((prev: any) => {
       return {
         ...prev,
         ...data,
       };
     });
+
+    console.log(formData);
 
     mutation.mutate({ ...formData, ...data });
   };
@@ -95,12 +124,14 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
           validation={{ required: true }}
           options={state}
         />
-        <FormTextInput
+        <SelectInput
           label="L.G.A of Origin"
           name="lga"
+          id="lga"
           placeholder="Enter L.G.A"
           register={register}
-          error={errors.lga as FieldError}
+          options={lga}
+          error={!! errors.lga}
           validation={{ required: true }}
         />
         <div>
@@ -146,9 +177,15 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
           <button className="button secondary" onClick={() => setStage(1)}>
             Go Back
           </button>
-          <Button text={"Create ABSSIN"} loading={mutation.isPending} />
+          <Button text={"Create ABSSIN"} loading={mutation.isPending} disabled={mutation.isPending}  />
         </div>
       </form>
+
+      {
+        show.mode && (
+          <AbssinSuccessModal link={"/identity/create/individual"} subtext={show.message}  />
+        )
+      }
     </div>
   );
 };
