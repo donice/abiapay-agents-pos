@@ -10,6 +10,7 @@ import {
   TbPasswordMobilePhone,
   TbProgressCheck,
   TbRosetteDiscountCheckFilled,
+  TbSquareRoundedCheck,
 } from "react-icons/tb";
 import QRCode from "react-qr-code";
 import { LuMailCheck } from "react-icons/lu";
@@ -167,18 +168,18 @@ export const AbssinSuccessModal = ({
     <div className="modalOverlay">
       <div className="modal">
         {mode == "success" ? (
-          <TbCreditCardPay className="success_icon" />
+          <TbSquareRoundedCheck className="success_icon" />
         ) : (
-          <TbCreditCardPay className="success_icon" />
+          <TbSquareRoundedCheck className="success_icon" />
         )}
         <div className="modalContent">
-          <h2>{maintext ? maintext : "ABSSIN Created Successful"} </h2>
+          <h2>{maintext ? maintext : "Congratulations! 🎉"} </h2>
           <p>
-            <span>{subtext ? subtext : ""}</span>{" "}
+            <span>{subtext ? subtext : "Your ABSSIN creation has been successful"}</span>{" "}
           </p>
           <button
             onClick={() => router.push("/dashboard")}
-            className="button secondary top"
+            className="button primary top"
           >
             Done
           </button>
@@ -187,6 +188,12 @@ export const AbssinSuccessModal = ({
               {buttontext ? buttontext : "Create Another ABSSIN"}
             </button>
           )}
+          <button
+            onClick={() => router.push("/enumeration/vehicle")}
+            className="button primary top"
+          >
+            Enumerate Vehicle
+          </button>
         </div>
       </div>
     </div>
@@ -402,10 +409,10 @@ export const ErrorModal: React.FC<InfoModalType> = ({
   button_text,
   link,
 }: {
-    button_text?: string;
-    text_header?: string;
-    text_info?: string;
-    link?: string;
+  button_text?: string;
+  text_header?: string;
+  text_info?: string;
+  link?: string;
 }) => {
   const router = useRouter();
 

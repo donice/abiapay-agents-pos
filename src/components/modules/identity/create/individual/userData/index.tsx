@@ -9,8 +9,13 @@ import {
   fetchTaxOffice,
 } from "@/src/services/common";
 import { submitDate, transformDate } from "@/src/utils/formatDate";
+import { useSearchParams } from "next/navigation";
 
 const UserData = ({ setStage, setFormData, formData }: any) => {
+  const querySearch = useSearchParams();
+  const source = querySearch.get("source");
+  const _id = querySearch.get("_id");
+
   const [taxOffice, setTaxOffice] = useState<any>([]);
   const [sector, setSector] = useState<any>([]);
   const [category, setCategory] = useState<any>([]);
@@ -124,34 +129,32 @@ const UserData = ({ setStage, setFormData, formData }: any) => {
           error={errors.birth_date as FieldError}
           validation={{ required: true }}
         />
-        <FormTextInput
-          type="number"
-          label="NIN"
-          name="nin"
-          placeholder="Enter NIN"
-          register={register}
-          // error={errors.nin as FieldError}
-          // validation={{ required: true }}
-        />
-        <FormTextInput
-          type="number"
-          label="BVN"
-          name="bvn"
-          placeholder="Enter BVN"
-          register={register}
-          error={errors.bvn as FieldError}
-          validation={{
-            required: true,
-            minLength: {
-              value: 11,
-              message: "Length must be above 11 characters",
-            },
-            maxLength: {
-              value: 13,
-              message: "Length must be below 13 characters",
-            },
-          }}
-        />
+        {source !== "No ID" && <>
+          <FormTextInput
+            type="number"
+            label="NIN"
+            name="nin"
+            placeholder="Enter NIN"
+            register={register}
+          />
+          <FormTextInput
+            type="number"
+            label="BVN"
+            name="bvn"
+            placeholder="Enter BVN"
+            register={register}
+            validation={{
+              minLength: {
+                value: 11,
+                message: "Length must be above 11 characters",
+              },
+              maxLength: {
+                value: 13,
+                message: "Length must be below 13 characters",
+              },
+            }}
+          />
+        </>}
         <FormTextInput
           type="number"
           label="Phone Number"
