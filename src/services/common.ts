@@ -62,7 +62,7 @@ export const fetchParks = async () => {
 
 export const fetchTradeUnions = async () => {
   try {
-    const res = await axiosInstance.get(`${url}/unions`);
+    const res = await axiosInstance.get(`${url}/enumeration/unions`);
     return res.data;
   } catch (error: any) {
     console.log(error);

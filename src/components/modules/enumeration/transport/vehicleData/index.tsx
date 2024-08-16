@@ -9,6 +9,7 @@ import {
 } from "@/src/services/transportEnumerationService";
 import toast from "react-hot-toast";
 import {
+  ErrorModal,
   InfoModal,
   VehicleCheckSuccessModal,
 } from "@/src/components/common/modal";
@@ -31,6 +32,7 @@ const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
   });
   const [show, setShow] = useState({
     mode: false,
+    user: "",
     status: "",
   });
 
@@ -56,18 +58,35 @@ const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
     },
     mutationKey: ["verify_plate_number"],
     onSuccess: (data) => {
-      // console.log(data);
       if (data.response_code == "00") {
-        toast.success("Plate Number Verified Successfully");
-        setShow({ mode: true, status: "success" });
-        setDetails(data?.response_data);
-        setModalDetails(data?.response_data?.vehicle_data);
+        if (
+          Object.keys(data?.response_data?.driver).length < 1 ||
+          data.response_data?.driver.abssin == "" ||
+          data.response_data?.vehicle_owner.abssin == ""
+        ) {
+          setShow({
+            mode: true,
+            status: "",
+            user:
+              Object.keys(data?.response_data?.driver).length < 1
+                ? "Driver"
+                : data.response_data?.vehicle_owner.abssin == ""
+                ? "Vehicle Owner"
+                : "Driver & Vehicle Owner",
+          });
+        } else {
+          toast.success("Plate Number Verified Successfully");
+          setShow({ mode: true, status: "success", user: "" });
+          setDetails(data?.response_data);
+          setModalDetails(data?.response_data?.vehicle_data);
+        }
+
         // setStage(1);
       } else if (data.response_code == "12") {
         toast.success(data.response_message);
       } else {
         toast.error("Error Verifying Plate Number");
-        setShow({ mode: true, status: "error" });
+        setShow({ mode: true, status: "error", user: "" });
       }
     },
     onError: (error) => {
@@ -200,6 +219,15 @@ const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
         <Button text="Save & Continue" loading={isPending} />
       </form>
 
+      {show.mode === true && (
+        <ErrorModal
+          text_header={`Error Validating ${show.user} ABSSIN`}
+          button_text="Create ABSSIN"
+          link="/identity/create/individual/verify"
+          text_info={`To proceed, kindly click "Create ABSSIN" to create ${show.user} ABSSIN`}
+          status={"error"}
+        />
+      )}
       {show.mode && show.status == "error" && (
         <InfoModal
           status={show.status}
@@ -219,7 +247,7 @@ const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
           expiry_date={modalDetails.expiry_date}
           button_text="Continue"
           onClick={() => {
-            setShow({ mode: false, status: "" });
+            setShow({ mode: false, status: "", user: "" });
             setStage(1);
           }}
         />

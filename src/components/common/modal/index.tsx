@@ -5,6 +5,7 @@ import "./style.scss";
 import { Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
 import {
+  TbCreditCardOff,
   TbCreditCardPay,
   TbPasswordMobilePhone,
   TbProgressCheck,
@@ -368,7 +369,6 @@ export const InfoModal: React.FC<InfoModalType> = ({
   text_header,
   button_text,
   link,
-  status,
 }) => {
   const router = useRouter();
 
@@ -383,6 +383,39 @@ export const InfoModal: React.FC<InfoModalType> = ({
         <div className="modalContent">
           <h2>{text_header}</h2>
           <p>
+            <span>{text_info ? text_info : ""}</span>{" "}
+          </p>
+          {link && (
+            <PrimaryButton link={link} text={button_text ? button_text : ""} />
+          )}
+
+          {/* <SecondaryButton text="Create New" link={"/tickets/transport/add"} /> */}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const ErrorModal: React.FC<InfoModalType> = ({
+  text_info,
+  text_header,
+  button_text,
+  link,
+}: {
+    button_text?: string;
+    text_header?: string;
+    text_info?: string;
+    link?: string;
+}) => {
+  const router = useRouter();
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <TbCreditCardOff className="error_icon" />
+        <div className="modalContent">
+          <h2>{text_header ? text_header : "Error Validating Info"}</h2>
+          <p className="error_p">
             <span>{text_info ? text_info : ""}</span>{" "}
           </p>
           {link && (
