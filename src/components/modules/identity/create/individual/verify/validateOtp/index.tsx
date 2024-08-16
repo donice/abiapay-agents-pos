@@ -120,7 +120,7 @@ const ValidateOtpComponent = () => {
           {show.mode && (
             <OtpSuccessModal
             mode="verified"
-              maintext={`OTP ${show?.message}`}
+              maintext={`${show?.message}`}
               subtext="Click 'Continue' to proceed your ABSSIN creation" 
               buttontext="Continue"
               link={`/identity/create/individual?source=${source}&_id=${_id}`}
