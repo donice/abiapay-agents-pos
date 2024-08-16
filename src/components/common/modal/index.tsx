@@ -189,7 +189,7 @@ export const AbssinSuccessModal = ({
             </button>
           )}
           <button
-            onClick={() => router.push("/enumeration/vehicle")}
+            onClick={() => router.push("/enumeration/transport")}
             className="button primary top"
           >
             Enumerate Vehicle
