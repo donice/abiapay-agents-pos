@@ -40,7 +40,7 @@ const SignageCategoryComponent = ({}: any) => {
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       amount: "",
-      signage_category: "",
+      road_category: "",
       trade_union: "",
       operating_park: "",
     },
@@ -67,7 +67,10 @@ const SignageCategoryComponent = ({}: any) => {
 
   return (
     <div>
-      <CustomHeader title="Signage Category" desc="Signage Details" />
+      <CustomHeader
+        title="Create Signage Road Category"
+        desc="Signage Details"
+      />
       <form onSubmit={handleSubmit(onSubmit)} className="absaa-form">
         <SelectInput
           label="Signage Category"
@@ -78,13 +81,14 @@ const SignageCategoryComponent = ({}: any) => {
               label: "Select Signage Category",
               value: "",
             },
-            {
-              label: "Wall Signs",
-              value: "Wall Signs",
-            },
+
             {
               label: "Free Standing",
               value: "Free Standing",
+            },
+            {
+              label: "High Street",
+              value: "High Street",
             },
           ]}
           placeholder="Select Signage Category"
@@ -92,50 +96,29 @@ const SignageCategoryComponent = ({}: any) => {
           validation={{ required: true }}
         />
         <SelectInput
-          label="Road Type"
-          name="road_type"
-          id="road_type"
+          label="Road Category"
+          name="road_category"
+          id="road_category"
           options={[
             {
-              label: "Select Road Type",
+              label: "Select Road Category",
               value: "",
             },
+
             {
               label: "Premium",
               value: "Premium",
             },
             {
-              label: "Standard",
-              value: "Standard",
+              label: "Azikwe Street",
+              value: "Azikwe Street",
             },
           ]}
-          placeholder="Select Road Type"
+          placeholder="Select Road Category"
           register={register}
           validation={{ required: true }}
         />
 
-        <SelectInput
-          label="Road Type"
-          name="road_type"
-          id="road_type"
-          options={[
-            {
-              label: "Select Road Type",
-              value: "",
-            },
-            {
-              label: "Premium",
-              value: "Premium",
-            },
-            {
-              label: "Standard",
-              value: "Standard",
-            },
-          ]}
-          placeholder="Select Road Type"
-          register={register}
-          validation={{ required: true }}
-        />
         <SelectInput
           label="Road Name"
           name="road_name"
@@ -158,75 +141,8 @@ const SignageCategoryComponent = ({}: any) => {
           register={register}
           validation={{ required: true }}
         />
-        <SelectInput
-          label="Zone"
-          name="zone"
-          id="zone"
-          options={[
-            {
-              label: "Select Zone",
-              value: "",
-            },
-            {
-              label: "Premium Zone",
-              value: "Premium Zone",
-            },
-            {
-              label: "Standard Zone",
-              value: "Standard Zone",
-            },
-          ]}
-          placeholder="Select Zone"
-          register={register}
-          validation={{ required: true }}
-        />
-        <SelectInput
-          label="Size"
-          name="size"
-          id="size"
-          options={[
-            {
-              label: "Select Size",
-              value: "",
-            },
-            {
-              label: "0.1 to 1.0 (2x2 - 3x4)",
-              value: "0.1 to 1.0 (2x2 - 3x4)",
-            },
-            {
-              label: "1.01 to 3.0 (4x6 - 5x8)",
-              value: "1.01 to 3.0 (4x6 - 5x8)",
-            },
-            {
-              label: "3.01 to 5.0 (6x10 - 6x12)",
-              value: "3.01 to 5.0 (6x10 - 6x12)",
-            },
-            {
-              label: "5.01 to 7.0 (6x12 - 8x10)",
-              value: "5.01 to 7.0 (6x12 - 8x10)",
-            },
-            {
-              label: "7.01 to 10.0 (8x10 - 10x10)",
-              value: "7.01 to 10.0 (8x10 - 10x10)",
-            },
-            {
-              label: "10.01 to 13.0 (10x10 - 10x12)",
-              value: "10.01 to 13.0 (10x10 - 10x12)",
-            },
-            {
-              label: "13.01 to 15.0 (10x12 - 10x16)",
-              value: "13.01 to 15.0 (10x12 - 10x16)",
-            },
-            {
-              label: "15.01 to 25.0 (10x16 - 10x20)",
-              value: "15.01 to 25.0 (10x16 - 10x20)",
-            },
-            
-          ]}
-          placeholder="Select Size"
-          register={register}
-          validation={{ required: true }}
-        />
+       
+       
         <FormTextInput
           label="Amount"
           type="number"
@@ -234,15 +150,7 @@ const SignageCategoryComponent = ({}: any) => {
           placeholder="Enter Amount"
           register={register}
           validation={{
-            required: "Phon Number is Required",
-            minLength: {
-              value: 11,
-              message: "Length must be above 11 characters",
-            },
-            maxLength: {
-              value: 11,
-              message: "Length must be below 13 characters",
-            },
+            required: true,
           }}
           error={errors.amount as FieldError}
         />

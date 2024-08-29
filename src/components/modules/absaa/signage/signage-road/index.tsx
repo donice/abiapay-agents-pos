@@ -17,7 +17,7 @@ import {
 import "../style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 
-const SignageCategoryComponent = ({}: any) => {
+const SignageRoadComponent = ({}: any) => {
   const [modalDetails, setModalDetails] = useState({
     vehicle_make: "",
     vehicle_model: "",
@@ -67,7 +67,7 @@ const SignageCategoryComponent = ({}: any) => {
 
   return (
     <div>
-      <CustomHeader title="Signage Category" desc="Signage Details" />
+      <CustomHeader title="Create Signage Road" desc="Signage Details" />
       <form onSubmit={handleSubmit(onSubmit)} className="absaa-form">
         <SelectInput
           label="Signage Category"
@@ -79,70 +79,27 @@ const SignageCategoryComponent = ({}: any) => {
               value: "",
             },
             {
-              label: "Wall Signs",
-              value: "Wall Signs",
-            },
-            {
               label: "Free Standing",
               value: "Free Standing",
+            },
+            {
+              label: "High Street",
+              value: "High Street",
             },
           ]}
           placeholder="Select Signage Category"
           register={register}
           validation={{ required: true }}
         />
-        <SelectInput
-          label="Road Type"
-          name="road_type"
-          id="road_type"
-          options={[
-            {
-              label: "Select Road Type",
-              value: "",
-            },
-            {
-              label: "Premium",
-              value: "Premium",
-            },
-            {
-              label: "Standard",
-              value: "Standard",
-            },
-          ]}
-          placeholder="Select Road Type"
-          register={register}
-          validation={{ required: true }}
-        />
+
 
         <SelectInput
-          label="Road Type"
-          name="road_type"
-          id="road_type"
-          options={[
-            {
-              label: "Select Road Type",
-              value: "",
-            },
-            {
-              label: "Premium",
-              value: "Premium",
-            },
-            {
-              label: "Standard",
-              value: "Standard",
-            },
-          ]}
-          placeholder="Select Road Type"
-          register={register}
-          validation={{ required: true }}
-        />
-        <SelectInput
-          label="Road Name"
+          label="Road Category"
           name="road_name"
           id="road_name"
           options={[
             {
-              label: "Select Road Name",
+              label: "Select Road Category",
               value: "",
             },
             {
@@ -154,7 +111,7 @@ const SignageCategoryComponent = ({}: any) => {
               value: "Azikwe Street",
             },
           ]}
-          placeholder="Select Road Name"
+          placeholder="Select Road Category"
           register={register}
           validation={{ required: true }}
         />
@@ -180,73 +137,41 @@ const SignageCategoryComponent = ({}: any) => {
           register={register}
           validation={{ required: true }}
         />
-        <SelectInput
-          label="Size"
-          name="size"
-          id="size"
-          options={[
-            {
-              label: "Select Size",
-              value: "",
-            },
-            {
-              label: "0.1 to 1.0 (2x2 - 3x4)",
-              value: "0.1 to 1.0 (2x2 - 3x4)",
-            },
-            {
-              label: "1.01 to 3.0 (4x6 - 5x8)",
-              value: "1.01 to 3.0 (4x6 - 5x8)",
-            },
-            {
-              label: "3.01 to 5.0 (6x10 - 6x12)",
-              value: "3.01 to 5.0 (6x10 - 6x12)",
-            },
-            {
-              label: "5.01 to 7.0 (6x12 - 8x10)",
-              value: "5.01 to 7.0 (6x12 - 8x10)",
-            },
-            {
-              label: "7.01 to 10.0 (8x10 - 10x10)",
-              value: "7.01 to 10.0 (8x10 - 10x10)",
-            },
-            {
-              label: "10.01 to 13.0 (10x10 - 10x12)",
-              value: "10.01 to 13.0 (10x10 - 10x12)",
-            },
-            {
-              label: "13.01 to 15.0 (10x12 - 10x16)",
-              value: "13.01 to 15.0 (10x12 - 10x16)",
-            },
-            {
-              label: "15.01 to 25.0 (10x16 - 10x20)",
-              value: "15.01 to 25.0 (10x16 - 10x20)",
-            },
-            
-          ]}
-          placeholder="Select Size"
-          register={register}
-          validation={{ required: true }}
-        />
+      
         <FormTextInput
-          label="Amount"
-          type="number"
+          label="Road Name"
           name="amount"
-          placeholder="Enter Amount"
+          placeholder="Enter Road Name"
           register={register}
           validation={{
-            required: "Phon Number is Required",
-            minLength: {
-              value: 11,
-              message: "Length must be above 11 characters",
-            },
-            maxLength: {
-              value: 11,
-              message: "Length must be below 13 characters",
-            },
+            required: true,
           }}
           error={errors.amount as FieldError}
         />
-        <Button text="Pay now" loading={isPending} />
+         <SelectInput
+          label="Status"
+          name="status"
+          id="status"
+          options={[
+            {
+              label: "Select Status",
+              value: "",
+            },
+            {
+              label: "Active",
+              value: "Active",
+            },
+            {
+              label: "Inactive",
+              value: "Inactive",
+            },
+          ]}
+          placeholder="Select Status"
+          register={register}
+          validation={{ required: true }}
+        />
+      
+        <Button text="Submit" loading={isPending} />
       </form>
 
       {show.mode === true && (
@@ -285,4 +210,4 @@ const SignageCategoryComponent = ({}: any) => {
   );
 };
 
-export default SignageCategoryComponent;
+export default SignageRoadComponent;
