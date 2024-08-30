@@ -227,22 +227,14 @@ const SignageCategoryComponent = ({}: any) => {
           register={register}
           validation={{ required: true }}
         />
-        <FormTextInput
+         <FormTextInput
           label="Amount"
           type="number"
           name="amount"
           placeholder="Enter Amount"
           register={register}
           validation={{
-            required: "Phon Number is Required",
-            minLength: {
-              value: 11,
-              message: "Length must be above 11 characters",
-            },
-            maxLength: {
-              value: 11,
-              message: "Length must be below 13 characters",
-            },
+            required: true,
           }}
           error={errors.amount as FieldError}
         />
