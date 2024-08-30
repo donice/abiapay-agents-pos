@@ -43,7 +43,7 @@ const IdentityStatsCard = () => {
               <div className="identity-stats-card_image"></div>
 
               <div className="identity-stats-card_balance">
-                <span>This Week's ABSSIN</span>
+                <span>This Month's ABSSIN</span>
                 <span>{data && data?.response_data?.tp_indv?.thisMonth || ""}</span>
               </div>
             </div>
