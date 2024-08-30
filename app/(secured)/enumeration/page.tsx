@@ -35,11 +35,11 @@ const items: AccountsProps[] = [
     icon: <FcShop className="icon" />,
   },
   {
-    // link: "enumeration/market",
+    link: "absaa/signage",
     title: "Signage Enumeration",
     desc: "Enumerate signages",
     icon: <FcEditImage className="icon" />,
-    comingsoon: true
+    // comingsoon: true
   },
   {
     // link: "enumeration/market",
