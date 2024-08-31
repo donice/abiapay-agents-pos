@@ -10,8 +10,8 @@ const ViewTransportEnumerationComponent = () => {
     <div className="transport">
       <header className="transport_header">
         <CustomHeader
-          title="Completed Transport Enumeration"
-          desc="View all completed Transport Enumeration"
+          title="Completed Enumerations"
+          desc="View all completed Enumerations"
         />
       </header>
       {/* <TicketsWalletCard /> */}
