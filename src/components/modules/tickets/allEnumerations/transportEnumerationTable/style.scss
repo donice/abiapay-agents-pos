@@ -28,6 +28,8 @@
         box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
 
         div:first-child {
+          width: 100%;
+          max-width: 70%;
           p {
             font-size: 14px;
             &:first-child {
@@ -50,8 +52,9 @@
           p {
             &:nth-child(1) {
               font-weight: bold;
-              font-size: 16px;
-              color: green;
+              font-size: 14px;
+              color: red;
+              text-align: end;
             }
 
             &:last-child {

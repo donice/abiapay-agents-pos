@@ -64,29 +64,17 @@ const TransportEnumerationTable: React.FC = () => {
 
                   <p>{new Date(transaction.CreateTime).toLocaleString()}</p>
                   {/* <p>{addEllipses(transaction?.reference, 20)}</p> */}
-                  <p>TP Name: {transaction.TaxpayerName }</p>
-                  <p>TP ID: {transaction.TaxpayerID }</p>
+                  <p>Taxpayer: {transaction.TaxpayerName }, {transaction.TaxpayerID}</p>
+                  <p>Plate Number: {transaction.PlateNumber}</p>
 
                 </div>
                 <div>
-                  <p>N{formatAmount(transaction.amount)}</p>
-                  <p
-                    className={`${
-                      transaction.status === "Completed"
-                        ? "completed"
-                        : "pending"
-                    }`}
-                  >
-                    {transaction.status === "Completed" ? (
-                      <GoVerified />
-                    ) : (
-                      <TbLoader />
-                    )}
-                    {transaction.status}
-                  </p>
+                  <p>Asset Code: {transaction.assetCode}</p>
+                  <p>N{formatAmount(transaction.IncomeAmount)}</p>
+                  <p>{transaction.IncomeCategory}</p>
+                  <p>{transaction.UnionName}</p>
                   
-                  <p className="next_date"><span><LuListRestart className="icon"/></span><span> {new Date(transaction.next_date).toLocaleString()}</span></p>
-                <p>Valid for: {transaction.payment_period}</p></div>
+                </div>
               </div>
             ))}
           </div>
