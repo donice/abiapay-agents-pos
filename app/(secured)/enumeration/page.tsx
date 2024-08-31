@@ -42,11 +42,11 @@ const items: AccountsProps[] = [
     // comingsoon: true
   },
   {
-    // link: "enumeration/market",
+    link: "enumeration/transport/view",
     title: "Manage Enumeration",
     desc: "Manage all enumerations",
     icon: <FcLowPriority className="icon" />,
-    comingsoon: true
+    // comingsoon: true
   },
 ];
 
