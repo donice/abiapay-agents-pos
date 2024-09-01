@@ -6,11 +6,7 @@ import "./style.scss";
 import Empty from "@/src/components/common/empty";
 import { formatAmount } from "@/src/utils/formatAmount";
 import { useRouter } from "next/navigation";
-import { GoVerified } from "react-icons/go";
-import { fetchTransactions } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
-import { TbLoader } from "react-icons/tb";
-import { LuListRestart } from "react-icons/lu";
 import { fetchCompletedTransportEnumeration } from "@/src/services/transportEnumerationService";
 
 const TransportEnumerationTable: React.FC = () => {
