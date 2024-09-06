@@ -6,7 +6,12 @@ import { FormTextInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import { fetchWalletInfo } from "@/src/services/walletService";
+import {
+  AccessWalletToWallet,
+  fetchWalletInfo,
+  FidelityWalletToWallet,
+  WalletToWalletPayload,
+} from "@/src/services/walletService";
 import { CustomHeader } from "@/src/components/common/header";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -61,6 +66,28 @@ const OtherWalletsTransferComponent = () => {
     },
   });
 
+  const { mutate: mutateTransfer, isPending: isPendingTransfer } = useMutation({
+    mutationFn: (data: WalletToWalletPayload) => {
+      return activeAccount == "access"
+        ? AccessWalletToWallet(data)
+        : FidelityWalletToWallet(data);
+    },
+    mutationKey: ["post_payment"],
+    onSuccess: (data) => {
+      if (data.response_code == "00") {
+        toast.success("Transaction Successful");
+        setBeneficiary(data.data.VirtualAccountName);
+      } else {
+        toast.error(data.response_message);
+        setBeneficiary("");
+      }
+    },
+    onError: (error) => {
+      setBeneficiary("");
+      console.log(error);
+    },
+  });
+
   useEffect(() => {
     if (debouncedWalletNo) {
       mutate(debouncedWalletNo);
@@ -68,8 +95,7 @@ const OtherWalletsTransferComponent = () => {
   }, [debouncedWalletNo, setValue]);
 
   const onSubmit = (reqData: any) => {
-    console.log(reqData);
-    toast.success("Transaction Successful");
+    mutateTransfer(reqData);
   };
 
   return (
@@ -127,12 +153,16 @@ const OtherWalletsTransferComponent = () => {
         />
 
         <FormTextInput
-          label={"Description (Optional)"}
+          label={"Description"}
           name={"desc"}
           placeholder="Enter Description"
           register={register}
+          validation={{ required: true }}
+          error={errors.desc}
         />
-        <Button text="Pay" disabled={beneficiary === ""} />
+
+        <Button text="Transfer Funds" loading={isPendingTransfer} disabled={isPendingTransfer}/>
+        {/* <Button text="Transfer Funds" disabled={beneficiary === ""} /> */}
       </form>
     </section>
   );
