@@ -12,7 +12,7 @@ import "../style.scss";
 
 const UsingPhoneNumberComponent = () => {
   const router = useRouter();
-  const [ticketsData, setTicketsData] = useState(null || []);
+  const [ticketsData, setTicketsData] = useState([]);
   const [searched, setSearched] = useState(false);
 
   if (ticketsData) {
