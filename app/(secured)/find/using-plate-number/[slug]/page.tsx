@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { getLastPathSegment } from "@/src/utils/getLastPathSegment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SelectInput } from "@/src/components/common/input";
 import { BackButton, Button } from "@/src/components/common/button";
 import "./style.scss";
@@ -14,11 +14,35 @@ import { useMutation } from "@tanstack/react-query";
 import { createNewTicket } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
-import {SuccessModal} from "@/src/components/common/modal";
+import { InformationModal, SuccessModal } from "@/src/components/common/modal";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
 const Dynamic = () => {
+  const [userData, setUserData] = useState<{
+    name?: string;
+    email?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (useIsBrower()) {
+      const data = window.sessionStorage.getItem("USER_DATA");
+      if (data) {
+        try {
+          setUserData(JSON.parse(data));
+        } catch (e) {
+          console.error("Error parsing JSON data:", e);
+          setUserData({});
+        }
+      }
+    }
+  }, []);
+
   const path = usePathname();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState({
+    mode: false,
+    state: "",
+    message: "",
+  });
   const segment = getLastPathSegment(path);
   let fetched_data = sessionStorage.getItem("TICKETS_DATA");
   const data = fetched_data && JSON.parse(fetched_data);
@@ -27,11 +51,12 @@ const Dynamic = () => {
     (ticket: any) => ticket.idagent_transactions == segment
   );
 
-  console.log(ticket);
+  // console.log(ticket);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<CreateTicketPayload>({
     defaultValues: {
@@ -44,13 +69,15 @@ const Dynamic = () => {
       no_of_days: ticket[0]?.no_of_days || "",
       amount: ticket[0]?.amount || 0,
       lga: ticket[0]?.lga || "",
-      agentEmail: ticket[0]?.agent_user || "",
+      agentEmail: userData?.email || "",
       plateNumber: ticket[0]?.plate_number || "",
       taxPayerPhone: ticket[0]?.taxpayer_phone || "",
       taxPayerName: ticket[0]?.taxpayer_name || "",
       wallet_type: "fidelity",
     },
   });
+
+  setValue("agentEmail", userData?.email || "");
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateTicketPayload) => {
@@ -59,9 +86,29 @@ const Dynamic = () => {
     },
     mutationKey: ["fetch_transactions"],
     onSuccess: (data) => {
-      data.message && toast.error(getErrorMessages(data.message));
-      data.response_code == "00" ? toast.success(data.response_message) : toast.error(data.response_message)
-      setShow(true);
+      // data.message && toast.error(getErrorMessages(data.message));
+      if (data.response_code == "00") {
+        toast.success(data.response_message);
+        setShow({
+          mode: true,
+          state: "success",
+          message: data.response_message
+        });
+      } else if (data.response_code == "12") {
+        toast.error(data.response_message || getErrorMessages(data.message));
+        setShow({
+          mode: true,
+          state: "warning",
+          message: data.response_message
+        });
+      } else {
+        toast.error(data.response_message || getErrorMessages(data.message));
+        setShow({
+          mode: true,
+          state: "error",
+          message: data.response_message || getErrorMessages(data.message)
+        });
+      }
     },
     onError: (error) => {
       console.log(error);
@@ -70,6 +117,7 @@ const Dynamic = () => {
 
   const onSubmit: SubmitHandler<CreateTicketPayload> = (data) => {
     try {
+      console.log(data);
       mutate(data);
     } catch (error) {
       console.log(error);
@@ -130,12 +178,27 @@ const Dynamic = () => {
           <BackButton link={"/find/using-plate-number"} />
         </div>
       </form>
-      {show && (
+      {show.mode == true && show.state == "success" && (
         <SuccessModal
           text="View Receipt"
           link="/tickets/transport/add/summary"
           id={`Valid for: ${ticket[0]?.payment_period}, Payment for: ${ticket[0]?.revenue_item} `}
-          // id={`Ref: ${data?.payment_ref}, Valid for: ${ticket[0]?.payment_period}, Payment for: ${ticket[0]?.revenue_item} `}
+        />
+      )}
+      {show.mode == true && show.state == "warning" && (
+        <InformationModal
+          mode="warning"
+          maintext= {show.message}
+          subtext="Cannot proceed the revending of this ticket"
+          link="/find/using-plate-numbery"
+        />
+      )}
+      {show.mode == true && show.state == "error" && (
+        <InformationModal
+          mode="error"
+          maintext= {show.message}
+          subtext="Cannot proceed the revending of this ticket"
+          link="/find/using-plate-number"
         />
       )}
     </div>

@@ -43,7 +43,7 @@ const UsingPlateNumberComponent = () => {
                   <div
                     key={transaction.idagent_transactions}
                     className="ticket"
-                    onClick={() => router.push(`/find/using-phone-number/${transaction.idagent_transactions}`)}
+                    onClick={() => router.push(`/find/using-plate-number/${transaction.idagent_transactions}`)}
                   >
                     <div>
                       <p>{CamelCaseToTitleCase(transaction.revenue_item)}</p>

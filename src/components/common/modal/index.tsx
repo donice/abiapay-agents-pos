@@ -14,6 +14,8 @@ import {
 } from "react-icons/tb";
 import QRCode from "react-qr-code";
 import { LuMailCheck } from "react-icons/lu";
+import { MdErrorOutline, MdOutlineWifiTetheringError } from "react-icons/md";
+import { BiError } from "react-icons/bi";
 
 interface SuccessModalProps {
   maintext?: string;
@@ -543,6 +545,52 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
           </button> */}
           <SecondaryButton text="Create New" link={"/enumeration"} />
           <PrimaryButton text={"Done"} link={"/dashboard"} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const InformationModal = ({
+  mode,
+  maintext,
+  subtext,
+  link,
+}: {
+  mode?: "success" | "error" | "warning" | "info";
+  maintext?: string;
+  subtext?: string;
+  link?: string;
+}) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        {mode == "error" ? (
+          <MdOutlineWifiTetheringError className="error_icon" />
+        ) : mode == "warning" ? (
+          <BiError className="warning_icon" />
+        ) : mode == "info" ? (
+          <MdErrorOutline className="success_icon" />
+        ) : null}
+        <div className="modalContent">
+          <h2>
+            {mode == "warning" ? "Warning: " : mode == "error" ? "Error: " : ""}{" "}
+            {maintext ? maintext : "Cannot Proceed"}{" "}
+          </h2>
+          <p>{subtext}</p>
+          {link && (
+            <button onClick={handleClick} className="button primary top">
+              Close
+            </button>
+          )}
         </div>
       </div>
     </div>

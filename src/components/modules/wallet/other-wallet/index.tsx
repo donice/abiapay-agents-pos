@@ -17,8 +17,10 @@ import toast from "react-hot-toast";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { SmallLoader } from "@/src/components/common/loader";
 import { fetchDashboardData } from "@/src/services/dashboardService";
+import { SuccessModal } from "@/src/components/common/modal";
 
 const OtherWalletsTransferComponent = () => {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [activeAccount, setActiveAccount] = useState("fidelity");
   const [beneficiary, setBeneficiary] = useState("");
 
@@ -76,6 +78,7 @@ const OtherWalletsTransferComponent = () => {
     onSuccess: (data) => {
       if (data.response_code == "00") {
         toast.success("Transaction Successful");
+        setShowSuccessModal(true);
         setBeneficiary(data.data.VirtualAccountName);
       } else {
         toast.error(data.response_message);
@@ -164,6 +167,8 @@ const OtherWalletsTransferComponent = () => {
         <Button text="Transfer Funds" loading={isPendingTransfer} disabled={isPendingTransfer}/>
         {/* <Button text="Transfer Funds" disabled={beneficiary === ""} /> */}
       </form>
+
+      {showSuccessModal && <SuccessModal maintext={"Transaction completed successfully"} link={"/wallet"} text="You can now proceed to sp" />}
     </section>
   );
 };
