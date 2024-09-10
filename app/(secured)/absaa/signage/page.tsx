@@ -4,6 +4,11 @@ import Link from "next/link";
 import React, { type ReactElement } from "react";
 import {
   FcBusinessman,
+  FcCircuit,
+  FcDiploma1,
+  FcDonate,
+  FcElectroDevices,
+  FcHighPriority,
   FcReading,
   FcShop,
 } from "react-icons/fc";
@@ -24,39 +29,39 @@ interface AccountsProps {
 
 const items: AccountsProps[] = [
   {
-    // link: "signage/signage/",
+    link: "absaa/signage/signage-enumeration",
     title: "Signage Enumeration",
     desc: "Create enumeration for signage",
-    icon: <FcBusinessman className="icon" />,
-    comingsoon: true
+    icon: <FcDiploma1 className="icon" />,
+    // comingsoon: true
   },
   {
-    // link: "signage/signage/",
+    link: "absaa/signage/signage-road",
     title: "Signage Road",
     desc: "Create enumeration for road",
-    icon: <FcBusinessman className="icon" />,
-    comingsoon: true
+    icon: <FcHighPriority className="icon" />,
+    // comingsoon: true
   },
   {
-    // link: "signage/signage/",
+    link: "absaa/signage/signage-rate",
     title: "Signage Rate",
     desc: "Create enumeration for rate",
-    icon: <FcBusinessman className="icon" />,
-    comingsoon: true
+    icon: <FcDonate className="icon" />,
+    // comingsoon: true
   },
   {
-    // link: "signage/signage/",
+    link: "absaa/signage/signage-road-category",
     title: "Road Category",
     desc: "Create road category",
-    icon: <FcBusinessman className="icon" />,
-    comingsoon: true
+    icon: <FcCircuit className="icon" />,
+    // comingsoon: true
   },
   {
-    // link: "signage/signage/",
+    link: "absaa/signage/signage-category",
     title: "Signage Category",
     desc: "Create category for signage",
-    icon: <FcBusinessman className="icon" />,
-    comingsoon: true
+    icon: <FcElectroDevices className="icon" />,
+    // comingsoon: true
   },
 
   // {

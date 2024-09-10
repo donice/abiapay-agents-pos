@@ -95,3 +95,12 @@ export const saveContact = async (requestBody: SaveContactType) => {
   }
 };
 
+export const fetchCompletedTransportEnumeration = async () => {
+  try {
+    const { data } = await axiosInstance.post(`${url}/enumeration/completed-transport`);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+

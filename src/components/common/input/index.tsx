@@ -101,7 +101,7 @@ export const FormTextInput: React.FC<InputProps> = ({
   readOnly,
   register,
   error,
-  validation, // Add this line
+  validation,
   ...rest
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -109,9 +109,12 @@ export const FormTextInput: React.FC<InputProps> = ({
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-
   const getErrorMessage = (error: FieldError | undefined): string => {
     if (!error) return "";
+
+    if (error.message) {
+      return error.message;
+    }
 
     switch (error.type) {
       case "required":
@@ -121,7 +124,7 @@ export const FormTextInput: React.FC<InputProps> = ({
       case "maxLength":
         return "Length must be less";
       case "validate":
-        return "Values do not match";
+        return "Invalid value";
       default:
         return "";
     }
@@ -141,7 +144,8 @@ export const FormTextInput: React.FC<InputProps> = ({
         readOnly={readOnly}
         disabled={disabled}
         onChange={onChange}
-        {...(register && register(name, validation))} // Modify this line
+        className={`${error ? "errorinput" : ""}`}
+        {...(register && register(name, validation))}
         {...rest}
       />
       <span></span>
@@ -209,11 +213,17 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
         {/* <option disabled value="Select">
           {placeholder}
         </option> */}
-        {options && options.map((option) => (
-          <option key={option.value} defaultValue={option.value} disabled={disabled} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {options &&
+          options.map((option) => (
+            <option
+              key={option.value}
+              defaultValue={option.value}
+              disabled={disabled}
+              value={option.value}
+            >
+              {option.label}
+            </option>
+          ))}
       </select>
       {error && <span className="error">Field Required</span>}
     </div>

@@ -10,9 +10,34 @@ const isToken =
     : null;
 setToken(isToken);
 
+export type WalletToWalletPayload = {
+  merchant_key: string,
+  recipient_wallet_no: string,
+  amount: number,
+  desc: string
+}
+
 export const fetchWalletInfo = async ( wallet_id: string )=> {
   try {
     const { data } = await axiosInstance.post(`${url}/wallet/wallet-info`, {"wallet_id": wallet_id});
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const FidelityWalletToWallet = async ( requestData: WalletToWalletPayload )=> {
+  try {
+    const { data } = await axiosInstance.post(`${url}/wallet/fidelity-wallet-to-wallet-transfer`, requestData);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const AccessWalletToWallet = async ( requestData: WalletToWalletPayload )=> {
+  try {
+    const { data } = await axiosInstance.post(`${url}/wallet/fidelity-wallet-to-wallet-transfer`, requestData);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);

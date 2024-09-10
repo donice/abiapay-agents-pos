@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import { FieldError, FieldErrorsImpl, useForm } from "react-hook-form";
+import { FieldError, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import {
   verifyPlateNumber,

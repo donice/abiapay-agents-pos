@@ -1,15 +1,14 @@
 "use client";
 import React from "react";
 import "./style.scss";
-import { fetchCollectionData } from "@/src/services/dashboardService";
 import { useQuery } from "@tanstack/react-query";
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
-import { formatAmount } from "@/src/utils/formatAmount";
+import { fetchABSSINStats } from "@/src/services/identityService";
 
 const IdentityStatsCard = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["ticketsWalletData"],
-    queryFn: fetchCollectionData,
+    queryFn: fetchABSSINStats,
   });
 
   if (isLoading) {
@@ -28,7 +27,7 @@ const IdentityStatsCard = () => {
     );
   }
 
-  // console.log(data.data, "Data");
+
 
   return (
     <>
@@ -38,14 +37,14 @@ const IdentityStatsCard = () => {
             <div className="ticket_container">
               <div className="identity-stats-card_balance">
                 <span>Today's ABSSIN</span>
-                <span>20</span>
+                <span>{data && data?.response_data?.tp_indv?.thisDay || "0"}</span>
               </div>
 
               <div className="identity-stats-card_image"></div>
 
               <div className="identity-stats-card_balance">
-                <span>This Week's ABSSIN</span>
-                <span>34</span>
+                <span>This Month's ABSSIN</span>
+                <span>{data && data?.response_data?.tp_indv?.thisMonth || ""}</span>
               </div>
             </div>
           </div>

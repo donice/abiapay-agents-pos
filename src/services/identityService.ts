@@ -100,6 +100,21 @@ export const validateID = async (requestData: validateIdPayloadType) => {
   }
 };
 
+export const fetchABSSINStats = async () => {
+  try {
+    const { data } = await axiosInstance.get(
+      `${url}/abssin/statistics`,
+    );
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    toast.error(
+      getErrorMessages(error?.data?.message) || "Error fetching OTP stats"
+    );
+    // throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
 export const validateNoID = async (requestData: validateNoIdPayloadType) => {
   try {
     const { data } = await axiosInstance.post(

@@ -129,10 +129,10 @@ const DashboardComponent: React.FC = () => {
     }
   }, []);
 
-  const getEnumerationData = useCallback(async () => {
+  const getEnumerationDailyData = useCallback(async () => {
     try {
       const res = await fetchEnumerationData();
-      setEnumerationCount(res?.data.length);
+      setEnumerationCount(res?.response_data?.transport?.thisDay + res?.response_data?.market?.thisDay);
     } catch (error) {
       toast.error("Cannot fetching enumeration data");
     }
@@ -152,7 +152,7 @@ const DashboardComponent: React.FC = () => {
   useEffect(() => {
     getDashboardData();
     getABSSINData();
-    getEnumerationData();
+    getEnumerationDailyData();
     getTransportTicketData();
     getTotalABSSIN();
   }, []);

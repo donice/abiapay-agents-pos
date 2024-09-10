@@ -1,16 +1,15 @@
 "use client";
 import React from "react";
 import "./style.scss";
-import { fetchCollectionData } from "@/src/services/dashboardService";
+import { fetchEnumerationData } from "@/src/services/dashboardService";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/app/(secured)/loading";
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
-import { formatAmount } from "@/src/utils/formatAmount";
 
 const EnumerationStatsCard = () => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["ticketsWalletData"],
-    queryFn: fetchCollectionData,
+    queryKey: ["enumerationStatsData"],
+    queryFn: fetchEnumerationData,
   });
 
   if (isLoading) {
@@ -39,14 +38,14 @@ const EnumerationStatsCard = () => {
             <div className="ticket_container">
               <div className="identity-stats-card_balance">
                 <span>Today's Enumeration</span>
-                <span>20</span>
+                <span>{(data?.response_data?.transport?.thisDay + data?.response_data?.market?.thisDay) || 0}</span>
               </div>
 
               <div className="identity-stats-card_image"></div>
 
               <div className="identity-stats-card_balance">
-                <span>This Week's Enumeration</span>
-                <span>34</span>
+                <span>This Month's Enumeration</span>
+                <span>{(data?.response_data?.transport?.thisMonth + data?.response_data?.market?.thisMonth) || 0}</span>
               </div>
             </div>
           </div>

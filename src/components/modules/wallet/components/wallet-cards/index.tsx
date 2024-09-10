@@ -6,18 +6,9 @@ import AccessBankLogo from "../../../../assets/access_bank.png";
 import FidelityBankLogo from "../../../../assets/fidelity_bank.png";
 import { formatAmount } from "@/src/utils/formatAmount";
 
-import { useQuery } from "@tanstack/react-query";
-import { fetchDashboardData } from "@/src/services/dashboardService";
 
-const TransferWalletCards = () => {
-  const [activeAccount, setActiveAccount] = useState("access");
+const TransferWalletCards = ({data, activeAccount, setActiveAccount}: any) => {
 
-  const { data } = useQuery({
-    queryKey: ["get_dashboard_data"],
-    queryFn: () => {
-      return fetchDashboardData();
-    },
-  });
   return (
     <section className="walletcard">
       <div className="walletcard_container">
