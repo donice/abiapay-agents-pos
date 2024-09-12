@@ -58,7 +58,7 @@ export const FidelityTransferFunds = async (
 ) => {
   try {
     const { data } = await axiosInstance.post(
-      `${url}/wallet/access-transfer-funds`,
+      `${url}/wallet/fidelity-transfer-funds`,
       requestData
     );
     return data;

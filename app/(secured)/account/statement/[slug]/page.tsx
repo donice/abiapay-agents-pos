@@ -1,7 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import { FormTextInput, SelectInput } from "@/src/components/common/input";
+import {
+  FormTextInput,
+  SelectInput,
+  SelectSearchInput,
+} from "@/src/components/common/input";
 import { Button, GoBackButton } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "@/src/hooks/useDebounce";
@@ -21,10 +25,14 @@ import { InformationModal } from "@/src/components/common/modal";
 import { fetchBanks } from "@/src/services/common";
 import { IndividualTransferWalletCards } from "@/src/components/modules/wallet/components/wallet-cards";
 import { TbSend } from "react-icons/tb";
+import { getErrorMessages } from "@/src/utils/helper";
 
 const StatementPage = ({ params }: { params: { slug: string } }) => {
   const activeAccount = params.slug;
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState({
+    show: false,
+    mode: "",
+  });
   const [beneficiary, setBeneficiary] = useState("");
   const [banks, setBanks] = useState([]);
 
@@ -62,7 +70,6 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
   const { onChange } = registerTransferToBank("amount");
 
   const walletNo = watchTransferWallet("recipient_wallet_no");
-  console.log(walletNo);
   const debouncedWalletNo = useDebounce(walletNo, 500);
 
   const { data } = useQuery({
@@ -143,15 +150,21 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
     onSuccess: (data) => {
       if (data.response_code == "00") {
         toast.success("Transaction Successful");
-        setShowSuccessModal(true);
-        setBeneficiary(data.data.VirtualAccountName);
-      } else {
-        toast.error(data.response_message);
+        setShowSuccessModal({ show: true, mode: "success" });
+    } else if (data.response_code == "15") {
+      setShowSuccessModal({ show: true, mode: "warning" });
+    }
+      else {
+        toast.error(data.status + ": " + data.message);
         setBeneficiary("");
       }
     },
-    onError: (error) => {
+    onError: (error: any) => {
       setBeneficiary("");
+      toast.error(
+        getErrorMessages(error?.response?.data?.message) ||
+          "Error completing transaction"
+      );
       console.log(error);
     },
   });
@@ -200,6 +213,14 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
           className="other-wallet_form"
         >
           {" "}
+          {/* <SelectSearchInput
+            label={"Bank Name"}
+            name={"bank_code"}
+            id={"bank_code"}
+            register={registerTransferToBank}
+            options={banks}
+            placeholder="Search and Select Bank"
+          /> */}
           <SelectInput
             label={"Bank Name"}
             name={"bank_code"}
@@ -329,11 +350,22 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
         </form>
       )}
 
-      {showSuccessModal && (
+      {showSuccessModal.show == true && showSuccessModal.mode == "success" && (
         <InformationModal
+          mode="success"
           icon={<TbSend className="success_icon" />}
-          maintext={`Money sent to successfully`}
+          maintext={`Money sent successfully`}
           subtext="Your transaction has been completed successfully. You can check your transaction history in your account."
+          link={"/account/statement"}
+        />
+      )}
+
+      {showSuccessModal.show == true && showSuccessModal.mode == "warning" && (
+        <InformationModal
+          mode="warning"
+          // icon={<TbSend className="warning_icon" />}
+          maintext={`Insufficient funds`}
+          subtext="Insufficient funds in your wallet. Please fund your wallet and try again."
           link={"/account/statement"}
         />
       )}
