@@ -17,6 +17,14 @@ export type WalletToWalletPayload = {
   desc: string
 }
 
+export type WalletToWalletBank = {
+  merchant_key: string,
+  bank_code: string,
+  bank_account: string,
+  amount: number,
+  desc: string
+}
+
 export const fetchWalletInfo = async ( wallet_id: string )=> {
   try {
     const { data } = await axiosInstance.post(`${url}/wallet/wallet-info`, {"wallet_id": wallet_id});
@@ -35,9 +43,27 @@ export const FidelityWalletToWallet = async ( requestData: WalletToWalletPayload
   }
 };
 
+export const FidelityTransferFunds = async ( requestData: WalletToWalletBank )=> {
+  try {
+    const { data } = await axiosInstance.post(`${url}/wallet/access-transfer-funds`, requestData);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
 export const AccessWalletToWallet = async ( requestData: WalletToWalletPayload )=> {
   try {
     const { data } = await axiosInstance.post(`${url}/wallet/fidelity-wallet-to-wallet-transfer`, requestData);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const AccessTransferFunds = async ( requestData: WalletToWalletBank )=> {
+  try {
+    const { data } = await axiosInstance.post(`${url}/wallet/access-transfer-funds`, requestData);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);

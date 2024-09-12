@@ -2,20 +2,18 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import {
-  BackButton,
-  Button,
-  GoBackButton,
-} from "@/src/components/common/button";
+import { Button, GoBackButton } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import {
+  AccessTransferFunds,
   AccessWalletToWallet,
   fetchWalletInfo,
+  FidelityTransferFunds,
   FidelityWalletToWallet,
+  WalletToWalletBank,
   WalletToWalletPayload,
 } from "@/src/services/walletService";
-import { CustomHeader } from "@/src/components/common/header";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { SmallLoader } from "@/src/components/common/loader";
@@ -23,7 +21,7 @@ import { fetchDashboardData } from "@/src/services/dashboardService";
 import { SuccessModal } from "@/src/components/common/modal";
 import { fetchBanks } from "@/src/services/common";
 
-const StatemenrPage = ({ params }: { params: { slug: string } }) => {
+const StatementPage = ({ params }: { params: { slug: string } }) => {
   const activeAccount = params.slug;
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [beneficiary, setBeneficiary] = useState("");
@@ -32,9 +30,9 @@ const StatemenrPage = ({ params }: { params: { slug: string } }) => {
   const {
     watch,
     setValue,
-    register,
-    formState: { errors },
-    handleSubmit,
+    register: registerTransferToBank,
+    formState: { errors: errorsTransferToBank },
+    handleSubmit: handleSubmitTransferToBank,
   } = useForm({
     defaultValues: {
       cashout_type: "",
@@ -44,8 +42,22 @@ const StatemenrPage = ({ params }: { params: { slug: string } }) => {
       desc: "",
     },
   });
+  const {
+    register: registerTransferWallet,
+    formState: { errors: errorsTransferWallet },
+    handleSubmit: handleSubmitTransferWallet,
+  } = useForm({
+    defaultValues: {
+      cashout_type: "",
+      merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+      recipient_wallet_no: "",
+      amount: "",
+      desc: "",
+    },
+  });
+
   const cashoutType = watch("cashout_type");
-  const { onChange } = register("amount");
+  const { onChange } = registerTransferToBank("amount");
 
   const walletNo = watch("recipient_wallet_no");
   const debouncedWalletNo = useDebounce(walletNo, 500);
@@ -97,10 +109,18 @@ const StatemenrPage = ({ params }: { params: { slug: string } }) => {
   });
 
   const { mutate: mutateTransfer, isPending: isPendingTransfer } = useMutation({
-    mutationFn: (data: WalletToWalletPayload) => {
-      return activeAccount == "access"
-        ? AccessWalletToWallet(data)
-        : FidelityWalletToWallet(data);
+    mutationFn: (data: any) => {
+      if (cashoutType == "wallet") {
+        return activeAccount == "access"
+          ? AccessWalletToWallet(data)
+          : FidelityWalletToWallet(data);
+      }
+      if (cashoutType == "bank") {
+        return activeAccount == "access"
+          ? AccessTransferFunds(data)
+          : FidelityTransferFunds(data);
+      }
+      throw new Error("Invalid cashout type or active account");
     },
     mutationKey: ["post_payment"],
     onSuccess: (data) => {
@@ -126,160 +146,168 @@ const StatemenrPage = ({ params }: { params: { slug: string } }) => {
   }, [debouncedWalletNo, setValue]);
 
   const onSubmit = (reqData: any) => {
+    console.log("DATA", reqData);
     mutateTransfer(reqData);
   };
 
   return (
     <section className="other-wallet">
-      <GoBackButton link="/account/statement" />
-      <form onSubmit={handleSubmit(onSubmit)} className="other-wallet_form">
-        <SelectInput
-          label={"Cashout Type"}
-          name={"cashout_type"}
-          id={"cashout_type"}
-          register={register}
-          options={[
-            {
-              value: "wallet",
-              label: "Cashout to Wallet",
-            },
-            {
-              value: "bank",
-              label: "Cashout to Bank",
-            },
-          ]}
-        />
+      <header>
+        <GoBackButton link="/account/statement" />
+      </header>
 
-        {cashoutType == "bank" && (
-          <>
-            {" "}
-            <SelectInput
-              label={"Bank Name"}
-              name={"bank"}
-              id={"bank"}
-              register={register}
-              options={banks}
-            />
-            <FormTextInput
-              type="number"
-              label={"Beneficiary Wallet"}
-              name="recipient_wallet_no"
-              placeholder={"Enter Beneficiary Wallet ID"}
-              register={register}
-              validation={{ required: true }}
-              error={errors.recipient_wallet_no}
-            />
-            {isPending && (
-              <p className="other-wallet_form_beneficiary">
-                <SmallLoader />{" "}
-              </p>
-            )}
-            {beneficiary !== "" && !isPending && (
-              <div className="other-wallet_form_beneficiary">
-                <p>{beneficiary}</p>
-              </div>
-            )}
-            <FormTextInput
-              type="number"
-              label={"Amount"}
-              name={"amount"}
-              placeholder="Enter Amount"
-              register={register}
-              onChange={onChange}
-              validation={{
-                required: "Enter an amount",
-                validate: (value: number) => {
-                  if (activeAccount == "access") {
-                    if (value > dasboardData?.access?.wallet_balance) {
-                      return "Insufficient funds in your Access wallet";
-                    }
-                  } else {
-                    if (value > dasboardData?.fidelity?.balance) {
-                      return "Insufficient funds in your Fidelity wallet";
-                    }
-                  }
-                },
-              }}
-              error={errors.amount}
-            />
-            <FormTextInput
-              label={"Description"}
-              name={"desc"}
-              placeholder="Enter Description"
-              register={register}
-              validation={{ required: true }}
-              error={errors.desc}
-            />
-            <Button
-              text="Transfer Funds"
-              loading={isPendingTransfer}
-              disabled={isPendingTransfer}
-            />
-          </>
-        )}
-        {cashoutType == "wallet" && (
-          <>
-            {" "}
-            <FormTextInput
-              type="number"
-              label={"Beneficiary Wallet"}
-              name="recipient_wallet_no"
-              placeholder={"Enter Beneficiary Wallet ID"}
-              register={register}
-              validation={{ required: true }}
-              error={errors.recipient_wallet_no}
-            />
-            {isPending && (
-              <p className="other-wallet_form_beneficiary">
-                <SmallLoader />{" "}
-              </p>
-            )}
-            {beneficiary !== "" && !isPending && (
-              <div className="other-wallet_form_beneficiary">
-                <p>{beneficiary}</p>
-              </div>
-            )}
-            <FormTextInput
-              type="number"
-              label={"Amount"}
-              name={"amount"}
-              placeholder="Enter Amount"
-              register={register}
-              onChange={onChange}
-              validation={{
-                required: "Enter an amount",
-                validate: (value: number) => {
-                  if (activeAccount == "access") {
-                    if (value > dasboardData?.access?.wallet_balance) {
-                      return "Insufficient funds in your Access wallet";
-                    }
-                  } else {
-                    if (value > dasboardData?.fidelity?.balance) {
-                      return "Insufficient funds in your Fidelity wallet";
-                    }
-                  }
-                },
-              }}
-              error={errors.amount}
-            />
-            <FormTextInput
-              label={"Description"}
-              name={"desc"}
-              placeholder="Enter Description"
-              register={register}
-              validation={{ required: true }}
-              error={errors.desc}
-            />
-            <Button
-              text="Transfer Funds"
-              loading={isPendingTransfer}
-              disabled={isPendingTransfer}
-            />
-          </>
-        )}
+      <SelectInput
+        label={"Cashout Type"}
+        name={"cashout_type"}
+        id={"cashout_type"}
+        register={registerTransferToBank}
+        options={[
+          {
+            value: "wallet",
+            label: "Cashout to Wallet",
+          },
+          {
+            value: "bank",
+            label: "Cashout to Bank",
+          },
+        ]}
+      />
 
-        {/* <Button text="Transfer Funds" disabled={beneficiary === ""} /> */}
-      </form>
+      {cashoutType == "bank" && (
+        <form
+          onSubmit={handleSubmitTransferToBank(onSubmit)}
+          className="other-wallet_form"
+        >
+          {" "}
+          <SelectInput
+            label={"Bank Name"}
+            name={"bank_code"}
+            id={"bank_code"}
+            register={registerTransferToBank}
+            options={banks}
+          />
+          <FormTextInput
+            type="number"
+            label={"Beneficiary Wallet"}
+            name="recipient_wallet_no"
+            placeholder={"Enter Beneficiary Wallet ID"}
+            register={registerTransferToBank}
+            validation={{ required: true }}
+            error={errorsTransferToBank.recipient_wallet_no}
+          />
+          {isPending && (
+            <p className="other-wallet_form_beneficiary">
+              <SmallLoader />{" "}
+            </p>
+          )}
+          {beneficiary !== "" && !isPending && (
+            <div className="other-wallet_form_beneficiary">
+              <p>{beneficiary}</p>
+            </div>
+          )}
+          <FormTextInput
+            type="number"
+            label={"Amount"}
+            name={"amount"}
+            placeholder="Enter Amount"
+            register={registerTransferToBank}
+            onChange={onChange}
+            validation={{
+              required: "Enter an amount",
+              validate: (value: number) => {
+                if (activeAccount == "access") {
+                  if (value > dasboardData?.access?.wallet_balance) {
+                    return "Insufficient funds in your Access wallet";
+                  }
+                } else {
+                  if (value > dasboardData?.fidelity?.balance) {
+                    return "Insufficient funds in your Fidelity wallet";
+                  }
+                }
+              },
+            }}
+            error={errorsTransferToBank.amount}
+          />
+          <FormTextInput
+            label={"Description"}
+            name={"desc"}
+            placeholder="Enter Description"
+            register={registerTransferToBank}
+            validation={{ required: true }}
+            error={errorsTransferToBank.desc}
+          />
+          <Button
+            text="Transfer Funds"
+            loading={isPendingTransfer}
+            disabled={isPendingTransfer}
+          />
+        </form>
+      )}
+
+      {cashoutType == "wallet" && (
+        <form
+          onSubmit={handleSubmitTransferWallet(onSubmit)}
+          className="other-wallet_form"
+        >
+          {" "}
+          <FormTextInput
+            type="number"
+            label={"Beneficiary Wallet"}
+            name="recipient_wallet_no"
+            placeholder={"Enter Beneficiary Wallet ID"}
+            register={registerTransferWallet}
+            validation={{ required: true }}
+            error={errorsTransferWallet.recipient_wallet_no}
+          />
+          {isPending && (
+            <p className="other-wallet_form_beneficiary">
+              <SmallLoader />{" "}
+            </p>
+          )}
+          {beneficiary !== "" && !isPending && (
+            <div className="other-wallet_form_beneficiary">
+              <p>{beneficiary}</p>
+            </div>
+          )}
+          <FormTextInput
+            type="number"
+            label={"Amount"}
+            name={"amount"}
+            placeholder="Enter Amount"
+            register={registerTransferWallet}
+            onChange={onChange}
+            validation={{
+              required: "Enter an amount",
+              validate: (value: number) => {
+                if (activeAccount == "access") {
+                  if (value > dasboardData?.access?.wallet_balance) {
+                    return "Insufficient funds in your Access wallet";
+                  }
+                } else {
+                  if (value > dasboardData?.fidelity?.balance) {
+                    return "Insufficient funds in your Fidelity wallet";
+                  }
+                }
+              },
+            }}
+            error={errorsTransferWallet.amount}
+          />
+          <FormTextInput
+            label={"Description"}
+            name={"desc"}
+            placeholder="Enter Description"
+            register={registerTransferWallet}
+            validation={{ required: true }}
+            error={errorsTransferWallet.desc}
+          />
+          <Button
+            text="Transfer Funds"
+            loading={isPendingTransfer}
+            disabled={isPendingTransfer}
+          />
+        </form>
+      )}
+
 
       {showSuccessModal && (
         <SuccessModal
@@ -292,4 +320,4 @@ const StatemenrPage = ({ params }: { params: { slug: string } }) => {
   );
 };
 
-export default StatemenrPage;
+export default StatementPage;
