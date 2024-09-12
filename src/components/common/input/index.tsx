@@ -195,7 +195,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
   placeholder,
   disabled,
   register,
-  validation, // Add this line
+  validation,
   error,
 }) => {
   return (
@@ -208,11 +208,9 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
         value={value}
         disabled={disabled}
         onChange={onChange}
-        {...(register && register(name, validation))} // Modify this line
-      >
-        {/* <option disabled value="Select">
-          {placeholder}
-        </option> */}
+        {...(register && register(name, validation))} 
+        >
+          
         {options &&
           options.map((option) => (
             <option

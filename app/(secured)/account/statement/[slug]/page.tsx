@@ -11,6 +11,7 @@ import {
   fetchWalletInfo,
   FidelityTransferFunds,
   FidelityWalletToWallet,
+  WalletInfoType,
 } from "@/src/services/walletService";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -37,12 +38,13 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
     defaultValues: {
       cashout_type: "",
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
-      recipient_wallet_no: "",
+      bank_account: "",
       amount: "",
       desc: "",
     },
   });
   const {
+    watch: watchTransferWallet,
     register: registerTransferWallet,
     formState: { errors: errorsTransferWallet },
     handleSubmit: handleSubmitTransferWallet,
@@ -59,7 +61,8 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
   const cashoutType = watch("cashout_type");
   const { onChange } = registerTransferToBank("amount");
 
-  const walletNo = watch("recipient_wallet_no");
+  const walletNo = watchTransferWallet("recipient_wallet_no");
+  console.log(walletNo);
   const debouncedWalletNo = useDebounce(walletNo, 500);
 
   const { data } = useQuery({
@@ -98,13 +101,20 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
   }, []);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: string) => {
+    mutationFn: (data: WalletInfoType) => {
       return fetchWalletInfo(data);
     },
     mutationKey: ["fetch_wallet_info"],
     onSuccess: (data) => {
       if (data.status == true) {
-        setBeneficiary(data.data.VirtualAccountName);
+        setBeneficiary(
+          data?.data.surname +
+            " " +
+            data?.data.firstname +
+            " (" +
+            data?.data.account_name +
+            ")"
+        );
       } else {
         setBeneficiary("");
       }
@@ -148,7 +158,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
 
   useEffect(() => {
     if (debouncedWalletNo) {
-      mutate(debouncedWalletNo);
+      mutate({ wallet_id: debouncedWalletNo, wallet_type: activeAccount });
     }
   }, [debouncedWalletNo, setValue]);
 
@@ -200,11 +210,11 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
           <FormTextInput
             type="number"
             label={"Account Number"}
-            name="recipient_wallet_no"
+            name="bank_account"
             placeholder={"Enter Account Number"}
             register={registerTransferToBank}
             validation={{ required: true }}
-            error={errorsTransferToBank.recipient_wallet_no}
+            error={errorsTransferToBank.bank_account}
           />
           {isPending && (
             <p className="other-wallet_form_beneficiary">
@@ -322,7 +332,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
       {showSuccessModal && (
         <InformationModal
           icon={<TbSend className="success_icon" />}
-          maintext={"Transaction completed successfully"}
+          maintext={`Money sent to successfully`}
           subtext="Your transaction has been completed successfully. You can check your transaction history in your account."
           link={"/account/statement"}
         />
