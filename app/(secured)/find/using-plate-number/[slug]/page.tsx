@@ -95,7 +95,7 @@ const Dynamic = () => {
           message: data.response_message
         });
       } else if (data.response_code == "12") {
-        toast.error(data.response_message || getErrorMessages(data.message));
+        toast.custom(data.response_message || getErrorMessages(data.message));
         setShow({
           mode: true,
           state: "warning",
@@ -117,7 +117,7 @@ const Dynamic = () => {
 
   const onSubmit: SubmitHandler<CreateTicketPayload> = (data) => {
     try {
-      console.log(data);
+      // console.log(data);
       mutate(data);
     } catch (error) {
       console.log(error);
@@ -190,7 +190,7 @@ const Dynamic = () => {
           mode="warning"
           maintext= {show.message}
           subtext="Cannot proceed the revending of this ticket"
-          link="/find/using-plate-numbery"
+          link="/find/using-plate-number"
         />
       )}
       {show.mode == true && show.state == "error" && (
