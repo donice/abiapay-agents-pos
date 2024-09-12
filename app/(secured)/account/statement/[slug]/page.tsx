@@ -11,15 +11,15 @@ import {
   fetchWalletInfo,
   FidelityTransferFunds,
   FidelityWalletToWallet,
-  WalletToWalletBank,
-  WalletToWalletPayload,
 } from "@/src/services/walletService";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { SmallLoader } from "@/src/components/common/loader";
 import { fetchDashboardData } from "@/src/services/dashboardService";
-import { SuccessModal } from "@/src/components/common/modal";
+import { InformationModal } from "@/src/components/common/modal";
 import { fetchBanks } from "@/src/services/common";
+import { IndividualTransferWalletCards } from "@/src/components/modules/wallet/components/wallet-cards";
+import { TbSend } from "react-icons/tb";
 
 const StatementPage = ({ params }: { params: { slug: string } }) => {
   const activeAccount = params.slug;
@@ -61,6 +61,13 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
 
   const walletNo = watch("recipient_wallet_no");
   const debouncedWalletNo = useDebounce(walletNo, 500);
+
+  const { data } = useQuery({
+    queryKey: ["get_dashboard_data"],
+    queryFn: () => {
+      return fetchDashboardData();
+    },
+  });
 
   const { data: dasboardData } = useQuery({
     queryKey: ["get_dashboard_data"],
@@ -154,6 +161,10 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
     <section className="other-wallet">
       <header>
         <GoBackButton link="/account/statement" />
+        <IndividualTransferWalletCards
+          data={data}
+          activeAccount={activeAccount}
+        />
       </header>
 
       <SelectInput
@@ -188,9 +199,9 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
           />
           <FormTextInput
             type="number"
-            label={"Beneficiary Wallet"}
+            label={"Account Number"}
             name="recipient_wallet_no"
-            placeholder={"Enter Beneficiary Wallet ID"}
+            placeholder={"Enter Account Number"}
             register={registerTransferToBank}
             validation={{ required: true }}
             error={errorsTransferToBank.recipient_wallet_no}
@@ -308,12 +319,12 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
         </form>
       )}
 
-
       {showSuccessModal && (
-        <SuccessModal
+        <InformationModal
+          icon={<TbSend className="success_icon" />}
           maintext={"Transaction completed successfully"}
-          link={"/wallet"}
-          text="You can now proceed to sp"
+          subtext="Your transaction has been completed successfully. You can check your transaction history in your account."
+          link={"/account/statement"}
         />
       )}
     </section>
