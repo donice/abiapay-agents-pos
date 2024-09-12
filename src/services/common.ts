@@ -13,6 +13,15 @@ const isToken =
 setToken(isToken);
 
 
+export const fetchBanks = async () => {
+  try {
+    const res = await axiosInstance.post(`${url}/banks`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export const fetchABSSINInfo = async (reqData: {
   id: string
 }) => {

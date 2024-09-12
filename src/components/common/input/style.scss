@@ -169,3 +169,32 @@ $icon-color: #a4a4a4;
   font-style: italic;
   font-size: 12px;
 }
+
+.selectsearch-container {
+  border: thin solid $form-input-border;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  min-width: 20rem;
+  width: 100%;
+  outline: green;
+  display: grid;
+
+  label {
+    display: flex;
+    color: #a6a6a6;
+    font-size: 0.8rem;
+  }
+  input {
+    border-radius: 5px;
+    min-width: 20rem;
+    width: 100%;
+    outline: green;
+
+    &::placeholder {
+      color: #8e8e8ea5;
+      font-size: 14px;
+      font-weight: 200;
+    }
+  }
+  
+}

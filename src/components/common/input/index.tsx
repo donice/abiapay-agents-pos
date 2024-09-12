@@ -195,7 +195,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
   placeholder,
   disabled,
   register,
-  validation, // Add this line
+  validation,
   error,
 }) => {
   return (
@@ -208,11 +208,9 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
         value={value}
         disabled={disabled}
         onChange={onChange}
-        {...(register && register(name, validation))} // Modify this line
-      >
-        {/* <option disabled value="Select">
-          {placeholder}
-        </option> */}
+        {...(register && register(name, validation))} 
+        >
+
         {options &&
           options.map((option) => (
             <option
@@ -229,3 +227,47 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
     </div>
   );
 };
+
+export const SelectSearchInput: React.FC<SelectComponentProps> = ({
+  label,
+  name,
+  id,
+  className,
+  value,
+  onChange,
+  options,
+  placeholder,
+  disabled,
+  register,
+  validation,
+  error,
+}) => {
+  return (
+    <div className="selectsearch-container">
+      <label htmlFor={id}>{label}</label>
+      <input
+        list={`${id}-list`}
+        name={name}
+        id={id}
+        className={className}
+        value={value}
+        disabled={disabled}
+        onChange={onChange}
+        placeholder={placeholder}
+        {...(register && register(name, validation))} 
+      />
+      <datalist id={`${id}-list`}>
+        {options &&
+          options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+      </datalist>
+      {error && <span className="error">Field Required</span>}
+    </div>
+  );
+};
+
+
+

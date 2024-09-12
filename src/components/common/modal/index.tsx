@@ -552,11 +552,13 @@ export const EnumerationSuccessModal: React.FC<EnumerationModalProps> = ({
 };
 
 export const InformationModal = ({
+  icon,
   mode,
   maintext,
   subtext,
   link,
 }: {
+  icon?: React.ReactNode;
   mode?: "success" | "error" | "warning" | "info";
   maintext?: string;
   subtext?: string;
@@ -573,13 +575,16 @@ export const InformationModal = ({
   return (
     <div className="modalOverlay">
       <div className="modal">
-        {mode == "error" ? (
+        {icon ? (
+          icon
+        ) : mode == "error" ? (
           <MdOutlineWifiTetheringError className="error_icon" />
         ) : mode == "warning" ? (
           <BiError className="warning_icon" />
         ) : mode == "info" ? (
           <MdErrorOutline className="success_icon" />
         ) : null}
+
         <div className="modalContent">
           <h2>
             {mode == "warning" ? "Warning: " : mode == "error" ? "Error: " : ""}{" "}

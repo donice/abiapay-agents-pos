@@ -64,3 +64,57 @@ const TransferWalletCards = ({data, activeAccount, setActiveAccount}: any) => {
 };
 
 export default TransferWalletCards;
+
+export const IndividualTransferWalletCards = ({data, activeAccount}: any) => {
+
+  return (
+    <section className="walletcard">
+      <div className="walletcard_container">
+       {activeAccount === "fidelity" ? <div
+          className={`wallet ${activeAccount === "fidelity" ? "active" : ""}`}
+        >
+          <div className="wallet_details">
+            <div className="wallet_details_icon">
+              <Image src={FidelityBankLogo} alt="fidelity bank logo" />
+            </div>
+            <div>
+              <p className="amount">
+                ₦ {formatAmount(data?.fidelity?.balance)}
+              </p>
+              <p>
+                Wallet: <span>{data?.fidelity?.account_number}</span>
+              </p>
+            </div>
+          </div>
+          <div className="wallet_check">
+            {activeAccount === "fidelity" && (
+              <TbCircleCheckFilled className="icon" />
+            )}
+          </div>
+        </div> :
+        <div
+          className={`wallet ${activeAccount === "access" ? "active" : ""}`}
+        >
+          <div className="wallet_details">
+            <div className="wallet_details_icon">
+              <Image src={AccessBankLogo} alt="access bank logo" />
+            </div>
+            <div>
+              <p className="amount">
+                ₦ {formatAmount(data?.access?.wallet_balance)}
+              </p>
+              <p>
+                Wallet: <span>{data?.access?.wallet_id}</span>
+              </p>
+            </div>
+          </div>
+          <div className="wallet_check">
+            {activeAccount === "access" && (
+              <TbCircleCheckFilled className="icon" />
+            )}
+          </div>
+        </div>}
+      </div>
+    </section>
+  );
+};
