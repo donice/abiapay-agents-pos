@@ -10,6 +10,7 @@ import {
   AccessWalletToWallet,
   fetchWalletInfo,
   FidelityWalletToWallet,
+  WalletInfoType,
   WalletToWalletPayload,
 } from "@/src/services/walletService";
 import { CustomHeader } from "@/src/components/common/header";
@@ -51,7 +52,7 @@ const OtherWalletsTransferComponent = () => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: string) => {
+    mutationFn: (data: WalletInfoType) => {
       return fetchWalletInfo(data);
     },
     mutationKey: ["fetch_wallet_info"],
@@ -93,7 +94,7 @@ const OtherWalletsTransferComponent = () => {
 
   useEffect(() => {
     if (debouncedWalletNo) {
-      mutate(debouncedWalletNo);
+      mutate({wallet_type: activeAccount, wallet_id: debouncedWalletNo});
     }
   }, [debouncedWalletNo, setValue]);
 
