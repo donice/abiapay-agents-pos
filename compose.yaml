@@ -1,6 +1,6 @@
 services:
   app:
-    image: abia-agent-portal
+    image: xtradot/abia-agent-portal:2.1
     build:
       context: ./
       target: production
