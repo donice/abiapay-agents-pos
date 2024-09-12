@@ -28,7 +28,6 @@ const EnumerationStatsCard = () => {
     );
   }
 
-  // console.log(data.data, "Data");
 
   return (
     <>
@@ -49,23 +48,6 @@ const EnumerationStatsCard = () => {
               </div>
             </div>
           </div>
-          {/* <div className="identity-stats-card">
-            <div className="ticket_container">
-              <div className="identity-stats-card_balance">
-                <span>Week's Collections</span>
-                <span>
-                  ₦{formatAmount(data.data?.[0].total_amount_monthly)}
-                </span>
-              </div>
-
-              <div className="identity-stats-card_image"></div>
-
-              <div className="identity-stats-card_balance">
-                <span>Month's Collection</span>
-                <span>{data.data?.[0].total_transaction_weekly}</span>
-              </div>
-            </div>
-          </div> */}
         </figure>
       ) : (
         <LoaderSkeleton height="200px" />

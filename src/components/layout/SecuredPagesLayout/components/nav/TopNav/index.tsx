@@ -50,7 +50,9 @@ const TopNav = () => {
           </div>
         )}
 
-        <PiUserCircleDuotone className="icon" />
+        <a href="/account" className="logo" aria-label="Abiapay Agents Logo">
+          <PiUserCircleDuotone className="icon" />
+        </a>
       </div>
     </div>
   );
