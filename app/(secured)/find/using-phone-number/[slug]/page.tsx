@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { getLastPathSegment } from "@/src/utils/getLastPathSegment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SelectInput } from "@/src/components/common/input";
 import { BackButton, Button } from "@/src/components/common/button";
 import "./style.scss";
@@ -14,7 +14,8 @@ import { useMutation } from "@tanstack/react-query";
 import { createNewTicket } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
-import {SuccessModal} from "@/src/components/common/modal";
+import { SuccessModal } from "@/src/components/common/modal";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
 const Dynamic = () => {
   const path = usePathname();
@@ -22,6 +23,25 @@ const Dynamic = () => {
   const segment = getLastPathSegment(path);
   let fetched_data = sessionStorage.getItem("TICKETS_DATA");
   const data = fetched_data && JSON.parse(fetched_data);
+
+  const [userData, setUserData] = useState<{
+    name?: string;
+    email?: string;
+  } | null>();
+
+  useEffect(() => {
+    if (useIsBrower()) {
+      const data = window.sessionStorage.getItem("USER_DATA");
+      if (data) {
+        try {
+          setUserData(JSON.parse(data));
+        } catch (e) {
+          console.error("Error parsing JSON data:", e);
+          setUserData({});
+        }
+      }
+    }
+  }, []);
 
   const ticket = data?.filter(
     (ticket: any) => ticket.idagent_transactions == segment
@@ -32,6 +52,7 @@ const Dynamic = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<CreateTicketPayload>({
     defaultValues: {
@@ -44,7 +65,7 @@ const Dynamic = () => {
       no_of_days: ticket[0]?.no_of_days || "",
       amount: ticket[0]?.amount || 0,
       lga: ticket[0]?.lga || "",
-      agentEmail: ticket[0]?.agent_user || "",
+      agentEmail: userData?.email || "",
       plateNumber: ticket[0]?.plate_number || "",
       taxPayerPhone: ticket[0]?.taxpayer_phone || "",
       taxPayerName: ticket[0]?.taxpayer_name || "",
@@ -52,15 +73,22 @@ const Dynamic = () => {
     },
   });
 
+  useEffect(() => {
+    setValue("agentEmail", userData?.email || "");
+  }, [userData]);
+
   const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateTicketPayload) => {
+      
       sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(data));
       return createNewTicket(data);
     },
     mutationKey: ["fetch_transactions"],
     onSuccess: (data) => {
       data.message && toast.error(getErrorMessages(data.message));
-      data.response_code == "00" ? toast.success(data.response_message) : toast.error(data.response_message)
+      data.response_code == "00"
+        ? toast.success(data.response_message)
+        : toast.error(data.response_message);
       setShow(true);
     },
     onError: (error) => {
@@ -133,6 +161,7 @@ const Dynamic = () => {
       {show && (
         <SuccessModal
           text="View Receipt"
+          maintext="Revend Ticket Successful"
           link="/tickets/transport/add/summary"
           id={`Valid for: ${ticket[0]?.payment_period}, Payment for: ${ticket[0]?.revenue_item} `}
           // id={`Ref: ${data?.payment_ref}, Valid for: ${ticket[0]?.payment_period}, Payment for: ${ticket[0]?.revenue_item} `}
