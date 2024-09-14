@@ -164,7 +164,6 @@ const Dynamic = () => {
           maintext="Revend Ticket Successful"
           link="/tickets/transport/add/summary"
           id={`Valid for: ${ticket[0]?.payment_period}, Payment for: ${ticket[0]?.revenue_item} `}
-          // id={`Ref: ${data?.payment_ref}, Valid for: ${ticket[0]?.payment_period}, Payment for: ${ticket[0]?.revenue_item} `}
         />
       )}
     </div>
