@@ -19,5 +19,3 @@ export const fetchAccountStatement = async () => {
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
-
-
