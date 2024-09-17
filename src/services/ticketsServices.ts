@@ -20,6 +20,11 @@ export interface Product {
   monthlyAmount: number;
 }
 
+export interface TransactionsTypes {
+  page: number;
+  limit: number;
+}
+
 export const createNewTicket = async ( requestData: CreateTicketPayload) => {
   try {
     const { data } = await axiosInstance.post(`${url}/transport/create-ticket`, requestData);
@@ -29,9 +34,9 @@ export const createNewTicket = async ( requestData: CreateTicketPayload) => {
   }
 };
 
-export const fetchTransactions = async ()=> {
+export const fetchTransactions = async (requestData: TransactionsTypes)=> {
   try {
-    const { data } = await axiosInstance.post(`${url}/transport/transactions`);
+    const { data } = await axiosInstance.post(`${url}/transport/transactions`, requestData);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);

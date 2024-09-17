@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Loading } from "@/src/components/common/loader/redirecting";
 import "./style.scss";
 import Empty from "@/src/components/common/empty";
@@ -8,19 +8,29 @@ import { formatAmount } from "@/src/utils/formatAmount";
 import { useRouter } from "next/navigation";
 import { GoVerified } from "react-icons/go";
 import { fetchTransactions } from "@/src/services/ticketsServices";
-import toast from "react-hot-toast";
 import { TbLoader } from "react-icons/tb";
 import { LuListRestart } from "react-icons/lu";
 const TransactionsTable: React.FC = () => {
   const router = useRouter();
-  const { data, error, isLoading, isError } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: fetchTransactions,
+  // const { data, error, isLoading, isError } = useQuery({
+  //   queryKey: ["transactions"],
+  //   queryFn: fetchTransactions(data),
+  // });
+
+  const { data, isPending, isError } = useMutation({
+    mutationKey: ["get_transactions"],
+    mutationFn: (data: any) => {
+     return fetchTransactions(data) 
+    } ,
+    onSuccess: () => {
+      console.log("success");
+    },
+    onError: (error) => {},
   });
 
   const fetced_data = data?.data || [];
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className={"loading"}>
         <Loading />
@@ -29,7 +39,7 @@ const TransactionsTable: React.FC = () => {
   }
 
   if (isError) {
-    toast.error(error instanceof Error ? error.message : "Unknown error");
+    console.log(data);
   }
 
   if (!data || data.length === 0) {
@@ -79,9 +89,18 @@ const TransactionsTable: React.FC = () => {
                     )}
                     {transaction.status}
                   </p>
-                  
-                  <p className="next_date"><span><LuListRestart className="icon"/></span><span> {new Date(transaction.next_date).toLocaleString()}</span></p>
-                <p>Valid for: {transaction.payment_period}</p></div>
+
+                  <p className="next_date">
+                    <span>
+                      <LuListRestart className="icon" />
+                    </span>
+                    <span>
+                      {" "}
+                      {new Date(transaction.next_date).toLocaleString()}
+                    </span>
+                  </p>
+                  <p>Valid for: {transaction.payment_period}</p>
+                </div>
               </div>
             ))}
           </div>
