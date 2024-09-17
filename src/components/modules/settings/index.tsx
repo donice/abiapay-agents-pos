@@ -40,7 +40,7 @@ const walletItems: WalletItemsProps[] = [
     cat: "wallet",
   },
   {
-    href: "/wallet/transfer/to-bank",
+    href: "/wallet/transfer/bank",
     title: "To Bank",
     icon: <FcLibrary className="icon" />,
     cat: "wallet",

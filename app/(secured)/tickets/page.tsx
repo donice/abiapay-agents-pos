@@ -7,6 +7,7 @@ import {
   FcAcceptDatabase,
   FcMoneyTransfer,
   FcDiploma2,
+  FcAutomatic,
 } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
@@ -37,6 +38,12 @@ const tickets: TicketsProps[] = [
     title: "Loading & Offloading",
     desc: "Register Loading & Offloading Vehicles",
     icon: <FcInTransit className="icon" />,
+  },
+  {
+    name: "tickets/transport/flying-revenue",
+    title: "Flying Revenue",
+    desc: "Register Flying Revenue Vehicles",
+    icon: <FcAutomatic className="icon" />,
   },
   {
     name: "tickets/transport/emblem",
