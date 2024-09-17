@@ -2,18 +2,11 @@
 import React from "react";
 import { Button } from "@/src/components/common/button";
 import "./style.scss";
-import { useQuery } from "@tanstack/react-query";
 import { CustomHeader } from "@/src/components/common/header";
-import { fetchAccountStatement } from "@/src/services/accountServices";
-import { Loading } from "@/src/components/common/loader/redirecting";
 import { useRouter } from "next/navigation";
 
 const Dynamic = () => {
   const router = useRouter();
-  const { data, isPending } = useQuery({
-    queryKey: ["bank"],
-    queryFn: fetchAccountStatement,
-  });
 
   return (
     <>
@@ -22,9 +15,7 @@ const Dynamic = () => {
         title={"Transfer to other banks"}
         desc={"Select your preferred bank"}
       />
-      {isPending ? (
-        <Loading />
-      ) : (
+
         <div className="bank">
 
           <div className="bank_cta">
@@ -48,7 +39,6 @@ const Dynamic = () => {
             />
           </div>
         </div>
-      )}
     </>
   );
 };

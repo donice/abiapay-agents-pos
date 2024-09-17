@@ -4,7 +4,6 @@ import "./style.scss";
 import {
   FormTextInput,
   SelectInput,
-  SelectSearchInput,
 } from "@/src/components/common/input";
 import { Button, GoBackButton } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
@@ -66,7 +65,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
     },
   });
 
-  const cashoutType = watch("cashout_type");
+  const cashoutType = "bank";
   const { onChange } = registerTransferToBank("amount");
 
   const walletNo = watchTransferWallet("recipient_wallet_no");
@@ -134,11 +133,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
 
   const { mutate: mutateTransfer, isPending: isPendingTransfer } = useMutation({
     mutationFn: (data: any) => {
-      if (cashoutType == "wallet") {
-        return activeAccount == "access"
-          ? AccessWalletToWallet(data)
-          : FidelityWalletToWallet(data);
-      }
+
       if (cashoutType == "bank") {
         return activeAccount == "access"
           ? AccessTransferFunds(data)
@@ -190,22 +185,6 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
         />
       </header>
 
-      <SelectInput
-        label={"Cashout Type"}
-        name={"cashout_type"}
-        id={"cashout_type"}
-        register={registerTransferToBank}
-        options={[
-          {
-            value: "wallet",
-            label: "Cashout to Wallet",
-          },
-          {
-            value: "bank",
-            label: "Cashout to Bank",
-          },
-        ]}
-      />
 
       {cashoutType == "bank" && (
         <form
@@ -286,69 +265,6 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
         </form>
       )}
 
-      {cashoutType == "wallet" && (
-        <form
-          onSubmit={handleSubmitTransferWallet(onSubmit)}
-          className="bank_form"
-        >
-          {" "}
-          <FormTextInput
-            type="number"
-            label={"Beneficiary Wallet"}
-            name="recipient_wallet_no"
-            placeholder={"Enter Beneficiary Wallet ID"}
-            register={registerTransferWallet}
-            validation={{ required: true }}
-            error={errorsTransferWallet.recipient_wallet_no}
-          />
-          {isPending && (
-            <p className="bank_form_beneficiary">
-              <SmallLoader />{" "}
-            </p>
-          )}
-          {beneficiary !== "" && !isPending && (
-            <div className="bank_form_beneficiary">
-              <p>{beneficiary}</p>
-            </div>
-          )}
-          <FormTextInput
-            type="number"
-            label={"Amount"}
-            name={"amount"}
-            placeholder="Enter Amount"
-            register={registerTransferWallet}
-            onChange={onChange}
-            validation={{
-              required: "Enter an amount",
-              validate: (value: number) => {
-                if (activeAccount == "access") {
-                  if (value > dasboardData?.access?.wallet_balance) {
-                    return "Insufficient funds in your Access wallet";
-                  }
-                } else {
-                  if (value > dasboardData?.fidelity?.balance) {
-                    return "Insufficient funds in your Fidelity wallet";
-                  }
-                }
-              },
-            }}
-            error={errorsTransferWallet.amount}
-          />
-          <FormTextInput
-            label={"Description"}
-            name={"desc"}
-            placeholder="Enter Description"
-            register={registerTransferWallet}
-            validation={{ required: true }}
-            error={errorsTransferWallet.desc}
-          />
-          <Button
-            text="Transfer Funds"
-            loading={isPendingTransfer}
-            disabled={isPendingTransfer}
-          />
-        </form>
-      )}
 
       {showSuccessModal.show == true && showSuccessModal.mode == "success" && (
         <InformationModal
