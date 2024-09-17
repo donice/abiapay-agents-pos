@@ -140,7 +140,7 @@ const DashboardComponent: React.FC = () => {
 
   const getTransportTicketData = useCallback(async () => {
     try {
-      const res = await fetchTransactions();
+      const res = await fetchTransactions({page: 1, limit: 30});
       const todaysTickets = filterByTodaysDate(res?.data)
       setTtCount(todaysTickets.length);
 

@@ -17,17 +17,20 @@ const TransactionsTable: React.FC = () => {
   //   queryFn: fetchTransactions(data),
   // });
 
+
   const { data, isPending, isError } = useMutation({
     mutationKey: ["get_transactions"],
-    mutationFn: (data: any) => {
-     return fetchTransactions(data) 
+    mutationFn: ({ page, limit }: { page: number; limit: number }) => {
+     return fetchTransactions({
+      page: 1,
+      limit: 5,
+     }) 
     } ,
     onSuccess: () => {
       console.log("success");
     },
     onError: (error) => {},
   });
-
   const fetced_data = data?.data || [];
 
   if (isPending) {
