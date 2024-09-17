@@ -12,28 +12,17 @@ import { TbLoader } from "react-icons/tb";
 import { LuListRestart } from "react-icons/lu";
 const TransactionsTable: React.FC = () => {
   const router = useRouter();
-  // const { data, error, isLoading, isError } = useQuery({
-  //   queryKey: ["transactions"],
-  //   queryFn: fetchTransactions(data),
-  // });
 
-
-  const { data, isPending, isError } = useMutation({
-    mutationKey: ["get_transactions"],
-    mutationFn: ({ page, limit }: { page: number; limit: number }) => {
-     return fetchTransactions({
-      page: 1,
-      limit: 5,
-     }) 
-    } ,
-    onSuccess: () => {
-      console.log("success");
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["get_transactions"],
+    queryFn: () => {
+      return fetchTransactions();
     },
-    onError: (error) => {},
   });
+
   const fetced_data = data?.data || [];
 
-  if (isPending) {
+  if (isLoading) {
     return (
       <div className={"loading"}>
         <Loading />

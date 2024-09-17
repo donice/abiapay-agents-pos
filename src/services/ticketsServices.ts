@@ -11,7 +11,6 @@ const isToken =
     : null;
 setToken(isToken);
 
-
 export interface Product {
   productCode: string;
   productName: string;
@@ -25,30 +24,38 @@ export interface TransactionsTypes {
   limit: number;
 }
 
-export const createNewTicket = async ( requestData: CreateTicketPayload) => {
+export const createNewTicket = async (requestData: CreateTicketPayload) => {
   try {
-    const { data } = await axiosInstance.post(`${url}/transport/create-ticket`, requestData);
+    const { data } = await axiosInstance.post(
+      `${url}/transport/create-ticket`,
+      requestData
+    );
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
 
-export const fetchTransactions = async (requestData: TransactionsTypes)=> {
+export const fetchTransactions = async () => {
   try {
-    const { data } = await axiosInstance.post(`${url}/transport/transactions`, requestData);
+    const { data } = await axiosInstance.post(`${url}/transport/transactions`, {
+      page: 1,
+      limit: 30,
+    });
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
 
-export const fetchPlateNumberInfo = async ( plate_number: string )=> {
+export const fetchPlateNumberInfo = async (plate_number: string) => {
   try {
-    const { data } = await axiosInstance.post(`${url}/transport/get-plate-number-info`, {"plate_number": plate_number});
+    const { data } = await axiosInstance.post(
+      `${url}/transport/get-plate-number-info`,
+      { plate_number: plate_number }
+    );
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
-

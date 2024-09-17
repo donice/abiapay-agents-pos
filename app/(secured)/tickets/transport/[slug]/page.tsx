@@ -13,25 +13,18 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
-import { fetchTransactions, TransactionsTypes } from "@/src/services/ticketsServices";
+import { fetchTransactions } from "@/src/services/ticketsServices";
 import { Loading } from "@/src/components/common/loader/redirecting";
 
 const Dynamic = () => {
   const path = usePathname();
   const segment = getLastPathSegment(path);
 
-  const { data, isPending, isError } = useMutation({
-    mutationKey: ["get_transactions"],
-    mutationFn: ({ page, limit }: { page: number; limit: number }) => {
-     return fetchTransactions({
-      page: 1,
-      limit: 5,
-     }) 
-    } ,
-    onSuccess: () => {
-      console.log("success");
+  const { data, isError } = useQuery({
+    queryKey: ["get_transactions"],
+    queryFn: () => {
+      return fetchTransactions();
     },
-    onError: (error) => {},
   });
 
   if (isError) {
@@ -94,7 +87,9 @@ const Dynamic = () => {
             <p>{ticket[0]?.payment_ref || "-"}</p>
           </div>
         </div>
-      ): <Loading /> }
+      ) : (
+        <Loading />
+      )}
 
       <div className="ticket-details_form_btn">
         <BackButton link={"/tickets/transport"} />
