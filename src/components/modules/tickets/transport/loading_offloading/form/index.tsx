@@ -13,7 +13,7 @@ import {
   createLoadingOffLoading,
   fetchLoadingOffloadingVehicleType,
   LoadingOffloadingType,
-} from "@/src/services/loadingOffloadingSevrvice";
+} from "@/src/services/loadingOffloadingService";
 
 interface EmblemProduct {
   id: number;
