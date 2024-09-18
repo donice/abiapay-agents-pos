@@ -116,7 +116,7 @@ const DashboardComponent: React.FC = () => {
       const res = await fetchABSSINData();
       setABSSINCount(res?.data.length);
     } catch (error) {
-      toast.error("Cannot fetching abssin data");
+      toast.error("Cannot fetch abssin data");
     }
   }, []);
 
@@ -125,7 +125,7 @@ const DashboardComponent: React.FC = () => {
       const res = await fetchTotalABSSIN();
       setABSSINCount(res?.data.length);
     } catch (error) {
-      toast.error("Cannot fetching abssin data");
+      toast.error("Cannot fetch abssin data");
     }
   }, []);
 
@@ -134,7 +134,7 @@ const DashboardComponent: React.FC = () => {
       const res = await fetchEnumerationData();
       setEnumerationCount(res?.response_data?.transport?.thisDay + res?.response_data?.market?.thisDay);
     } catch (error) {
-      toast.error("Cannot fetching enumeration data");
+      toast.error("Cannot fetch enumeration data");
     }
   }, []);
 
@@ -145,7 +145,7 @@ const DashboardComponent: React.FC = () => {
       setTtCount(todaysTickets.length);
 
     } catch (error) {
-      toast.error("Cannot fetching enumeration data");
+      toast.error("Cannot fetch ticket data");
     }
   }, []);
 

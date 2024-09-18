@@ -87,7 +87,9 @@ const Dynamic = () => {
             <p>{ticket[0]?.payment_ref || "-"}</p>
           </div>
         </div>
-      ): <Loading /> }
+      ) : (
+        <Loading />
+      )}
 
       <div className="ticket-details_form_btn">
         <BackButton link={"/tickets/transport"} />

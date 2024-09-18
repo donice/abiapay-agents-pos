@@ -28,8 +28,8 @@ interface WalletItemsProps {
 
 const walletItems: WalletItemsProps[] = [
   {
-    href: "/wallet/transfer/my-wallet",
-    title: "To My Wallet",
+    href: "/wallet/transfer/earnings-to-wallet",
+    title: "Earnings To Wallet",
     icon: <FcMoneyTransfer className="icon" />,
     cat: "wallet",
   },

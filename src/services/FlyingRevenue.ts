@@ -3,7 +3,7 @@ import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
-const central_api_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
+const centralapi_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
   useIsBrower() && window.sessionStorage.getItem("TOKEN")
@@ -11,7 +11,7 @@ const isToken =
     : null;
 setToken(isToken);
 
-export interface LoadingOffloadingType {
+export interface FlyingRevenuePayload {
   merchant_key: string,
   penalty_status: string,
   total_number: string,
@@ -24,24 +24,23 @@ export interface LoadingOffloadingType {
   collection_point: string,
   payment_period: string,
   wallet_type: string,
-  next_payment_date: string,
   amount: string
 }
 
-export const fetchLoadingOffloadingVehicleType = async ( )=> {
+export const createFlyingRevenue = async ( reqData: FlyingRevenuePayload )=> {
   try {
-    const { data } = await axiosInstance.get(`${central_api_url}/agent/concessionaires-product-codes?category=LoadingOffloading`);
+    const { data } = await axiosInstance.post(`${url}/transport/create-haulage`, reqData);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
 
-export const createLoadingOffLoading = async ( reqData: LoadingOffloadingType )=> {
+export const fetchTonnage = async ( reqData: string | undefined )=> {
   try {
-    const { data } = await axiosInstance.post(`${url}/ticket/loading-offloading`, reqData);
+    const { data } = await axiosInstance.get(`${centralapi_url}/agent/concessionaires-product-codes?category=${reqData}` );
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    throw new Error(`Error fetching Tonnage: ${error?.message}`);
   }
 };
