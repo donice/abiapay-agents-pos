@@ -11,11 +11,11 @@ import { useMutation } from "@tanstack/react-query";
 import { getErrorMessages } from "@/src/utils/helper";
 import {
   EmblemProduct,
-  fetchLoadingOffloadingVehicleType,
 } from "@/src/services/loadingOffloadingService";
 import { haulages } from "../lib/haulages";
 import {
   createFlyingRevenue,
+  fetchTonnage,
   FlyingRevenuePayload,
 } from "@/src/services/FlyingRevenue";
 
@@ -26,13 +26,12 @@ const FlyingRevenueForm = ({
   setShow: any;
   slug: string;
 }) => {
-  console.log(slug);
   const haulageItem = haulages.find((item) => item.name.includes(slug));
   const [embleProductCode, setEmbleProductCode] = useState<EmblemProduct[]>([]);
 
   const getEmblemProductCode = async () => {
     try {
-      const data = await fetchLoadingOffloadingVehicleType();
+      const data = await fetchTonnage(haulageItem?.cat);
       setEmbleProductCode(data);
     } catch (error) {
       console.error(error);
@@ -137,7 +136,6 @@ const FlyingRevenueForm = ({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="loading_form">
-        {slug == "x" && (
           <>
             <SelectInput
               label={"Vehicle Type"}
@@ -151,48 +149,6 @@ const FlyingRevenueForm = ({
               onChange={handleEmblemTypeChange}
             />
           </>
-        )}
-
-        {slug == "produce" && (
-          <>
-            <SelectInput
-              label={"Vehicle Tonnage"}
-              name={"product_code"}
-              id={"product_code"}
-              validation={{ required: true }}
-              options={embleProductCode.map((item: EmblemProduct) => ({
-                label: item.productName,
-                value: item.productCode,
-              }))}
-              onChange={handleEmblemTypeChange}
-            />
-          </>
-        )}
-        {slug == "scrap-metal" && (
-          <>
-            <SelectInput
-              label={"Ticket Type"}
-              name={"product_code"}
-              id={"product_code"}
-              register={register}
-              validation={{ required: true }}
-              error={!!errors.product_code}
-              options={[
-                {
-                  label: "Select Ticket Type",
-                  value: "",
-                },
-                {
-                  label: "Scrap",
-                  value: "Scrap",
-                },
-              ]}
-              onChange={() =>
-                watch("product_code") !== "" && setValue("amount", "7000")
-              }
-            />
-          </>
-        )}
 
         <FormTextInput
           label={"Vehicle Content"}

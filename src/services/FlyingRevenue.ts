@@ -3,6 +3,7 @@ import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
+const centralapi_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
   useIsBrower() && window.sessionStorage.getItem("TOKEN")
@@ -32,5 +33,14 @@ export const createFlyingRevenue = async ( reqData: FlyingRevenuePayload )=> {
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const fetchTonnage = async ( reqData: string | undefined )=> {
+  try {
+    const { data } = await axiosInstance.get(`${centralapi_url}/agent/concessionaires-product-codes?category=${reqData}` );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching Tonnage: ${error?.message}`);
   }
 };

@@ -3,7 +3,7 @@ import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
-const central_api_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
+const centralapi_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
   useIsBrower() && window.sessionStorage.getItem("TOKEN")
@@ -50,7 +50,7 @@ export interface EmblemProduct {
 
 export const fetchLoadingOffloadingVehicleType = async ( )=> {
   try {
-    const { data } = await axiosInstance.get(`${central_api_url}/agent/concessionaires-product-codes?category=LoadingOffloading`);
+    const { data } = await axiosInstance.get(`${centralapi_url}/agent/concessionaires-product-codes?category=LoadingOffloading`);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);

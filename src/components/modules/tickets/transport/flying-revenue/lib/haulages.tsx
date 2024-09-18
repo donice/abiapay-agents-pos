@@ -57,7 +57,7 @@ export const haulages: HaulageProps[] = [
   {
     name: "tickets/transport/flying-revenue/inter-state-haulage",
     title: "Inter State Haulage & Commerece Levy",
-    cat: "Transport(Haulage_Commerce)",
+    cat: "Transport",
     icon: <FcLandscape className="icon" />,
   },
   {
