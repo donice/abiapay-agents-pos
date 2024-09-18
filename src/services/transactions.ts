@@ -10,7 +10,7 @@ const isToken =
     : null;
 setToken(isToken);
 
-export const fetchTransactions = async () => {
+export const fetchTransferHistory = async () => {
   try {
     const { data } = await axiosInstance.post(`${url}/wallet/transfer-history`);
     return data;

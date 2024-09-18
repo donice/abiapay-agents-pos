@@ -3,25 +3,28 @@ import React, { useState } from "react";
 import { CustomHeader } from "../../common/header";
 import { formatAmount } from "@/src/utils/formatAmount";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
-import router from "next/router";
+import {useRouter} from "next/navigation";
 import { GoVerified } from "react-icons/go";
 import { GoBackButton } from "../../common/button";
 import Empty from "../../common/empty";
 import "./style.scss";
 import { useQuery } from "@tanstack/react-query";
-import { fetchTransactions } from "@/src/services/transactions";
+import { fetchTransferHistory } from "@/src/services/transactions";
 import { Loading } from "../../common/loader/redirecting";
 import toast from "react-hot-toast";
 
 const TransactionsComponent = () => {
-  // const [transactions, setTransactions] = useState(null || []);
+  const router = useRouter();
 
 const { data, isError, isLoading } = useQuery({
-  queryKey: ["transactions"],
+  queryKey: ["transfer_history"],
   queryFn: () => {
-    return fetchTransactions();
+    return fetchTransferHistory();
   },
 });
+
+// console.log(data.response_data);
+
  if (isError) {
   toast.error("Something went wrong fetching transactions");
     console.log("error");
@@ -40,36 +43,36 @@ const { data, isError, isLoading } = useQuery({
         </header>
 
         <div className="tranactions-comp_form">
-          {data && data.length > 0 ? (
+          {/* {data && data.length > 0 ? ( */}
+          {data?.response_data && data?.response_data.length > 0 ? (
             <div className="tranactions-comp_form_tickets_container">
               <div className="tickets">
-                {data.map((transaction: any) => (
+                {data.response_data.map((transaction: any) => (
                   <div
-                    key={transaction.idagent_transactions}
+                    key={transaction.id}
                     className="ticket"
                     onClick={() =>
                       router.push(
-                        `/tranactions/using-phone-number/${transaction.idagent_transactions}`
+                        `/transfers/details/${transaction.id}`
                       )
                     }
                   >
                     <div>
-                      <p>{CamelCaseToTitleCase(transaction.revenue_item)}</p>
-                      <p>{transaction.agency}</p>
-                      <p>{new Date(transaction.trans_date).toLocaleString()}</p>
+                      <p>{transaction.payer_accountName}</p>
+                      <p>{transaction.payer_accountNumber}</p>
+                      <p>{new Date(transaction.createTime).toLocaleString()}</p>
                       <p>{transaction.reference}</p>
                     </div>
                     <div>
-                      <p>N{formatAmount(transaction.amount)}</p>
                       <p
                         className={`${
-                          transaction.status === "Completed" ? "completed" : " "
+                          transaction.paymentStatus === "PAID" ? "completed" : " "
                         }`}
                       >
-                        {transaction.status === "Completed" && <GoVerified />}
-                        {transaction.status}
+                        {transaction.paymentStatus === "PAID" && <GoVerified />}
+                        {transaction.paymentStatus}
                       </p>
-                      <p>{transaction.payment_period}</p>
+                      <p>N{formatAmount(transaction.payer_amountPaid)}</p>
                     </div>
                   </div>
                 ))}
@@ -77,6 +80,7 @@ const { data, isError, isLoading } = useQuery({
             </div>
           ) : isLoading ? <Loading /> : (
             <Empty text="No Transactions found" />
+            
           )}
         </div>
       </div>
