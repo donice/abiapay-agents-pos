@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { CustomHeader } from "../../common/header";
 import { formatAmount } from "@/src/utils/formatAmount";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
-import router from "next/router";
+import {useRouter} from "next/navigation";
 import { GoVerified } from "react-icons/go";
 import { GoBackButton } from "../../common/button";
 import Empty from "../../common/empty";
@@ -14,6 +14,7 @@ import { Loading } from "../../common/loader/redirecting";
 import toast from "react-hot-toast";
 
 const TransactionsComponent = () => {
+  const router = useRouter();
 
 const { data, isError, isLoading } = useQuery({
   queryKey: ["transfer_history"],
@@ -52,7 +53,7 @@ const { data, isError, isLoading } = useQuery({
                     className="ticket"
                     onClick={() =>
                       router.push(
-                        `/tranactions/using-phone-number/${transaction.id}`
+                        `/transfers/details/${transaction.id}`
                       )
                     }
                   >
