@@ -44,7 +44,7 @@ const { data, isError, isLoading } = useQuery({
 
         <div className="tranactions-comp_form">
           {/* {data && data.length > 0 ? ( */}
-          {data ? (
+          {data?.response_data && data?.response_data.length > 0 ? (
             <div className="tranactions-comp_form_tickets_container">
               <div className="tickets">
                 {data.response_data.map((transaction: any) => (
@@ -80,6 +80,7 @@ const { data, isError, isLoading } = useQuery({
             </div>
           ) : isLoading ? <Loading /> : (
             <Empty text="No Transactions found" />
+            
           )}
         </div>
       </div>

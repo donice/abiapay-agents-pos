@@ -9,6 +9,7 @@ import { fetchTransferHistory } from "@/src/services/transactions";
 import { useQuery } from "@tanstack/react-query";
 import { Loading } from "@/src/components/common/loader/redirecting";
 import { useRouter } from "next/navigation";
+import Empty from "@/src/components/common/empty";
 
 const Dynamic = ({ params }: { params: { slug: string } }) => {
   const router = useRouter();
@@ -33,50 +34,59 @@ const Dynamic = ({ params }: { params: { slug: string } }) => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="ticket-details">
-          <h1>More Transaction Details</h1>
-          <div className="ticket-details_comp">
-            <div>
-              <p>Status</p>
-              <p>{ticket?.paymentStatus}</p>
-            </div>
+        <>
+          {data?.response_data.length > 0 ? (
+            <div className="ticket-details">
+              <h1>More Transaction Details</h1>
+              <div className="ticket-details_comp">
+                <div>
+                  <p>Status</p>
+                  <p>{ticket?.paymentStatus}</p>
+                </div>
 
-            <div>
-              <p>Amount</p>
-              <p>N {formatAmount(ticket?.payer_amountPaid)}</p>
-            </div>
-            <div>
-              <p>Bank</p>
-              <p>{ticket?.merchant_bankName}</p>
-            </div>
+                <div>
+                  <p>Amount</p>
+                  <p>N {formatAmount(ticket?.payer_amountPaid)}</p>
+                </div>
+                <div>
+                  <p>Bank</p>
+                  <p>{ticket?.merchant_bankName}</p>
+                </div>
 
-            <div>
-              <p>Payer Name</p>
-              <p>{ticket?.payer_accountName}</p>
-            </div>
+                <div>
+                  <p>Payer Name</p>
+                  <p>{ticket?.payer_accountName}</p>
+                </div>
 
-            <div>
-              <p>Payer Account</p>
-              <p>{ticket?.payer_accountNumber}</p>
-            </div>
+                <div>
+                  <p>Payer Account</p>
+                  <p>{ticket?.payer_accountNumber}</p>
+                </div>
 
-            <div>
-              <p>Transaction Ref</p>
-              <p>{ticket?.sessionId}</p>
-            </div>
-            <div>
-              <p>Transaction Date</p>
-              <p>{ticket?.createTime}</p>
-            </div>
-          </div>
+                <div>
+                  <p>Transaction Ref</p>
+                  <p>{ticket?.sessionId}</p>
+                </div>
+                <div>
+                  <p>Transaction Date</p>
+                  <p>{ticket?.createTime}</p>
+                </div>
+              </div>
 
-          <Button
-            text="Go Back"
-            onClick={() => {
-              router.push("/transfers");
-            }}
-          />
-        </div>
+              <Button
+                text="Go Back"
+                onClick={() => {
+                  router.push("/transfers");
+                }}
+              />
+              
+            </div>
+          ) : (
+            <div>
+              <Empty text="No data" />
+            </div>
+          )}
+        </>
       )}
     </>
   );
