@@ -28,6 +28,26 @@ export interface LoadingOffloadingType {
   amount: string
 }
 
+export interface EmblemProduct {
+  id: number;
+  merchant_id: string;
+  business_type: string;
+  productCode: string;
+  productTag: string;
+  planCode: string;
+  productName: string;
+  category: string;
+  amount: string;
+  dailyAmount: string;
+  weeklyAmount: string;
+  monthlyAmount: string;
+  emblem: string;
+  presumptivetax: string;
+  penalty: string;
+  penalty_daily: string;
+  status: string;
+}
+
 export const fetchLoadingOffloadingVehicleType = async ( )=> {
   try {
     const { data } = await axiosInstance.get(`${central_api_url}/agent/concessionaires-product-codes?category=LoadingOffloading`);
