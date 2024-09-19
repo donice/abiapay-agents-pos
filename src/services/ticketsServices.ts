@@ -40,7 +40,7 @@ export const fetchTransactions = async () => {
   try {
     const { data } = await axiosInstance.post(`${url}/transport/transactions`, {
       page: 1,
-      limit: 30,
+      limit: 200,
     });
     return data;
   } catch (error: any) {
