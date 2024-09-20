@@ -91,7 +91,7 @@ export const haulages: HaulageProps[] = [
     icon: <FcShipped className="icon" />,
   },
   {
-    name: "tickets/transport/flying-revenue/produce/gate-pass",
+    name: "tickets/transport/flying-revenue/gate-pass",
     title: "Gate Pass",
     cat: "GatePass",
     icon: <FcEngineering className="icon" />,
