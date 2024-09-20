@@ -184,7 +184,6 @@ interface SelectComponentProps {
   error?: boolean;
 }
 
-
 export const SelectInput: React.FC<SelectComponentProps> = ({
   label,
   name,
@@ -193,7 +192,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
   value,
   onChange,
   options,
-  placeholder = "Select an option", // Default placeholder text
+  placeholder = "Select an option",
   disabled,
   register,
   validation,
@@ -206,21 +205,20 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
         name={name}
         id={id}
         className={`${className} minimal`}
-        value={value || ""} // Empty value by default
+        value={value}
         disabled={disabled}
         onChange={onChange}
-        {...(register && register(name, validation))}
-      >
-        {/* Show placeholder as selected when value is empty */}
-        <option value="" disabled hidden>
-          {placeholder}
-        </option>
+        {...(register && register(name, validation))} 
+        >
 
-        {/* Dynamic options */}
+        <option value="" disabled>{placeholder}</option>
+
         {options &&
           options.map((option) => (
             <option
               key={option.value}
+              defaultValue={option.value}
+              disabled={disabled}
               value={option.value}
             >
               {option.label}
@@ -231,7 +229,6 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
     </div>
   );
 };
-
 
 export const SelectSearchInput: React.FC<SelectComponentProps> = ({
   label,
