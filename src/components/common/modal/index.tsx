@@ -364,7 +364,7 @@ export const FlyingRevenue = ({
 
           <SecondaryButton
             text="Create New Flying Revenue"
-            link="/tickets/transport/flying_revenue"
+            link="/tickets/transport/flying-revenue"
           />
         </div>
       </div>

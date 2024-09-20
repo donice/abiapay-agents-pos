@@ -44,8 +44,9 @@ const TicketsStatsCard = () => {
               <div className="tickets-wallet-card_image"></div>
 
               <div className="tickets-wallet-card_balance">
-                <span>Total Tickets</span>
-                <span>{data.data?.[0].total_transaction}</span>
+              <span>{new Date().toDateString()}</span>
+
+                <span>{data.data?.[0].total_transaction} Tickets</span>
               </div>
             </div>
           </div>
@@ -62,7 +63,7 @@ const TicketsStatsCard = () => {
 
               <div className="tickets-wallet-card_balance">
                 <span>Month's Collection</span>
-                <span>{data.data?.[0].total_transaction_weekly}</span>
+                <span>{data.data?.[0].total_transaction_weekly} Tickets</span>
               </div>
             </div>
           </div>

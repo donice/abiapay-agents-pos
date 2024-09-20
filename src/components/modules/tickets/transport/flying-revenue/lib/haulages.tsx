@@ -86,7 +86,7 @@ export const haulages: HaulageProps[] = [
   },
   {
     name: "tickets/transport/flying-revenue/sand-beaches",
-    title: "SandBeaches",
+    title: "Sand Beaches",
     cat: "SandBeaches",
     icon: <FcShipped className="icon" />,
   },
