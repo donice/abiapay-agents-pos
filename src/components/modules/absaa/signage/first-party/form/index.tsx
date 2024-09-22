@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { fetchProducts } from "@/src/services/common";
+import { fetchABSSINInfo, fetchProducts } from "@/src/services/common";
 import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
@@ -12,13 +12,14 @@ import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { SuccessModal } from "@/src/components/common/modal";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import "./style.scss";
-import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
 import {
   Product,
   createNewTicket,
   fetchPlateNumberInfo,
 } from "@/src/services/ticketsServices";
 import { useMutation } from "@tanstack/react-query";
+import { ABSAAPayload } from "@/src/components/types/absaaTypes";
+import { createFirstPartySignage } from "@/src/services/absaaService";
 
 const CreateFirstPartySignageForm = ({
   show,
@@ -36,50 +37,31 @@ const CreateFirstPartySignageForm = ({
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<CreateTicketPayload>({
+  } = useForm<ABSAAPayload>({
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
-      transaction_date: getCurrentDateTime(),
-      invoice_id: `INV${randomInvoiceGenerator()}`,
-      paymentPeriod: "",
-      productCode: "",
-      next_expiration_date: "",
-      no_of_days: "",
       amount: "",
-      lga: "",
-      agentEmail: "",
-      plateNumber: "",
-      taxPayerPhone: "",
-      taxPayerName: "",
+      zone: "",
+      size_meter: "",
+      sign_type: "",
+      road_name: "",
+      occurence: "1",
+      abssin: "",
+      taxpayer_phone: "",
+      taxpayer_name: "",
       wallet_type: "fidelity",
     },
   });
 
   const router = useRouter();
-  const [products, setProducts] = useState<Product[]>([]);
 
   const data = useIsBrower() && sessionStorage.getItem("USER_DATA");
   const user_data = data && JSON.parse(data);
-  const getProductsData = async () => {
-    try {
-      const response = await fetchProducts();
-      setProducts(response?.data);
-    } catch {
-      toast.error("Error fetching products");
-    }
-  };
 
-  useEffect(() => {
-    setValue("agentEmail", user_data?.email);
-  }, [setValue, user_data]);
-
-  useEffect(() => {
-    getProductsData();
-  }, []);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: CreateTicketPayload) => {
-      return createNewTicket(data);
+    mutationFn: (data: ABSAAPayload) => {
+      return createFirstPartySignage(data);
     },
     onSuccess: (response: any) => {
       if (response.response_code === "00") {
@@ -98,7 +80,7 @@ const CreateFirstPartySignageForm = ({
     },
   });
 
-  const onSubmit = async (data: CreateTicketPayload) => {
+  const onSubmit = async (data: ABSAAPayload) => {
     const formData = {
       ...data,
       transaction_date: getCurrentDateTime(),
@@ -110,60 +92,20 @@ const CreateFirstPartySignageForm = ({
     mutate(formData);
   };
 
-  const handleProductChange = (event: { target: { value: any } }) => {
-    const productCode = event.target.value;
-    setSelectedProduct(productCode);
-    setValue("productCode", productCode);
-  };
 
-  const handlePeriodChange = (event: { target: { value: any } }) => {
-    const period = event.target.value;
-    setSelectedPeriod(period);
-    setValue("paymentPeriod", period);
-
-    const selectedProductData = products.find(
-      (product) => product.productCode === selectedProduct
-    );
-    let amount = 0;
-    let no_of_days = "0";
-
-    switch (period) {
-      case "1 Day":
-        no_of_days = "1";
-        amount = selectedProductData?.dailyAmount || 0;
-        break;
-      case "1 Week":
-        no_of_days = "7";
-        amount = selectedProductData?.weeklyAmount || 0;
-        break;
-      case "1 Month":
-        no_of_days = "30";
-        amount = selectedProductData?.monthlyAmount || 0;
-        break;
-    }
-
-    setValue("no_of_days", no_of_days);
-    const transaction_date = new Date();
-    const next_expiration_date = new Date(
-      transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000
-    );
-    setValue("next_expiration_date", next_expiration_date.toISOString());
-    setValue("amount", amount);
-  };
-
-  const plateNumber = watch("plateNumber");
-  const debouncedPlateNumber = useDebounce(plateNumber, 500);
+  const abssin = watch("abssin");
+  const debouncedPlateNumber = useDebounce(abssin, 500);
 
   useEffect(() => {
     if (debouncedPlateNumber) {
-      const getPlateNumberInfo = async (plateNumber: string) => {
+      const getPlateNumberInfo = async (abssin: string) => {
         try {
-          const response = await fetchPlateNumberInfo(plateNumber);
+          const response = await fetchABSSINInfo({id: abssin});
 
           if (response.data?.length !== 0) {
             toast.success(response.message);
-            setValue("taxPayerName", response.data.Name);
-            setValue("taxPayerPhone", response.data.Phone);
+            setValue("taxpayer_name", response.data.firstname + " " + response.data.lastname);
+            setValue("taxpayer_phone", response.data.phone_number);
           }
         } catch (error) {
           toast.error("Error fetching plate number information");
@@ -178,8 +120,8 @@ const CreateFirstPartySignageForm = ({
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
       <SelectInput
         label="Sign Type"
-        name="wallet_type"
-        id="wallet_type"
+        name="sign_type"
+        id="sign_type"
         register={register}
         validation={{ required: true }}
         options={[
@@ -187,12 +129,12 @@ const CreateFirstPartySignageForm = ({
           { value: "Free Standing Signs", label: "Free Standing Signs" },
         ]}
         placeholder="Select Wallet Type"
-        error={!!errors.wallet_type}
+        error={!!errors.sign_type}
       />
       <SelectInput
         label="Zone"
-        name="wallet_type"
-        id="wallet_type"
+        name="zone"
+        id="zone"
         register={register}
         validation={{ required: true }}
         options={[
@@ -200,12 +142,12 @@ const CreateFirstPartySignageForm = ({
           { value: "Premium", label: "Premium" },
         ]}
         placeholder="Select Wallet Type"
-        error={!!errors.wallet_type}
+        error={!!errors.zone}
       />
       <SelectInput
         label="Area in SQM"
-        name="wallet_type"
-        id="wallet_type"
+        name="size_meter"
+        id="size_meter"
         register={register}
         validation={{ required: true }}
         options={[
@@ -244,23 +186,33 @@ const CreateFirstPartySignageForm = ({
           
         ]}
         placeholder="Select Wallet Type"
-        error={!!errors.wallet_type}
+        error={!!errors.size_meter}
       />
 
       <FormTextInput
-        label="Plate Number"
+        label="ABSSIN"
         type="text"
-        name="plateNumber"
-        placeholder="Enter Plate Number"
+        name="abssin"
+        placeholder="Enter ABSSIN"
         register={register}
         validation={{ required: true }}
-        error={errors.plateNumber}
+        error={errors.abssin}
+      />
+
+      <FormTextInput
+        label="Taxpayer Name"
+        type="text"
+        name="taxpayer_name"
+        placeholder="Enter Taxpayer Name"
+        register={register}
+        validation={{ required: true }}
+        error={errors.taxpayer_name}
       />
 
       <FormTextInput
         label="Taxpayer Phone Number"
         type="number"
-        name="taxPayerPhone"
+        name="taxpayer_phone"
         placeholder="Enter Taxpayer Phone Number"
         register={register}
         validation={{
@@ -274,27 +226,17 @@ const CreateFirstPartySignageForm = ({
             message: "Length must be below 13 characters",
           },
         }}
-        error={errors.taxPayerPhone}
-      />
-
-      <FormTextInput
-        label="Taxpayer Name"
-        type="text"
-        name="taxPayerName"
-        placeholder="Enter Taxpayer Name"
-        register={register}
-        validation={{ required: true }}
-        error={errors.taxPayerName}
+        error={errors.taxpayer_phone}
       />
 
       <FormTextInput
         label="Location"
         type="text"
-        name="taxPayerName"
+        name="road_name"
         placeholder="Enter Location"
         register={register}
         validation={{ required: true }}
-        error={errors.taxPayerName}
+        error={errors.road_name}
       />
 
       <FormTextInput
