@@ -23,11 +23,12 @@ import type { Action, State } from "../../types/dashboardTypes";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { WalletCard } from "./walletCard";
 import { fetchTransactions } from "@/src/services/ticketsServices";
+import QuickLink from "./quickLink";
 
 function filterByTodaysDate(transactions: any[]) {
-  const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-  return transactions.filter(transaction => {
-      return transaction.trans_date.split('T')[0] === today;
+  const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+  return transactions.filter((transaction) => {
+    return transaction.trans_date.split("T")[0] === today;
   });
 }
 
@@ -132,7 +133,10 @@ const DashboardComponent: React.FC = () => {
   const getEnumerationDailyData = useCallback(async () => {
     try {
       const res = await fetchEnumerationData();
-      setEnumerationCount(res?.response_data?.transport?.thisDay + res?.response_data?.market?.thisDay);
+      setEnumerationCount(
+        res?.response_data?.transport?.thisDay +
+          res?.response_data?.market?.thisDay
+      );
     } catch (error) {
       toast.error("Cannot fetch enumeration data");
     }
@@ -141,9 +145,8 @@ const DashboardComponent: React.FC = () => {
   const getTransportTicketData = useCallback(async () => {
     try {
       const res = await fetchTransactions();
-      const todaysTickets = filterByTodaysDate(res?.data)
+      const todaysTickets = filterByTodaysDate(res?.data);
       setTtCount(todaysTickets.length);
-
     } catch (error) {
       toast.error("Cannot fetch ticket data");
     }
@@ -179,11 +182,6 @@ const DashboardComponent: React.FC = () => {
         </div>
       </header>
 
-      {/* <div>
-        <QuickLink name="Identity" link="/identity" />
-        <QuickLink name="Enforcement" link="/identity" />
-        <QuickLink name="Reports" link="/identity" />
-      </div> */}
       {!loading ? (
         <div className="dashboard_wallets">
           <WalletCard bank="access" data={accessData} />
@@ -221,6 +219,12 @@ const DashboardComponent: React.FC = () => {
           <LoaderSkeleton height="70px" />
         </div>
       )}
+
+      <div>
+        <QuickLink name="Bulk Prints" link="/prints" />
+        {/* <QuickLink name="Enforcement" link="/identity" /> */}
+        {/* <QuickLink name="Reports" link="/identity" /> */}
+      </div>
     </div>
   );
 };

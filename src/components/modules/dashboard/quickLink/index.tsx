@@ -11,7 +11,7 @@ const QuickLinks = ({
   name,
   link,
 }: {
-  name: "Identity" | "Enforcement" | "Reports";
+  name: "Identity" | "Enforcement" | "Reports" | "Bulk Prints";
   link: string;
 }) => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const QuickLinks = ({
     <div className="quicklink" onClick={() => router.push(link)}>
       <div className="quicklink_name">
         {" "}
-        {name == "Identity" ? (
+        {name == "Identity" || name == "Bulk Prints" ? (
           <Image src={scanner} alt="scanner" className="icon" />
         ) : name == "Reports" ? (
           <Image src={reports} alt="reports" className="icon" />
