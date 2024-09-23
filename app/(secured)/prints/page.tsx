@@ -21,17 +21,18 @@ interface TicketsProps {
 }
 
 const tickets: TicketsProps[] = [
-  {
-    name: "prints/id",
-    title: "ID Cards",
-    desc: "Print bulk ID cards",
-    icon: <FcSimCardChip className="icon" />,
-  },
+
   {
     name: "prints/sticker",
     title: "Stickers",
     desc: "Print bulk stickers",
     icon: <FcGallery className="icon" />,
+  },  
+  {
+    name: "prints/id",
+    title: "ID Cards",
+    desc: "Print bulk ID cards",
+    icon: <FcSimCardChip className="icon" />,
   },
 ];
 
