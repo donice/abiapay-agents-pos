@@ -2,6 +2,12 @@
 
 .bulk-id {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  @include custom-media-query("mobile", $md) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
   .card {
     margin-top: 2rem;
     display: flex;
@@ -15,11 +21,13 @@
     background-position: center;
     padding: 1rem;
     border-radius: 0.5rem;
-    width: 100%;
-    max-width: 32rem; 
-    aspect-ratio: 32 / 19.5;
-    height: auto; 
-    max-height: 19.5rem;
+    width: 32rem; 
+    height: 19.5rem;
+    // width: 100%;
+    // max-width: 32rem; 
+    // aspect-ratio: 32 / 19.5;
+    // height: auto; 
+    // max-height: 19.5rem;
     border: 2px solid rgb(240, 240, 240);
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     
