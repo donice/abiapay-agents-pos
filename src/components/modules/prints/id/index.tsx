@@ -2,20 +2,20 @@
 import { CustomHeader } from "@/src/components/common/header";
 import React, { useState } from "react";
 import BulkPrintForm from "./form";
-import { useRouter } from "next/navigation";
-import { EmblemModal } from "@/src/components/common/modal";
+import BulkComp from "./bulk";
 
 const PrintIDComp = () => {
+  const [viewData, setViewData] = useState("form");
+  const [bulkData, setBulkData] = useState<[] | null>(null);
 
   return (
     <div>
-      <CustomHeader
-        title="Bulk ID Cards"
-        desc="Print bulk ID cards"
-      />
-
-      <BulkPrintForm  />
-     
+      <CustomHeader title="Bulk ID Cards" desc="Print bulk ID cards" />
+      {viewData == "form" ? (
+        <BulkPrintForm setViewData={setViewData} setBulkData={setBulkData} />
+      ) : viewData == "data" ? (
+        <BulkComp bulkData={bulkData} />
+      ): null}
     </div>
   );
 };

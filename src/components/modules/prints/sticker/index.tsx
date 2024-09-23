@@ -1,39 +1,23 @@
 "use client";
 import { CustomHeader } from "@/src/components/common/header";
 import React, { useState } from "react";
-import CreateEmblemForm from "./form";
-import { useRouter } from "next/navigation";
-import { EmblemModal } from "@/src/components/common/modal";
+import BulkPrintForm from "./form";
+import BulkComp from "./bulk";
 
-const PrintStickerComponent = () => {
-  const router = useRouter();
-  const [show, setShow] = useState({
-    mode: false,
-    message: "",
-    expiry_date: "",
-    payment_ref: "",
-  });
+const PrintIDComp = () => {
+  const [viewData, setViewData] = useState("form");
+  const [bulkData, setBulkData] = useState<[] | null>(null);
+
   return (
     <div>
-      <CustomHeader
-        title="Transport Emblem"
-        desc="Create Transport Emblem"
-      />
-
-      <CreateEmblemForm setShow={setShow} />
-      {show.mode && (
-        <EmblemModal
-          maintext={show.message}
-          exp_date={show.expiry_date}
-          payment_ref={show.payment_ref}
-          button_text="Done"
-          onClick={() => {
-            router.push("/tickets");
-          }}
-        />
-      )}
+      <CustomHeader title="Bulk Stickers" desc="Print bulk stickers" />
+      {viewData == "form" ? (
+        <BulkPrintForm setViewData={setViewData} setBulkData={setBulkData} />
+      ) : viewData == "data" ? (
+        <BulkComp bulkData={bulkData} />
+      ): null}
     </div>
   );
 };
 
-export default PrintStickerComponent;
+export default PrintIDComp;

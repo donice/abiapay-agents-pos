@@ -18,7 +18,7 @@ interface LGA {
   value: string;
 }
 
-const BulkPrintForm = () => {
+const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
   const [lga, setLga] = useState<LGA[]>([]);
 
   const getLgas = async () => {
@@ -43,8 +43,6 @@ const BulkPrintForm = () => {
 
   const {
     handleSubmit,
-    watch,
-    setValue,
     register,
     formState: { errors },
   } = useForm({
@@ -63,9 +61,11 @@ const BulkPrintForm = () => {
     },
     onSuccess: (data) => {
       if (data?.response_code) {
-        data?.response_code == "00"
-          ? toast.success(data?.response_message || "Data Fetched Successfully")
-          : toast.error(data?.response_message);
+        if (data?.response_code == "00") {
+          toast.success(data?.response_message || "Data Fetched Successfully");
+          setBulkData(data?.response_data.data);
+          setViewData("data");
+        } else toast.error(data?.response_message);
       } else {
         toast.error(getErrorMessages(data?.message));
       }
@@ -77,7 +77,6 @@ const BulkPrintForm = () => {
 
   const onSubmit = (reqData: any) => {
     mutate(reqData);
-    console.log(reqData);
   };
 
   return (
@@ -102,7 +101,7 @@ const BulkPrintForm = () => {
         error={errors.no_of_cards}
       />
 
-      <Button text={"Fetch Data"} loading={isPending} disabled={isPending}/>
+      <Button text={"Fetch Data"} loading={isPending} disabled={isPending} />
     </form>
   );
 };
