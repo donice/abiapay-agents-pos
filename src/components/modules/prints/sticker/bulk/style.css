@@ -40,12 +40,12 @@
 
 .bulk-sticker .card-id {
   position: absolute;
-  top: 7.5rem;
+  top: 10rem;
   left: 50%;
   transform: translateX(-50%);
   font-weight: 600;
   font-family: serif;
-  font-size: 2.9rem;
+  font-size: 2.5rem;
   padding: 0.5rem;
 }
 
@@ -67,7 +67,7 @@
 
 .bulk-sticker .card-content .qrcode {
   position: absolute;
-  top: 40%;
+  top: 45%;
   left: 50%;
   transform: translateX(-50%);
 }
