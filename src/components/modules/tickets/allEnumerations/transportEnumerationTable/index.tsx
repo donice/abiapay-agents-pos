@@ -51,7 +51,7 @@ const TransportEnumerationTable: React.FC = () => {
                 className="ticket"
                 onClick={() =>
                   router.push(
-                    `/tickets/transport/${transaction.EnumerationID}`
+                    `/enumeration/transport/view/${transaction.EnumerationID}`
                   )
                 }
               >
