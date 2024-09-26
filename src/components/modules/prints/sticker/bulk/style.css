@@ -19,6 +19,7 @@
   background-image: url("../../../../../../public/prints/sticker-bg.jpg");
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
   padding: 1rem;
   border-radius: 0.5rem;
   width: 32rem;
