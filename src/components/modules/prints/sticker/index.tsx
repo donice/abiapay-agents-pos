@@ -8,16 +8,15 @@ import { Button } from "@/src/components/common/button";
 const PrintIDComp = () => {
   const [viewData, setViewData] = useState("form");
   const [bulkData, setBulkData] = useState<[] | null>(null);
-  
+
   const printRef = useRef<HTMLDivElement>(null);
-  
 
   const handlePrint = () => {
     if (printRef.current) {
       const printContents = printRef.current.innerHTML;
-  
+
       const printWindow = window.open("", "", "width=900,height=600");
-  
+
       if (printWindow) {
         printWindow.document.write(`
           <html>
@@ -47,54 +46,56 @@ const PrintIDComp = () => {
               }
   
               .bulk-sticker .card {
-                margin-top: 2rem;
-                display: flex;
-                align-items: flex-end;
-                justify-content: center;
-                position: relative;
-                gap: 1rem;
-                background-image: url("/prints/sticker-bg.jpg"); /* Use absolute path */
-                background-repeat: no-repeat;
-                background-position: center;
-                padding: 1rem;
-                border-radius: 0.5rem;
-                width: 32rem;
-                height: 32rem;
-                border: 2px solid rgb(240, 240, 240);
-                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-                  0 8px 10px -6px rgb(0 0 0 / 0.1);
-              }
+  margin-top: 2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  gap: 1rem;
+  background-image: url("../../../../../../public/prints/sticker-bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 32rem;
+  height: 32rem;
+  border: 2px solid rgb(240, 240, 240);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
   
               .bulk-sticker .card-tag {
-                position: absolute;
-                top: 5rem;
-                right: 3.75rem;
-                font-weight: 700;
-                color: red;
-                font-size: 1rem;
-                padding: 0.5rem;
-              }
+  position: absolute;
+  top: 5rem;
+  right: 2.5rem;
+  font-weight: 700;
+  color: red;
+  font-size: 1rem;
+  padding: 0.5rem;
+}
   
-              .bulk-sticker .card-id {
-                position: absolute;
-                top: 7.5rem;
-                left: 50%;
-                transform: translateX(-50%);
-                font-weight: 600;
-                font-family: serif;
-                font-size: 2.9rem;
-                padding: 0.5rem;
-              }
-  
-              .bulk-sticker .card-vehicle {
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
-                font-weight: 600;
-                font-family: serif;
-                font-size: 2.9rem;
-                padding: 0.5rem;
-              }
+             .bulk-sticker .card-id {
+  position: absolute;
+  top: 10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+  font-family: serif;
+  font-size: 2.5rem;
+  padding: 0.5rem;
+}
+
+.bulk-sticker .card-vehicle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+  font-family: serif;
+  font-size: 2.9rem;
+  padding: 1.5rem;
+}
   
               .bulk-sticker .card-content {
                 gap: 1rem;
@@ -114,7 +115,7 @@ const PrintIDComp = () => {
           </html>
         `);
         printWindow.document.close();
-        
+
         printWindow.onload = () => {
           printWindow.focus();
           printWindow.print();
@@ -127,8 +128,6 @@ const PrintIDComp = () => {
       console.error("printRef is null.");
     }
   };
-  
-  
 
   return (
     <div>
@@ -136,13 +135,11 @@ const PrintIDComp = () => {
       {viewData == "form" ? (
         <BulkPrintForm setViewData={setViewData} setBulkData={setBulkData} />
       ) : viewData == "data" ? (
-        
-        <div className="print-top"> 
+        <div className="print-top">
           <Button text={"Print Stickers"} onClick={handlePrint} />
           <div ref={printRef}>
             <BulkComp bulkData={bulkData} />
           </div>
-         
         </div>
       ) : null}
     </div>

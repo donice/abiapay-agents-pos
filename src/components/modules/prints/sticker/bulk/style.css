@@ -32,7 +32,7 @@
 .bulk-sticker .card-tag {
   position: absolute;
   top: 5rem;
-  right: 3.75rem;
+  right: 2.5rem;
   font-weight: 700;
   color: red;
   font-size: 1rem;
@@ -57,7 +57,7 @@
   font-weight: 600;
   font-family: serif;
   font-size: 2.9rem;
-  padding: 0.5rem;
+  padding: 1.5rem;
 }
 
 .bulk-sticker .card-content {
