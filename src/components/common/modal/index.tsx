@@ -592,18 +592,24 @@ export const InformationModal = ({
   maintext,
   subtext,
   link,
+  success_text,
+  success_link,
 }: {
   icon?: React.ReactNode;
   mode?: "success" | "error" | "warning" | "info";
   maintext?: string;
   subtext?: string;
   link?: string;
+  success_text?: string;
+  success_link?: string;
 }) => {
   const router = useRouter();
 
   const handleClick = () => {
     if (link) {
       router.push(link);
+    } else if (success_link) {
+      router.push(success_link);
     }
   };
 
@@ -618,7 +624,7 @@ export const InformationModal = ({
           <BiError className="warning_icon" />
         ) : mode == "info" ? (
           <MdErrorOutline className="success_icon" />
-        ) : null}
+        ) : <FcOk className="success_icon" />}
 
         <div className="modalContent">
           <h2>
@@ -628,9 +634,14 @@ export const InformationModal = ({
           <p>{subtext}</p>
           {link && (
             <button onClick={handleClick} className="button primary top">
-              Close
+              Done
             </button>
           )}
+          {mode == "success" && (
+            <SecondaryButton onClick={handleClick} text={success_text ? success_text: ""} />
+          )}
+
+
         </div>
       </div>
     </div>

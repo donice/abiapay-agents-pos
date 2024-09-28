@@ -22,11 +22,20 @@ import {
 } from "@/src/services/billServices";
 import { useForm } from "react-hook-form";
 import { SelectInput } from "@/src/components/common/input";
+import { SuccessModal, InformationModal } from "@/src/components/common/modal";
+import { getErrorMessages } from "@/src/utils/helper";
 
 const Dynamic = () => {
   const path = usePathname();
   const segment = getLastPathSegment(path);
   const [billIsueeDetails, setBillIsueeDetails] = useState<any>({});
+
+  const [show, setShow] = useState({
+    mode: false,
+    state: "",
+    message: "",
+    sum_message: "",
+  });
 
   const { mutate } = useMutation({
     mutationFn: (data: FetchBillPayload) => {
@@ -42,7 +51,42 @@ const Dynamic = () => {
         return fetchInstantAccount(data);
       },
       onSuccess: (data: any) => {
-        setBillIsueeDetails(data?.response_data);
+        if (data.response_code == "00") {
+          setShow({
+            mode: true,
+            state: "success",
+            message: data.response_message,
+            sum_message:
+              "Pay" +
+              " " +
+              data?.response_data?.transaction_amount +
+              " " +
+              "to the account:" +
+              " " +
+              data?.response_data?.virtual_acct_no +
+              ", " +
+              " " +
+              data?.response_data?.virtual_acct_name +
+              " " +
+              "with the bank name:" +
+              " " +
+              data?.response_data?.bank_name,
+          });
+        } else if (data.response_code == "05") {
+          setShow({
+            mode: true,
+            state: "warning",
+            message: data.response_message,
+            sum_message: "",
+          });
+        } else {
+          setShow({
+            mode: true,
+            state: "error",
+            message: data.response_message || getErrorMessages(data.message),
+            sum_message: "",
+          });
+        }
       },
     });
 
@@ -177,6 +221,31 @@ const Dynamic = () => {
           <BackButton link={"/bills"} />
         </div>
       </form>
+      {show.mode == true && show.state == "success" && (
+        <InformationModal
+          mode="success"
+          maintext={show.message}
+          subtext={show.sum_message}
+          link="/bills"
+          success_text="Proceed to confirm payment"
+        />
+      )}
+      {show.mode == true && show.state == "warning" && (
+        <InformationModal
+          mode="warning"
+          maintext={show.message}
+          subtext="Cannot proceed this bill instant account creation"
+          link={`/bills`}
+        />
+      )}
+      {show.mode == true && show.state == "error" && (
+        <InformationModal
+          mode="error"
+          maintext={show.message}
+          subtext="Cannot proceed the revending of this ticket"
+          link={`/bills`}
+        />
+      )}
     </div>
   );
 };
