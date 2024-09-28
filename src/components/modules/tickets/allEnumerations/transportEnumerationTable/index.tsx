@@ -66,7 +66,7 @@ const TransportEnumerationTable: React.FC = () => {
                 </div>
                 <div>
                   <p>Asset Code: {transaction.assetCode}</p>
-                  <p>N{formatAmount(transaction.IncomeAmount)}</p>
+                  <p>₦{formatAmount(transaction.IncomeAmount)}</p>
                   <p>{transaction.IncomeCategory}</p>
                   <p>{transaction.UnionName}</p>
                   

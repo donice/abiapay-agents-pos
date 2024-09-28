@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FormButton, CancelButton } from "@/src/components/common/button";
+import { FormButton } from "@/src/components/common/button";
 import { TextInput } from "@/src/components/common/input"; // Importing the custom input component
 import "./style.scss";
 import toast from "react-hot-toast";
-import { login, useAuthDispatch } from "@/src/context/authContext";
+import { loginMDA, useAuthDispatch } from "@/src/context/authContext";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 
@@ -27,7 +27,7 @@ const MDASigninForm: React.FC = () => {
 
   const mutation = useMutation({
     mutationFn: (data: { email: string; password: string }) =>
-      login(dispatch, data),
+      loginMDA(dispatch, data),
     onSuccess: () => {
       router.push("/dashboard");
     },
@@ -81,7 +81,7 @@ const MDASigninForm: React.FC = () => {
       />
 
       <div className="btn_container">
-        <FormButton loading={loading} text="Sign in" disabled={!isFormValid && loading} />
+        <FormButton loading={loading} text="Sign in" disabled={!isFormValid || loading} />
         <div className="forgot-password" onClick={() => router.push("/forgot-password")}>Forgot Password?</div>
       </div>
     </form>

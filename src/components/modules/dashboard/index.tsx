@@ -14,7 +14,6 @@ import {
   fetchDashboardData,
   fetchABSSINData,
   fetchEnumerationData,
-  fetchTransportTicketData,
   fetchTotalABSSIN,
 } from "@/src/services/dashboardService";
 import toast from "react-hot-toast";
@@ -220,9 +219,10 @@ const DashboardComponent: React.FC = () => {
         </div>
       )}
 
-      <div>
+      <div className="dashboard_quicklinks">
+        <QuickLink name="Bills" link="/bills" />
         <QuickLink name="Bulk Prints" link="/prints" />
-        {/* <QuickLink name="Enforcement" link="/identity" /> */}
+        
         {/* <QuickLink name="Reports" link="/identity" /> */}
       </div>
     </div>

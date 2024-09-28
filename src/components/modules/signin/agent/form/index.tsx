@@ -81,7 +81,7 @@ const AgentSigninForm: React.FC = () => {
       />
 
       <div className="btn_container">
-        <FormButton loading={loading} text="Sign in" disabled={!isFormValid && loading} />
+        <FormButton loading={loading} text="Sign in" disabled={!isFormValid || loading} />
         <div className="forgot-password" onClick={() => router.push("/forgot-password")}>Forgot Password?</div>
       </div>
     </form>

@@ -10,6 +10,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { setToken } from "../services/setToken";
 import useIsBrower from "../hooks/useIsBrower";
+import { useRouter } from 'next/router';
 
 interface LoginResponse {
   status: number;
@@ -118,6 +119,32 @@ export const login = async (
   dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
     const response = await axios.post(`${url}/user/login`, data);
+    const { token, body }: LoginResponse = response.data;
+    dispatch({ type: "LOGIN", payload: token });
+
+    setToken(token);
+    toast.success(response?.data?.message);
+    useIsBrower() && sessionStorage.setItem("TOKEN", token);
+    useIsBrower() && sessionStorage.setItem("USER_DATA", JSON.stringify(body));
+
+  } catch (error: any) {
+    dispatch({
+      type: "SET_LOGIN_ERRORS",
+      payload: "Invalid login credentials",
+    });
+    toast.error(error?.response?.data?.message);
+  } finally {
+    dispatch({ type: "SET_LOGIN_SUBMITTING", payload: false });
+  }
+};
+
+export const loginMDA = async (
+  dispatch: Dispatch<AuthAction>,
+  data: { email: string; password: string }
+) => {
+  dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
+  try {
+    const response = await axios.post(`${url}/user/mda-login`, data);
     const { token, body }: LoginResponse = response.data;
     dispatch({ type: "LOGIN", payload: token });
 
