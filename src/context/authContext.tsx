@@ -118,7 +118,7 @@ export const login = async (
   dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
     const response = await axios.post(`${url}/user/login`, data);
-    const { token, status, body }: LoginResponse = response.data;
+    const { token, body }: LoginResponse = response.data;
     dispatch({ type: "LOGIN", payload: token });
 
     setToken(token);

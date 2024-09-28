@@ -13,7 +13,7 @@ interface FormData {
   password: string;
 }
 
-const SigninForm: React.FC = () => {
+const MDASigninForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -88,4 +88,4 @@ const SigninForm: React.FC = () => {
   );
 };
 
-export default SigninForm;
+export default MDASigninForm;

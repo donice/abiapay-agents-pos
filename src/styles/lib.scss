@@ -17,6 +17,10 @@ $border: 1px solid $gray;
 
 	$sm: 639px;
 
+	$xs: 450px;
+
+	$xxs: 340px;
+
 
 @function px-to-rem($px, $suffix: 1rem) {
 	@return calc(($px / $base-font-size) * $suffix);

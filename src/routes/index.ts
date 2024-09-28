@@ -11,6 +11,8 @@ export const protectedRoutes: string[] = [
 
 export const unprotectedRoutes: string[] = [
   '/signin',
+  '/signin/agent',
+  '/signin/mda',
   '/signout',
   '/forgot-password'
 ];

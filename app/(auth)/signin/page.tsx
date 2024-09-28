@@ -1,14 +1,7 @@
-import SigninComponent from '@/src/components/modules/signin';
-import { Metadata } from 'next';
+import SigninComponent from '@/src/components/modules/signin'
 import React from 'react'
 
-
-export const metadata: Metadata = {
-  title: "Sigin to Agents Portal",
-  description: "Abia Pay for Agents Portal Dashboard",
-};
-
-const SignInPage = () => {
+const SigninPage = () => {
   return (
     <div>
       <SigninComponent />
@@ -16,4 +9,4 @@ const SignInPage = () => {
   )
 }
 
-export default SignInPage
+export default SigninPage

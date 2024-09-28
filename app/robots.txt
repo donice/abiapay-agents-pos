@@ -2,6 +2,8 @@
 User-agent: *
 Disallow: /dashboard/
 Disallow: /signin/
+Disallow: /signin/agent/
+Disallow: /signin/mda/
 Disallow: /signup/
 Disallow: /private/
 
