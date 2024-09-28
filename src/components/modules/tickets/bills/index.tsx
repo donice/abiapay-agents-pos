@@ -1,6 +1,4 @@
 import React from "react";
-import TicketsWalletCard from "../ticketsStatsCard";
-import { SecondaryButton } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
 import "./style.scss";
 import BillsTable from "./billsTable";
@@ -8,8 +6,8 @@ import BillsTable from "./billsTable";
 
 const BillsComponent = () => {
   return (
-    <div className="transport">
-      <header className="transport_header">
+    <div className="bills_comp">
+      <header className="bills_comp_header">
         <CustomHeader
           title="Bills"
           desc="View your bills"
@@ -17,7 +15,7 @@ const BillsComponent = () => {
       </header>
       {/* <TicketsWalletCard /> */}
 
-      <div className="transport_table">
+      <div className="bills_comp_table">
         <BillsTable />
       </div>
     </div>

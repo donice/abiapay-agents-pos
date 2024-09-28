@@ -22,8 +22,9 @@ import {
 } from "@/src/services/billServices";
 import { useForm } from "react-hook-form";
 import { SelectInput } from "@/src/components/common/input";
-import { SuccessModal, InformationModal } from "@/src/components/common/modal";
+import { InformationModal } from "@/src/components/common/modal";
 import { getErrorMessages } from "@/src/utils/helper";
+import { PiReceiptDuotone } from "react-icons/pi";
 
 const Dynamic = () => {
   const path = usePathname();
@@ -36,6 +37,8 @@ const Dynamic = () => {
     message: "",
     sum_message: "",
   });
+
+  const [viewItems, setViewItems] = useState<any>(false);
 
   const { mutate } = useMutation({
     mutationFn: (data: FetchBillPayload) => {
@@ -138,7 +141,7 @@ const Dynamic = () => {
     if (billIsueeDetails && ticket && ticket.length > 0) {
       setValue("notice_number", segment);
       setValue("customer_name", billIsueeDetails?.taxpayer_name);
-      setValue("customer_email", billIsueeDetails?.customer_email);
+      setValue("customer_email", billIsueeDetails?.agent_email);
       setValue("customer_phone", billIsueeDetails?.taxpayer_phone);
     }
   }, [billIsueeDetails]);
@@ -159,7 +162,7 @@ const Dynamic = () => {
 
           <div>
             <p>Amount</p>
-            <p>₦ {formatAmount(ticket[0]?.amount) || "-"}</p>
+            <p>₦{formatAmount(ticket[0]?.amount) || "-"}</p>
           </div>
 
           <div>
@@ -197,11 +200,34 @@ const Dynamic = () => {
         <Loading />
       )}
 
+      <button className="bill-details_btn" onClick={() => setViewItems(!viewItems)}>
+        <PiReceiptDuotone className="icon"/>{" "}
+        <span>{!viewItems ? "View Bill Items" : "Hide Bill Items"}</span>
+      </button>
+
+      {viewItems &&
+        billIsueeDetails?.items?.map((item: any, index: number) => (
+          <div className="bill-details_comp" key={index}>
+            <div>
+              <p>Revenue Item</p>
+              <p>{item?.revenue_item || "-"}</p>
+            </div>
+            <div>
+              <p>Amount</p>
+              <p>₦{formatAmount(item?.amount) || "-"}</p>
+            </div>
+            <div>
+              <p>Payment Ref</p>
+              <p>{item?.payment_ref || "-"}</p>
+            </div>
+          </div>
+        ))}
+
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <SelectInput
           label="Choose Wallet"
-          name="wallet_type"
-          id="wallet_type"
+          name="account_type"
+          id="account_type"
           register={register}
           validation={{ required: true }}
           options={[
@@ -242,7 +268,7 @@ const Dynamic = () => {
         <InformationModal
           mode="error"
           maintext={show.message}
-          subtext="Cannot proceed the revending of this ticket"
+          subtext="Cannot proceed this bill instant account creation"
           link={`/bills`}
         />
       )}
