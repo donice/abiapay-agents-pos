@@ -21,6 +21,7 @@ const AgentsSigninComponent = () => {
     <div className="sigin_component">
       <CustomFormHeader title="Agent Sign in" desc="Sign in to your agents portal" />
       <AgentSigninForm />
+      {/* <p>Are you an agent? <a onClick={handleLogout}>Sign out</a></p> */}
     </div>
   );
 };

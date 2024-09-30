@@ -79,10 +79,28 @@ const AgentSigninForm: React.FC = () => {
         value={formData.password}
         onChange={handleChange}
       />
-
       <div className="btn_container">
-        <FormButton loading={loading} text="Sign in" disabled={!isFormValid || loading} />
-        <div className="forgot-password" onClick={() => router.push("/forgot-password")}>Forgot Password?</div>
+        <FormButton
+          loading={loading}
+          text="Sign in"
+          disabled={!isFormValid || loading}
+        />
+      </div>{" "}
+
+      <div className="bottom_links">
+        <div
+          className="forgot-password link"
+          onClick={() => router.push("/forgot-password")}
+        >
+          Forgot Password?
+        </div>
+
+        <div className="forgot-password">
+          Are you an MDA?{" "}
+          <span onClick={() => router.push("/signin/mda")} className="link">
+            Click here to sign in
+          </span>{" "}
+        </div>
       </div>
     </form>
   );

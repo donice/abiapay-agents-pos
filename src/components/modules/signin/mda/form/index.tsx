@@ -82,7 +82,22 @@ const MDASigninForm: React.FC = () => {
 
       <div className="btn_container">
         <FormButton loading={loading} text="Sign in" disabled={!isFormValid || loading} />
-        <div className="forgot-password" onClick={() => router.push("/forgot-password")}>Forgot Password?</div>
+       
+        <div className="bottom_links">
+        <div
+          className="forgot-password link"
+          onClick={() => router.push("/forgot-password")}
+        >
+          Forgot Password?
+        </div>
+
+        <div className="forgot-password">
+          Are you an MDA?{" "}
+          <span onClick={() => router.push("/signin/agent")} className="link">
+            Click here to sign in
+          </span>{" "}
+        </div>
+      </div>
       </div>
     </form>
   );
