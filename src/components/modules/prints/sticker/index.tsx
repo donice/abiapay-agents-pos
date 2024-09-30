@@ -46,56 +46,56 @@ const PrintIDComp = () => {
               }
   
               .bulk-sticker .card {
-  margin-top: 2rem;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  position: relative;
-  gap: 1rem;
-  background-image: url("../../../../../../public/prints/sticker-bg.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  width: 32rem;
-  height: 32rem;
-  border: 2px solid rgb(240, 240, 240);
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-    0 8px 10px -6px rgb(0 0 0 / 0.1);
-}
+                margin-top: 2rem;
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                position: relative;
+                gap: 1rem;
+                background-image: url("/prints/sticker-bg.jpg");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: contain;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                width: 32rem;
+                height: 32rem;
+                border: 2px solid rgb(240, 240, 240);
+                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+                  0 8px 10px -6px rgb(0 0 0 / 0.1);
+              }
 
   
               .bulk-sticker .card-tag {
-  position: absolute;
-  top: 5rem;
-  right: 2.5rem;
-  font-weight: 700;
-  color: red;
-  font-size: 1rem;
-  padding: 0.5rem;
-}
+                position: absolute;
+                top: 5rem;
+                right: 2.5rem;
+                font-weight: 700;
+                color: red;
+                font-size: 1rem;
+                padding: 0.5rem;
+              }
   
              .bulk-sticker .card-id {
-  position: absolute;
-  top: 10rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: 600;
-  font-family: serif;
-  font-size: 2.5rem;
-  padding: 0.5rem;
-}
+                position: absolute;
+                top: 10rem;
+                left: 50%;
+                transform: translateX(-50%);
+                font-weight: 600;
+                font-family: serif;
+                font-size: 2.5rem;
+                padding: 0.5rem;
+              }
 
-.bulk-sticker .card-vehicle {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: 600;
-  font-family: serif;
-  font-size: 2.9rem;
-  padding: 1.5rem;
-}
+              .bulk-sticker .card-vehicle {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                font-weight: 600;
+                font-family: serif;
+                font-size: 2.9rem;
+                padding: 1.5rem;
+              }
   
               .bulk-sticker .card-content {
                 gap: 1rem;
