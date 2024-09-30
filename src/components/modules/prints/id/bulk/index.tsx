@@ -27,19 +27,19 @@ const BulkComp = ({ bulkData }: any) => {
               <img src={data?.PhotoID} alt={""} width={100} height={100} />
             </div>
             <div className="card-content_text">
-              <div>
+              <div className="">
                 <p>Surname:</p>
                 <p>{data?.surname}</p>
               </div>
-              <div>
+              <div className="middle top">
                 <p>Others:</p>
                 <p>{data?.first_name + " " + data?.middle_name}</p>
               </div>
-              <div>
+              <div className="bottom top">
                 <p>D.O.B:</p>
                 <p>{data?.birth_date}</p>
               </div>
-              <div>
+              <div className="bottom top">
                 <p>Gender:</p>
                 <p>{data?.gender}</p>
               </div>

@@ -65,8 +65,8 @@ const PrintIDComp = () => {
 
 .bulk-id .card-tag {
   position: absolute;
-  top: 5.5rem;
-  right: 2.25rem;
+  top: 6.75rem;
+  right: 3.25rem;
   color: white;
   font-weight: 600;
   font-size: 0.9rem;
@@ -75,8 +75,8 @@ const PrintIDComp = () => {
 
 .bulk-id .card-id {
   position: absolute;
-  top: 7.5rem;
-  left: 6.3rem;
+  top: 8.5rem;
+  left: 7.3rem;
   font-weight: 600;
   font-family: serif;
   font-size: 1.9rem;
@@ -93,6 +93,8 @@ const PrintIDComp = () => {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   grid-column: span 3 / span 3;
+  margin-top: -2rem;
+  max-height: 7rem;
 }
 
 .bulk-id .card-content_text div {
@@ -109,6 +111,11 @@ const PrintIDComp = () => {
   grid-column: span 2 / span 2;
   margin-bottom: -4rem;
   font-weight: 700;
+}
+
+.top {
+margin-top: -4rem;
+
 }
 
          
