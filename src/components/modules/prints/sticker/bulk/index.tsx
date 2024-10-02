@@ -19,12 +19,14 @@ const BulkComp = ({ bulkData }: any) => {
     <div className="bulk-sticker">
       {displayData.map((data: any, idx: number) => (
         <div key={idx} className="card">
-          <span className="card-id">{data?.EnumerationID}</span>
+          <span className="card-id">{data?.assetCode}</span>
+          <span className="card-cat">{data?.IncomeCategory}</span>
+          <span className="card-income">{data?.IncomeCategory}</span>
           <span className="card-tag">{data?.productTag}</span>
           <span className="card-vehicle">{data?.PlateNumber}</span>
           <div className="card-content">
             <QRCodeSVG
-              style={{ width: 170, height: 170 }}
+              style={{ width: 190, height: 190 }}
               className="qrcode"
               value={`https://web.abiapay.com/verify?enum_id=${data?.EnumerationID}`}
             />

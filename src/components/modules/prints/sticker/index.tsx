@@ -76,26 +76,51 @@ const PrintIDComp = () => {
                 padding: 0.5rem;
               }
   
-             .bulk-sticker .card-id {
-                position: absolute;
-                top: 10rem;
-                left: 50%;
-                transform: translateX(-50%);
-                font-weight: 600;
-                font-family: serif;
-                font-size: 2.5rem;
-                padding: 0.5rem;
-              }
+.bulk-sticker .card-id {
+  position: absolute;
+  top: 8.65rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+  font-family: serif;
+  font-size: 2rem;
+  padding: 0.5rem;
+  text-transform: uppercase;
+  color: gray;
+}
 
-              .bulk-sticker .card-vehicle {
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
-                font-weight: 600;
-                font-family: serif;
-                font-size: 2.9rem;
-                padding: 1.5rem;
-              }
+.bulk-sticker .card-vehicle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+  font-family: serif;
+  font-size: 2rem;
+  padding: 1.5rem;
+  text-transform: uppercase;
+  color: gray;
+}
+
+.bulk-sticker .card-cat,
+.bulk-sticker .card-income {
+  position: absolute;
+  transform: rotate(90deg);
+  top: 50%;
+  font-weight: 600;
+  font-family: serif;
+  font-size: 1rem;
+  letter-spacing: 0.25rem;
+  padding: 1.5rem;
+  text-transform: uppercase;
+  color: red;
+}
+
+.bulk-sticker .card-cat {
+  left: -2rem;  
+}
+.bulk-sticker .card-income {
+  left: 18rem;  
+}
   
               .bulk-sticker .card-content {
                 gap: 1rem;
@@ -105,7 +130,7 @@ const PrintIDComp = () => {
   
               .bulk-sticker .card-content .qrcode {
                 position: absolute;
-                top: 40%;
+                top: 37%;
                 left: 50%;
                 transform: translateX(-50%);
               }
