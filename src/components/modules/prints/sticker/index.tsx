@@ -94,7 +94,8 @@ const PrintIDComp = () => {
   left: 50%;
   transform: translateX(-50%);
   font-weight: 800;
-  font-family: serif;
+  font-family: san-serif;
+  bottom: 1.5rem;
   font-size: 2rem;
   padding: 1.5rem;
   text-transform: uppercase;
@@ -124,7 +125,7 @@ const PrintIDComp = () => {
 .bulk-sticker .card-enum {
   position: absolute;
   font-weight: 600;
-  bottom: 5rem;
+  bottom: 6.5rem;
   font-size: 1rem;
   padding: 1.5rem;
   text-transform: uppercase;
