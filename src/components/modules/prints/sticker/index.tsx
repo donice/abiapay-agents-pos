@@ -93,7 +93,7 @@ const PrintIDComp = () => {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  font-weight: 600;
+  font-weight: 800;
   font-family: serif;
   font-size: 2rem;
   padding: 1.5rem;
@@ -107,7 +107,6 @@ const PrintIDComp = () => {
   transform: rotate(90deg);
   top: 50%;
   font-weight: 600;
-  font-family: serif;
   font-size: 1rem;
   letter-spacing: 0.25rem;
   padding: 1.5rem;
@@ -121,6 +120,18 @@ const PrintIDComp = () => {
 .bulk-sticker .card-income {
   left: 18rem;  
 }
+
+.bulk-sticker .card-enum {
+  position: absolute;
+  font-weight: 600;
+  bottom: 5rem;
+  font-size: 1rem;
+  padding: 1.5rem;
+  text-transform: uppercase;
+  color: gray;
+  letter-spacing: 0.3rem;
+}
+
   
               .bulk-sticker .card-content {
                 gap: 1rem;

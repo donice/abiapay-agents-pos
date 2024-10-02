@@ -22,6 +22,7 @@ const BulkComp = ({ bulkData }: any) => {
           <span className="card-id">{data?.assetCode}</span>
           <span className="card-cat">{data?.IncomeCategory}</span>
           <span className="card-income">{data?.IncomeCategory}</span>
+          <span className="card-enum">{data?.EnumerationID}</span>
           <span className="card-tag">{data?.productTag}</span>
           <span className="card-vehicle">{data?.PlateNumber}</span>
           <div className="card-content">
