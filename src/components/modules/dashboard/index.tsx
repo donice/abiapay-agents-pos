@@ -225,7 +225,6 @@ const DashboardComponent: React.FC = () => {
         )}
         <QuickLink name="Bulk Prints" link="/prints" />
 
-        {/* <QuickLink name="Reports" link="/identity" /> */}
       </div>
     </div>
   );
