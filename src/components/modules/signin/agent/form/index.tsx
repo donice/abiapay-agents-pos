@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FormButton, CancelButton } from "@/src/components/common/button";
+import { FormButton } from "@/src/components/common/button";
 import { TextInput } from "@/src/components/common/input"; // Importing the custom input component
 import "./style.scss";
 import toast from "react-hot-toast";
@@ -13,7 +13,7 @@ interface FormData {
   password: string;
 }
 
-const SigninForm: React.FC = () => {
+const AgentSigninForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -79,13 +79,31 @@ const SigninForm: React.FC = () => {
         value={formData.password}
         onChange={handleChange}
       />
-
       <div className="btn_container">
-        <FormButton loading={loading} text="Sign in" disabled={!isFormValid && loading} />
-        <div className="forgot-password" onClick={() => router.push("/forgot-password")}>Forgot Password?</div>
+        <FormButton
+          loading={loading}
+          text="Sign in"
+          disabled={!isFormValid || loading}
+        />
+      </div>{" "}
+
+      <div className="bottom_links">
+        <div
+          className="forgot-password link"
+          onClick={() => router.push("/forgot-password")}
+        >
+          Forgot Password?
+        </div>
+
+        <div className="forgot-password">
+          Are you an MDA?{" "}
+          <span onClick={() => router.push("/signin/mda")} className="link">
+            Click here to sign in
+          </span>{" "}
+        </div>
       </div>
     </form>
   );
 };
 
-export default SigninForm;
+export default AgentSigninForm;

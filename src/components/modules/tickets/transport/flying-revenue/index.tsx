@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FlyingRevenue } from "@/src/components/common/modal";
 import FlyingRevenueForm from "./form";
 import { haulages } from "./lib/haulages";
+import { GoBackButton } from "@/src/components/common/button";
 
 const FlyingRevenueComponent = ({ slug }: { slug: string }) => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const FlyingRevenueComponent = ({ slug }: { slug: string }) => {
 
   return (
     <div>
+      <GoBackButton link="/tickets/transport/flying-revenue" />
       <CustomHeader
         title={haulageItem ? `${haulageItem.title} Flying Revenue`  : ""}
         desc="Haulage Tickets"

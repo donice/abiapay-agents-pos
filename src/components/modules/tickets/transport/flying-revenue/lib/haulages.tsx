@@ -27,7 +27,7 @@ export const haulages: HaulageProps[] = [
   {
     name: "tickets/transport/flying-revenue/produce",
     title: "Produce",
-    cat: "Produce",
+    cat: "Transport",
     icon: <FcShop className="icon" />,
   },
   {
@@ -63,7 +63,7 @@ export const haulages: HaulageProps[] = [
   {
     name: "tickets/transport/flying-revenue/baggage-basket",
     title: "Baggage & Basket Handling Charge",
-    cat: "BaggageBasket",
+    cat: "Baggage_Basket",
     icon: <FcFactory className="icon" />,
   },
   {
@@ -86,12 +86,12 @@ export const haulages: HaulageProps[] = [
   },
   {
     name: "tickets/transport/flying-revenue/sand-beaches",
-    title: "SandBeaches",
+    title: "Sand Beaches",
     cat: "SandBeaches",
     icon: <FcShipped className="icon" />,
   },
   {
-    name: "tickets/transport/flying-revenue/produce/gate-pass",
+    name: "tickets/transport/flying-revenue/gate-pass",
     title: "Gate Pass",
     cat: "GatePass",
     icon: <FcEngineering className="icon" />,

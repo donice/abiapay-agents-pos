@@ -3,14 +3,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import React, { type ReactElement } from "react";
 import {
-  FcBusinessman,
-  FcCircuit,
   FcDiploma1,
-  FcDonate,
-  FcElectroDevices,
-  FcHighPriority,
-  FcReading,
-  FcShop,
+  FcDisplay,
+  FcLeave,
 } from "react-icons/fc";
 import "./style.scss";
 
@@ -29,46 +24,55 @@ interface AccountsProps {
 
 const items: AccountsProps[] = [
   {
-    link: "absaa/signage/signage-enumeration",
-    title: "Signage Enumeration",
-    desc: "Create enumeration for signage",
+    link: "absaa/signage/first-party",
+    title: "First Party Signs",
+    desc: "Create first party signages",
+    icon: <FcDisplay className="icon" />,
+    // comingsoon: true
+  },
+  {
+    link: "absaa/signage/second-party",
+    title: "Second Party Signs",
+    desc: "Create second party signages",
+    icon: <FcLeave className="icon" />,
+    comingsoon: true
+  },
+  {
+    link: "absaa/signage/third-party",
+    title: "Third Party Signs",
+    desc: "Create third party signages",
     icon: <FcDiploma1 className="icon" />,
-    // comingsoon: true
+    comingsoon: true
   },
-  {
-    link: "absaa/signage/signage-road",
-    title: "Signage Road",
-    desc: "Create enumeration for road",
-    icon: <FcHighPriority className="icon" />,
-    // comingsoon: true
-  },
-  {
-    link: "absaa/signage/signage-rate",
-    title: "Signage Rate",
-    desc: "Create enumeration for rate",
-    icon: <FcDonate className="icon" />,
-    // comingsoon: true
-  },
-  {
-    link: "absaa/signage/signage-road-category",
-    title: "Road Category",
-    desc: "Create road category",
-    icon: <FcCircuit className="icon" />,
-    // comingsoon: true
-  },
-  {
-    link: "absaa/signage/signage-category",
-    title: "Signage Category",
-    desc: "Create category for signage",
-    icon: <FcElectroDevices className="icon" />,
-    // comingsoon: true
-  },
-
   // {
-  //   link: "signage/view/business",
-  //   title: "View Business",
-  //   desc: "View all Business ABSSIN",
-  //   icon: <FcReading className="icon" />,
+  //   link: "absaa/signage/signage-enumeration",
+  //   title: "Signage Enumeration",
+  //   desc: "Create enumeration for signage",
+  //   icon: <FcDiploma1 className="icon" />,
+  // },
+  // {
+  //   link: "absaa/signage/signage-road",
+  //   title: "Signage Road",
+  //   desc: "Create enumeration for road",
+  //   icon: <FcHighPriority className="icon" />,
+  // },
+  // {
+  //   link: "absaa/signage/signage-rate",
+  //   title: "Signage Rate",
+  //   desc: "Create enumeration for rate",
+  //   icon: <FcDonate className="icon" />,
+  // },
+  // {
+  //   link: "absaa/signage/signage-road-category",
+  //   title: "Road Category",
+  //   desc: "Create road category",
+  //   icon: <FcCircuit className="icon" />,
+  // },
+  // {
+  //   link: "absaa/signage/signage-category",
+  //   title: "Signage Category",
+  //   desc: "Create category for signage",
+  //   icon: <FcElectroDevices className="icon" />,
   // },
 ];
 

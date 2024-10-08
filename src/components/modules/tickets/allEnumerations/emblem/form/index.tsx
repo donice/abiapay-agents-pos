@@ -15,8 +15,6 @@ import toast from "react-hot-toast";
 import { fetchLGAData } from "@/src/services/common";
 import { useMutation } from "@tanstack/react-query";
 import { getErrorMessages } from "@/src/utils/helper";
-import { EmblemModal } from "@/src/components/common/modal";
-import { useRouter } from "next/navigation";
 
 interface EmblemProduct {
   id: number;

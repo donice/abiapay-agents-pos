@@ -42,7 +42,7 @@ const UsingPlateNumberExportComponent = () => {
                       <p>{transaction.reference}</p>
                     </div>
                     <div>
-                      <p>N{formatAmount(transaction.amount)}</p>
+                      <p>₦{formatAmount(transaction.amount)}</p>
                       <p
                         className={`${
                           transaction.status === "Completed" ? "completed" : "processing"

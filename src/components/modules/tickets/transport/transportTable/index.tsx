@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import React, { useState, useMemo } from "react";
+import { useDebounce } from "@/src/hooks/useDebounce";
+import { useQuery } from "@tanstack/react-query";
 import { Loading } from "@/src/components/common/loader/redirecting";
 import "./style.scss";
 import Empty from "@/src/components/common/empty";
@@ -10,17 +11,41 @@ import { GoVerified } from "react-icons/go";
 import { fetchTransactions } from "@/src/services/ticketsServices";
 import { TbLoader } from "react-icons/tb";
 import { LuListRestart } from "react-icons/lu";
+
 const TransactionsTable: React.FC = () => {
   const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["get_transactions"],
+    /**
+     * Fetches all the transactions
+     * @returns {Promise<Object>} promise that resolves to an object containing the transactions
+     */
     queryFn: () => {
       return fetchTransactions();
     },
   });
 
-  const fetced_data = data?.data || [];
+  const fetched_data = data?.data || [];
+
+  const filteredTransactions = useMemo(() => {
+    if (!debouncedSearchTerm) return fetched_data;
+
+    const filtered = fetched_data.filter((transaction: any) =>
+      transaction?.trans_ref
+        ?.toLowerCase()
+        .includes(debouncedSearchTerm.toLowerCase())
+    );
+
+    if (filtered.length === 0) {
+      console.log("No results found for:", debouncedSearchTerm);
+      // console.log("Fetched Data:", fetched_data);
+    }
+
+    return filtered;
+  }, [debouncedSearchTerm, fetched_data]);
 
   if (isLoading) {
     return (
@@ -44,10 +69,36 @@ const TransactionsTable: React.FC = () => {
 
   return (
     <section className="main-table">
-      {fetced_data.length > 0 ? (
+      <div className="filter-input">
+        <label htmlFor="search">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="#3ba361"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
+        </label>
+        <input
+          type="text"
+          placeholder="Search by Plate Number"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search input"
+        />
+      </div>
+
+      {filteredTransactions.length > 0 ? (
         <div className="main-table_form_tickets_container">
           <div className="tickets">
-            {fetced_data.map((transaction: any) => (
+            {filteredTransactions.map((transaction: any) => (
               <div
                 key={transaction.idagent_transactions}
                 className="ticket"
@@ -60,13 +111,11 @@ const TransactionsTable: React.FC = () => {
                 <div>
                   <p>{transaction.trans_ref}</p>
                   <p>{transaction.revenue_item}</p>
-
                   <p>{new Date(transaction.createtime).toLocaleString()}</p>
-                  {/* <p>{addEllipses(transaction?.reference, 20)}</p> */}
                   <p>Ref: {transaction.payment_ref}</p>
                 </div>
                 <div>
-                  <p>N{formatAmount(transaction.amount)}</p>
+                  <p>₦{formatAmount(transaction.amount)}</p>
                   <p
                     className={`${
                       transaction.status === "Completed"

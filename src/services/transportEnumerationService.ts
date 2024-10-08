@@ -104,3 +104,13 @@ export const fetchCompletedTransportEnumeration = async () => {
   }
 };
 
+
+export const fetchProductCode = async () => {
+  try {
+    const { data } = await axiosInstance.get(`${url}/transport/emblem-product-code`);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching products: ${error?.message}`);
+  }
+};
+

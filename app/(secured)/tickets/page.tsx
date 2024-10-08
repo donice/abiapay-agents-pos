@@ -72,7 +72,6 @@ const TicketPage = () => {
 
       <div className="ticketspage_container">
         <TicketsWalletCards />
-        {/* <TicketsStatsCard /> */}
 
         <div className="ticketspage_items">
           {tickets.map((item) => (

@@ -72,7 +72,7 @@ const { data, isError, isLoading } = useQuery({
                         {transaction.paymentStatus === "PAID" && <GoVerified />}
                         {transaction.paymentStatus}
                       </p>
-                      <p>N{formatAmount(transaction.payer_amountPaid)}</p>
+                      <p>₦{formatAmount(transaction.payer_amountPaid)}</p>
                     </div>
                   </div>
                 ))}

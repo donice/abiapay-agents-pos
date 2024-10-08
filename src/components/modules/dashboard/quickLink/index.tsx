@@ -1,17 +1,16 @@
 import React from "react";
 import "./style.scss";
-import { TbChevronRight, TbLineScan } from "react-icons/tb";
+import { TbChevronRight } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import scanner from "./assets/scanner.png";
-import reports from "./assets/reports.png";
 import badge from "./assets/badge.png";
+import { FcNews, FcPrint } from "react-icons/fc";
 
 const QuickLinks = ({
   name,
   link,
 }: {
-  name: "Identity" | "Enforcement" | "Reports";
+  name: "Identity" | "Enforcement" | "Bills" | "Bulk Prints";
   link: string;
 }) => {
   const router = useRouter();
@@ -19,10 +18,10 @@ const QuickLinks = ({
     <div className="quicklink" onClick={() => router.push(link)}>
       <div className="quicklink_name">
         {" "}
-        {name == "Identity" ? (
-          <Image src={scanner} alt="scanner" className="icon" />
-        ) : name == "Reports" ? (
-          <Image src={reports} alt="reports" className="icon" />
+        {name == "Bulk Prints" ? (
+          <FcPrint className="icon" />
+        ) : name == "Bills" ? (
+          <FcNews className="icon" />
         ) : (
           <Image src={badge} alt="badge" className="icon" />
         )}

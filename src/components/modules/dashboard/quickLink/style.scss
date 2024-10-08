@@ -1,6 +1,7 @@
 @use "../../../../styles/index.scss" as *;
 
 .quicklink {
+  cursor: pointer;
   display: flex;
   width: 100%;
   justify-content: space-between;

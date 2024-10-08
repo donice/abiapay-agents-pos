@@ -4,6 +4,7 @@ import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { FieldError, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import {
+  fetchProductCode,
   verifyPlateNumber,
   VerifyPlateNumberType,
 } from "@/src/services/transportEnumerationService";
@@ -16,7 +17,6 @@ import {
 import {
   fetchParks,
   fetchTradeUnions,
-  fetchVehicleCategories,
 } from "@/src/services/common";
 
 const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
@@ -103,11 +103,12 @@ const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
 
   const getVehicleCategories = async () => {
     try {
-      const data = await fetchVehicleCategories();
+      const {data} = await fetchProductCode();
+      console.log(data, "PRODUCT CODE");
       const res = data?.map((item: any) => {
         return {
           label: item.productName,
-          value: item.productName,
+          value: item.productCode,
         };
       });
       setVehicleCategory(res);

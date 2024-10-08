@@ -115,7 +115,7 @@ const Dynamic = () => {
 
         <div>
           <p>Amount</p>
-          <p>N {formatAmount(ticket[0]?.amount)}</p>
+          <p>₦ {formatAmount(ticket[0]?.amount)}</p>
         </div>
 
         <div>

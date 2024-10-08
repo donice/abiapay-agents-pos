@@ -18,7 +18,6 @@
     }
 
     &_text {
-
       @include custom-media-query("mobile", $sm) {
         margin-bottom: 2rem;
       }
@@ -37,10 +36,14 @@
     }
 
     &_buttons {
-      width: -webkit-fill-available;
+      width: auto;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
+
+      @include custom-media-query("mobile", $sm) {
+        width: 100%;
+      }
     }
   }
 
@@ -49,7 +52,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
     transition: display 1s ease-in-out;
-
 
     @include custom-media-query("mobile", $sm) {
       grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -86,4 +88,10 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+
+  &_quicklinks {
+    display: grid;
+    gap: 1rem;
+  }
 }
+

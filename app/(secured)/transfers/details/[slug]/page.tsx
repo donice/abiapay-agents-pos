@@ -46,7 +46,7 @@ const Dynamic = ({ params }: { params: { slug: string } }) => {
 
                 <div>
                   <p>Amount</p>
-                  <p>N {formatAmount(ticket?.payer_amountPaid)}</p>
+                  <p>₦ {formatAmount(ticket?.payer_amountPaid)}</p>
                 </div>
                 <div>
                   <p>Bank</p>
