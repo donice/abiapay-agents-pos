@@ -43,6 +43,12 @@ const Dynamic = () => {
     },
     onSuccess: (data: any) => {
       console.log(data);
+
+      if (data?.response_code == "00") {
+        toast.success(data?.response_message);
+      } else {
+        toast(data?.response_message);
+      }
     },
   });
   
