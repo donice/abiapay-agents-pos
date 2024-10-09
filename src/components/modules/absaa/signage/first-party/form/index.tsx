@@ -12,11 +12,6 @@ import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { SuccessModal } from "@/src/components/common/modal";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import "./style.scss";
-import {
-  Product,
-  createNewTicket,
-  fetchPlateNumberInfo,
-} from "@/src/services/ticketsServices";
 import { useMutation } from "@tanstack/react-query";
 import { ABSAAPayload } from "@/src/components/types/absaaTypes";
 import { createFirstPartySignage } from "@/src/services/absaaService";
@@ -128,7 +123,7 @@ const CreateFirstPartySignageForm = ({
           { value: "Wall Signs", label: "Wall Signs" },
           { value: "Free Standing Signs", label: "Free Standing Signs" },
         ]}
-        placeholder="Select Wallet Type"
+        placeholder="Select Sign Type"
         error={!!errors.sign_type}
       />
       <SelectInput
@@ -141,7 +136,7 @@ const CreateFirstPartySignageForm = ({
           { value: "Standard Zone", label: "Standard Zone" },
           { value: "Premium", label: "Premium" },
         ]}
-        placeholder="Select Wallet Type"
+        placeholder="Select Zone"
         error={!!errors.zone}
       />
       <SelectInput
@@ -185,7 +180,7 @@ const CreateFirstPartySignageForm = ({
           },
           
         ]}
-        placeholder="Select Wallet Type"
+        placeholder="Select Area in SQM"
         error={!!errors.size_meter}
       />
 
