@@ -4,13 +4,15 @@
   .ticketspage_container {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 1rem;  
+    margin-top: 2rem;
   }
   
   &_items {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
+ 
 
     @include custom-media-query("mobile", $sm) {
       grid-template-columns: repeat(1, minmax(0, 1fr));

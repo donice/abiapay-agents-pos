@@ -1,7 +1,7 @@
 import { https } from "../lib/axiosInstance";
 
 const base_url = process.env.NEXT_PUBLIC_APP_URL;
-const ibm = process.env.NEXT_PUBLIC_IBM;
+const ibm = process.env.NEXT_PUBLIC_APIC_KEY;
 
 export interface VerifyTicketPayload {
   agentEmail: string;

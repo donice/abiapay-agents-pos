@@ -2,18 +2,17 @@
 import { usePathname } from "next/navigation";
 import { getLastPathSegment } from "@/src/utils/getLastPathSegment";
 import React from "react";
-import { BackButton } from "@/src/components/common/button";
+import { BackButton, Button } from "@/src/components/common/button";
 import "./style.scss";
 import { formatAmount } from "@/src/utils/formatAmount";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
-import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
-import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
-import { fetchTransactions } from "@/src/services/ticketsServices";
+import {
+  fetchTransactions,
+  retryPayment,
+} from "@/src/services/ticketsServices";
 import { Loading } from "@/src/components/common/loader/redirecting";
 
 const Dynamic = () => {
@@ -36,57 +35,92 @@ const Dynamic = () => {
     (ticket: any) => ticket.idagent_transactions == segment
   );
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: { payment_ref: string }) => {
+      return retryPayment({
+        payment_ref: data.payment_ref,
+      });
+    },
+    onSuccess: (data: any) => {
+      console.log(data);
+
+      if (data?.response_code == "00") {
+        toast.success(data?.response_message);
+      } else {
+        toast(data?.response_message);
+      }
+    },
+  });
+  
+  const retryPaymentFn = () => {
+    const paymentRef = ticket[0]?.payment_ref;
+    if (paymentRef) {
+      mutate({ payment_ref: paymentRef }); // Pass payment_ref as an object
+    } else {
+      console.error("Payment reference is missing.");
+    }
+  };
+  
   return (
     <div className="ticket-details">
       <h1>Transaction Details</h1>
       {data?.data ? (
-        <div className="ticket-details_comp">
-          <div>
-            <p>Transaction Status</p>
-            <p>{ticket[0]?.status || "-"}</p>
-          </div>
-          <div>
-            <p>Plate Number</p>
-            <p>{ticket[0]?.plate_number || "-"}</p>
-          </div>
+        <>
+          {ticket[0]?.status == "Processing" && (
+            <Button
+              text={"Reprocess Ticket"}
+              loading={isPending}
+              onClick={retryPaymentFn}
+            />
+          )}
+          <div className="ticket-details_comp">
+            <div>
+              <p>Transaction Status</p>
+              <p>{ticket[0]?.status || "-"}</p>
+            </div>
+            <div>
+              <p>Plate Number</p>
+              <p>{ticket[0]?.plate_number || "-"}</p>
+            </div>
 
-          <div>
-            <p>Amount</p>
-            <p>₦ {formatAmount(ticket[0]?.amount) || "-"}</p>
-          </div>
+            <div>
+              <p>Amount</p>
+              <p>₦ {formatAmount(ticket[0]?.amount) || "-"}</p>
+            </div>
 
-          <div>
-            <p>Taxpayer Name</p>
-            <p>{ticket[0]?.taxpayer_name || "-"}</p>
-          </div>
+            <div>
+              <p>Taxpayer Name</p>
+              <p>{ticket[0]?.taxpayer_name || "-"}</p>
+            </div>
 
-          <div>
-            <p>Ticket Type</p>
-            <p>{ticket[0]?.revenue_item || "-"}</p>
-          </div>
+            <div>
+              <p>Ticket Type</p>
+              <p>{ticket[0]?.revenue_item || "-"}</p>
+            </div>
 
-          <div>
-            <p>Phone Number</p>
-            <p>{ticket[0]?.taxpayer_phone || "-"}</p>
-          </div>
+            <div>
+              <p>Phone Number</p>
+              <p>{ticket[0]?.taxpayer_phone || "-"}</p>
+            </div>
 
-          <div>
-            <p>Payment Period</p>
-            <p>{ticket[0]?.payment_period || "-"}</p>
-          </div>
-          <div>
-            <p>Agent Name</p>
-            <p>{ticket[0]?.agent_user || "-"}</p>
-          </div>
-          <div>
-            <p>Created Time</p>
-            <p>{ticket[0]?.createtime || "-"}</p>
-          </div>
-          <div>
-            <p>Payment Reference</p>
-            <p>{ticket[0]?.payment_ref || "-"}</p>
-          </div>
-        </div>
+            <div>
+              <p>Payment Period</p>
+              <p>{ticket[0]?.payment_period || "-"}</p>
+            </div>
+            <div>
+              <p>Agent Name</p>
+              <p>{ticket[0]?.agent_user || "-"}</p>
+            </div>
+            <div>
+              <p>Created Time</p>
+              <p>{ticket[0]?.createtime || "-"}</p>
+            </div>
+            <div>
+              <p>Payment Reference</p>
+              <p>{ticket[0]?.payment_ref || "-"}</p>
+            </div>
+          </div>{" "}
+        </>
       ) : (
         <Loading />
       )}
