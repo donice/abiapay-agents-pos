@@ -10,7 +10,7 @@ import {
 import "./style.scss";
 
 export const metadata: Metadata = {
-  title: "ABSSAA Signages",
+  title: "ABSAA Signages",
   description: "Manage all signages done by ABSAA",
 };
 
