@@ -1,13 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { fetchABSSINInfo, fetchProducts } from "@/src/services/common";
+import { fetchABSSINInfo } from "@/src/services/common";
 import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { useRouter } from "next/navigation";
-import { Button, BackButton } from "@/src/components/common/button";
+import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { SuccessModal } from "@/src/components/common/modal";
 import { useDebounce } from "@/src/hooks/useDebounce";
@@ -22,9 +22,7 @@ const CreateFirstPartySignageForm = ({
   paymentRef,
   setPaymentRef,
   selectedPeriod,
-  setSelectedPeriod,
   selectedProduct,
-  setSelectedProduct,
 }: any) => {
   const {
     register,
