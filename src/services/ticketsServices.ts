@@ -48,9 +48,12 @@ export const fetchTransactions = async () => {
   }
 };
 
-export const retryPayment = async (reqData: { payment_ref: string}) => {
+export const retryPayment = async (reqData: { payment_ref: string }) => {
   try {
-    const { data } = await axiosInstance.post(`${url}/wallet/access-reproccess-debit`, reqData);
+    const { data } = await axiosInstance.post(
+      `${url}/wallet/access-reproccess-debit`,
+      { payment_ref: reqData?.payment_ref, merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY }
+    );
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);

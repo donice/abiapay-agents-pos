@@ -92,7 +92,7 @@ const MDASigninForm: React.FC = () => {
         </div>
 
         <div className="forgot-password">
-          Are you an MDA?{" "}
+          Are you an Agent?{" "}
           <span onClick={() => router.push("/signin/agent")} className="link">
             Click here to sign in
           </span>{" "}
