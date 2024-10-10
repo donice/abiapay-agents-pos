@@ -4,13 +4,13 @@ import { TbChevronRight } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import badge from "./assets/badge.png";
-import { FcNews, FcPrint } from "react-icons/fc";
+import { FcRules, FcNews, FcPrint } from "react-icons/fc";
 
 const QuickLinks = ({
   name,
   link,
 }: {
-  name: "Identity" | "Enforcement" | "Bills" | "Bulk Prints";
+  name: "Identity" | "Enforcement" | "Bills" | "Bulk Prints" | "Receipts";
   link: string;
 }) => {
   const router = useRouter();
@@ -22,6 +22,8 @@ const QuickLinks = ({
           <FcPrint className="icon" />
         ) : name == "Bills" ? (
           <FcNews className="icon" />
+        ) : name == "Receipts" ? (
+          <FcRules className="icon" />
         ) : (
           <Image src={badge} alt="badge" className="icon" />
         )}

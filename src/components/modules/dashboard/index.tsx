@@ -224,7 +224,9 @@ const DashboardComponent: React.FC = () => {
           <QuickLink name="Bills" link="/bills" />
         )}
         <QuickLink name="Bulk Prints" link="/prints" />
-
+        {userData?.user_cat == "MdaUser" && (
+          <QuickLink name="Receipts" link="/receipts" />
+        )}
       </div>
     </div>
   );
