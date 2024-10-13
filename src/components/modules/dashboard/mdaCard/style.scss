@@ -23,7 +23,8 @@ $bold-primary-text: #3f3f46;
     align-items: center;
     gap: 0.5rem;
     background-color: #d4ffe4;
-    padding: 0.5rem;
+    border: 1px solid #b2ffce;
+    padding: 0.75rem;
     border-radius: 100%;
     color: green;
   }
@@ -38,6 +39,12 @@ $bold-primary-text: #3f3f46;
       color: gray;
       font-weight: semibold;
       font-size: 0.75rem;
+    }
+
+    span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: green;
     }
   }
 }

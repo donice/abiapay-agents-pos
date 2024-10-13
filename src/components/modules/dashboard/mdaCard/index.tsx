@@ -30,7 +30,7 @@ const MdaCard = ({ name, amount, link }: props) => {
 
       <div className="mda-card_amount">
         <p>Total {name}</p>
-        <span>{amount}</span>
+        <span>{amount} Items</span>
       </div>
     </div>
   );
