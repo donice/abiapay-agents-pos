@@ -23,9 +23,13 @@ import useIsBrower from "@/src/hooks/useIsBrower";
 import { WalletCard } from "./walletCard";
 import { fetchTransactions } from "@/src/services/ticketsServices";
 import QuickLink from "./quickLink";
+import MdaCard from "./mdaCard";
+import { useQuery } from "@tanstack/react-query";
+import { fetchReceipts } from "@/src/services/receiptsServices";
+import { fetchBills } from "@/src/services/billServices";
 
 function filterByTodaysDate(transactions: any[]) {
-  const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0]; 
   return transactions.filter((transaction) => {
     return transaction.trans_date.split("T")[0] === today;
   });
@@ -106,7 +110,7 @@ const DashboardComponent: React.FC = () => {
         },
       });
     } catch (error) {
-      toast.error("Error fetching dashboard data");
+      // toast.error("Error fetching dashboard data");
       dispatch({ type: "FETCH_ERROR" });
     }
   }, []);
@@ -151,6 +155,25 @@ const DashboardComponent: React.FC = () => {
     }
   }, []);
 
+  const { data: receiptData, isLoading: receiptLoading } = useQuery({
+    queryKey: ["get_receipts"],
+    queryFn: () => {
+      return fetchReceipts();
+    },
+  });
+
+  const { data: billsData, isLoading: billsLoading } = useQuery({
+    queryKey: ["get_bills"],
+    queryFn: () => {
+      return fetchBills();
+    },
+  });
+
+  const fetched_data = billsData?.response_data || [];
+
+
+  // console.log(receiptData, "RECEIPT DATA");
+
   useEffect(() => {
     getDashboardData();
     getABSSINData();
@@ -168,20 +191,22 @@ const DashboardComponent: React.FC = () => {
           title={`Welcome${userData?.name && `, ${userData?.name}`}`}
           desc="Overview of your dashboard"
         />
-        <div className="dashboard_header_buttons">
-          <SecondaryButton
-            text="Akara Ekwenti"
-            link="/find/using-phone-number"
-          />
-          <PrimaryButton
-            text="Sharp Sharp"
-            link="/find/using-plate-number"
-            addIcon={true}
-          />
-        </div>
+        {userData?.user_cat == "MdaUser" ? null : (
+          <div className="dashboard_header_buttons">
+            <SecondaryButton
+              text="Akara Ekwenti"
+              link="/find/using-phone-number"
+            />
+            <PrimaryButton
+              text="Sharp Sharp"
+              link="/find/using-plate-number"
+              addIcon={true}
+            />
+          </div>
+        )}
       </header>
 
-      {!loading ? (
+      {userData?.user_cat == "MdaUser" ? null : !loading ? (
         <div className="dashboard_wallets">
           <WalletCard bank="access" data={accessData} />
           <WalletCard bank="fidelity" data={fidelityData} />
@@ -193,7 +218,21 @@ const DashboardComponent: React.FC = () => {
         </div>
       )}
 
-      {abssinCount != null && enumerationCount != null ? (
+      {userData?.user_cat == "MdaUser" ? (
+        <div className="dashboard_mda_stats">
+          <MdaCard
+            name="Bills"
+            amount={billsData?.response_data == null ? 0 : billsData?.response_data.length.toString()}
+            link="/bills"
+          />
+          <MdaCard
+            name="Receipts"
+            amount={receiptData == null ? 0 : receiptData.length.toString()}
+            link="/receipts"
+          />
+        </div>
+      ) : abssinCount != null &&
+        enumerationCount != null ? (
         <div className="dashboard_stats">
           <StatsCard
             name="Tickets"
@@ -213,9 +252,9 @@ const DashboardComponent: React.FC = () => {
         </div>
       ) : (
         <div className="dashboard_stats_skeleton">
-          <LoaderSkeleton height="70px" />
-          <LoaderSkeleton height="70px" />
-          <LoaderSkeleton height="70px" />
+          <LoaderSkeleton height="100px" />
+          <LoaderSkeleton height="100px" />
+          <LoaderSkeleton height="100px" />
         </div>
       )}
 

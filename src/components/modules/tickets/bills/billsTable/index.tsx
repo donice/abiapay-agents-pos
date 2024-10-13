@@ -13,7 +13,7 @@ const TransactionsTable: React.FC = () => {
   const router = useRouter();
 
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["get_transactions"],
+    queryKey: ["get_bills"],
     queryFn: () => {
       return fetchBills();
     },
