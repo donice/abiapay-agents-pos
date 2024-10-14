@@ -294,7 +294,7 @@ const DashboardComponent: React.FC = () => {
 
         {userData?.user_cat == "Enforcer" && (
           <>
-            <QuickLink name="Verify Vehicle Status" link="/receipts" />
+            <QuickLink name="Verify Vehicle Status" link="/tickets/verify" />
             <QuickLink name="Traffic Offence Ticket" link="/receipts" />
             <QuickLink name="Ticket Fines" link="/receipts" />
           </>

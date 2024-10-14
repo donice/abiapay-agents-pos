@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
-import { Button, PrimaryButton, SecondaryButton } from "../button";
+import { BackButton, Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
 import {
   TbCreditCardOff,
@@ -624,7 +624,9 @@ export const InformationModal = ({
           <BiError className="warning_icon" />
         ) : mode == "info" ? (
           <MdErrorOutline className="success_icon" />
-        ) : <FcOk className="success_icon" />}
+        ) : (
+          <FcOk className="success_icon" />
+        )}
 
         <div className="modalContent">
           <h2>
@@ -638,10 +640,98 @@ export const InformationModal = ({
             </button>
           )}
           {mode == "success" && (
-            <SecondaryButton onClick={handleClick} text={success_text ? success_text: ""} />
+            <SecondaryButton
+              onClick={handleClick}
+              text={success_text ? success_text : ""}
+            />
           )}
+        </div>
+      </div>
+    </div>
+  );
+};
+export const InstantAccountModal = ({
+  onClick,
+  icon,
+  mode,
+  maintext,
+  subtext,
+  link,
+  success_link,
+  virtual_acct_no,
+  virtual_acct_name,
+  transaction_amount,
+  bank_name,
+  expiry_datetime,
+  loading,
+}: {
+  onClick?: () => void;
+  icon?: React.ReactNode;
+  mode?: "success" | "error" | "warning" | "info";
+  maintext?: string;
+  subtext?: string;
+  link?: string;
+  success_text?: string;
+  success_link?: string;
+  virtual_acct_no: string;
+  virtual_acct_name: string;
+  transaction_amount: string;
+  bank_name: string;
+  expiry_datetime: string;
+  loading?: boolean;
+}) => {
+  const router = useRouter();
 
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    } else if (success_link) {
+      router.push(success_link);
+    }
+  };
 
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        {icon ? icon : <FcOk className="success_icon" />}
+
+        <div className="modalContent">
+          <h2>
+            {mode == "warning" ? "Warning: " : mode == "error" ? "Error: " : ""}{" "}
+            {maintext ? maintext : "Instant Account Details"}{" "}
+          </h2>
+          <p>{subtext}</p>
+
+          <div className="account-details">
+            <div className="account-details_items">
+              <p>Account Number:</p>
+              <p>{virtual_acct_no}</p>
+            </div>
+            <div className="account-details_items">
+              <p>Account Name:</p>
+              <p>{virtual_acct_name}</p>
+            </div>
+            <div className="account-details_items">
+              <p>Transaction Amount:</p>
+              <p>{transaction_amount}</p>
+            </div>
+            <div className="account-details_items">
+              <p>Bank Name:</p>
+              <p>{bank_name}</p>
+            </div>
+          </div>
+          {/* <p style={{ marginBottom: "20px" }}>
+            This account is only valid for this transaction. It will expire on{" "}
+            {expiry_datetime}
+          </p> */}
+
+          <Button
+            text={"Confirm my payment"}
+            loading={loading}
+            disabled={loading}
+            onClick={onClick}
+          />
+          <BackButton link={"/bills"} />
         </div>
       </div>
     </div>

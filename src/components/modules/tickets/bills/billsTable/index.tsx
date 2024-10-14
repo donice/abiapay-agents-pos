@@ -46,9 +46,9 @@ const TransactionsTable: React.FC = () => {
       {fetched_data.length > 0 ? (
         <div className="main-table_form_tickets_container">
           <div className="tickets">
-            {fetched_data.map((transaction: any) => (
+            {fetched_data.map((transaction: any, index: any) => (
               <div
-                key={transaction.idagent_transactions}
+                key={index}
                 className="ticket"
                 onClick={() =>
                   router.push(
