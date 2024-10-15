@@ -92,11 +92,11 @@ const SideNav = () => {
       <div className="side-nav_items_container">
         <div className="side-nav_items">
           {nav_items
-            .filter(
-              (item) =>
-                !item.access || item.access.includes(userData?.user_cat || "")
-            ) // Filter based on access or show if no access restriction
-            .map((item) => (
+           .filter(
+            (item) =>
+              !item.access || (userData?.user_cat && item.access.includes(userData.user_cat))
+          )
+          .map((item) => (
               <Link
                 href={`/${item.name}`}
                 key={item.name}
