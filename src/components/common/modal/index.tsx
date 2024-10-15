@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import AccessBankLogo from "@/src/components/assets/access_bank.png";
 import FidelityBankLogo from "@/src/components/assets/fidelity_bank.png";
 import Image from "next/image";
+import { formatAmount } from "@/src/utils/formatAmount";
 
 interface SuccessModalProps {
   maintext?: string;
@@ -730,7 +731,7 @@ export const InstantAccountModal = ({
             </div>
             <div className="account-details_items">
               <p>Transaction Amount:</p>
-              <p>{transaction_amount}</p>
+              <p>₦{transaction_amount}</p>
             </div>
             <div className="account-details_items">
               <p>Bank Name:</p>
