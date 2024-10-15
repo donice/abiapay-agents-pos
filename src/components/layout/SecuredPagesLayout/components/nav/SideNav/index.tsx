@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import "./style.scss";
 import Link from "next/link";
 import getRoute from "@/src/hooks/getRoute";
@@ -12,11 +12,16 @@ import {
   TbSquareRoundedPlus,
   TbLayoutGridAdd,
 } from "react-icons/tb";
+import useIsBrower from "@/src/hooks/useIsBrower";
+
+// Define the allowed user categories
+type UserCategory = "Agent" | "Enforcers" | "MdaUser";
 
 interface SideNavProps {
   name: string;
   title: string;
   icon?: ReactElement;
+  access?: UserCategory[]; // Update to use UserCategory[]
 }
 
 const nav_items: SideNavProps[] = [
@@ -24,21 +29,25 @@ const nav_items: SideNavProps[] = [
     name: "dashboard",
     title: "Dashboard",
     icon: <TbHome className="icon" />,
+    access: ["Agent", "Enforcers", "MdaUser"],
   },
   {
     name: "tickets/transport",
     title: "Transport Ticket",
     icon: <TbTicket className="icon" />,
+    access: ["Agent"], 
   },
   {
     name: "tickets/verify",
     title: "Verify Ticket",
     icon: <TbLineScan className="icon" />,
+    access: ["Agent"],
   },
   {
     name: "tickets/add",
     title: "Add Tickets",
     icon: <TbSquareRoundedPlus className="icon plus" />,
+    access: ["Agent"], 
   },
   {
     name: "user/account",
@@ -55,16 +64,48 @@ const nav_items: SideNavProps[] = [
 const SideNav = () => {
   const route = getRoute();
 
+  const [userData, setUserData] = useState<{
+    name?: string;
+    user_cat?: UserCategory; // Explicitly type this as UserCategory
+  } | null>(null);
+
+  useEffect(() => {
+    if (useIsBrower()) {
+      const data = window.sessionStorage.getItem("USER_DATA");
+      if (data) {
+        try {
+          const parsedData = JSON.parse(data);
+          setUserData({
+            ...parsedData,
+            user_cat: parsedData.user_cat as UserCategory, // Type assertion for user_cat
+          });
+        } catch (e) {
+          console.error("Error parsing JSON data:", e);
+          setUserData({});
+        }
+      }
+    }
+  }, []);
+
   return (
     <div className="side-nav">
       <div className="side-nav_items_container">
         <div className="side-nav_items">
-          {nav_items.map((item) => (
-            <Link href={`/${item.name}`} key={item.name} className={`side-nav_item ${item.name === route ? "active" : "inactive"}`}>
+          {nav_items
+            .filter(
+              (item) =>
+                !item.access || item.access.includes(userData?.user_cat || "")
+            ) // Filter based on access or show if no access restriction
+            .map((item) => (
+              <Link
+                href={`/${item.name}`}
+                key={item.name}
+                className={`side-nav_item ${item.name === route ? "active" : "inactive"}`}
+              >
                 <span>{item.icon}</span>
                 <span>{item.title}</span>
-            </Link>
-          ))}
+              </Link>
+            ))}
           <Link href={"/signin"} key={"logout"} className="side-nav_item logout">
             <span>
               <TbLogout2 className="icon out" />
