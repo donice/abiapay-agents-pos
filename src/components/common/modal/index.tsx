@@ -18,6 +18,9 @@ import { LuMailCheck } from "react-icons/lu";
 import { MdErrorOutline, MdOutlineWifiTetheringError } from "react-icons/md";
 import { BiError } from "react-icons/bi";
 import toast from "react-hot-toast";
+import AccessBankLogo from "@/src/components/assets/access_bank.png";
+import FidelityBankLogo from "@/src/components/assets/fidelity_bank.png";
+import Image from "next/image";
 
 interface SuccessModalProps {
   maintext?: string;
@@ -695,9 +698,9 @@ export const InstantAccountModal = ({
     <div className="modalOverlay">
       <div className="modal">
         {bank_name == "Access Bank" ? (
-          <FcOk className="success_icon" />
+          <Image src={AccessBankLogo} width={70} className="success_icon" alt="access bank logo" />
         ) : (
-          <FcOk className="success_icon" />
+          <Image src={FidelityBankLogo} width={70} className="success_icon" alt="fidelity bank logo" />
         )}
         {/* {icon ? icon : <FcOk className="success_icon" />} */}
 

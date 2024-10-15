@@ -37,7 +37,6 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
   const [banks, setBanks] = useState([]);
 
   const {
-    watch,
     setValue,
     register: registerTransferToBank,
     formState: { errors: errorsTransferToBank },
