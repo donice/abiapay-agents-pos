@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
 import { BackButton, Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
 import {
+  TbCopy,
   TbCreditCardOff,
   TbCreditCardPay,
   TbPasswordMobilePhone,
@@ -16,6 +17,7 @@ import QRCode from "react-qr-code";
 import { LuMailCheck } from "react-icons/lu";
 import { MdErrorOutline, MdOutlineWifiTetheringError } from "react-icons/md";
 import { BiError } from "react-icons/bi";
+import toast from "react-hot-toast";
 
 interface SuccessModalProps {
   maintext?: string;
@@ -652,12 +654,8 @@ export const InformationModal = ({
 };
 export const InstantAccountModal = ({
   onClick,
-  icon,
   mode,
-  maintext,
-  subtext,
   link,
-  success_link,
   virtual_acct_no,
   virtual_acct_name,
   transaction_amount,
@@ -666,13 +664,9 @@ export const InstantAccountModal = ({
   loading,
 }: {
   onClick?: () => void;
-  icon?: React.ReactNode;
   mode?: "success" | "error" | "warning" | "info";
-  maintext?: string;
-  subtext?: string;
   link?: string;
   success_text?: string;
-  success_link?: string;
   virtual_acct_no: string;
   virtual_acct_name: string;
   transaction_amount: string;
@@ -680,33 +674,53 @@ export const InstantAccountModal = ({
   expiry_datetime: string;
   loading?: boolean;
 }) => {
-  const router = useRouter();
 
-  const handleClick = () => {
-    if (link) {
-      router.push(link);
-    } else if (success_link) {
-      router.push(success_link);
+  const handleCopy = async (acct: string) => {
+    if (!acct) {
+      toast.error("Account number is missing");
+      return;
+    }
+  
+    try {
+      await navigator.clipboard.writeText(acct);
+      toast.success("Account number copied!");
+    } catch (err) {
+      console.error("Failed to copy:", err);
+      toast.error("Failed to copy account number. Please try again.");
     }
   };
+  
 
   return (
     <div className="modalOverlay">
       <div className="modal">
-        {icon ? icon : <FcOk className="success_icon" />}
+        {bank_name == "Access Bank" ? (
+          <FcOk className="success_icon" />
+        ) : (
+          <FcOk className="success_icon" />
+        )}
+        {/* {icon ? icon : <FcOk className="success_icon" />} */}
 
         <div className="modalContent">
           <h2>
             {mode == "warning" ? "Warning: " : mode == "error" ? "Error: " : ""}{" "}
-            {maintext ? maintext : "Instant Account Details"}{" "}
+            Instant Account Transfer
           </h2>
-          <p>{subtext}</p>
+          <p>Kindly transfer to the Bank Details shown below</p>
 
           <div className="account-details">
             <div className="account-details_items">
               <p>Account Number:</p>
-              <p>{virtual_acct_no}</p>
+              <p style={{ display: "flex", alignItems: "center" , gap: "5px"}}>
+                <TbCopy
+                  className="icon"
+                  onClick={() => handleCopy(virtual_acct_no)}
+                  style={{ cursor: "pointer" }}
+                />{" "}
+                {virtual_acct_no}
+              </p>
             </div>
+
             <div className="account-details_items">
               <p>Account Name:</p>
               <p>{virtual_acct_name}</p>

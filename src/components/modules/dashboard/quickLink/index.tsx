@@ -11,6 +11,7 @@ import {
   FcAutomotive,
   FcDeleteDatabase,
   FcDiploma2,
+  FcBusinessContact,
 } from "react-icons/fc";
 
 const QuickLinks = ({
@@ -18,6 +19,7 @@ const QuickLinks = ({
   link,
 }: {
   name:
+    | "ABSAA"
     | "Identity"
     | "Enforcement"
     | "Bills"
@@ -35,6 +37,8 @@ const QuickLinks = ({
         {" "}
         {name == "Bulk Prints" ? (
           <FcPrint className="icon" />
+        ) : name == "ABSAA" ? (
+          <FcBusinessContact className="icon" />
         ) : name == "Bills" ? (
           <FcNews className="icon" />
         ) : name == "Receipts" ? (

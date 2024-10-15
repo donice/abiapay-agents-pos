@@ -287,8 +287,6 @@ const Dynamic = () => {
         <InstantAccountModal
           onClick={() => mutateConfirmPayment(ticket[0]?.transref)}
           mode="success"
-          maintext={show.message}
-          subtext={show.sum_message}
           link="/bills"
           success_text="Proceed to confirm payment"
           virtual_acct_no={instantAccountDetails?.virtual_acct_no}
