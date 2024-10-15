@@ -27,6 +27,16 @@
   margin: 0 1rem;
   z-index: 9999;
 
+  .logo_icon {
+    margin-bottom: 2rem;
+    width: 4rem;
+    background-color: #f2fff4;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #00800041;
+
+  }
+
   .success_icon {
     color: green;
     font-size: 4.5rem;
@@ -275,4 +285,10 @@
       text-transform: uppercase;
     }
   }
+}
+
+.modalActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }

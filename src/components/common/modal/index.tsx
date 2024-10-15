@@ -22,6 +22,7 @@ import AccessBankLogo from "@/src/components/assets/access_bank.png";
 import FidelityBankLogo from "@/src/components/assets/fidelity_bank.png";
 import Image from "next/image";
 import { formatAmount } from "@/src/utils/formatAmount";
+import { CountdownTimer } from "@/src/utils/countdownTimer";
 
 interface SuccessModalProps {
   maintext?: string;
@@ -678,32 +679,39 @@ export const InstantAccountModal = ({
   expiry_datetime: string;
   loading?: boolean;
 }) => {
-
   const handleCopy = async (acct: string) => {
     if (!acct) {
       toast.error("Account number is missing");
       return;
     }
-  
+
     try {
       await navigator.clipboard.writeText(acct);
-      toast.success("Account number copied!");
+      toast.success("Copied!");
     } catch (err) {
       console.error("Failed to copy:", err);
       toast.error("Failed to copy account number. Please try again.");
     }
   };
-  
 
   return (
     <div className="modalOverlay">
       <div className="modal">
         {bank_name == "Access Bank" ? (
-          <Image src={AccessBankLogo} width={70} className="success_icon" alt="access bank logo" />
+          <Image
+            src={AccessBankLogo}
+            width={70}
+            className="logo_icon"
+            alt="access bank logo"
+          />
         ) : (
-          <Image src={FidelityBankLogo} width={70} className="success_icon" alt="fidelity bank logo" />
+          <Image
+            src={FidelityBankLogo}
+            width={70}
+            className="logo_icon"
+            alt="fidelity bank logo"
+          />
         )}
-        {/* {icon ? icon : <FcOk className="success_icon" />} */}
 
         <div className="modalContent">
           <h2>
@@ -714,8 +722,16 @@ export const InstantAccountModal = ({
 
           <div className="account-details">
             <div className="account-details_items">
+              <p>Bank Name:</p>
+              <p>{bank_name}</p>
+            </div>{" "}
+            <div className="account-details_items">
+              <p>Account Name:</p>
+              <p>{virtual_acct_name}</p>
+            </div>
+            <div className="account-details_items">
               <p>Account Number:</p>
-              <p style={{ display: "flex", alignItems: "center" , gap: "5px"}}>
+              <p style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                 <TbCopy
                   className="icon"
                   onClick={() => handleCopy(virtual_acct_no)}
@@ -724,32 +740,32 @@ export const InstantAccountModal = ({
                 {virtual_acct_no}
               </p>
             </div>
-
-            <div className="account-details_items">
-              <p>Account Name:</p>
-              <p>{virtual_acct_name}</p>
-            </div>
             <div className="account-details_items">
               <p>Transaction Amount:</p>
-              <p>₦{transaction_amount}</p>
-            </div>
-            <div className="account-details_items">
-              <p>Bank Name:</p>
-              <p>{bank_name}</p>
+              <p style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                <TbCopy
+                  className="icon"
+                  onClick={() => handleCopy(transaction_amount)}
+                  style={{ cursor: "pointer" }}
+                />{" "}
+                ₦{transaction_amount}
+              </p>
             </div>
           </div>
-          {/* <p style={{ marginBottom: "20px" }}>
-            This account is only valid for this transaction. It will expire on{" "}
-            {expiry_datetime}
-          </p> */}
+          <p style={{ marginBottom: "20px" }}>
+            This account is only valid for this transaction. It will expire in{" "}
+            <CountdownTimer targetDate={expiry_datetime} />
+          </p>
 
-          <Button
-            text={"Confirm my payment"}
-            loading={loading}
-            disabled={loading}
-            onClick={onClick}
-          />
-          <BackButton link={"/bills"} />
+          <div className="modalActions">
+            <Button
+              text={"Confirm my Payment"}
+              loading={loading}
+              disabled={loading}
+              onClick={onClick}
+            />
+            <BackButton link={"/bills"} />
+          </div>
         </div>
       </div>
     </div>
