@@ -82,6 +82,8 @@ const DashboardComponent: React.FC = () => {
   const [userData, setUserData] = useState<{
     name?: string;
     user_cat?: string;
+    mda_name?: string;
+    mda?: string;
   } | null>(null);
 
   useEffect(() => {
@@ -189,7 +191,7 @@ const DashboardComponent: React.FC = () => {
       <header className="dashboard_header">
         <CustomHeader
           title={`Welcome${userData?.name && `, ${userData?.name}`}`}
-          desc="Overview of your dashboard"
+          desc={userData?.user_cat == "MdaUser" ? `${userData?.mda_name} Dashboard`:"Overview of your dashboard"}
         />
         {userData?.user_cat == "MdaUser" ||
         userData?.user_cat == "Enforcer" ||
