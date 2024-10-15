@@ -19,7 +19,7 @@ const QuickLinks = ({
   link,
 }: {
   name:
-    | "ABSAA"
+    | "ABSSAA"
     | "Identity"
     | "Enforcement"
     | "Bills"
@@ -37,7 +37,7 @@ const QuickLinks = ({
         {" "}
         {name == "Bulk Prints" ? (
           <FcPrint className="icon" />
-        ) : name == "ABSAA" ? (
+        ) : name == "ABSSAA" ? (
           <FcBusinessContact className="icon" />
         ) : name == "Bills" ? (
           <FcNews className="icon" />

@@ -10,8 +10,8 @@ import {
 import "./style.scss";
 
 export const metadata: Metadata = {
-  title: "ABSAA Signages",
-  description: "Manage all signages done by ABSAA",
+  title: "ABSSAA Signages",
+  description: "Manage all signages done by ABSSAA",
 };
 
 interface AccountsProps {
@@ -79,7 +79,7 @@ const items: AccountsProps[] = [
 const SignagePage = () => {
   return (
     <div className="signage">
-      <CustomHeader title="ABSSA Dashboard" desc={"Manage all signages done by ABSAA"} />
+      <CustomHeader title="ABSSAA Dashboard" desc={"Manage all signages done by ABSSAA"} />
       
 
       <div className="signage_container">

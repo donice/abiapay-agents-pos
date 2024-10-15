@@ -282,15 +282,19 @@ const DashboardComponent: React.FC = () => {
       )}
 
       <div className="dashboard_quicklinks">
-        {(userData?.user_cat == "MdaUser" || userData?.user_cat == "Agent") && (
+        {( userData?.user_cat == "Agent") && (
           <>
-            <QuickLink name="ABSAA" link="/absaa/signage" />
+            <QuickLink name="ABSSAA" link="/absaa/signage" />
+          </>
+        )}
+        {( userData?.user_cat == "MdaUser") && (
+          <>
+            <QuickLink name="Bulk Prints" link="/prints" />
           </>
         )}
         {userData?.user_cat == "MdaUser" && (
           <>
             {" "}
-            <QuickLink name="Bulk Prints" link="/prints" />
             <QuickLink name="Bills" link="/bills" />{" "}
             <QuickLink name="Receipts" link="/receipts" />
           </>
