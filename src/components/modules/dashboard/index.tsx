@@ -251,11 +251,6 @@ const DashboardComponent: React.FC = () => {
             }
             link="/bills"
           />
-          {/* <EnforcerCard
-            name="Receipts"
-            amount={receiptData == null ? 0 : receiptData.length.toString()}
-            link="/receipts"
-          /> */}
         </div>
       ) : abssinCount != null && enumerationCount != null ? (
         <div className="dashboard_stats">
@@ -304,7 +299,7 @@ const DashboardComponent: React.FC = () => {
 
         {userData?.user_cat == "Enforcer" && (
           <>
-            <QuickLink name="Verify Vehicle Status" link="/tickets/verify" />
+            <QuickLink name="Verify Vehicle Status" link="/vehicle-status" />
             <QuickLink name="Traffic Offence Ticket" link="/receipts" />
             <QuickLink name="Ticket Fines" link="/receipts" />
           </>

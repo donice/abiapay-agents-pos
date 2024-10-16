@@ -15,7 +15,7 @@ import {
 import useIsBrower from "@/src/hooks/useIsBrower";
 
 // Define the allowed user categories
-type UserCategory = "Agent" | "Enforcers" | "MdaUser";
+type UserCategory = "Agent" | "Enforcer" | "MdaUser";
 
 interface SideNavProps {
   name: string;
@@ -29,7 +29,7 @@ const nav_items: SideNavProps[] = [
     name: "dashboard",
     title: "Dashboard",
     icon: <TbHome className="icon" />,
-    access: ["Agent", "Enforcers", "MdaUser"],
+    access: ["Agent", "Enforcer", "MdaUser"],
   },
   {
     name: "tickets/transport",
