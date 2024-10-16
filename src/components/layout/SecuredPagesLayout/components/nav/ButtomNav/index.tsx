@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import "./style.scss";
 import Link from "next/link";
 import getRoute from "@/src/hooks/getRoute";
@@ -17,12 +17,14 @@ import {
   TbTicket,
 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
 interface BottomNavProps {
   name: string;
   title: string;
   icon: ReactElement;
   icon_active?: ReactElement;
+  access?: "Agent" | "Enforcers" | "MdaUser";
 }
 
 const nav_items: BottomNavProps[] = [
@@ -43,18 +45,21 @@ const nav_items: BottomNavProps[] = [
     title: "Verify Tickets",
     icon: <TbLineScan className="icon" />,
     icon_active: <TbZoomScanFilled className="icon" />,
+    access: "Agent",
   },
   {
     name: "tickets/add",
     title: "Add Tickets",
     icon: <TbSquareRoundedPlus className="icon plus" />,
     icon_active: <TbSquareRoundedPlusFilled className="icon plus" />,
+    access: "Agent",
   },
   {
     name: "user/account",
     title: "My Account",
     icon: <TbUser className="icon" />,
     icon_active: <TbUserFilled className="icon" />,
+    access: "Agent",
   },
   {
     name: "user/settings",
@@ -68,20 +73,44 @@ const BottomNav = () => {
   const route = getRoute();
   const router = useRouter();
 
+  const [userData, setUserData] = useState<{
+    name?: string;
+    user_cat?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (useIsBrower()) {
+      const data = window.sessionStorage.getItem("USER_DATA");
+      if (data) {
+        try {
+          setUserData(JSON.parse(data));
+        } catch (e) {
+          console.error("Error parsing JSON data:", e);
+          setUserData({});
+        }
+      }
+    }
+  }, []);
+  
   return (
     <div className="bottom-nav">
       <div className="bottom-nav_items_container">
         <div className="bottom-nav_items">
-          {nav_items.map((item) => (
-            <Link href={`/${item.name}`} key={item.name} className={`bottom-nav_item ${item.name === route ? "active" : "inactive"}`}>
-                <span>{item.name === route ? item.icon_active : item.icon}</span>
-            </Link>
-          ))}
-          {/* <div key={"logout"} onClick={() => {sessionStorage.clear(); router.refresh();}} className="bottom-nav_item logout">
-            <span>
-              <TbLogout2 className="icon out" />
-            </span>
-          </div> */}
+          {nav_items
+            // .filter((item) => item.access == userData?.user_cat)
+            .map((item) => (
+              <Link
+                href={`/${item.name}`}
+                key={item.name}
+                className={`bottom-nav_item ${
+                  item.name === route ? "active" : "inactive"
+                }`}
+              >
+                <span>
+                  {item.name === route ? item.icon_active : item.icon}
+                </span>
+              </Link>
+            ))}
         </div>
       </div>
     </div>

@@ -22,12 +22,15 @@ export interface BillPaymentPayload {
   account_type: string;
 }
 
+export interface ConfirmInstantAccountPaymentPayload {
+  notice_number: string;
+}
 export const fetchBills = async () => {
   try {
     const { data } = await axiosInstance.get(`${url}/collections`);
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    throw new Error(`Error fetching bills: ${error?.message}`);
   }
 };
 
@@ -39,7 +42,7 @@ export const fetchBillPayment = async (requestBody: FetchBillPayload) => {
     );
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    throw new Error(`Error fetching bill payment: ${error?.message}`);
   }
 };
 
@@ -51,6 +54,20 @@ export const fetchInstantAccount = async (requestBody: BillPaymentPayload) => {
     );
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    throw new Error(`Error creating instant account: ${error?.message}`);
+  }
+};
+
+export const confirmInstantAccountPayment = async (
+  requestBody: ConfirmInstantAccountPaymentPayload
+) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/payment/check-instant-payment`,
+      { notice_number: requestBody }
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error confirming payment: ${error?.message}`);
   }
 };

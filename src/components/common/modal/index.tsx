@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
-import { Button, PrimaryButton, SecondaryButton } from "../button";
+import { BackButton, Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
 import {
+  TbCopy,
   TbCreditCardOff,
   TbCreditCardPay,
   TbPasswordMobilePhone,
@@ -16,6 +17,12 @@ import QRCode from "react-qr-code";
 import { LuMailCheck } from "react-icons/lu";
 import { MdErrorOutline, MdOutlineWifiTetheringError } from "react-icons/md";
 import { BiError } from "react-icons/bi";
+import toast from "react-hot-toast";
+import AccessBankLogo from "@/src/components/assets/access_bank.png";
+import FidelityBankLogo from "@/src/components/assets/fidelity_bank.png";
+import Image from "next/image";
+import { formatAmount } from "@/src/utils/formatAmount";
+import { CountdownTimer } from "@/src/utils/countdownTimer";
 
 interface SuccessModalProps {
   maintext?: string;
@@ -624,7 +631,9 @@ export const InformationModal = ({
           <BiError className="warning_icon" />
         ) : mode == "info" ? (
           <MdErrorOutline className="success_icon" />
-        ) : <FcOk className="success_icon" />}
+        ) : (
+          <FcOk className="success_icon" />
+        )}
 
         <div className="modalContent">
           <h2>
@@ -638,10 +647,125 @@ export const InformationModal = ({
             </button>
           )}
           {mode == "success" && (
-            <SecondaryButton onClick={handleClick} text={success_text ? success_text: ""} />
+            <SecondaryButton
+              onClick={handleClick}
+              text={success_text ? success_text : ""}
+            />
           )}
+        </div>
+      </div>
+    </div>
+  );
+};
+export const InstantAccountModal = ({
+  onClick,
+  mode,
+  link,
+  virtual_acct_no,
+  virtual_acct_name,
+  transaction_amount,
+  bank_name,
+  expiry_datetime,
+  loading,
+}: {
+  onClick?: () => void;
+  mode?: "success" | "error" | "warning" | "info";
+  link?: string;
+  success_text?: string;
+  virtual_acct_no: string;
+  virtual_acct_name: string;
+  transaction_amount: string;
+  bank_name: string;
+  expiry_datetime: string;
+  loading?: boolean;
+}) => {
+  const handleCopy = async (acct: string) => {
+    if (!acct) {
+      toast.error("Account number is missing");
+      return;
+    }
 
+    try {
+      await navigator.clipboard.writeText(acct);
+      toast.success("Copied!");
+    } catch (err) {
+      console.error("Failed to copy:", err);
+      toast.error("Failed to copy account number. Please try again.");
+    }
+  };
 
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        {bank_name == "Access Bank" ? (
+          <Image
+            src={AccessBankLogo}
+            width={70}
+            className="logo_icon"
+            alt="access bank logo"
+          />
+        ) : (
+          <Image
+            src={FidelityBankLogo}
+            width={70}
+            className="logo_icon"
+            alt="fidelity bank logo"
+          />
+        )}
+
+        <div className="modalContent">
+          <h2>
+            {mode == "warning" ? "Warning: " : mode == "error" ? "Error: " : ""}{" "}
+            Instant Account Transfer
+          </h2>
+          <p>Kindly transfer to the Bank Details shown below</p>
+
+          <div className="account-details">
+            <div className="account-details_items">
+              <p>Bank Name:</p>
+              <p>{bank_name}</p>
+            </div>{" "}
+            <div className="account-details_items">
+              <p>Account Name:</p>
+              <p>{virtual_acct_name}</p>
+            </div>
+            <div className="account-details_items">
+              <p>Account Number:</p>
+              <p style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                <TbCopy
+                  className="icon"
+                  onClick={() => handleCopy(virtual_acct_no)}
+                  style={{ cursor: "pointer" }}
+                />{" "}
+                {virtual_acct_no}
+              </p>
+            </div>
+            <div className="account-details_items">
+              <p>Transaction Amount:</p>
+              <p style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                <TbCopy
+                  className="icon"
+                  onClick={() => handleCopy(transaction_amount)}
+                  style={{ cursor: "pointer" }}
+                />{" "}
+                ₦{transaction_amount}
+              </p>
+            </div>
+          </div>
+          <p style={{ marginBottom: "20px" }}>
+            This account is only valid for this transaction. It will expire in{" "}
+            <CountdownTimer targetDate={expiry_datetime} />
+          </p>
+
+          <div className="modalActions">
+            <Button
+              text={"Confirm my Payment"}
+              loading={loading}
+              disabled={loading}
+              onClick={onClick}
+            />
+            <BackButton link={"/bills"} />
+          </div>
         </div>
       </div>
     </div>

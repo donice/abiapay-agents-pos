@@ -11,7 +11,7 @@ import "../style.scss";
 
 const UsingPlateNumberExportComponent = () => {
   const router = useRouter();
-  const [ticketsData, setTicketsData] = useState( []);
+  const [ticketsData, setTicketsData] = useState(null || []);
   const [searched, setSearched] = useState(false);
 
   if (ticketsData) {

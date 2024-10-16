@@ -23,9 +23,20 @@ import useIsBrower from "@/src/hooks/useIsBrower";
 import { WalletCard } from "./walletCard";
 import { fetchTransactions } from "@/src/services/ticketsServices";
 import QuickLink from "./quickLink";
+import MdaCard from "./mdaCard";
+import { useQuery } from "@tanstack/react-query";
+import { fetchReceipts } from "@/src/services/receiptsServices";
+import { fetchBills } from "@/src/services/billServices";
+import EnforcerCard from "./enforcerCard";
+
+const MDA_KEYS = {
+  ministry_of_transport: "29001001",
+  absaa: "11100104",
+  board_of_iternal_revenue: "20008001",
+};
 
 function filterByTodaysDate(transactions: any[]) {
-  const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
   return transactions.filter((transaction) => {
     return transaction.trans_date.split("T")[0] === today;
   });
@@ -77,6 +88,8 @@ const DashboardComponent: React.FC = () => {
   const [userData, setUserData] = useState<{
     name?: string;
     user_cat?: string;
+    mda_name?: string;
+    mda?: string;
   } | null>(null);
 
   useEffect(() => {
@@ -106,7 +119,7 @@ const DashboardComponent: React.FC = () => {
         },
       });
     } catch (error) {
-      toast.error("Error fetching dashboard data");
+      // toast.error("Error fetching dashboard data");
       dispatch({ type: "FETCH_ERROR" });
     }
   }, []);
@@ -151,6 +164,24 @@ const DashboardComponent: React.FC = () => {
     }
   }, []);
 
+  const { data: receiptData, isLoading: receiptLoading } = useQuery({
+    queryKey: ["get_receipts"],
+    queryFn: () => {
+      return fetchReceipts();
+    },
+  });
+
+  const { data: billsData, isLoading: billsLoading } = useQuery({
+    queryKey: ["get_bills"],
+    queryFn: () => {
+      return fetchBills();
+    },
+  });
+
+  const fetched_data = billsData?.response_data || [];
+
+  // console.log(receiptData, "RECEIPT DATA");
+
   useEffect(() => {
     getDashboardData();
     getABSSINData();
@@ -166,22 +197,31 @@ const DashboardComponent: React.FC = () => {
       <header className="dashboard_header">
         <CustomHeader
           title={`Welcome${userData?.name && `, ${userData?.name}`}`}
-          desc="Overview of your dashboard"
+          desc={
+            userData?.user_cat == "MdaUser"
+              ? `${userData?.mda_name} Dashboard`
+              : "Overview of your dashboard"
+          }
         />
-        <div className="dashboard_header_buttons">
-          <SecondaryButton
-            text="Akara Ekwenti"
-            link="/find/using-phone-number"
-          />
-          <PrimaryButton
-            text="Sharp Sharp"
-            link="/find/using-plate-number"
-            addIcon={true}
-          />
-        </div>
+        {userData?.user_cat == "MdaUser" ||
+        userData?.user_cat == "Enforcer" ||
+        userData?.user_cat == "Enforcer" ? null : (
+          <div className="dashboard_header_buttons">
+            <SecondaryButton
+              text="Akara Ekwenti"
+              link="/find/using-phone-number"
+            />
+            <PrimaryButton
+              text="Sharp Sharp"
+              link="/find/using-plate-number"
+              addIcon={true}
+            />
+          </div>
+        )}
       </header>
 
-      {!loading ? (
+      {userData?.user_cat == "MdaUser" ||
+      userData?.user_cat == "Enforcer" ? null : !loading ? (
         <div className="dashboard_wallets">
           <WalletCard bank="access" data={accessData} />
           <WalletCard bank="fidelity" data={fidelityData} />
@@ -193,7 +233,36 @@ const DashboardComponent: React.FC = () => {
         </div>
       )}
 
-      {abssinCount != null && enumerationCount != null ? (
+      {userData?.user_cat == "MdaUser" ? (
+        <div className="dashboard_mda_stats">
+          <MdaCard
+            name="Bills"
+            amount={
+              billsData?.response_data == null
+                ? 0
+                : billsData?.response_data.length.toString()
+            }
+            link="/bills"
+          />
+          <MdaCard
+            name="Receipts"
+            amount={receiptData == null ? 0 : receiptData.length.toString()}
+            link="/receipts"
+          />
+        </div>
+      ) : userData?.user_cat == "Enforcer" ? (
+        <div className="dashboard_enf_stats">
+          <EnforcerCard
+            name="Fines"
+            amount={
+              billsData?.response_data == null
+                ? 0
+                : billsData?.response_data.length.toString()
+            }
+            link="/bills"
+          />
+        </div>
+      ) : abssinCount != null && enumerationCount != null ? (
         <div className="dashboard_stats">
           <StatsCard
             name="Tickets"
@@ -213,19 +282,38 @@ const DashboardComponent: React.FC = () => {
         </div>
       ) : (
         <div className="dashboard_stats_skeleton">
-          <LoaderSkeleton height="70px" />
-          <LoaderSkeleton height="70px" />
-          <LoaderSkeleton height="70px" />
+          <LoaderSkeleton height="100px" />
+          <LoaderSkeleton height="100px" />
+          <LoaderSkeleton height="100px" />
         </div>
       )}
 
       <div className="dashboard_quicklinks">
-        {userData?.user_cat == "MdaUser" && (
-          <QuickLink name="Bills" link="/bills" />
+        {(userData?.user_cat == "Agent" || userData?.mda == MDA_KEYS.absaa) && (
+          <>
+            <QuickLink name="ABSSAA" link="/absaa/signage" />
+          </>
         )}
-        <QuickLink name="Bulk Prints" link="/prints" />
+        {(userData?.mda == MDA_KEYS.ministry_of_transport ||
+          userData?.mda == MDA_KEYS.board_of_iternal_revenue) && (
+          <>
+            <QuickLink name="Bulk Prints" link="/prints" />
+          </>
+        )}
         {userData?.user_cat == "MdaUser" && (
-          <QuickLink name="Receipts" link="/receipts" />
+          <>
+            {" "}
+            <QuickLink name="Bills" link="/bills" />{" "}
+            <QuickLink name="Receipts" link="/receipts" />
+          </>
+        )}
+
+        {userData?.user_cat == "Enforcer" && (
+          <>
+            <QuickLink name="Verify Vehicle Status" link="/vehicle-status" />
+            <QuickLink name="Traffic Offence Ticket" link="/receipts" />
+            <QuickLink name="Ticket Fines" link="/receipts" />
+          </>
         )}
       </div>
     </div>
