@@ -111,7 +111,7 @@ const LiscenceVehicleStatusComponent = () => {
                           expired(transaction.expiryDate) === "Almost Due"
                             ? "processing"
                             : expired(transaction.expiryDate) === "Expired"
-                            ? "Expired"
+                            ? "expired"
                             : expired(transaction.expiryDate) === "Active"
                             ? "completed": null
                         }`}
