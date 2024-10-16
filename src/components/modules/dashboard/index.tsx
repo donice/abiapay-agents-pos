@@ -29,6 +29,12 @@ import { fetchReceipts } from "@/src/services/receiptsServices";
 import { fetchBills } from "@/src/services/billServices";
 import EnforcerCard from "./enforcerCard";
 
+const MDA_KEYS = {
+  ministry_of_transport: "29001001",
+  absaa: "11100104",
+  board_of_iternal_revenue: "20008001",
+};
+
 function filterByTodaysDate(transactions: any[]) {
   const today = new Date().toISOString().split("T")[0];
   return transactions.filter((transaction) => {
@@ -191,7 +197,11 @@ const DashboardComponent: React.FC = () => {
       <header className="dashboard_header">
         <CustomHeader
           title={`Welcome${userData?.name && `, ${userData?.name}`}`}
-          desc={userData?.user_cat == "MdaUser" ? `${userData?.mda_name} Dashboard`:"Overview of your dashboard"}
+          desc={
+            userData?.user_cat == "MdaUser"
+              ? `${userData?.mda_name} Dashboard`
+              : "Overview of your dashboard"
+          }
         />
         {userData?.user_cat == "MdaUser" ||
         userData?.user_cat == "Enforcer" ||
@@ -279,12 +289,13 @@ const DashboardComponent: React.FC = () => {
       )}
 
       <div className="dashboard_quicklinks">
-        {( userData?.user_cat == "Agent") && (
+        {(userData?.user_cat == "Agent" || userData?.mda == MDA_KEYS.absaa) && (
           <>
             <QuickLink name="ABSSAA" link="/absaa/signage" />
           </>
         )}
-        {( userData?.user_cat == "MdaUser") && (
+        {(userData?.mda == MDA_KEYS.ministry_of_transport ||
+          userData?.mda == MDA_KEYS.board_of_iternal_revenue) && (
           <>
             <QuickLink name="Bulk Prints" link="/prints" />
           </>
