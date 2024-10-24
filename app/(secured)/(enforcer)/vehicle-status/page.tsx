@@ -19,9 +19,9 @@ interface AccountsProps {
 
 const items: AccountsProps[] = [
   {
-    link: "vehicle-status/liscence-vehicle-status",
-    title: "Liscense & Vehicle Status",
-    desc: "Confirm Liscense & Vehicle Status",
+    link: "vehicle-status/license-vehicle-status",
+    title: "License & Vehicle Status",
+    desc: "Confirm License & Vehicle Status",
     icon: <FcDeployment className="icon" />,
   },
   {

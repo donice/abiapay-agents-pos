@@ -14,12 +14,10 @@ import "../style.scss";
 function expired(date: string): string {
   let normalizedDate = date;
 
-  // Check if the date is in 'DD/MM/YYYY' format
   if (/\d{2}\/\d{2}\/\d{4}/.test(date)) {
     const [day, month, year] = date.split('/');
-    normalizedDate = `${year}-${month}-${day}`; // Convert to 'YYYY-MM-DD' format
+    normalizedDate = `${year}-${month}-${day}`;
   } 
-  // Check if date is already in 'YYYY-MM-DD' or similar valid ISO format
   else if (!/\d{4}-\d{2}-\d{2}/.test(date) && !/\d{4}\/\d{2}\/\d{2}/.test(date)) {
     console.error("Invalid date format");
     return "Invalid date";
@@ -50,7 +48,7 @@ function expired(date: string): string {
 }
 
 
-const LiscenceVehicleStatusComponent = () => {
+const LicenseVehicleStatusComponent = () => {
   const router = useRouter();
   const [ticketsData, setTicketsData] = useState([]);
   const [searched, setSearched] = useState(false);
@@ -66,7 +64,7 @@ const LiscenceVehicleStatusComponent = () => {
       <div className="find-comp">
         <header>
           <CustomHeader
-            title="Verify Liscense & Vehicle Status"
+            title="Verify License & Vehicle Status"
             desc="Enter taxpayer plate number to verify"
           />
         </header>
@@ -83,7 +81,7 @@ const LiscenceVehicleStatusComponent = () => {
                     className="ticket"
                     onClick={() =>
                       router.push(
-                        `/vehicle-status/liscence-vehicle-status/${transaction.registrationNumber}`
+                        `/vehicle-status/license-vehicle-status/${transaction.registrationNumber}`
                       )
                     }
                   >
@@ -137,4 +135,4 @@ const LiscenceVehicleStatusComponent = () => {
   );
 };
 
-export default LiscenceVehicleStatusComponent;
+export default LicenseVehicleStatusComponent;

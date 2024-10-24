@@ -34,7 +34,10 @@ const QuickLinks = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="quicklink" onClick={() => router.push(link)}>
+    <div
+      className="quicklink"
+      onClick={() => (comingSoon ? null : router.push(link))}
+    >
       <div className="quicklink_name">
         {" "}
         {name == "Bulk Prints" ? (

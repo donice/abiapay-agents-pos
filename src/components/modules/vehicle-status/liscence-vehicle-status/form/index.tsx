@@ -10,6 +10,7 @@ import {
   verifyVehicleStatus,
   verifyVehicleStatusPayload,
 } from "@/src/services/vehicleStatusService";
+import toast from "react-hot-toast";
 
 const Form = ({ setTicketsData, setSearched }: any) => {
   const {
@@ -23,7 +24,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
   });
 
   const { mutate, isPending } = useMutation({
-    //  mutationKey: ["verify_vehicle_status"],
+    mutationKey: ["verify_vehicle_status"],
     mutationFn: (data: verifyVehicleStatusPayload) => {
       return verifyVehicleStatus(data);
     },
@@ -33,6 +34,9 @@ const Form = ({ setTicketsData, setSearched }: any) => {
 
       if (data?.response_code == "00") {
         setTicketsData(data?.response_data);
+        setSearched(true);
+      } else {
+        toast.error(data?.response_message);
         setSearched(true);
       }
     },
