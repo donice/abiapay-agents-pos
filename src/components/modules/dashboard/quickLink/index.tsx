@@ -17,6 +17,7 @@ import {
 const QuickLinks = ({
   name,
   link,
+  comingSoon,
 }: {
   name:
     | "ABSSAA"
@@ -29,6 +30,7 @@ const QuickLinks = ({
     | "Traffic Offence Ticket"
     | "Ticket Fines";
   link: string;
+  comingSoon?: boolean;
 }) => {
   const router = useRouter();
   return (
@@ -54,7 +56,11 @@ const QuickLinks = ({
         )}
         <span>{name}</span>
       </div>
-      <TbChevronRight />
+      {comingSoon ? (
+        <span className="coming-soon">Coming Soon</span>
+      ) : (
+        <TbChevronRight />
+      )}
     </div>
   );
 };
