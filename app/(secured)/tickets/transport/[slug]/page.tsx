@@ -46,7 +46,7 @@ const Dynamic = () => {
       if (data?.response_code == "00") {
         toast.success(data?.response_message);
       } else {
-        toast(data?.response_message);
+        toast.error(data?.response_message);
       }
     },
   });
@@ -65,7 +65,7 @@ const Dynamic = () => {
   const retryPaymentFn = () => {
     const paymentRef = ticket[0]?.payment_ref;
     if (paymentRef) {
-      mutate({ payment_ref: paymentRef }); // Pass payment_ref as an object
+      mutate({ payment_ref: paymentRef });
     } else {
       console.error("Payment reference is missing.");
     }
