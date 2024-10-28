@@ -28,7 +28,6 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
     },
   });
 
-
   const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateGroupSportPayload) => {
       return createGroupSportTicket(data);
@@ -62,7 +61,6 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="loading_form">
-
       <FormTextInput
         label={"Taxpayer Phone Number"}
         name={"taxpayer_phone"}
@@ -80,7 +78,7 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
         error={errors.taxpayer_name}
       />
 
-<SelectInput
+      <SelectInput
         label={"Stadium Name"}
         name={"stadium_name"}
         id={"stadium_name"}
@@ -110,15 +108,21 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
           },
         ]}
       />
-      <FormTextInput
+     <SelectInput
         label={"Ticket Type"}
         name={"ticket_type"}
-        placeholder="Enter Ticket Type"
+        id={"ticket_type"}
         register={register}
         validation={{ required: true }}
-        error={errors.ticket_type}
+        error={!!errors.stadium_name}
+        options={[
+          { label: "VIP", value: "VIP" },
+          {
+            label: "Popular Stand",
+            value: "Popular Stand",
+          },
+        ]}
       />
-
       <FormTextInput
         label={"Amount"}
         name={"amount"}
@@ -129,7 +133,6 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
         error={errors.amount}
         disabled
       />
-
 
       <SelectInput
         label={"Wallet Type"}

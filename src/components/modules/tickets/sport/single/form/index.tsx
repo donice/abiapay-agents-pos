@@ -152,13 +152,20 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
           },
         ]}
       />
-      <FormTextInput
+      <SelectInput
         label={"Ticket Type"}
         name={"ticket_type"}
-        placeholder="Enter Ticket Type"
+        id={"ticket_type"}
         register={register}
         validation={{ required: true }}
-        error={errors.ticket_type}
+        error={!!errors.stadium_name}
+        options={[
+          { label: "VIP", value: "VIP" },
+          {
+            label: "Popular Stand",
+            value: "Popular Stand",
+          },
+        ]}
       />
 
       <FormTextInput
