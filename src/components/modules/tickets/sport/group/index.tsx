@@ -21,7 +21,7 @@ const GroupSportTicketsComponent = ({category}: {category: string}) => {
         desc="Create Sport Tickets"
       />
 
-      <Form setShow={setShow}/>
+      <Form setShow={setShow} category={category}/>
       {show.mode && (
         <SportModal
           maintext={show.message}

@@ -122,21 +122,35 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
         error={errors.taxpayer_name}
       />
 
-      <FormTextInput
+      <SelectInput
         label={"Stadium Name"}
         name={"stadium_name"}
-        placeholder="Enter Stadium Name"
+        id={"stadium_name"}
         register={register}
         validation={{ required: true }}
-        error={errors.stadium_name}
+        error={!!errors.stadium_name}
+        options={[
+          { label: "Enyimba Stadium, Aba", value: "Enyimba Stadium, Aba" },
+          {
+            label: "Umuahia Township Stadium, Umuahia",
+            value: "Umuahia Township Stadium, Umuahia",
+          },
+        ]}
       />
-      <FormTextInput
+      <SelectInput
         label={"Team Name"}
         name={"team_name"}
-        placeholder="Enter Team Name"
+        id={"team_name"}
         register={register}
         validation={{ required: true }}
-        error={errors.team_name}
+        error={!!errors.stadium_name}
+        options={[
+          { label: "Enyimba FC, Aba", value: "Enyimba FC, Aba" },
+          {
+            label: "Abia Warrior FC, Umuahia",
+            value: "Abia Warrior FC, Umuahia",
+          },
+        ]}
       />
       <FormTextInput
         label={"Ticket Type"}
@@ -151,10 +165,11 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
         label={"Amount"}
         name={"amount"}
         placeholder="Enter Amount"
+        value={category === "guest" ? "1200" : "1000"}
         register={register}
         validation={{ required: true }}
         error={errors.amount}
-        // disabled
+        disabled
       />
 
       <SelectInput
