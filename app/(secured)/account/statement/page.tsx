@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 const Dynamic = () => {
   const router = useRouter();
   const { data, isPending } = useQuery({
-    queryKey: ["statement"],
+    queryKey: ["my-statement"],
     queryFn: fetchAccountStatement,
   });
 
@@ -88,13 +88,13 @@ const Dynamic = () => {
             </div>
             <div>
               <p>Earnings </p>
-              <p>₦{formatAmount(data?.data?.earnings) || "-"} </p>
+              <p>₦{formatAmount(data?.data?.earning) || "-"} </p>
             </div>
             <div>
               <p>Total Earnings</p>
-              <p>₦{formatAmount(data?.data?.total_earnings) || "-"} </p>
+              <p>₦{formatAmount(data?.data?.total_earning) || "-"} </p>
             </div>
-            <div>
+            <div className="creation_date">
               <p>Creation Date </p>
               <p> {data?.data?.creation_date || "-"}</p>
             </div>
@@ -108,6 +108,7 @@ const Dynamic = () => {
               </p>
             </div>
             <Button
+            // disabled={true}
               text={"Fidelity Cashout"}
               onClick={() => {
                 router.push("/account/statement/fidelity");
