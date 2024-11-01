@@ -182,6 +182,7 @@ interface SelectComponentProps {
   register?: any; // Add this line
   validation?: any; // Add this line
   error?: boolean;
+  errorMessage?: string;
 }
 
 export const SelectInput: React.FC<SelectComponentProps> = ({
@@ -197,6 +198,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
   register,
   validation,
   error,
+  errorMessage = "Field Required",
 }) => {
   return (
     <div className="select-container">
@@ -208,24 +210,19 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
         value={value}
         disabled={disabled}
         onChange={onChange}
-        {...(register && register(name, validation))} 
-        >
-
-        <option value="" disabled>{placeholder}</option>
-
+        {...(register && register(name, validation))}
+      >
+        <option value="" disabled>
+          {placeholder}
+        </option>
         {options &&
           options.map((option) => (
-            <option
-              key={option.value}
-              defaultValue={option.value}
-              disabled={disabled}
-              value={option.value}
-            >
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
       </select>
-      {error && <span className="error">Field Required</span>}
+      {error && <span className="error">{errorMessage}</span>}
     </div>
   );
 };

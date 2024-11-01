@@ -35,7 +35,7 @@ export const fetchWalletInfo = async (reqData: WalletInfoType) => {
     const { data } = await axiosInstance.post(`${url}/wallet/wallet-info`, reqData);
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    throw new Error(`Error fetching wallet info: ${error?.message}`);
   }
 };
 
@@ -49,7 +49,7 @@ export const FidelityWalletToWallet = async (
     );
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    throw new Error(`Error fetching funds: ${error?.message}`);
   }
 };
 
@@ -63,7 +63,7 @@ export const FidelityTransferFunds = async (
     );
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    throw new Error(`Error fetching funds: ${error?.message}`);
   }
 };
 

@@ -194,6 +194,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
         label={"Cashout Type"}
         name={"cashout_type"}
         id={"cashout_type"}
+        placeholder="Select Cashout Type"
         register={registerTransferToBank}
         options={[
           {

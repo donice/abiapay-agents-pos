@@ -32,4 +32,14 @@
       color: $primary;
     }
   }
+
+  .coming-soon {
+    font-size: 12px;
+    font-weight: 500;
+    color: green;
+    border: 1px solid green;
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    background-color: #dbffe8;
+  }
 }

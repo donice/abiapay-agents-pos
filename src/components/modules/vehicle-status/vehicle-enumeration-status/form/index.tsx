@@ -10,6 +10,7 @@ import {
   verifyVehicleEnumeration,
   verifyVehicleEnumrationPayload,
 } from "@/src/services/vehicleStatusService";
+import toast from "react-hot-toast";
 
 const Form = ({ setTicketsData, setSearched }: any) => {
   const {
@@ -32,6 +33,9 @@ const Form = ({ setTicketsData, setSearched }: any) => {
 
       if (data?.status == true) {
         setTicketsData(data?.data);
+        setSearched(true);
+      } else {
+        toast.error(data?.response_message);
         setSearched(true);
       }
     },

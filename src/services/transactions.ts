@@ -15,6 +15,6 @@ export const fetchTransferHistory = async () => {
     const { data } = await axiosInstance.post(`${url}/wallet/transfer-history`);
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    throw new Error(`Error fetching transfer history: ${error?.message}`);
   }
 };

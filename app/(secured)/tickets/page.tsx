@@ -8,11 +8,11 @@ import {
   FcMoneyTransfer,
   FcDiploma2,
   FcAutomatic,
+  FcSportsMode,
 } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
 import TicketsWalletCards from "@/src/components/modules/tickets/ticketsWalletCards";
-import TicketsStatsCard from "@/src/components/modules/tickets/ticketsStatsCard";
 
 export const metadata: Metadata = {
   title: "Manage Ticket",
@@ -32,6 +32,12 @@ const tickets: TicketsProps[] = [
     title: "Transport Tickets",
     desc: "Create transport ticket",
     icon: <FcShipped className="icon" />,
+  },
+  {
+    name: "tickets/sport",
+    title: "Sport Tickets",
+    desc: "Create Sport Sticket",
+    icon: <FcSportsMode className="icon" />,
   },
   {
     name: "tickets/transport/loading-offloading",

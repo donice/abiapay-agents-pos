@@ -14,6 +14,25 @@ export interface CreateTicketPayload {
   amount: number | string;
   wallet_type: string;
 }
+export interface CreateIndividualSportPayload {
+  abssin: string,
+  taxpayer_name: string,
+  taxpayer_phone: string,
+  team_name: string,
+  ticket_type: string,
+  amount: string,
+  wallet_type: string,
+  merchant_key: string
+}
+export interface CreateGroupSportPayload {
+  taxpayer_name: string,
+  taxpayer_phone: string,
+  team_name: string,
+  ticket_type: string,
+  amount: string,
+  wallet_type: string,
+  merchant_key: string
+}
 
 export interface Transaction {
   idagent_transactions: number;
@@ -55,3 +74,4 @@ export interface Transaction {
   comment: string | null;
   taxoffice: string;
 }
+

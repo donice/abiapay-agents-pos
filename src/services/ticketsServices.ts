@@ -1,9 +1,10 @@
 import axiosInstance from "../lib/axiosInstance";
 import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
-import { CreateTicketPayload } from "../components/types/ticketTypes";
+import { CreateGroupSportPayload, CreateIndividualSportPayload, CreateTicketPayload } from "../components/types/ticketTypes";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
+const centralapi_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
   useIsBrower() && window.sessionStorage.getItem("TOKEN")
@@ -24,10 +25,50 @@ export interface TransactionsTypes {
   limit: number;
 }
 
+export interface ResendSMSPayload {
+  payment_ref: string;
+}
+
 export const createNewTicket = async (requestData: CreateTicketPayload) => {
   try {
     const { data } = await axiosInstance.post(
       `${url}/transport/create-ticket`,
+      requestData
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const createIndividualSportTicket = async (requestData: CreateIndividualSportPayload) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/sport/create-individual-ticket`,
+      requestData
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const createGroupSportTicket = async (requestData: CreateGroupSportPayload) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/sport/create-group-ticket`,
+      requestData
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const resendSMS = async (requestData: ResendSMSPayload) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${centralapi_url}/wallet/resend-sms`,
       requestData
     );
     return data;

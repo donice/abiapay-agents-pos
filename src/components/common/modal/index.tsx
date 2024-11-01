@@ -344,6 +344,41 @@ export const OffloadingModal = ({
   );
 };
 
+export const SportModal = ({
+  maintext,
+  payment_ref,
+  button_text,
+  onClick,
+}: {
+  maintext?: string;
+  payment_ref?: string;
+  text?: string;
+  button_text?: string;
+  onClick?: any;
+}) => {
+  return (
+    <div className="modalOverlay">
+      <div className="modal">
+        <FcOk className="success_icon" />
+        <div className="modalContent">
+          <h2>{maintext ? maintext : "Payment Successful"} </h2>
+          <p>
+            Payment Reference: <span>{payment_ref ? payment_ref : ""}</span>{" "}
+          </p>
+          <button onClick={onClick} className="button primary top">
+            {button_text}
+          </button>
+
+          <SecondaryButton
+            text="Create New Sport Ticket"
+            link="/tickets/sport"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const FlyingRevenue = ({
   maintext,
   payment_ref,

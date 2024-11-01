@@ -98,7 +98,6 @@ const AddTransportTicketForm = ({
     },
   });
 
-
   const onSubmit = async (data: CreateTicketPayload) => {
     const formData = {
       ...data,
@@ -181,6 +180,7 @@ const AddTransportTicketForm = ({
         label="Ticket Type"
         name="productCode"
         id="productCode"
+        value={""}
         onChange={handleProductChange}
         options={products.map((product) => ({
           value: product.productCode,
@@ -238,7 +238,6 @@ const AddTransportTicketForm = ({
         onChange={handlePeriodChange}
         disabled={!selectedProduct}
         options={[
-          { value: "", label: "Select Payment Period" },
           { value: "1 Day", label: "1 Day" },
           { value: "1 Week", label: "1 Week" },
           { value: "1 Month", label: "1 Month" },

@@ -17,6 +17,7 @@ import {
 const QuickLinks = ({
   name,
   link,
+  comingSoon,
 }: {
   name:
     | "ABSSAA"
@@ -29,10 +30,14 @@ const QuickLinks = ({
     | "Traffic Offence Ticket"
     | "Ticket Fines";
   link: string;
+  comingSoon?: boolean;
 }) => {
   const router = useRouter();
   return (
-    <div className="quicklink" onClick={() => router.push(link)}>
+    <div
+      className="quicklink"
+      onClick={() => (comingSoon ? null : router.push(link))}
+    >
       <div className="quicklink_name">
         {" "}
         {name == "Bulk Prints" ? (
@@ -54,7 +59,11 @@ const QuickLinks = ({
         )}
         <span>{name}</span>
       </div>
-      <TbChevronRight />
+      {comingSoon ? (
+        <span className="coming-soon">Coming Soon</span>
+      ) : (
+        <TbChevronRight />
+      )}
     </div>
   );
 };
