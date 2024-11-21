@@ -24,7 +24,7 @@
   border-radius: 0.5rem;
   width: 32rem;
   height: 32rem;
-  border: 2px solid rgb(240, 240, 240);
+  border: 2px solid #c6c6c6;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
@@ -39,20 +39,20 @@
   padding: 0.5rem;
 }
 
-.bulk-sticker .card-id {
+.bulk-sticker .card-plate_no {
   position: absolute;
   top: 8.65rem;
   left: 50%;
   transform: translateX(-50%);
   font-weight: 600;
-  font-family: serif;
-  font-size: 2rem;
+  font-family: Tahoma, sans-serif;
+  font-size: 1.5rem;
   padding: 0.5rem;
   text-transform: uppercase;
   color: gray;
 }
 
-.bulk-sticker .card-vehicle {
+.bulk-sticker .card-asset_code {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -80,7 +80,7 @@
   left: -2rem;  
 }
 .bulk-sticker .card-income {
-  left: 18rem;  
+  right: -2rem;  
 }
 
 .bulk-sticker .card-enum {
