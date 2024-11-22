@@ -31,11 +31,11 @@
 
 .bulk-sticker .card-tag {
   position: absolute;
-  top: 5rem;
-  right: 2.5rem;
+  top: 4rem;
+  right: 1.5rem;
   font-weight: 700;
   color: red;
-  font-size: 1rem;
+  font-size: 0.75rem;
   padding: 0.5rem;
 }
 
@@ -60,7 +60,17 @@
   font-size: 2rem;
   padding: 1.5rem;
   text-transform: uppercase;
+  color: green;
+}
+
+.bulk-sticker .card-lga {
+  position: absolute;
+  top: 4rem;
+  left: 1.5rem;
   color: gray;
+  font-size: 0.75rem;
+  padding: 0.5rem;
+  text-transform: uppercase;
 }
 
 .bulk-sticker .card-cat,

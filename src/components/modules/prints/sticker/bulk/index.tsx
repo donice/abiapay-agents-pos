@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import { QRCodeSVG } from "qrcode.react";
 
-const BulkComp = ({ bulkData }: any) => {
+const BulkComp = ({ bulkData, stickerLga }: any) => {
   const [displayData, setDisplayData] = useState<any[]>([]);
 
   useEffect(() => {
@@ -19,13 +19,13 @@ const BulkComp = ({ bulkData }: any) => {
     <div className="bulk-sticker">
       {displayData.map((data: any, idx: number) => (
         <div key={idx} className="card">
+          <span className="card-lga">{stickerLga}</span>
           <span className="card-plate_no">{data?.PlateNumber}</span>
           <span className="card-cat">{data?.IncomeCategory}</span>
           <span className="card-income">{data?.IncomeCategory}</span>
           <span className="card-enum">{data?.EnumerationID}</span>
           <span className="card-tag">{data?.productTag}</span>
           <span className="card-asset_code">{data?.assetCode}</span>
-          {/* <span className="card-asset_code">IUERHY849</span> */}
           <div className="card-content">
             <QRCodeSVG
               style={{ width: 190, height: 190 }}
@@ -40,3 +40,4 @@ const BulkComp = ({ bulkData }: any) => {
 };
 
 export default BulkComp;
+    

@@ -8,6 +8,7 @@ import { Button } from "@/src/components/common/button";
 const PrintIDComp = () => {
   const [viewData, setViewData] = useState("form");
   const [bulkData, setBulkData] = useState<[] | null>(null);
+  const [stickerLga, setStickerLga] = useState();
 
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -65,11 +66,11 @@ const PrintIDComp = () => {
   
               .bulk-sticker .card-tag {
                 position: absolute;
-                top: 5rem;
-                right: 2.5rem;
+                top: 4.5rem;
+                right: 1.5rem;
                 font-weight: 700;
                 color: red;
-                font-size: 1rem;
+                font-size: 0.75rem;
                 padding: 0.5rem;
               }
   
@@ -79,7 +80,7 @@ const PrintIDComp = () => {
                 left: 50%;
                 transform: translateX(-50%);
                 font-weight: 600;
-                font-family: Tahoma, sans-serif;
+                font-family: Tahoma;
                 font-size: 1.5rem;
                 padding: 0.5rem;
                 text-transform: uppercase;
@@ -96,7 +97,17 @@ const PrintIDComp = () => {
                 font-size: 2rem;
                 padding: 1.5rem;
                 text-transform: uppercase;
+                color: green;
+              }
+
+              .bulk-sticker .card-lga {
+                position: absolute;
+                top: 4.5rem;
+                left: 1.5rem;
                 color: gray;
+                font-size: 0.75rem;
+                padding: 0.5rem;
+                text-transform: uppercase;
               }
 
               .bulk-sticker .card-cat,
@@ -167,12 +178,12 @@ const PrintIDComp = () => {
     <div>
       <CustomHeader title="Bulk Stickers" desc="Print bulk stickers" />
       {viewData == "form" ? (
-        <BulkPrintForm setViewData={setViewData} setBulkData={setBulkData} />
+        <BulkPrintForm setViewData={setViewData} setBulkData={setBulkData} setStickerLga={setStickerLga} />
       ) : viewData == "data" ? (
         <div className="print-top">
           <Button text={"Print Stickers"} onClick={handlePrint} />
           <div ref={printRef}>
-            <BulkComp bulkData={bulkData} />
+            <BulkComp bulkData={bulkData} stickerLga={stickerLga} />
           </div>
         </div>
       ) : null}

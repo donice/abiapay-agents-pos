@@ -18,7 +18,7 @@ interface LGA {
   value: string;
 }
 
-const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
+const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
   const [lga, setLga] = useState<LGA[]>([]);
 
   const getLgas = async () => {
@@ -64,6 +64,7 @@ const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
         if (data?.response_code == "00") {
           toast.success(data?.response_message || "Data Fetched Successfully");
           setBulkData(data?.response_data.data);
+          setStickerLga(data?.response_data.lga_name);
           setViewData("data");
         } else toast.error(data?.response_message);
       } else {
