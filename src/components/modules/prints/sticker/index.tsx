@@ -60,11 +60,8 @@ const PrintIDComp = () => {
                 border-radius: 0.5rem;
                 width: 32rem;
                 height: 32rem;
-                border: 2px solid rgb(240, 240, 240);
-                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-                  0 8px 10px -6px rgb(0 0 0 / 0.1);
+                border: 2px solid #c6c6c6;
               }
-
   
               .bulk-sticker .card-tag {
                 position: absolute;
@@ -76,62 +73,62 @@ const PrintIDComp = () => {
                 padding: 0.5rem;
               }
   
-.bulk-sticker .card-id {
-  position: absolute;
-  top: 8.65rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: 600;
-  font-family: serif;
-  font-size: 2rem;
-  padding: 0.5rem;
-  text-transform: uppercase;
-  color: gray;
-}
+              .bulk-sticker .card-plate_no {
+                position: absolute;
+                top: 9.5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                font-weight: 600;
+                font-family: Tahoma, sans-serif;
+                font-size: 1.5rem;
+                padding: 0.5rem;
+                text-transform: uppercase;
+                color: gray;
+              }
 
-.bulk-sticker .card-vehicle {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: 800;
-  font-family: san-serif;
-  bottom: 1.5rem;
-  font-size: 2rem;
-  padding: 1.5rem;
-  text-transform: uppercase;
-  color: gray;
-}
+              .bulk-sticker .card-asset_code {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                font-weight: 800;
+                font-family: Tahoma, sans-serif;
+                bottom: 1.5rem;
+                font-size: 2rem;
+                padding: 1.5rem;
+                text-transform: uppercase;
+                color: gray;
+              }
 
-.bulk-sticker .card-cat,
-.bulk-sticker .card-income {
-  position: absolute;
-  transform: rotate(90deg);
-  top: 50%;
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 0.25rem;
-  padding: 1.5rem;
-  text-transform: uppercase;
-  color: red;
-}
+              .bulk-sticker .card-cat,
+              .bulk-sticker .card-income {
+                position: absolute;
+                transform: rotate(90deg);
+                top: 50%;
+                font-weight: 600;
+                font-size: 1rem;
+                letter-spacing: 0.25rem;
+                padding: 1.5rem;
+                text-transform: uppercase;
+                color: red;
+              }
 
-.bulk-sticker .card-cat {
-  left: -2rem;  
-}
-.bulk-sticker .card-income {
-  left: 18rem;  
-}
+              .bulk-sticker .card-cat {
+                left: -2rem;  
+              }
+              .bulk-sticker .card-income {
+                right: -2rem;  
+              }
 
-.bulk-sticker .card-enum {
-  position: absolute;
-  font-weight: 600;
-  bottom: 6.5rem;
-  font-size: 1rem;
-  padding: 1.5rem;
-  text-transform: uppercase;
-  color: gray;
-  letter-spacing: 0.3rem;
-}
+              .bulk-sticker .card-enum {
+                position: absolute;
+                font-weight: 600;
+                bottom: 6.5rem;
+                font-size: 1rem;
+                padding: 1.5rem;
+                text-transform: uppercase;
+                color: gray;
+                letter-spacing: 0.3rem;
+              }
 
   
               .bulk-sticker .card-content {
