@@ -4,7 +4,7 @@ import "./style.scss";
 import { GoBackButton } from "@/src/components/common/button";
 import AddMarketTicketForm from "./form";
 
-const AddMarketTicketComponent = () => {
+const MarketTicketDetailsComponent = () => {
   return (
     <section className="market_add">
       <GoBackButton />
@@ -24,4 +24,4 @@ const AddMarketTicketComponent = () => {
   );
 };
 
-export default AddMarketTicketComponent;
+export default MarketTicketDetailsComponent;

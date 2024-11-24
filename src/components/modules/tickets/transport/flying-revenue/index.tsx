@@ -20,7 +20,7 @@ const FlyingRevenueComponent = ({ slug }: { slug: string }) => {
 
   return (
     <div>
-      <GoBackButton link="/tickets/transport/flying-revenue" />
+      <GoBackButton />
       <CustomHeader
         title={haulageItem ? `${haulageItem.title} Flying Revenue`  : ""}
         desc="Haulage Tickets"

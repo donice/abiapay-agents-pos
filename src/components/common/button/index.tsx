@@ -147,13 +147,13 @@ export const SecondaryButton = ({ text, link, onClick }: prop) => {
   );
 };
 
-export const GoBackButton = ({ link }: { link: string }) => {
+export const GoBackButton = () => {
   const router = useRouter();
-  const handleClick = (route: string) => {
-    return router.push(route);
+  const handleClick = () => {
+    return router.back();
   };
   return (
-    <button className="go_back" onClick={() => handleClick(link)}>
+    <button className="go_back" onClick={() => handleClick()}>
       <MdOutlineArrowBackIos className="icon" />
       Go Back
     </button>

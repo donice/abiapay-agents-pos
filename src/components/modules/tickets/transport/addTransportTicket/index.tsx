@@ -14,7 +14,7 @@ const AddTransportTicketComponent = () => {
 
   return (
     <section className="transport_add">
-      <GoBackButton link="/tickets/transport" />
+      <GoBackButton />
       <div className="transport-comp">
         <header className="transport_add-comp_header">
           <CustomHeader

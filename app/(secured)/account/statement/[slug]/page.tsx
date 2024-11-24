@@ -183,7 +183,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
   return (
     <section className="other-wallet">
       <header>
-        <GoBackButton link="/account/statement" />
+        <GoBackButton />
         <IndividualTransferWalletCards
           data={data}
           activeAccount={activeAccount}

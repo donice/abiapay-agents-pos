@@ -22,7 +22,7 @@ const VehicleEnumerationStatusComponent = () => {
 
   return (
     <section className="find">
-      <GoBackButton link="/vehicle-status" />
+      <GoBackButton />
 
       <div className="find-comp">
         <header>

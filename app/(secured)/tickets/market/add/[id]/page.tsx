@@ -8,7 +8,8 @@ export const metadata: Metadata = {
 };
 
 
-const AddMarketTicketPage = () => {
+const MarketTicketDetailsPage = ({params}: {params: {slug: string}}) => {
+  const slug = params.slug
   return (
     <div>
       <AddMarketTicketComponent/>
@@ -16,4 +17,4 @@ const AddMarketTicketPage = () => {
   )
 }
 
-export default AddMarketTicketPage;
+export default MarketTicketDetailsPage;
