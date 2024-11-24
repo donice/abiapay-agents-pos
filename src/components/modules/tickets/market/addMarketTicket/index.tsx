@@ -11,7 +11,7 @@ const AddMarketTicketComponent = () => {
       <div className="market-comp">
         <header className="market-comp_header">
           <CustomHeader
-            title="Add Transport Ticket"
+            title="Add Market Ticket"
             desc="Manage/Create Transaction"
           />
         </header>

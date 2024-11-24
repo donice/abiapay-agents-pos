@@ -1,39 +1,46 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { DefaultButton, CancelButton } from "@/src/components/common/button";
-import { SelectInput, TextInput } from "@/src/components/common/input";
+import React, { useEffect } from "react";
+import { FormButton, PrimaryButton } from "@/src/components/common/button";
+import { SelectInput, FormTextInput } from "@/src/components/common/input";
 import { fetchLGAData } from "@/src/services/common";
 import "./style.scss";
+import { useForm } from "react-hook-form";
+import { fetchMarketEnumerationDetails } from "@/src/services/ticketsServices";
+import { useMutation } from "@tanstack/react-query";
 
 const AddMarketTicketForm = () => {
-  const [formData, setFormData] = useState({
-    ticketType: "",
-    lga: "",
-    plateNumber: "",
-    taxPayerName: "",
-    taxPayerPhone: "",
-    paymentPeriod: "",
-    amount: "",
+  const {
+    register: registerRenderForm,
+    watch: watchRenderForm,
+    handleSubmit: handleRenderFormSubmit,
+  } = useForm({
+    defaultValues: {
+      option: "",
+      enumeration_id: "",
+    },
   });
 
-  const [isFormValid, setIsFormValid] = useState(false);
+  const {
+    mutate: mutateEnumerationDetails,
+    isPending: isPendingEnumerationDetails,
+  } = useMutation({
+    mutationKey: ["fetchMarketEnumerationDetails"],
+    mutationFn: () => {
+      return fetchMarketEnumerationDetails({
+        enumeration_id: watchRenderForm("enumeration_id"),
+      });
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
 
-  useEffect(() => {
-    const allFieldsFilled = Object.values(formData).every(
-      (field) => field !== ""
-    );
-    setIsFormValid(allFieldsFilled);
-  }, [formData]);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const onSubmitEnumerationID = (data: any) => {
+    mutateEnumerationDetails();
+    console.log(data);
   };
+
+  const watchOption = watchRenderForm("option");
 
   const getLGAData = async () => {
     const res = await fetchLGAData();
@@ -45,102 +52,45 @@ const AddMarketTicketForm = () => {
     getLGAData();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const isBrowser = typeof window !== 'undefined';
-    isBrowser && sessionStorage.setItem("TRANSPORT_FORM_DETAILS", JSON.stringify(formData));
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="add-market-ticket">
+    <div className="add-market-ticket">
+      <h2 className="mb-1 text-uppercase font-semibold text-teal-600 text-xs tracking-wider">
+        DO YOU HAVE A MARKET ENUMERATION ID?
+      </h2>
       <SelectInput
-        label="Ticket Type"
-        name="ticketType"
-        id="ticketType"
-        value={formData.ticketType}
-        onChange={handleChange}
+        label="Select Option"
+        name="option"
+        register={registerRenderForm}
+        placeholder="Select Select Option"
+        id={""}
         options={[
-          { value: "truck", label: "Truck" },
-          { value: "bus", label: "Bus" },
-          { value: "car", label: "Car" },
-          { value: "bike", label: "Bike" },
+          { value: "yes", label: "Yes" },
+          { value: "no", label: "No" },
         ]}
-        placeholder="Select Ticket Type"
       />
 
-      <SelectInput
-        label="L.G.A"
-        name="lga"
-        id="lga"
-        value={formData.lga}
-        onChange={handleChange}
-        options={[
-          { value: "truck", label: "Truck" },
-          { value: "bus", label: "Bus" },
-          { value: "car", label: "Car" },
-          { value: "bike", label: "Bike" },
-        ]}
-        placeholder="Select L.G.A"
-      />
-
-      <TextInput
-        label="Plate Nummber"
-        type="text"
-        name="plateNumber"
-        placeholder="Enter Plate Number"
-        value={formData.plateNumber}
-        onChange={handleChange}
-      />
-      <TextInput
-        label="Phone Number"
-        type="text"
-        name="taxPayerPhone"
-        placeholder="Enter Phone Number"
-        value={formData.taxPayerPhone}
-        onChange={handleChange}
-      />
-      <TextInput
-        label="Taxpayer Name"
-        type="text"
-        name="taxPayerName"
-        placeholder="Enter Taxpayer Name"
-        value={formData.taxPayerName}
-        onChange={handleChange}
-      />
-
-      <SelectInput
-        label="Payment Period"
-        name="paymentPeriod"
-        id="paymentPeriod"
-        value={formData.paymentPeriod}
-        onChange={handleChange}
-        options={[
-          { value: "truck", label: "Truck" },
-          { value: "bus", label: "Bus" },
-          { value: "car", label: "Car" },
-          { value: "bike", label: "Bike" },
-        ]}
-        placeholder="Select Payment Period"
-      />
-
-      <TextInput
-        label="Amount"
-        type="number"
-        name="amount"
-        placeholder="Enter Amount"
-        value={formData.amount}
-        onChange={handleChange}
-      />
-
-      <div className="btn_container">
-        <CancelButton link="/tickets/market" />
-        <DefaultButton
-          text="Save & Continue"
-          link={`/tickets/market/summary/${formData?.plateNumber}`}
-          disabled={!isFormValid}
-        />
-      </div>
-    </form>
+      {watchOption == "yes" ? (
+        <form onSubmit={handleRenderFormSubmit(onSubmitEnumerationID)}>
+          <div className="add-market-ticket">
+            <FormTextInput
+              label="Enumeration ID"
+              type="number"
+              name="enumeration_id"
+              register={registerRenderForm}
+              placeholder="Enter Enumeration ID"
+            />{" "}
+            <FormButton
+              text={"Check Details"}
+              disabled={
+                watchRenderForm("enumeration_id") == "" ||
+                isPendingEnumerationDetails
+              }
+              loading={isPendingEnumerationDetails}
+            />
+          </div>
+        </form>
+      ) : null}
+    </div>
   );
 };
 

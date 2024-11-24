@@ -1,9 +1,14 @@
 import axiosInstance from "../lib/axiosInstance";
 import useIsBrower from "../hooks/useIsBrower";
 import { setToken } from "./setToken";
-import { CreateGroupSportPayload, CreateIndividualSportPayload, CreateTicketPayload } from "../components/types/ticketTypes";
+import {
+  CreateGroupSportPayload,
+  CreateIndividualSportPayload,
+  CreateTicketPayload,
+} from "../components/types/ticketTypes";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
+const portal_url = process.env.NEXT_PUBLIC_PORTAL_URL;
 const centralapi_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
@@ -41,7 +46,9 @@ export const createNewTicket = async (requestData: CreateTicketPayload) => {
   }
 };
 
-export const createIndividualSportTicket = async (requestData: CreateIndividualSportPayload) => {
+export const createIndividualSportTicket = async (
+  requestData: CreateIndividualSportPayload
+) => {
   try {
     const { data } = await axiosInstance.post(
       `${url}/sport/create-individual-ticket`,
@@ -53,7 +60,9 @@ export const createIndividualSportTicket = async (requestData: CreateIndividualS
   }
 };
 
-export const createGroupSportTicket = async (requestData: CreateGroupSportPayload) => {
+export const createGroupSportTicket = async (
+  requestData: CreateGroupSportPayload
+) => {
   try {
     const { data } = await axiosInstance.post(
       `${url}/sport/create-group-ticket`,
@@ -93,7 +102,10 @@ export const retryPayment = async (reqData: { payment_ref: string }) => {
   try {
     const { data } = await axiosInstance.post(
       `${url}/wallet/access-reproccess-debit`,
-      { payment_ref: reqData?.payment_ref, merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY }
+      {
+        payment_ref: reqData?.payment_ref,
+        merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY,
+      }
     );
     return data;
   } catch (error: any) {
@@ -107,6 +119,19 @@ export const fetchPlateNumberInfo = async (plate_number: string) => {
       `${url}/transport/get-plate-number-info`,
       { plate_number: plate_number }
     );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+// MARKET ENUMERATION LEVY
+
+export const fetchMarketEnumerationDetails = async ({enumeration_id}: { enumeration_id: string }) => {
+  try {
+    const { data } = await axiosInstance.post(`${portal_url}/payment/enumeration`, {
+      enumeration_id: enumeration_id,
+    });
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);

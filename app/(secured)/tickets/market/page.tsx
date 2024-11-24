@@ -6,8 +6,8 @@ import "../../../../src/styles/index.scss";
 const MarketTicketsPage = () => {
   return (
     <div>
-      <button className="green_btn">Coming soon</button>
-      {/* <MarketTicketComponent /> */}
+      {/* <button className="green_btn">Coming soon</button> */}
+      <MarketTicketComponent />
     </div>
   );
 };

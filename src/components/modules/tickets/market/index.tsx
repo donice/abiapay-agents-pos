@@ -8,7 +8,6 @@ import "./style.scss";
 const data = [
   { id: 1, name: "John Doe", email: "john@example.com" },
   { id: 2, name: "Jane Smith", email: "jane@example.com" },
-  // Add more data as needed
   { id: 3, name: "Michael Brown", email: "michael@example.com" },
   { id: 4, name: "Chris Johnson", email: "chris@example.com" },
   { id: 5, name: "Patricia Williams", email: "patricia@example.com" },
@@ -19,7 +18,6 @@ const data = [
   { id: 10, name: "Susan Taylor", email: "susan@example.com" },
   { id: 11, name: "Margaret Thomas", email: "margaret@example.com" },
   { id: 12, name: "Robert Jackson", email: "robert@example.com" },
-  // Add more data as needed
 ];
 
 const MarketTicketComponent = () => {
@@ -31,14 +29,14 @@ const MarketTicketComponent = () => {
           desc="Manage/Create Market Ticket"
         />
         <div className="market_header_buttons">
-          <SecondaryButton text="Add Ticket" link="/tickets/market/add" />
+          <SecondaryButton text="Add Market Ticket" link="/tickets/market/add" />
         </div>
       </header>
       <TicketsWalletCard />
 
-      <div className="market_table">
+      {/* <div className="market_table">
         <CustomTable data={data} />
-      </div>
+      </div> */}
     </div>
   );
 };
