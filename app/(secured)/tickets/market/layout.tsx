@@ -14,8 +14,8 @@ export default function RootLayout({
       <GoBackButton />
       <header className="mt-2">
         <CustomHeader
-          title="Add Market Ticket"
-          desc="Manage/Create Transaction"
+          title="Pay Market Levy"
+          desc="Create Ticket for Market Levy"
         />
       </header>
       {children}
