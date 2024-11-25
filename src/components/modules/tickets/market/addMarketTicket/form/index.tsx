@@ -9,6 +9,7 @@ import { fetchMarketEnumerationDetails } from "@/src/services/ticketsServices";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import CreateMarketLevyForm from "./createMarketLevy";
 
 const AddMarketTicketForm = () => {
   const router = useRouter();
@@ -39,8 +40,10 @@ const AddMarketTicketForm = () => {
           `/tickets/market/add/${data?.response_data.enumeration_id}`
         );
       } else {
-        toast.error(data?.response_message || "No details for this enumeration id", {
-        });
+        toast.error(
+          data?.response_message || "No details for this enumeration id",
+          {}
+        );
       }
     },
   });
@@ -89,7 +92,9 @@ const AddMarketTicketForm = () => {
               />
             </div>
           </form>
-        ) : null}
+        ) : (
+          watchOption == "no" && <CreateMarketLevyForm />
+        )}
       </>
     </div>
   );

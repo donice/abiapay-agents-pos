@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { Button, FormButton } from "@/src/components/common/button";
+import { FormButton } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import "./style.scss";
 import { set, useForm } from "react-hook-form";
