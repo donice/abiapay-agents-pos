@@ -1,31 +1,58 @@
 "use client";
 import React, { useEffect } from "react";
-import { FormButton } from "@/src/components/common/button";
-import { SelectInput } from "@/src/components/common/input";
+import { Button, FormButton } from "@/src/components/common/button";
+import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import "./style.scss";
-import { useForm } from "react-hook-form";
-import { fetchMarketEnumerationDetails } from "@/src/services/ticketsServices";
+import { set, useForm } from "react-hook-form";
+import {
+  fetchMarketEnumerationDetails,
+  fetchMarkets,
+  MarketLevyType,
+  postPayForMarketLevy,
+} from "@/src/services/ticketsServices";
 import { useMutation } from "@tanstack/react-query";
 import { formatAmount } from "@/src/utils/formatAmount";
 import { PiSealCheckDuotone } from "react-icons/pi";
-import { useRouter } from "next/navigation";
 import { BiLoaderCircle } from "react-icons/bi";
+import { getErrorMessages } from "@/src/utils/helper";
+import toast from "react-hot-toast";
 
 const AddMarketTicketForm = (id: any) => {
-  console.log("IDSSSSSS", id);
+  const [markets, setMarkets] = React.useState([]);
   const [details, setDetails] = React.useState<any>(null);
+
   const {
-    register: registerRenderForm,
-    watch: watchRenderForm,
-    handleSubmit: handleRenderFormSubmit,
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
   } = useForm({
     defaultValues: {
-      option: "",
-      enumeration_id: "",
+      taxpayer_name: "",
+      abssin: "",
+      taxpayer_phone: "",
+      zone_line: "",
+      market_id: "",
+      shop_number: "",
+      payment_period: "2024",
+      merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+      wallet_type: "fidelity",
     },
   });
 
-  const mutateMarketLevy = useMutation({
+  const getMarkets = async () => {
+    try {
+      const data = await fetchMarkets();
+      setMarkets(
+        data?.data.map((item: any) => ({ label: item.market, value: item.id }))
+      );
+      return data;
+    } catch (error: any) {
+      throw new Error(`Error fetching transactions: ${error?.message}`);
+    }
+  };
+
+  const mutateFetchMarketLevyDetails = useMutation({
     mutationKey: ["fetchMarketEnumerationDetails"],
     mutationFn: () => {
       return fetchMarketEnumerationDetails({
@@ -34,19 +61,45 @@ const AddMarketTicketForm = (id: any) => {
     },
     onSuccess: (data) => {
       setDetails(data?.response_data);
+
+      if (data?.response_code == "00") {
+        setValue("abssin", data?.response_data?.taxpayer_id);
+        setValue("taxpayer_name", data?.response_data?.taxpayer_name);
+        setValue("taxpayer_phone", data?.response_data?.taxpayer_phone);
+      }
       console.log(data);
     },
   });
 
-  const watchOption = watchRenderForm("option");
+  const mutatePayForMarketLevy = useMutation({
+    mutationKey: ["payForMarketLevy"],
+    mutationFn: (data: MarketLevyType) => {
+      return postPayForMarketLevy(data);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data?.response_code !== "00") {
+        getErrorMessages(data?.message);
+      }  else {
+        toast.error("Cannot pay for market levy");
+      }
+    },
+    onError: (error: any) => {
+      toast.error("Cannot pay for market levy");
+    }
+  });
 
-  console.log("DETAILSSS", details);
+  const onsubmit = (data: any) => mutatePayForMarketLevy.mutate(data);
 
   useEffect(() => {
     if (id) {
-      mutateMarketLevy.mutate();
+      mutateFetchMarketLevyDetails.mutate();
     }
   }, [id]);
+
+  useEffect(() => {
+    getMarkets();
+  }, []);
 
   return (
     <div className="add-market-ticket">
@@ -96,13 +149,11 @@ const AddMarketTicketForm = (id: any) => {
                   <PiSealCheckDuotone className="text-green-500 text-xl " />
                   <p>{details?.items[0].status}</p>
                 </div>
-                
               ) : (
                 <div className="flex items-center gap-1 text-sm font-semibold ">
                   <BiLoaderCircle className="text-yellow-400 text-xl animate-spin" />
                   <p>{details?.items[0].status}</p>
                 </div>
-                
               )}
             </p>
           </div>
@@ -112,7 +163,34 @@ const AddMarketTicketForm = (id: any) => {
               {details?.created_at}
             </p>
           </div>
-          <div className="pt-3">
+          <form
+            onSubmit={handleSubmit(onsubmit)}
+            className="pt-3 flex flex-col gap-2 justify-between"
+          >
+            <SelectInput
+              label={"Market Name"}
+              name={"market_id"}
+              id={"market_id"}
+              register={register}
+              validation={{ required: true }}
+              error={!!errors.market_id}
+              options={markets}
+            />
+            <FormTextInput
+              label={"Shop Number"}
+              name={"shop_number"}
+              register={register}
+              validation={{ required: true }}
+              error={errors.shop_number}
+            />
+            <FormTextInput
+              label={"Zone Line"}
+              name={"zone_line"}
+              register={register}
+              validation={{ required: true }}
+              error={errors.zone_line}
+            />
+           
             <SelectInput
               label={"Wallet Type"}
               name={"wallet_type"}
@@ -122,10 +200,13 @@ const AddMarketTicketForm = (id: any) => {
                 { value: "access", label: "Access" },
               ]}
             />
-          </div>
+            <FormButton
+              text={"Pay Now"}
+              disabled={mutatePayForMarketLevy.isPending}
+              loading={mutatePayForMarketLevy.isPending}
+            />
+          </form>
         </div>
-
-        <FormButton text={"Pay Now"} disabled={false} loading={false} />
       </section>
     </div>
   );

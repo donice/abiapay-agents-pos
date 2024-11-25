@@ -25,6 +25,18 @@ export interface Product {
   monthlyAmount: number;
 }
 
+export interface MarketLevyType {
+  taxpayer_name: string,
+  abssin: string,
+  taxpayer_phone: string,
+  zone_line: string,
+  market_id: string,
+  shop_number: string,
+  payment_period: string,
+  merchant_key: string,
+  wallet_type: string
+}
+
 export interface TransactionsTypes {
   page: number;
   limit: number;
@@ -127,11 +139,28 @@ export const fetchPlateNumberInfo = async (plate_number: string) => {
 
 // MARKET ENUMERATION LEVY
 
+export const fetchMarkets = async () => {
+  try {
+    const { data } = await axiosInstance.get(`${url}/market`);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
 export const fetchMarketEnumerationDetails = async ({enumeration_id}: { enumeration_id: string }) => {
   try {
     const { data } = await axiosInstance.post(`${portal_url}/payment/enumeration`, {
       enumeration_id: enumeration_id,
     });
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const postPayForMarketLevy = async (reqData: MarketLevyType) => {
+  try {
+    const { data } = await axiosInstance.post(`${url}/market/market-ticket`, reqData);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
