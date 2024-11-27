@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import AddMarketTicketComponent from '@/src/components/modules/tickets/market/addMarketTicket';
 
 export const metadata: Metadata = {
-  title: "Create Market Ticket",
+  title: "Create Market Levy",
   description: "Agents Portal Tickets Page",
 };
 

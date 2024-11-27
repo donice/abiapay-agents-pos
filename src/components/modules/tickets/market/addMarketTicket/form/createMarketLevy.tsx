@@ -14,9 +14,22 @@ import { getErrorMessages } from "@/src/utils/helper";
 import toast from "react-hot-toast";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchABSSINInfo } from "@/src/services/common";
+import { MarketTicketModal } from "@/src/components/common/modal";
+import { FcApproval } from "react-icons/fc";
 
 const CreateMarketLevyForm = () => {
   const [markets, setMarkets] = React.useState([]);
+  const [status, setStatus] = React.useState({
+    openModal: false,
+    mode: "success",
+  });
+
+  const [modalDetails, setModalDetails] = React.useState({
+    enumeration_id: "",
+    payment_status: "",
+    response_message: "",
+    payment_ref: "",
+  });
 
   const {
     register,
@@ -42,7 +55,10 @@ const CreateMarketLevyForm = () => {
     try {
       const data = await fetchMarkets();
       setMarkets(
-        data?.data.map((item: any) => ({ label: item.market, value: item.id }))
+        data?.data.map((item: any) => ({
+          label: item.market,
+          value: item.market_id,
+        }))
       );
       return data;
     } catch (error: any) {
@@ -57,8 +73,16 @@ const CreateMarketLevyForm = () => {
     },
     onSuccess: (data) => {
       console.log(data);
-      if (data?.response_code !== "00") {
-        toast.error(getErrorMessages(data?.message));
+      if (data?.response_code == "00" || data?.response_code == "12") {
+        setStatus({ openModal: true, mode: "success" });
+        console.log(data);
+        setModalDetails({
+          enumeration_id: data?.enumeration_id,
+          payment_status: data?.payment_status,
+          response_message: data?.response_message,
+          payment_ref: data?.payment_ref,
+        });
+        toast.success(data?.response_message);
       } else {
         toast.error("Cannot pay for market levy");
       }
@@ -199,6 +223,21 @@ const CreateMarketLevyForm = () => {
               loading={mutatePayForMarketLevy.isPending}
             />
           </form>
+
+          {status.openModal && status.mode === "success" && (
+            <MarketTicketModal
+              details={{
+                enum_id: modalDetails?.enumeration_id,
+                payment_status: modalDetails?.payment_status,
+                payment_ref: modalDetails?.payment_ref,
+              }}
+              text={modalDetails?.response_message}
+              icon={
+                <FcApproval className="my-4 text-[5rem] p-3 bg-green-100 rounded-full" />
+              }
+              maintext={"Market Ticket Payment Successful"}
+            />
+          )}
         </div>
       </section>
     </div>

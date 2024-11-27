@@ -7,7 +7,6 @@ import { AbiaEnumerationLarge } from "../Images";
 import {
   TbCopy,
   TbCreditCardOff,
-  TbCreditCardPay,
   TbPasswordMobilePhone,
   TbProgressCheck,
   TbRosetteDiscountCheckFilled,
@@ -30,6 +29,21 @@ interface SuccessModalProps {
   text?: string;
   link?: string;
   onClick?: any;
+  icon?: React.ReactNode;
+}
+
+interface MarketTicketModalProps {
+  maintext?: string;
+  id?: string;
+  text?: string;
+  link?: string;
+  onClick?: any;
+  icon?: React.ReactNode;
+  details: {
+    enum_id: string;
+    payment_status?: string;
+    payment_ref?: string;
+  };
 }
 
 interface EmailSuccessModalProps {
@@ -69,11 +83,27 @@ interface VehicleCheckSuccessModalType {
   onClick?: ((event: any) => void) | undefined;
 }
 
+const handleCopy = async (acct: string) => {
+  if (!acct) {
+    toast.error("Account number is missing");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(acct);
+    toast.success("Copied!");
+  } catch (err) {
+    console.error("Failed to copy:", err);
+    toast.error("Failed to copy account number. Please try again.");
+  }
+};
+
 export const SuccessModal: React.FC<SuccessModalProps> = ({
   maintext,
   id,
   text,
   link,
+  icon,
 }) => {
   const router = useRouter();
 
@@ -86,7 +116,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
   return (
     <div className="modalOverlay">
       <div className="modal">
-        <FcOk className="success_icon" />
+        {icon ? icon : <FcOk className="success_icon" />}
         <div className="modalContent">
           <h2>{maintext ? maintext : "Payment Successful"} </h2>
           <p>
@@ -100,6 +130,62 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
           )}
 
           <SecondaryButton text="Create New" link={"/tickets/transport"} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const MarketTicketModal: React.FC<MarketTicketModalProps> = ({
+  maintext,
+  text,
+  icon,
+  details,
+}) => {
+  const router = useRouter();
+  return (
+    <div className="modalOverlay">
+      <div className="modal w-full min-w-sm">
+        {icon ? icon : <FcOk className="success_icon" />}
+        <div className="modalContent w-full gap-2">
+          <div>
+            <h2 className="">{maintext ? maintext : "Payment Successful"} </h2>
+            <p>{text ? text : "View the details of your transaction below"}</p>
+          </div>
+
+          <div className="w-full border-2 p-4 rounded-xl mt-2 grid gap-4">
+
+            <div className="flex justify-between ">
+              <span className="block text-xs text-gray-500">
+                Payment Reference:
+              </span>
+              <div className="col-span-2flex flex-col items-start justify-start  text-sm text-gray-600 font-semibold ">
+                <span className=" text-sm text-gray-600 font-semibold">
+                  {details.payment_ref}
+                </span>
+
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span className="block text-xs text-gray-500">
+                Enumeration ID:
+              </span>
+              <div className="col-span-2 flex flex-col items-start justify-start  text-sm text-gray-600 font-semibold ">
+                <span className=" text-sm text-gray-600 font-semibold">
+                  {details.enum_id}
+                </span>
+                <div className="flex gap-2 ">
+                 <p>Copy</p>
+                  <TbCopy
+                    className="icon"
+                    onClick={() => handleCopy(details.enum_id)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <PrimaryButton text={"View Receipt"} link={`/tickets/market/receipt/${details.enum_id}`} />
         </div>
       </div>
     </div>
@@ -714,21 +800,6 @@ export const InstantAccountModal = ({
   expiry_datetime: string;
   loading?: boolean;
 }) => {
-  const handleCopy = async (acct: string) => {
-    if (!acct) {
-      toast.error("Account number is missing");
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(acct);
-      toast.success("Copied!");
-    } catch (err) {
-      console.error("Failed to copy:", err);
-      toast.error("Failed to copy account number. Please try again.");
-    }
-  };
-
   return (
     <div className="modalOverlay">
       <div className="modal">
