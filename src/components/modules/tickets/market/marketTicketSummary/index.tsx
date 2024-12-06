@@ -25,7 +25,7 @@ const MarketTicketsSummaryComponent = () => {
 
   return (
     <section className="market">
-      <GoBackButton link="/market/transport/add" />
+      <GoBackButton />
 
       <div className="market-summary-comp">
         <div className="market-summary-comp_header">

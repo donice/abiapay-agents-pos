@@ -21,7 +21,7 @@ const UsingPhoneNumberComponent = () => {
 
   return (
     <section className="find">
-      <GoBackButton link="/dashboard" />
+      <GoBackButton />
 
       <div className="find-comp">
         <header>

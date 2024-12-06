@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { CustomHeader } from "../../common/header";
 import { formatAmount } from "@/src/utils/formatAmount";
-import { CamelCaseToTitleCase } from "@/src/utils/helper";
 import {useRouter} from "next/navigation";
 import { GoVerified } from "react-icons/go";
 import { GoBackButton } from "../../common/button";
@@ -32,7 +31,7 @@ const { data, isError, isLoading } = useQuery({
 
   return (
     <div className="tranactions">
-      <GoBackButton link="/dashboard" />
+      <GoBackButton />
 
       <div className="tranactions-comp">
         <header>

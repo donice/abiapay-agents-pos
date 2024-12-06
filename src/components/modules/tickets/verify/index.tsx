@@ -66,7 +66,7 @@ const VerifyTicketsComponent = () => {
             displayDetails?.response_code == "00") ||
           (displayDetails?.response_code &&
             displayDetails?.response_code == "97") ? (
-          <div>
+          <div className="border-2 border-dashed rounded-xl px-4">
             <div className="line-items">
               <p>Status:</p>
               {displayDetails?.response_code == "00" ? (
@@ -89,6 +89,19 @@ const VerifyTicketsComponent = () => {
                   </p>
                 </div>
               ))}
+
+             {/* <div className="mt-4">
+              <h3 className="font-bold text-xl text-gray-600">Fines</h3>
+
+             {displayDetails?.fines?.map((fine: any, index: number) => (
+                <div key={index} className="mt-4">
+                  <div className="flex justify-between">
+                    <p>{fine?.penalty_rate}</p>
+                    <p>{fine?.ticket_rate}</p>
+                  </div>
+                </div>
+              ))}
+            </div> */}
           </div>
         ) : (
           <Empty text="No matching vehicle found" />

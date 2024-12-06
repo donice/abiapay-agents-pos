@@ -14,7 +14,7 @@ const FirsPartySignageComponent = () => {
 
   return (
     <section className="firstparty_add">
-      <GoBackButton link="/tickets/transport" />
+      <GoBackButton />
       <div className="firstparty-comp">
         <header className="firstparty_add-comp_header">
           <CustomHeader

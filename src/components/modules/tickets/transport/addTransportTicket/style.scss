@@ -3,7 +3,7 @@
 .transport_add {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 
   @include custom-media-query("mobile", $sm) {
     padding: 0;
