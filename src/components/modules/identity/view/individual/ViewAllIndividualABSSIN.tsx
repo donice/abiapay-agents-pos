@@ -24,7 +24,7 @@ const ViewAllIndividualABSSIN = (data: any) => {
               <TbUser className="text-3xl text-gray-400" />
             ) : null}
           </div>
-          <div className="col-span-2 text-xs flex flex-col justify-between">
+          <div className="col-span-2 text-sm flex flex-col justify-between">
             <div>
               <h2 className="font-semibold text-green-500">
                 {abssin?.state_id}
