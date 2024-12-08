@@ -79,7 +79,7 @@ export const IndividualTransferWalletCards = ({data, activeAccount}: any) => {
             </div>
             <div>
               <p className="amount">
-                ₦ {formatAmount(data?.fidelity?.balance)}
+                ₦ {formatAmount(data?.fidelity?.earnings)}
               </p>
               <p>
                 Wallet: <span>{data?.fidelity?.account_number}</span>
@@ -101,7 +101,7 @@ export const IndividualTransferWalletCards = ({data, activeAccount}: any) => {
             </div>
             <div>
               <p className="amount">
-                ₦ {formatAmount(data?.access?.wallet_balance)}
+                ₦ {formatAmount(data?.access?.current_earnings)}
               </p>
               <p>
                 Wallet: <span>{data?.access?.wallet_id}</span>
