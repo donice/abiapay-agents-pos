@@ -14,7 +14,7 @@ const ViewAllIndividualABSSIN = (data: any) => {
     <div>
       {ABSSINs?.map((abssin: any, idx: number) => (
         <Link
-          href={`/identity/view/individual${abssin?.state_id}`}
+          href={`/identity/view/individual/${abssin?.state_id}`}
           key={idx}
           className="border-b border-gray-300 py-4 grid grid-cols-3 gap-4"
         >
