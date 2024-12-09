@@ -102,9 +102,7 @@ export const validateID = async (requestData: validateIdPayloadType) => {
 
 export const fetchABSSINStats = async () => {
   try {
-    const { data } = await axiosInstance.get(
-      `${url}/abssin/statistics`,
-    );
+    const { data } = await axiosInstance.get(`${url}/abssin/statistics`);
     return data;
   } catch (error: any) {
     console.log(error);
@@ -188,7 +186,6 @@ export const validateNoIDOtp = async (
 
 export const createIndividualAbssin = async (
   requestData: createIndividualAbssinPayloadType
-
 ) => {
   try {
     const data = await https(`${url}/abssin/register-abssin-individual`, {
@@ -196,7 +193,9 @@ export const createIndividualAbssin = async (
       body: JSON.stringify(requestData),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${window.sessionStorage.getItem("TOKEN") || isToken || ""}`,
+        Authorization: `Bearer ${
+          window.sessionStorage.getItem("TOKEN") || isToken || ""
+        }`,
       },
     });
 
@@ -231,5 +230,16 @@ export const createBusinessAbssin = async (
     );
     console.log(error);
     throw new Error(`Error fetching transactions: ${error}`);
+  }
+};
+
+export const getIndividualABSSINs = async () => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/abssin/manage-individual`
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };

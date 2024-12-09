@@ -4,7 +4,7 @@ import "./style.scss";
 import { QRCodeSVG } from "qrcode.react";
 
 const BulkComp = ({ bulkData }: any) => {
-  const [displayData, setDisplayData] = useState([] || null);
+  const [displayData, setDisplayData] = useState([]);
 
   useEffect(() => {
     if (bulkData) {
