@@ -102,6 +102,16 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
         error={errors.no_of_cards}
       />
 
+<FormTextInput
+        label={"Page"}
+        type="number"
+        name={"page"}
+        placeholder="Enter Page Number"
+        register={register}
+        validation={{ required: true }}
+        error={errors.page}
+      />
+
       <Button text={"Fetch Data"} loading={isPending} disabled={isPending} />
     </form>
   );
