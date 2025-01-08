@@ -16,6 +16,7 @@ import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchABSSINInfo } from "@/src/services/common";
 import { MarketTicketModal } from "@/src/components/common/modal";
 import { FcApproval } from "react-icons/fc";
+import { getCurrentYear } from "@/src/utils/getCurrentYear";
 
 const CreateMarketLevyForm = () => {
   const [markets, setMarkets] = React.useState([]);
@@ -45,7 +46,7 @@ const CreateMarketLevyForm = () => {
       zone_line: "",
       market_id: "",
       shop_number: "",
-      payment_period: "2024",
+      payment_period: getCurrentYear(),
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       wallet_type: "fidelity",
     },

@@ -14,6 +14,7 @@ import {
   fetchLoadingOffloadingVehicleType,
   LoadingOffloadingType,
 } from "@/src/services/loadingOffloadingService";
+import { getCurrentYear } from "@/src/utils/getCurrentYear";
 
 interface EmblemProduct {
   id: number;
@@ -69,7 +70,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
       tax_payer_name: "",
       plate_number: "",
       collection_point: "",
-      payment_period: "2024",
+      payment_period: getCurrentYear(),
       wallet_type: "fidelity",
       next_payment_date: "1Day",
       amount: "",

@@ -15,6 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { EnumerationSuccessModal } from "@/src/components/common/modal";
 import { fetchLGAData } from "@/src/services/common";
+import { getCurrentYear } from "@/src/utils/getCurrentYear";
 
 interface TicketsDataType {
   response_code: string;
@@ -86,7 +87,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
     vehicle_plate_number: formData.plate_number || "",
     taxpayer_name: details?.vehicle_owner.ownerName || "",
     taxpayer_phone: formData.phone_number || "",
-    revenue_year: "2024",
+    revenue_year: getCurrentYear().toString(),
     taxpayer_location: formData.taxpayer_location || "",
     operating_park: formData.operating_park || "",
     trade_union: formData.trade_union || "",
