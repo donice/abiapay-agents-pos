@@ -226,8 +226,6 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         validation={{ required: true }}
         error={!!errors.payment_period}
         options={[
-          { label: "2023", value: "2023" },
-          { label: "2024", value: "2024" },
           { label: "2025", value: "2025" },
         ]}
       />
