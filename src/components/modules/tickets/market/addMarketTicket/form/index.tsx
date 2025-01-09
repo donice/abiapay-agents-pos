@@ -65,7 +65,7 @@ const AddMarketTicketForm = () => {
           label="Select Option"
           name="option"
           register={registerRenderForm}
-          placeholder="Select Select Option"
+          placeholder="Select Option"
           id={""}
           options={[
             { value: "yes", label: "Yes" },

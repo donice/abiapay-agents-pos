@@ -36,7 +36,7 @@ const tickets: TicketsProps[] = [
   },
   {
     name: "tickets/market/add",
-    title: "Market Levy",
+    title: "Market Ticket",
     desc: "Create market ticket",
     icon: <FcPaid className="icon" />,
   },
