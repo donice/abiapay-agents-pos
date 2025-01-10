@@ -214,6 +214,18 @@ const AddMarketTicketForm = (id: any) => {
               error={errors.zone_line}
             />
 
+<           SelectInput
+              label={"Payment Period"}
+              name={"payment_period"}
+              id={"payment_period"}
+              register={register}
+              validation={{ required: true }}
+              error={!!errors.payment_period}
+              options={[
+                { label: "2025", value: "2025" },
+              ]}
+            />
+
             <SelectInput
               label={"Wallet Type"}
               name={"wallet_type"}
