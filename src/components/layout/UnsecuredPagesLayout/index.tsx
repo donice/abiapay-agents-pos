@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.scss";
 import { AbiaLogoLarge } from "../../common/Images";
+import { getCurrentYear } from "@/src/utils/getCurrentYear";
 
 const UnsecuredPagesLayout = ({
   children,
@@ -15,7 +16,7 @@ const UnsecuredPagesLayout = ({
       </a>
       <div className="unsecured-main_container">{children}</div>
       <footer >
-      © 2024 Abia State Government. <br /> All rights reserved.
+      © {getCurrentYear()} Abia State Government. <br /> All rights reserved.
       </footer>
     </div>
   );

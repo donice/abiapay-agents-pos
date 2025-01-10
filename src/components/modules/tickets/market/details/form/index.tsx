@@ -18,6 +18,7 @@ import { getErrorMessages } from "@/src/utils/helper";
 import toast from "react-hot-toast";
 import { MarketTicketModal } from "@/src/components/common/modal";
 import { FcApproval } from "react-icons/fc";
+import { getCurrentYear } from "@/src/utils/getCurrentYear";
 
 const AddMarketTicketForm = (id: any) => {
   const [markets, setMarkets] = React.useState([]);
@@ -48,7 +49,7 @@ const AddMarketTicketForm = (id: any) => {
       zone_line: "",
       market_id: "",
       shop_number: "",
-      payment_period: "2024",
+      payment_period: getCurrentYear(),
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
       wallet_type: "fidelity",
     },

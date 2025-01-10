@@ -11,6 +11,7 @@ import { fetchABSSINInfo, fetchLGAData } from "@/src/services/common";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useDebounce } from "@/src/hooks/useDebounce";
+import { getCurrentYear } from "@/src/utils/getCurrentYear";
 
 interface ModalType {
   response_code: string;
@@ -59,7 +60,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
       shop_owner_phone: formData?.shop_owner_phone || "",
       shop_number: formData?.shop_number || "",
       shop_category: formData?.shop_category || "",
-      revenue_year: formData?.revenue_year || "2024",
+      revenue_year: formData?.revenue_year || getCurrentYear(),
       zone_line: formData?.zone_line || "",
       market: formData?.market || "",
       monthly_income_range: formData?.monthly_income_range || "",
