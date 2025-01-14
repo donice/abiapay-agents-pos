@@ -202,6 +202,17 @@ const CreateMarketLevyForm = () => {
               validation={{ required: true }}
               error={errors.zone_line}
             />{" "}
+            <SelectInput
+                    label={"Payment Period"}
+                    name={"payment_period"}
+                    id={"payment_period"}
+                    register={register}
+                    validation={{ required: true }}
+                    error={!!errors.payment_period}
+                    options={[
+                      { label: "2025", value: "2025" },
+                    ]}
+                  />
             <FormTextInput
               label={"Amount to be paid"}
               name={"amount"}
