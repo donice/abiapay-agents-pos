@@ -190,14 +190,17 @@ const AddTransportTicketForm = ({
         error={!!errors.productCode}
       />
 
-      <FormTextInput
-        label="Plate Number"
-        type="text"
-        name="plateNumber"
-        placeholder="Enter Plate Number"
-        register={register}
-        validation={{ required: true }}
-        error={errors.plateNumber}
+    <FormTextInput
+      label="Plate Number"
+      type="text"
+      name="plateNumber"
+      placeholder="Enter Plate Number"
+      register={register}
+      validation={{
+        required: true,
+        setValueAs: (value: string) => value.toUpperCase()
+      }}
+      error={errors.plateNumber}
       />
 
       <FormTextInput
