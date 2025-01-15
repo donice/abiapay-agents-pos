@@ -79,6 +79,13 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
     },
   });
 
+    console.log(data);
+
+    // const { data, isPending } = useQuery({
+    //   queryKey: ["my-statement"],
+    //   queryFn: fetchAccountStatement,
+    // });
+
   const { data: dasboardData } = useQuery({
     queryKey: ["get_dashboard_data"],
     queryFn: () => {
