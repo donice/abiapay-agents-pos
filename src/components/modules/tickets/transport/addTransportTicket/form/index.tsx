@@ -176,18 +176,23 @@ const AddTransportTicketForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
-      <SelectInput
-        label="Ticket Type"
-        name="productCode"
-        id="productCode"
-        value={""}
-        onChange={handleProductChange}
-        options={products.map((product) => ({
-          value: product.productCode,
-          label: product.productName,
-        }))}
-        placeholder="Select Ticket Type"
-        error={!!errors.productCode}
+       <SelectInput
+      label="Ticket Type"
+      name="productCode"
+      id="productCode"
+      register={register}
+      validation={{
+        required: true,
+        onChange: (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedProduct(e.target.value);
+        }
+      }}
+      options={products.map((product) => ({
+        value: product.productCode,
+        label: product.productName,
+      }))}
+      placeholder="Select Ticket Type"
+      error={!!errors.productCode}
       />
 
     <FormTextInput

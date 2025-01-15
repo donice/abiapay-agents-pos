@@ -12,24 +12,20 @@ import { useRouter } from "next/navigation";
 
 const Dynamic = () => {
   const router = useRouter();
-    // Query for Account Statement
     const { data: statementData, isPending: isStatementPending } = useQuery({
       queryKey: ["my-statement"],
       queryFn: fetchAccountStatement,
     });
-  
-    // Query for Dashboard Data (Access Earnings)
+
     const { data: dashboardData, isPending: isDashboardPending } = useQuery({
       queryKey: ["dashboard-data"],
       queryFn: fetchDashboardData,  // Assuming this fetches the dashboard data
     });
-  
-    // Show loading state if either query is still pending
+
     if (isStatementPending || isDashboardPending) {
       return <Loading />;
     }
 
-    // Calculate total earnings
   const accessEarnings = dashboardData?.access?.current_earnings || 0;
   const fidelityEarnings = dashboardData?.fidelity?.earnings || 0;
   const totalEarnings = accessEarnings + fidelityEarnings;
