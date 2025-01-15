@@ -54,7 +54,7 @@ const QuickLinks = ({
           <FcDeleteDatabase className="icon" />
         ) : name == "Ticket Fines" ? (
           <FcDiploma2 className="icon" />
-        ) : (
+        ) : name == "Identity" ? <FcBusinessContact className="icon" /> : (
           <Image src={badge} alt="badge" className="icon" />
         )}
         <span>{name}</span>
