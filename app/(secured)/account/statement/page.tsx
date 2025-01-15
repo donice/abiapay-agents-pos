@@ -5,17 +5,34 @@ import "./style.scss";
 import { useQuery } from "@tanstack/react-query";
 import { CustomHeader } from "@/src/components/common/header";
 import { fetchAccountStatement } from "@/src/services/accountServices";
+import { fetchDashboardData } from "@/src/services/dashboardService";
 import { Loading } from "@/src/components/common/loader/redirecting";
 import { formatAmount } from "@/src/utils/formatAmount";
 import { useRouter } from "next/navigation";
 
 const Dynamic = () => {
   const router = useRouter();
-  const { data, isPending } = useQuery({
-    queryKey: ["my-statement"],
-    queryFn: fetchAccountStatement,
-  });
+    // Query for Account Statement
+    const { data: statementData, isPending: isStatementPending } = useQuery({
+      queryKey: ["my-statement"],
+      queryFn: fetchAccountStatement,
+    });
+  
+    // Query for Dashboard Data (Access Earnings)
+    const { data: dashboardData, isPending: isDashboardPending } = useQuery({
+      queryKey: ["dashboard-data"],
+      queryFn: fetchDashboardData,  // Assuming this fetches the dashboard data
+    });
+  
+    // Show loading state if either query is still pending
+    if (isStatementPending || isDashboardPending) {
+      return <Loading />;
+    }
 
+    // Calculate total earnings
+  const accessEarnings = dashboardData?.access?.current_earnings || 0;
+  const fidelityEarnings = dashboardData?.fidelity?.earnings || 0;
+  const totalEarnings = accessEarnings + fidelityEarnings;
   return (
     <>
       {" "}
@@ -23,80 +40,84 @@ const Dynamic = () => {
         title={"Account Statement"}
         desc={"Account Statement Details"}
       />
-      {isPending ? (
+      {isStatementPending || isDashboardPending ? (
         <Loading />
       ) : (
         <div className="statement">
           <div className="statement_comp">
             <div>
               <p>Full name</p>
-              <p>{data?.data?.fullname || "-"}</p>
+              <p>{statementData?.data?.fullname || "-"}</p>
             </div>
 
             <div>
               <p>User Category</p>
-              <p>{data?.data?.user_cat || "-"}</p>
+              <p>{statementData?.data?.user_cat || "-"}</p>
             </div>
 
             <div>
               <p>Agent Code</p>
-              <p>{data?.data?.agent_code || "-"} </p>
+              <p>{statementData?.data?.agent_code || "-"} </p>
             </div>
 
             <div>
               <p>Email</p>
-              <p>{data?.data?.email || "-"} </p>
+              <p>{statementData?.data?.email || "-"} </p>
             </div>
 
             <div>
               <p>L.G.A</p>
-              <p>{data?.data?.lga || "-"} </p>
+              <p>{statementData?.data?.lga || "-"} </p>
             </div>
 
             <div>
               <p>Account Status</p>
-              <p>{data?.data?.account_status || "-"} </p>
+              <p>{statementData?.data?.account_status || "-"} </p>
             </div>
             <div>
               <p>Pending Transactions</p>
               <p>
-                ₦{formatAmount(data?.data?.pending_transactions) || "-"} /{" "}
-                {data?.data?.pending_transactions_count || "0"}{" "}
+                ₦{formatAmount(statementData?.data?.pending_transactions) || "-"} /{" "}
+                {statementData?.data?.pending_transactions_count || "0"}{" "}
               </p>
             </div>
             <div>
               <p>Total Transactions</p>
               <p>
-                ₦{formatAmount(data?.data?.total_transactions) || "-"} /{" "}
-                {data?.data?.total_transactions_count || "0"}{" "}
+                ₦{formatAmount(statementData?.data?.total_transactions) || "-"} /{" "}
+                {statementData?.data?.total_transactions_count || "0"}{" "}
               </p>
             </div>
             <div>
               <p>Total Transactions Today</p>
               <p>
-                ₦{formatAmount(data?.data?.total_transactions_today) || "-"} /{" "}
-                {data?.data?.total_transactions_today_count || "0"}{" "}
+                ₦{formatAmount(statementData?.data?.total_transactions_today) || "-"} /{" "}
+                {statementData?.data?.total_transactions_today_count || "0"}{" "}
               </p>
             </div>
             <div>
               <p>Wallet Balance</p>
-              <p>₦{formatAmount(data?.data?.wallet_balance) || "-"} </p>
+              <p>₦{formatAmount(statementData?.data?.wallet_balance) || "-"} </p>
             </div>
             <div>
               <p>Total Wallet Credit </p>
-              <p>₦{formatAmount(data?.data?.total_wallet_credit) || "-"} </p>
+              <p>₦{formatAmount(statementData?.data?.total_wallet_credit) || "-"} </p>
             </div>
             <div>
-              <p>Earnings </p>
-              <p>₦{formatAmount(data?.data?.earning) || "-"} </p>
+              <p>Access Earnings </p>
+              <p>₦{formatAmount(dashboardData?.access?.current_earnings) || "-"} </p>
+            </div>
+            <div>
+              <p>Fidelity Earnings </p>
+              <p>₦{formatAmount(dashboardData?.fidelity?.earnings) || "-"} </p>
             </div>
             <div>
               <p>Total Earnings</p>
-              <p>₦{formatAmount(data?.data?.total_earning) || "-"} </p>
+              <p>₦{formatAmount(totalEarnings) || "-"} </p>
             </div>
             <div className="creation_date">
               <p>Creation Date </p>
-              <p> {data?.data?.creation_date || "-"}</p>
+              <p> {statementData?.data?.creation_date || "-"}</p>
             </div>
           </div>
 
