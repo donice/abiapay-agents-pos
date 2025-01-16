@@ -98,21 +98,31 @@ const ViewTransportEmblemReceipt = ({
               CLEARANCE CERTIFICATE
             </header>
             <ul className={style.emblem_receipt_clearance_list}>
-              <li>1. Board of Internal Revenue (Hackney Carriage)</li>
-              <li>2. Sanitation Sticker/Pollution/Effluent Discharge/Emission Control</li>
-              <li>3. MOT Sticker</li>
-              <li>4. Haulage Permit</li>
-              <li>5. Safety Emblem</li>
-              <li>6. Natural Freight</li>
-              <li>7. Commodity Sticker</li>
-              <li>8. Loading and Off Loading</li>
-              <li>9. Route/Inter State/Road Tax Warrant Permit</li>
-              <li>10. Ogepa Sticker</li>
-              <li>11. Agric Levy</li>
-              <li>12. Federal Ocean Terminal</li>
-              <li>13. Airport</li>
-              <li>14. Mid-Year Sticker</li>
-              <li>15. ASPIMSS Yearly Safety Clearance</li>
+                <li>1. Board of Internal Revenue (Hackney Carriage)</li>
+                <li>2. Sanitation Sticker/Pollution/Effluent Discharge/Emission Control</li>
+                <li>3. MOT Sticker</li>
+                <li>4. Haulage Permit</li>
+                <li>5. Safety Emblem</li>
+                <li>6. Natural Freight</li>
+                <li>7. Commodity Sticker</li>
+                <li>8. Loading and Off Loading</li>
+                <li>9. Route/Inter State/Road Tax Warrant Permit</li>
+                <li>10. Ogepa Sticker</li>
+                <li>11. Agric Levy</li>
+                <li>12. Federal Ocean Terminal</li>
+                <li>13. Airport</li>
+                <li>14. Mid-Year Sticker</li>
+                <li>15. ASPIMSS Yearly Safety Clearance Delivery Permit</li>
+                <li>16. Heavy Duty Permit</li>
+                <li>17. Intra State and Inter State Route Permit</li>
+                <li>18. Mobile Advert</li>
+                <li>19. Radio TV License</li>
+                <li>20. Oil and Gas Permit</li>
+                <li>21. Sale and Distribution Permit</li>
+                <li>22. Unified Local Government permit</li>
+                <li>23. Niger Delta Sticker</li>
+                <li>24. Federal Organ Terminal for Trailers, Lorries, Pickup, Buses and Cars</li>
+                <li>25. Other Permit Covered by National Emblem</li>
             </ul>
           </div>
 
