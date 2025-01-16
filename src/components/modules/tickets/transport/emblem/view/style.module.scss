@@ -27,10 +27,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 5rem;
+        gap: 2.5rem;
 
         width: 100%;
-        max-width: 450px;
+        max-width: 350px;
 
         @include custom-media-query("mobile", 729px) {
           gap: inherit;
