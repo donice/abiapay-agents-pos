@@ -51,9 +51,8 @@ const ViewTransportEmblemReceipt = ({
         title={"Emblem Receipt"}
         desc="View Transport Emblem Receipt"
       />
-
       <section className={style.emblem} id="tickets-summary-comp">
-        <div className={style.emblem_receipt}>
+        <div className={style.emblem_receipt} ref={componentRef}>
           <header className={style.emblem_receipt_header}>
             <div className={style.emblem_receipt_header_logos}>
               <Image src={abiaLogo} alt="obia" width={100} height={100} />
@@ -118,7 +117,8 @@ const ViewTransportEmblemReceipt = ({
             </div>
           </div>
         </div>
-      </section>  <Button text="Download Certificate" onClick={handlePrint} />
+      </section>{" "}
+      <Button text="Download Certificate" onClick={handlePrint} />
     </div>
   );
 };
