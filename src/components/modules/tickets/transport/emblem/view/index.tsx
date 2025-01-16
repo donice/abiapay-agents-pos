@@ -35,7 +35,7 @@ const ViewTransportEmblemReceipt = ({
               <h2>for </h2>
             </div>
             <div className={style.emblem_receipt_header_reference}>
-              <p>Plate Number: {plate_no}</p> <p>Payment Ref: {payment_ref}</p>
+              <p>{plate_no}</p> <p>{payment_ref}</p>
             </div>
           </header>
 
@@ -63,7 +63,7 @@ const ViewTransportEmblemReceipt = ({
             </ol>
           </div>
 
-          <footer className={style.emblem_receipt_footer}>
+          <div className={style.emblem_receipt_footer}>
             <p className={style.emblem_receipt_footer_text}>
               This is to Certify that the vehicle with the sticker receipt has
               satisfied every lawful road permit respect to the above listed
@@ -76,7 +76,7 @@ const ViewTransportEmblemReceipt = ({
               <p>Executive Chairman</p>
               <p>Abia State Internal Revenue Service</p>
             </div>
-          </footer>
+          </div>
         </div>
       </section>
     </div>
