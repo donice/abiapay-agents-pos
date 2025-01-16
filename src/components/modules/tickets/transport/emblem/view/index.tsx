@@ -43,18 +43,24 @@ const ViewTransportEmblemReceipt = ({
     if (componentRef.current) {
       try {
         const canvas = await html2canvas(componentRef.current, {
-          scale: 1,
+          scale: 2,
           windowWidth: componentRef.current.scrollWidth,
           useCORS: true,
           allowTaint: true,
         });
-        const image = canvas.toDataURL("image/png");
-        const link = document.createElement("a");
-        link.href = image;
-        link.download = `emblem-receipt-${payment_ref}.png`;
-        link.click();
+
+        // Import jsPDF dynamically to avoid SSR issues
+        const { jsPDF } = await import('jspdf');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save(`emblem-receipt-${payment_ref}.pdf`);
       } catch (error) {
-        console.error("Error generating image:", error);
+        console.error("Error generating PDF:", error);
       }
     }
   };
