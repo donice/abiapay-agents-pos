@@ -2,6 +2,7 @@ import { CustomHeader } from "@/src/components/common/header";
 import React from "react";
 import Image from "next/image";
 import style from "./style.module.scss";
+import QRCode from "react-qr-code";
 
 import abiaLogo from "@/public/logos/emblem/abia_@33.jpg";
 import coaLogo from "@/public/logos/emblem/coat_of_arm.png";
@@ -78,6 +79,15 @@ const ViewTransportEmblemReceipt = ({
             </div>
           </div>
         </div>
+
+        <div className={style.qr_container}>
+              <QRCode
+                size={256}
+                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                value={""}
+                viewBox={`0 0 256 256`}
+              />
+            </div>
       </section>
     </div>
   );
