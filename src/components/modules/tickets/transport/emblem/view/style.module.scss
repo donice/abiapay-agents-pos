@@ -6,6 +6,7 @@
   margin-top: 3rem;
   width: 100%;
   max-width: 768px;
+  margin-bottom: 1rem;
 
   @include custom-media-query("mobile", 729px) {
     margin-top: 0;
