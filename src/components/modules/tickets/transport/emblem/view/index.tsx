@@ -9,7 +9,7 @@ import coaLogo from "@/public/logos/emblem/coat_of_arm.png";
 import jtb from "@/public/logos/emblem/jtb.png";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { Button } from "@/src/components/common/button";
-import { useReactToPrint } from "react-to-print";
+import html2canvas from "html2canvas"
 
 const ViewTransportEmblemReceipt = ({
   plate_no,
@@ -40,23 +40,36 @@ const ViewTransportEmblemReceipt = ({
     }
   }, []);
 
-  const handleDownload = useReactToPrint({
-    content: () => componentRef.current,
-    documentTitle: `emblem_cert_${payment_ref}`,
-    removeAfterPrint: true,
-    pageStyle: `
-      @media print {
-        @page {
-          size: A4;
-          margin: 20mm;
-        }
-        body {
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        }
-      }
-    `,
-  });
+  const handleDownload = async () => {
+    if (!componentRef.current) return;
+
+    try {
+      // Create a canvas from the component
+      const element = componentRef.current;
+      const canvas = await html2canvas(element);
+
+      // Convert canvas to blob
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+
+        // Create download link
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `emblem_cert_${payment_ref}.png`;
+
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Cleanup
+        window.URL.revokeObjectURL(url);
+      }, 'image/png');
+    } catch (error) {
+      console.error('Error generating download:', error);
+    }
+  };
 
   return (
     <div>
