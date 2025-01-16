@@ -15,8 +15,6 @@ import toast from "react-hot-toast";
 import { fetchLGAData } from "@/src/services/common";
 import { useMutation } from "@tanstack/react-query";
 import { getErrorMessages } from "@/src/utils/helper";
-import { EmblemModal } from "@/src/components/common/modal";
-import { useRouter } from "next/navigation";
 
 interface EmblemProduct {
   id: number;
@@ -43,7 +41,7 @@ interface LGA {
   value: string;
 }
 
-const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
+const CreateEmblemForm = ({ show, setShow }: { show: any, setShow: any }) => {
   const [embleProductCode, setEmbleProductCode] = useState<EmblemProduct[]>([]);
   const [lga, setLga] = useState<LGA[]>([]);
 
@@ -145,8 +143,8 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
     },
     onSuccess: (data) => {
       if (data?.response_code) {
-        data?.response_code == "00"
-          ? toast.success(data?.response_message) &&
+       if( data?.response_code == "00"){
+           toast.success(data?.response_message) &&
             setShow({
               mode: true,
               message: data?.response_message,
@@ -154,11 +152,10 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
               payment_ref: data?.payment_ref,
               plate_no: watch("plate_number"),
             })
-          : toast.error(data?.response_message);
+          } else toast.error(data?.response_message);
       } else {
         toast.error(getErrorMessages(data?.message));
       }
-      // console.log(data);
     },
     onError: (error) => {
       console.log(error);
@@ -167,7 +164,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
 
   const onSubmit = (reqData: any) => {
     mutate(reqData);
-    console.log(reqData);
+    sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify({...reqData}));
   };
 
   return (

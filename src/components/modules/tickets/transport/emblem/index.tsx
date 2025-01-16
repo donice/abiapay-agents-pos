@@ -15,8 +15,6 @@ const TransportEmblemComponent = () => {
     plate_no: "",
   });
 
-  console.log(show);
-
   return (
     <div>
       <CustomHeader
@@ -24,7 +22,7 @@ const TransportEmblemComponent = () => {
         desc="Create Transport Emblem"
       />
 
-      <CreateEmblemForm setShow={setShow} />
+      <CreateEmblemForm setShow={setShow}show={show} />
       {show.mode && (
         <EmblemModal
           maintext={show.message}
@@ -32,7 +30,7 @@ const TransportEmblemComponent = () => {
           payment_ref={show.payment_ref}
           button_text="View Receipt"
           onClick={() => {
-            router.push(`/tickets/transport/emblem/${show.plate_no}?payment_ref=${show.payment_ref}`);
+            router.push(`/tickets/transport/emblem/summary?payment_ref=${show.payment_ref}`);
           }}
         />
       )}
