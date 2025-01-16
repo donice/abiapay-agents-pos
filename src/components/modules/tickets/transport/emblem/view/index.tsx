@@ -51,8 +51,8 @@ const ViewTransportEmblemReceipt = ({
         title={"Emblem Receipt"}
         desc="View Transport Emblem Receipt"
       />
-      <section className={style.emblem} id="tickets-summary-comp">
-        <div className={style.emblem_receipt} ref={componentRef}>
+      <section className={style.emblem} id="tickets-summary-comp"  ref={componentRef}>
+        <div className={style.emblem_receipt}>
           <header className={style.emblem_receipt_header}>
             <div className={style.emblem_receipt_header_logos}>
               <Image src={abiaLogo} alt="obia" width={100} height={100} />
