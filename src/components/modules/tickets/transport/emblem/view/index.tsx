@@ -40,9 +40,22 @@ const ViewTransportEmblemReceipt = ({
     }
   }, []);
 
-  const handlePrint = useReactToPrint({
+  const handleDownload = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: `eblem_cert_${payment_ref}`,
+    documentTitle: `emblem_cert_${payment_ref}`,
+    removeAfterPrint: true,
+    pageStyle: `
+      @media print {
+        @page {
+          size: A4;
+          margin: 20mm;
+        }
+        body {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    `,
   });
 
   return (
@@ -51,7 +64,11 @@ const ViewTransportEmblemReceipt = ({
         title={"Emblem Receipt"}
         desc="View Transport Emblem Receipt"
       />
-      <section className={style.emblem} id="tickets-summary-comp"  ref={componentRef}>
+      <section
+        className={style.emblem}
+        id="tickets-summary-comp"
+        ref={componentRef}
+      >
         <div className={style.emblem_receipt}>
           <header className={style.emblem_receipt_header}>
             <div className={style.emblem_receipt_header_logos}>
@@ -90,6 +107,7 @@ const ViewTransportEmblemReceipt = ({
               <li>Federal Ocean Terminal</li>
               <li>Airport</li>
               <li>Mid-Year Sticker</li>
+              <li>⁠ASPIMSS Yearly Safety Clearance</li>
             </ol>
           </div>
 
@@ -118,7 +136,7 @@ const ViewTransportEmblemReceipt = ({
           </div>
         </div>
       </section>{" "}
-      <Button text="Download Certificate" onClick={handlePrint} />
+      <Button text="Download Certificate" onClick={handleDownload} />
     </div>
   );
 };

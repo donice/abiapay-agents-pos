@@ -92,7 +92,7 @@ const CreateEmblemForm = ({ show, setShow }: { show: any, setShow: any }) => {
       description: "Emblem",
       amount: "",
       lga: "",
-      payment_period: "",
+      payment_period: "2025",
       wallet_type: "fidelity",
       payment_method: "fidelity",
     },
@@ -188,10 +188,15 @@ const CreateEmblemForm = ({ show, setShow }: { show: any, setShow: any }) => {
         register={register}
         validation={{
           required: true,
+          pattern: {
+            value: /^[A-Z0-9]{1,8}$/i,
+            message: "Plate number must be alphanumeric and maximum 8 characters",
+          },
           setValueAs: (value: string) => value.toUpperCase(),
         }}
         error={errors.plate_number}
       />
+
       <FormTextInput
         label={"Taxpayer Phone Number"}
         name={"taxpayer_phone"}

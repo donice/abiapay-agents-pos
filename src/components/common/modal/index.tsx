@@ -388,7 +388,7 @@ export const EmblemModal = ({
             {button_text}
           </button>
 
-          <SecondaryButton text="Create New Emblem" link="/tickets/transport" />
+          <SecondaryButton text="Create New Emblem" link="/tickets" />
         </div>
       </div>
     </div>
