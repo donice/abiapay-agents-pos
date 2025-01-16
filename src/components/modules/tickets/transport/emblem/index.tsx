@@ -12,7 +12,9 @@ const TransportEmblemComponent = () => {
     message: "",
     expiry_date: "",
     payment_ref: "",
+    plate_no: "",
   });
+
   return (
     <div>
       <CustomHeader
@@ -20,15 +22,15 @@ const TransportEmblemComponent = () => {
         desc="Create Transport Emblem"
       />
 
-      <CreateEmblemForm setShow={setShow} />
+      <CreateEmblemForm setShow={setShow}show={show} />
       {show.mode && (
         <EmblemModal
           maintext={show.message}
           exp_date={show.expiry_date}
           payment_ref={show.payment_ref}
-          button_text="Done"
+          button_text="View Receipt"
           onClick={() => {
-            router.push("/tickets");
+            router.push(`/tickets/transport/emblem/summary?payment_ref=${show.payment_ref}`);
           }}
         />
       )}

@@ -35,7 +35,7 @@
   right: 1.5rem;
   font-weight: 700;
   color: red;
-  font-size: 0.75rem;
+  font-size: 1.25rem;
   padding: 0.5rem;
 }
 
@@ -46,7 +46,7 @@
   transform: translateX(-50%);
   font-weight: 600;
   font-family: Tahoma, sans-serif;
-  font-size: 1.5rem;
+  font-size: 2.25rem;
   padding: 0.5rem;
   text-transform: uppercase;
   color: gray;
@@ -57,7 +57,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 2.75rem;
   padding: 1.5rem;
   text-transform: uppercase;
   color: green;
@@ -68,7 +68,7 @@
   top: 4rem;
   left: 1.5rem;
   color: gray;
-  font-size: 0.75rem;
+  font-size: 1rem;
   padding: 0.5rem;
   text-transform: uppercase;
 }
@@ -87,10 +87,10 @@
 }
 
 .bulk-sticker .card-cat {
-  left: -2rem;  
+  left: -2rem;
 }
 .bulk-sticker .card-income {
-  right: -2rem;  
+  right: -2rem;
 }
 
 .bulk-sticker .card-enum {

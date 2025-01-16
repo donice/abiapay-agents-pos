@@ -15,8 +15,6 @@ import toast from "react-hot-toast";
 import { fetchLGAData } from "@/src/services/common";
 import { useMutation } from "@tanstack/react-query";
 import { getErrorMessages } from "@/src/utils/helper";
-import { EmblemModal } from "@/src/components/common/modal";
-import { useRouter } from "next/navigation";
 
 interface EmblemProduct {
   id: number;
@@ -43,7 +41,7 @@ interface LGA {
   value: string;
 }
 
-const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
+const CreateEmblemForm = ({ show, setShow }: { show: any, setShow: any }) => {
   const [embleProductCode, setEmbleProductCode] = useState<EmblemProduct[]>([]);
   const [lga, setLga] = useState<LGA[]>([]);
 
@@ -94,7 +92,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
       description: "Emblem",
       amount: "",
       lga: "",
-      payment_period: "",
+      payment_period: "2025",
       wallet_type: "fidelity",
       payment_method: "fidelity",
     },
@@ -145,19 +143,19 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
     },
     onSuccess: (data) => {
       if (data?.response_code) {
-        data?.response_code == "00"
-          ? toast.success(data?.response_message) &&
+       if( data?.response_code == "00"){
+           toast.success(data?.response_message) &&
             setShow({
               mode: true,
               message: data?.response_message,
               expiry_date: data?.next_expiration_date,
               payment_ref: data?.payment_ref,
+              plate_no: watch("plate_number"),
             })
-          : toast.error(data?.response_message);
+          } else toast.error(data?.response_message);
       } else {
         toast.error(getErrorMessages(data?.message));
       }
-      // console.log(data);
     },
     onError: (error) => {
       console.log(error);
@@ -166,7 +164,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
 
   const onSubmit = (reqData: any) => {
     mutate(reqData);
-    console.log(reqData);
+    sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify({...reqData}));
   };
 
   return (
@@ -188,9 +186,17 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         name={"plate_number"}
         placeholder="Enter Vehicle Plate Number"
         register={register}
-        validation={{ required: true }}
+        validation={{
+          required: true,
+          pattern: {
+            value: /^[A-Z0-9]{1,8}$/i,
+            message: "Plate number must be alphanumeric and maximum 8 characters",
+          },
+          setValueAs: (value: string) => value.toUpperCase(),
+        }}
         error={errors.plate_number}
       />
+
       <FormTextInput
         label={"Taxpayer Phone Number"}
         name={"taxpayer_phone"}
@@ -206,6 +212,15 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         register={register}
         validation={{ required: true }}
         error={errors.customer_name}
+      />
+
+      <FormTextInput
+        label={"Taxpayer Email"}
+        name={"customer_email"}
+        placeholder="Enter Taxpayer Email"
+        register={register}
+        validation={{ required: true }}
+        error={errors.customer_email}
       />
 
       <FormTextInput
@@ -225,9 +240,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         register={register}
         validation={{ required: true }}
         error={!!errors.payment_period}
-        options={[
-          { label: "2025", value: "2025" },
-        ]}
+        options={[{ label: "2025", value: "2025" }]}
       />
       <SelectInput
         label={"LGA"}
@@ -252,7 +265,6 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
       />
 
       <Button text={"Process Now"} loading={isPending} />
-
     </form>
   );
 };

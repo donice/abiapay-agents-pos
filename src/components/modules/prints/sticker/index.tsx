@@ -33,19 +33,19 @@ const PrintIDComp = () => {
                   page-break-after: always;
                 }
               }
-  
+
               /* Grid Layout for Stickers */
               .bulk-sticker {
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
               }
-  
+
               @media (max-width: 768px) {
                 .bulk-sticker {
                   grid-template-columns: repeat(1, minmax(0, 1fr));
                 }
               }
-  
+
               .bulk-sticker .card {
                 margin-top: 2rem;
                 display: flex;
@@ -63,17 +63,17 @@ const PrintIDComp = () => {
                 height: 32rem;
                 border: 2px solid #c6c6c6;
               }
-  
+
               .bulk-sticker .card-tag {
                 position: absolute;
                 top: 4.5rem;
                 right: 1.5rem;
                 font-weight: 700;
                 color: red;
-                font-size: 0.75rem;
+                font-size: 1.25rem;
                 padding: 0.5rem;
               }
-  
+
               .bulk-sticker .card-plate_no {
                 position: absolute;
                 top: 9.5rem;
@@ -81,7 +81,7 @@ const PrintIDComp = () => {
                 transform: translateX(-50%);
                 font-weight: 600;
                 font-family: Tahoma;
-                font-size: 1.5rem;
+                font-size: 2.25rem;
                 padding: 0.5rem;
                 text-transform: uppercase;
                 color: gray;
@@ -94,7 +94,7 @@ const PrintIDComp = () => {
                 font-weight: 800;
                 font-family: Tahoma, sans-serif;
                 bottom: 1.5rem;
-                font-size: 2rem;
+                font-size: 2.75rem;
                 padding: 1.5rem;
                 text-transform: uppercase;
                 color: green;
@@ -124,10 +124,10 @@ const PrintIDComp = () => {
               }
 
               .bulk-sticker .card-cat {
-                left: -2rem;  
+                left: -2rem;
               }
               .bulk-sticker .card-income {
-                right: -2rem;  
+                right: -2rem;
               }
 
               .bulk-sticker .card-enum {
@@ -141,13 +141,13 @@ const PrintIDComp = () => {
                 letter-spacing: 0.3rem;
               }
 
-  
+
               .bulk-sticker .card-content {
                 gap: 1rem;
                 display: grid;
                 grid-template-columns: repeat(5, minmax(0, 1fr));
               }
-  
+
               .bulk-sticker .card-content .qrcode {
                 position: absolute;
                 top: 37%;

@@ -303,6 +303,7 @@ const DashboardComponent: React.FC = () => {
         {userData?.user_cat == "MdaUser" && (
           <>
             {" "}
+            <QuickLink name="Identity" link="/identity" />{" "}
             <QuickLink name="Bills" link="/bills" />{" "}
             <QuickLink name="Receipts" link="/receipts" />
           </>

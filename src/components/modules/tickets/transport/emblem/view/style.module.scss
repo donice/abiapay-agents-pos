@@ -1,0 +1,117 @@
+@use "../../../../../../../src/styles/index.scss" as *;
+
+.emblem {
+  border: 1px solid #d5d5d5;
+  border-radius: px-to-rem(4px);
+  margin-top: 3rem;
+  width: 100%;
+  max-width: 768px;
+  margin-bottom: 1rem;
+
+  @include custom-media-query("mobile", 729px) {
+    margin-top: 0;
+  }
+
+  &_receipt {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &_header {
+      width: 100%;
+      display: grid;
+      justify-content: center;
+
+      &_logos {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+
+        width: 100%;
+        max-width: 350px;
+
+        @include custom-media-query("mobile", 729px) {
+          gap: inherit;
+        }
+
+        img {
+          display: inline-flex;
+
+          &:nth-child(1) {
+            padding: 1rem;
+          }
+        }
+      }
+
+      &_title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        h1,
+        h2 {
+          font-weight: 600;
+          color: #2f2f2f;
+          line-height: 1.5rem;
+        }
+        h1 {
+          font-weight: 700;
+          font-size: 1.35rem;
+        }
+      }
+
+      &_reference {
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem 0;
+        p {
+          font-weight: 600;
+          font-size: 0.85rem;
+        }
+      }
+    }
+
+    &_clearance {
+      width: 100%;
+      max-width: 600px;
+
+      &_header {
+        text-align: center;
+      }
+
+      &_list {
+        padding: 0 1rem;
+        font-size: 0.85rem;
+        margin: 1rem 0;
+      }
+    }
+    &_footer {
+      padding: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+
+      &_text {
+        width: 100%;
+        max-width: 625px;
+        font-size: 0.75rem;
+      }
+
+      &_signature {
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.qr_container {
+  width: 7.5rem;
+}
