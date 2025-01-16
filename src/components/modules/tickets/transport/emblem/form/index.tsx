@@ -152,6 +152,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
               message: data?.response_message,
               expiry_date: data?.next_expiration_date,
               payment_ref: data?.payment_ref,
+              plate_no: watch("plate_number"),
             })
           : toast.error(data?.response_message);
       } else {
@@ -188,7 +189,10 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         name={"plate_number"}
         placeholder="Enter Vehicle Plate Number"
         register={register}
-        validation={{ required: true }}
+        validation={{
+          required: true,
+          setValueAs: (value: string) => value.toUpperCase(),
+        }}
         error={errors.plate_number}
       />
       <FormTextInput
@@ -225,9 +229,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         register={register}
         validation={{ required: true }}
         error={!!errors.payment_period}
-        options={[
-          { label: "2025", value: "2025" },
-        ]}
+        options={[{ label: "2025", value: "2025" }]}
       />
       <SelectInput
         label={"LGA"}
@@ -252,7 +254,6 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
       />
 
       <Button text={"Process Now"} loading={isPending} />
-
     </form>
   );
 };

@@ -1,0 +1,41 @@
+@use "../../../../../../../src/styles/index.scss" as *;
+
+.emblem {
+  border: 1px solid #d5d5d5;
+  border-radius: px-to-rem(4px);
+
+  &_receipt {
+    margin: 1rem;
+
+    &_header {
+      display: grid;
+
+      &_logos {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        img {
+          display: inline-flex;
+          padding: 0.5rem;
+
+          &:nth-child(1) {
+            padding: 1rem;
+          }
+        }
+      }
+
+      &_title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    &_clearance {
+
+      &_header {
+
+      }
+    }
+  }
+}
