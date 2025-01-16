@@ -87,11 +87,7 @@ const ViewTransportEmblemReceipt = ({
 
           <div className={style.emblem_receipt_footer}>
             <p className={style.emblem_receipt_footer_text}>
-              This is to Certify that the vehicle with the sticker receipt has
-              satisfied every lawful road permit respect to the above listed
-              items and should be allowed free passage and hence protected from
-              any road abuse, touting, illegal block, unlawful delay, harassment
-              by any other State Agent Nationwide.
+            This is to certify that the vehicle with this sticker has satisfied every lawful road permit with respect to the above listed items and should be allowed free passage and hence protected from any road abuse, touting, illegal block, unlawful delay, harassment by any other State Agent Nationwide.
             </p>
 
             <div className={style.emblem_receipt_footer_signature}>
