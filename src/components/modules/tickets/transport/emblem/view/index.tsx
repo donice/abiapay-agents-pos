@@ -1,5 +1,5 @@
 import { CustomHeader } from "@/src/components/common/header";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import style from "./style.module.scss";
 import QRCode from "react-qr-code";
@@ -8,6 +8,8 @@ import abiaLogo from "@/public/logos/emblem/abia_@33.jpg";
 import coaLogo from "@/public/logos/emblem/coat_of_arm.png";
 import jtb from "@/public/logos/emblem/jtb.png";
 import useIsBrower from "@/src/hooks/useIsBrower";
+import { Button } from "@/src/components/common/button";
+import { useReactToPrint } from "react-to-print";
 
 const ViewTransportEmblemReceipt = ({
   plate_no,
@@ -16,10 +18,11 @@ const ViewTransportEmblemReceipt = ({
   plate_no: string;
   payment_ref: string;
 }) => {
+  const componentRef = useRef<HTMLDivElement>(null);
 
-  const [data, setUserData]= useState({
-    product_code: ""
-  })
+  const [data, setUserData] = useState({
+    product_code: "",
+  });
 
   useEffect(() => {
     if (useIsBrower()) {
@@ -30,12 +33,18 @@ const ViewTransportEmblemReceipt = ({
         } catch (e) {
           console.error("Error parsing JSON data:", e);
           setUserData({
-            product_code: ""
+            product_code: "",
           });
         }
       }
     }
   }, []);
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: `eblem_cert_${payment_ref}`,
+  });
+
   return (
     <div>
       <CustomHeader
@@ -43,7 +52,7 @@ const ViewTransportEmblemReceipt = ({
         desc="View Transport Emblem Receipt"
       />
 
-      <section className={style.emblem}>
+      <section className={style.emblem} id="tickets-summary-comp">
         <div className={style.emblem_receipt}>
           <header className={style.emblem_receipt_header}>
             <div className={style.emblem_receipt_header_logos}>
@@ -87,7 +96,11 @@ const ViewTransportEmblemReceipt = ({
 
           <div className={style.emblem_receipt_footer}>
             <p className={style.emblem_receipt_footer_text}>
-            This is to certify that the vehicle with this sticker has satisfied every lawful road permit with respect to the above listed items and should be allowed free passage and hence protected from any road abuse, touting, illegal block, unlawful delay, harassment by any other State Agent Nationwide.
+              This is to certify that the vehicle with this sticker has
+              satisfied every lawful road permit with respect to the above
+              listed items and should be allowed free passage and hence
+              protected from any road abuse, touting, illegal block, unlawful
+              delay, harassment by any other State Agent Nationwide.
             </p>
 
             <div className={style.emblem_receipt_footer_signature}>
@@ -105,6 +118,8 @@ const ViewTransportEmblemReceipt = ({
             </div>
           </div>
         </div>
+
+        <Button text="Share Receipt" onClick={handlePrint} />
       </section>
     </div>
   );
