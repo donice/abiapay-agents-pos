@@ -40,44 +40,22 @@ const ViewTransportEmblemReceipt = ({
     }
   }, []);
   const handleDownload = async () => {
-    if (!componentRef.current) return;
-
-    try {
-      const element = componentRef.current;
-
-      const images = element.getElementsByTagName('img');
-      await Promise.all(Array.from(images).map(img => {
-        return new Promise((resolve) => {
-          if (img.complete) {
-            resolve(null);
-          } else {
-            img.onload = () => resolve(null);
-            img.onerror = () => resolve(null);
-          }
+    if (componentRef.current) {
+      try {
+        const canvas = await html2canvas(componentRef.current, {
+          scale: 1,
+          windowWidth: componentRef.current.scrollWidth,
+          useCORS: true,
+          allowTaint: true,
         });
-      }));
-
-      const canvas = await html2canvas(element, {
-        logging: true,
-        useCORS: true,
-        allowTaint: true,
-        scale: 2,
-        backgroundColor: '#ffffff'
-      });
-      const imgData = canvas.toDataURL('image/png');
-
-      const { jsPDF } = await import('jspdf');
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
-      });
-
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      pdf.save(`emblem_cert_${payment_ref}.pdf`);
-
-    } catch (error) {
-      console.error('Error generating PDF:', error);
+        const image = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = image;
+        link.download = `emblem-receipt-${payment_ref}.png`;
+        link.click();
+      } catch (error) {
+        console.error("Error generating image:", error);
+      }
     }
   };
 
@@ -95,9 +73,9 @@ const ViewTransportEmblemReceipt = ({
         <div className={style.emblem_receipt}>
           <header className={style.emblem_receipt_header}>
             <div className={style.emblem_receipt_header_logos}>
-              <Image src={abiaLogo} alt="obia" width={100} height={100} />
-              <Image src={coaLogo} alt="coa" width={100} height={100} />{" "}
-              <Image src={jtb} alt="jtb" width={100} height={100} />
+              <img src={abiaLogo.src} alt="obia" width={100} height={100} />
+              <img src={coaLogo.src} alt="coa" width={100} height={100} />
+              <img src={jtb.src} alt="jtb" width={100} height={100} />
             </div>
             <div className={style.emblem_receipt_header_title}>
               <h1>ABIA STATE GOVERNMENT</h1>
