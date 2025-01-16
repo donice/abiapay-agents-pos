@@ -77,17 +77,17 @@ const ViewTransportEmblemReceipt = ({
               <p>Executive Chairman</p>
               <p>Abia State Internal Revenue Service</p>
             </div>
-          </div>
-        </div>
 
-        <div className={style.qr_container}>
+            <div className={style.qr_container}>
               <QRCode
                 size={256}
                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                value={""}
+                value={"https://abiapay.com//verify/emblem?={number}"}
                 viewBox={`0 0 256 256`}
               />
             </div>
+          </div>
+        </div>
       </section>
     </div>
   );

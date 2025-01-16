@@ -80,9 +80,12 @@
     }
     &_footer {
       padding: 1rem 0;
-      display: grid;
+      display: flex;
+      justify-content: center;
       gap: 1rem;
       text-align: center;
+      justify-content: center;
+
       &_text {
         font-size: 0.75rem;
       }
