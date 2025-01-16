@@ -45,15 +45,21 @@ const ViewTransportEmblemReceipt = ({
     try {
       const element = componentRef.current;
       const canvas = await html2canvas(element);
-      const dataUrl = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/png');
 
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = `emblem_cert_${payment_ref}.png`;
-      link.click();
+      // Import jsPDF dynamically to avoid SSR issues
+      const { jsPDF } = await import('jspdf');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
+
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      pdf.save(`emblem_cert_${payment_ref}.pdf`);
 
     } catch (error) {
-      console.error('Error generating download:', error);
+      console.error('Error generating PDF:', error);
     }
   };
 
