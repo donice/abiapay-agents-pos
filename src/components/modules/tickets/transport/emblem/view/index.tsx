@@ -39,33 +39,19 @@ const ViewTransportEmblemReceipt = ({
       }
     }
   }, []);
-
   const handleDownload = async () => {
     if (!componentRef.current) return;
 
     try {
-      // Create a canvas from the component
       const element = componentRef.current;
       const canvas = await html2canvas(element);
+      const dataUrl = canvas.toDataURL('image/png');
 
-      // Convert canvas to blob
-      canvas.toBlob((blob) => {
-        if (!blob) return;
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = `emblem_cert_${payment_ref}.png`;
+      link.click();
 
-        // Create download link
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `emblem_cert_${payment_ref}.png`;
-
-        // Trigger download
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Cleanup
-        window.URL.revokeObjectURL(url);
-      }, 'image/png');
     } catch (error) {
       console.error('Error generating download:', error);
     }
