@@ -1,5 +1,5 @@
 import { CustomHeader } from "@/src/components/common/header";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import style from "./style.module.scss";
 import QRCode from "react-qr-code";
@@ -7,6 +7,7 @@ import QRCode from "react-qr-code";
 import abiaLogo from "@/public/logos/emblem/abia_@33.jpg";
 import coaLogo from "@/public/logos/emblem/coat_of_arm.png";
 import jtb from "@/public/logos/emblem/jtb.png";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
 const ViewTransportEmblemReceipt = ({
   plate_no,
@@ -15,6 +16,26 @@ const ViewTransportEmblemReceipt = ({
   plate_no: string;
   payment_ref: string;
 }) => {
+
+  const [data, setUserData]= useState({
+    product_code: ""
+  })
+
+  useEffect(() => {
+    if (useIsBrower()) {
+      const data = window.sessionStorage.getItem("TRANSPORT_INVOICE");
+      if (data) {
+        try {
+          setUserData(JSON.parse(data));
+        } catch (e) {
+          console.error("Error parsing JSON data:", e);
+          setUserData({
+            product_code: ""
+          });
+        }
+      }
+    }
+  }, []);
   return (
     <div>
       <CustomHeader
@@ -33,7 +54,7 @@ const ViewTransportEmblemReceipt = ({
             <div className={style.emblem_receipt_header_title}>
               <h1>ABIA STATE GOVERNMENT</h1>
               <h2>2025 CONSOLIDATED EMBLEM</h2>
-              <h2>for </h2>
+              <h2>for {data?.product_code} </h2>
             </div>
             <div className={style.emblem_receipt_header_reference}>
               <p>{plate_no}</p> <p>{payment_ref}</p>
