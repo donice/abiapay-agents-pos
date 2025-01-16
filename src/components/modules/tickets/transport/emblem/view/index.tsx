@@ -44,7 +44,18 @@ const ViewTransportEmblemReceipt = ({
 
     try {
       const element = componentRef.current;
-      const canvas = await html2canvas(element);
+      const canvas = await html2canvas(element, {
+        logging: true,
+        useCORS: true,
+        allowTaint: true,
+        onclone: (document) => {
+          // Ensure images are loaded
+          const images = document.getElementsByTagName('img');
+          Array.from(images).forEach(img => {
+            img.crossOrigin = 'anonymous';
+          });
+        }
+      });
       const imgData = canvas.toDataURL('image/png');
 
       // Import jsPDF dynamically to avoid SSR issues
@@ -95,25 +106,23 @@ const ViewTransportEmblemReceipt = ({
             <header className={style.emblem_receipt_clearance_header}>
               CLEARANCE CERTIFICATE
             </header>
-            <ol className={style.emblem_receipt_clearance_list}>
-              <li>Board of Internal Revenue (Hackney Carriage)</li>
-              <li>
-                Sanitation Sticker/Pollution/Effluent Discharge/Emission Control
-              </li>
-              <li>MOT Sticker</li>
-              <li>Haulage Permit</li>
-              <li>Safety Emblem</li>
-              <li>Natural Freight</li>
-              <li>Commodity Sticker</li>
-              <li>Loading and Off Loading</li>
-              <li>Route/Inter State/Road Tax Warrant Permit</li>
-              <li>Ogepa Sticker</li>
-              <li>Agric Levy</li>
-              <li>Federal Ocean Terminal</li>
-              <li>Airport</li>
-              <li>Mid-Year Sticker</li>
-              <li>⁠ASPIMSS Yearly Safety Clearance</li>
-            </ol>
+            <ul className={style.emblem_receipt_clearance_list}>
+              <li>1. Board of Internal Revenue (Hackney Carriage)</li>
+              <li>2. Sanitation Sticker/Pollution/Effluent Discharge/Emission Control</li>
+              <li>3. MOT Sticker</li>
+              <li>4. Haulage Permit</li>
+              <li>5. Safety Emblem</li>
+              <li>6. Natural Freight</li>
+              <li>7. Commodity Sticker</li>
+              <li>8. Loading and Off Loading</li>
+              <li>9. Route/Inter State/Road Tax Warrant Permit</li>
+              <li>10. Ogepa Sticker</li>
+              <li>11. Agric Levy</li>
+              <li>12. Federal Ocean Terminal</li>
+              <li>13. Airport</li>
+              <li>14. Mid-Year Sticker</li>
+              <li>15. ASPIMSS Yearly Safety Clearance</li>
+            </ul>
           </div>
 
           <div className={style.emblem_receipt_footer}>
