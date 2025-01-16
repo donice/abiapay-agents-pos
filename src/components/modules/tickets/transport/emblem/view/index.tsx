@@ -44,21 +44,28 @@ const ViewTransportEmblemReceipt = ({
 
     try {
       const element = componentRef.current;
+
+      const images = element.getElementsByTagName('img');
+      await Promise.all(Array.from(images).map(img => {
+        return new Promise((resolve) => {
+          if (img.complete) {
+            resolve(null);
+          } else {
+            img.onload = () => resolve(null);
+            img.onerror = () => resolve(null);
+          }
+        });
+      }));
+
       const canvas = await html2canvas(element, {
         logging: true,
         useCORS: true,
         allowTaint: true,
-        onclone: (document) => {
-          // Ensure images are loaded
-          const images = document.getElementsByTagName('img');
-          Array.from(images).forEach(img => {
-            img.crossOrigin = 'anonymous';
-          });
-        }
+        scale: 2,
+        backgroundColor: '#ffffff'
       });
       const imgData = canvas.toDataURL('image/png');
 
-      // Import jsPDF dynamically to avoid SSR issues
       const { jsPDF } = await import('jspdf');
       const pdf = new jsPDF({
         orientation: 'portrait',
