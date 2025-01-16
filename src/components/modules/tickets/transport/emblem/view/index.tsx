@@ -118,7 +118,7 @@ const ViewTransportEmblemReceipt = ({
             </div>
           </div>
         </div>
-      </section>  <Button text="Share Receipt" onClick={handlePrint} />
+      </section>  <Button text="Download Certificate" onClick={handlePrint} />
     </div>
   );
 };
