@@ -82,7 +82,7 @@ const ViewTransportEmblemReceipt = ({
               <QRCode
                 size={256}
                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                value={"https://abiapay.com//verify/emblem?={number}"}
+                value={`https://abiapay.com//verify/emblem?=${payment_ref}`}
                 viewBox={`0 0 256 256`}
               />
             </div>
