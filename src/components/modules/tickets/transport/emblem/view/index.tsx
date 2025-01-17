@@ -103,7 +103,7 @@ const ViewTransportEmblemReceipt = ({
                 <li>3. MOT Sticker</li>
                 <li>4. Haulage Permit</li>
                 <li>5. Safety Emblem</li>
-                <li>6. Natural Freight</li>
+                <li>6. National Freight</li>
                 <li>7. Commodity Sticker</li>
                 <li>8. Loading and Off Loading</li>
                 <li>9. Route/Inter State/Road Tax Warrant Permit</li>
