@@ -147,7 +147,13 @@ const ViewTransportEmblemReceipt = ({
                 value={`https://abiapay.com//verify/emblem?=${payment_ref}`}
                 viewBox={`0 0 256 256`}
               />
+
+
             </div>
+            <div className="grid text-xs">
+              <p>Scan the aove url to verify, or visit:</p> <p className="underline">{`https://abiapay.com//verify/emblem?=${payment_ref}`}</p>
+            </div>
+
           </div>
         </div>
       </section>{" "}
