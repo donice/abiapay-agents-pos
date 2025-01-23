@@ -68,6 +68,7 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
         options={[
           { label: "Plate Number", value: "plate_number" },
           { label: "Payment Reference", value: "payment_ref" },
+          { label: "Emblem", value: "emblem" },
         ]}
         placeholder="Select Reference Type"
       />

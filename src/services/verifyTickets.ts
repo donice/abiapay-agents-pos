@@ -6,7 +6,7 @@ const ibm = process.env.NEXT_PUBLIC_APIC_KEY;
 export interface VerifyTicketPayload {
   agentEmail: string;
   referenceID: string;
-  verifyType?: string | "emblem"
+  verifyType?: string;
 }
 
 export const verifyTicket = async (requestData: VerifyTicketPayload) => {
