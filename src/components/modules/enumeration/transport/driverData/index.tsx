@@ -84,7 +84,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
   const req: CreateTicketType = {
     taxpayer_category: "individual",
     abssin: details?.vehicle_owner.abssin || "",
-    vehicle_plate_number: formData.plate_number || "",
+    vehicle_plate_number: formData.plate_number.toUpperCase() || "",
     taxpayer_name: details?.vehicle_owner.ownerName || "",
     taxpayer_phone: formData.phone_number || "",
     revenue_year: getCurrentYear().toString(),

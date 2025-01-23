@@ -5,6 +5,7 @@ import { FieldError, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import {
   fetchProductCode,
+  fetchVehicleCategory,
   verifyPlateNumber,
   VerifyPlateNumberType,
 } from "@/src/services/transportEnumerationService";
@@ -14,10 +15,7 @@ import {
   InfoModal,
   VehicleCheckSuccessModal,
 } from "@/src/components/common/modal";
-import {
-  fetchParks,
-  fetchTradeUnions,
-} from "@/src/services/common";
+import { fetchParks, fetchTradeUnions } from "@/src/services/common";
 
 const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
   const [parks, setParks] = useState([]);
@@ -103,7 +101,7 @@ const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
 
   const getVehicleCategories = async () => {
     try {
-      const {data} = await fetchProductCode();
+      const { data } = await fetchVehicleCategory();
       console.log(data, "PRODUCT CODE");
       const res = data?.map((item: any) => {
         return {
@@ -186,6 +184,7 @@ const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
             maxLength: {
               value: 8,
               message: "Length must be below 13 characters",
+              setValueAs: (value: string) => value.toUpperCase(),
             },
           }}
           error={errors.plate_number as FieldError}
