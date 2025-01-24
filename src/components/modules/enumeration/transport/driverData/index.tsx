@@ -84,7 +84,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
   const req: CreateTicketType = {
     taxpayer_category: "individual",
     abssin: details?.vehicle_owner.abssin || "",
-    vehicle_plate_number: formData.plate_number || "",
+    vehicle_plate_number: formData.plate_number.toUpperCase() || "",
     taxpayer_name: details?.vehicle_owner.ownerName || "",
     taxpayer_phone: formData.phone_number || "",
     revenue_year: getCurrentYear().toString(),
@@ -189,7 +189,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
 
       {show && (
         <EnumerationSuccessModal
-          qr_link={`https://portal.sandbox.abiapay.com/verify-asset?assetCode=${ticketData?.assetCode}`}
+          qr_link={`https://portal.abiapay.com/verify-asset?assetCode=${ticketData?.assetCode}`}
           plate_number={formData.plate_number || ""}
           text={ticketData?.assetCode || ""}
           id={ticketData?.enumeration_id || ""}

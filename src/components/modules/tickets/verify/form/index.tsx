@@ -19,7 +19,7 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
     formState: { errors },
   } = useForm<VerifyTicketPayload>({
     defaultValues: {
-      // agentEmail: userData?.email,
+      verifyType: "",
       referenceID: "",
     },
   });
@@ -63,11 +63,13 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
     <form onSubmit={handleSubmit(onSubmit)} className="verify-tickets-form">
       <SelectInput
         label="Reference Type"
-        name="ref_type"
-        id="ref_type"
+        name="verifyType"
+        id="verifyType"
+        register={register}
         options={[
           { label: "Plate Number", value: "plate_number" },
           { label: "Payment Reference", value: "payment_ref" },
+          { label: "Emblem", value: "emblem" },
         ]}
         placeholder="Select Reference Type"
       />

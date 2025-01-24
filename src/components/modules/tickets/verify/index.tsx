@@ -37,7 +37,7 @@ const VerifyTicketsComponent = () => {
 
   const displayKeys = [
     "vehicle_type",
-    "no_of_days",
+    // "no_of_days",
     "driver_phone",
     "last_ticket_ref",
     "last_ticket_purchase",
@@ -70,9 +70,9 @@ const VerifyTicketsComponent = () => {
             <div className="line-items">
               <p>Status:</p>
               {displayDetails?.response_code == "00" ? (
-                <p className="success">Valid Ticket</p>
+                <p className="success">{displayDetails?.response_message || "Valid Ticket"}</p>
               ) : (
-                <p className="failure">Invalid Ticket</p>
+                <p className="failure">{displayDetails?.response_message ||"Invalid Ticket"}</p>
               )}
             </div>
             {Object.entries(displayDetails)
@@ -89,19 +89,6 @@ const VerifyTicketsComponent = () => {
                   </p>
                 </div>
               ))}
-
-             {/* <div className="mt-4">
-              <h3 className="font-bold text-xl text-gray-600">Fines</h3>
-
-             {displayDetails?.fines?.map((fine: any, index: number) => (
-                <div key={index} className="mt-4">
-                  <div className="flex justify-between">
-                    <p>{fine?.penalty_rate}</p>
-                    <p>{fine?.ticket_rate}</p>
-                  </div>
-                </div>
-              ))}
-            </div> */}
           </div>
         ) : (
           <Empty text="No matching vehicle found" />
