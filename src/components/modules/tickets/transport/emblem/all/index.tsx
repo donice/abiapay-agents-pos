@@ -26,8 +26,6 @@ const AllEmblemModule: React.FC = () => {
 
   const fetched_data = data?.response_data || [];
 
-  console.log("Fetched Data:", fetched_data);
-
   const filteredTransactions = useMemo(() => {
     if (!debouncedSearchTerm) return fetched_data;
 
@@ -39,19 +37,10 @@ const AllEmblemModule: React.FC = () => {
 
     if (filtered.length === 0) {
       console.log("No results found for:", debouncedSearchTerm);
-      // console.log("Fetched Data:", fetched_data);
     }
 
     return filtered;
   }, [debouncedSearchTerm, fetched_data]);
-
-  if (isLoading) {
-    return (
-      <div className={"loading"}>
-        <Loading />
-      </div>
-    );
-  }
 
   if (isError) {
     console.log(data);
@@ -65,89 +54,97 @@ const AllEmblemModule: React.FC = () => {
     );
   }
 
-  console.log("Filtered Transactions:", filteredTransactions);
+  // console.log("Filtered Transactions:", filteredTransactions);
 
   return (
     <section className="main-table">
-      <div className="filter-input">
-        <label htmlFor="search">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="#3ba361"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-            />
-          </svg>
-        </label>
-        <input
-          type="text"
-          placeholder="Search by Payment Reference"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search input"
-        />
-      </div>
-
-      {filteredTransactions.length > 0 ? (
-        <div className="main-table_form_tickets_container">
-          <div className="tickets">
-            {filteredTransactions.map((transaction: any) => (
-              <div
-                key={transaction.idagent_transactions}
-                className="ticket"
-                onClick={() =>
-                  router.push(
-                    `/tickets/transport/${transaction.idagent_transactions}`
-                  )
-                }
-              >
-                <div>
-                  <p>{transaction.trans_ref}</p>
-                  <p>{transaction.revenue_item}</p>
-                  <p>{new Date(transaction.createtime).toLocaleString()}</p>
-                  <p>Ref: {transaction.payment_ref}</p>
-                </div>
-                <div>
-                  <p>₦{formatAmount(transaction.amount)}</p>
-                  <p
-                    className={`${
-                      transaction.status === "Completed"
-                        ? "completed"
-                        : "pending"
-                    }`}
-                  >
-                    {transaction.status === "Completed" ? (
-                      <GoVerified />
-                    ) : (
-                      <TbLoader />
-                    )}
-                    {transaction.status}
-                  </p>
-
-                  <p className="next_date">
-                    <span>
-                      <LuListRestart className="icon" />
-                    </span>
-                    <span>
-                      {" "}
-                      {new Date(transaction.next_date).toLocaleString()}
-                    </span>
-                  </p>
-                  <p>Valid for: {transaction.payment_period}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+      {isLoading ? (
+        <div className={"loading"}>
+          <Loading />
         </div>
       ) : (
-        <Empty text="No emblems found" />
+        <>
+          {" "}
+          <div className="filter-input">
+            <label htmlFor="search">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="#3ba361"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                />
+              </svg>
+            </label>
+            <input
+              type="text"
+              placeholder="Search by Vehicle Plate Number"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search input"
+            />
+          </div>
+          {filteredTransactions.length > 0 ? (
+            <div className="main-table_form_tickets_container">
+              <div className="tickets">
+                {filteredTransactions.map((transaction: any) => (
+                  <div
+                    key={transaction.idagent_transactions}
+                    className="ticket"
+                    onClick={() =>
+                      router.push(
+                        `/tickets/transport/${transaction.idagent_transactions}`
+                      )
+                    }
+                  >
+                    <div>
+                      <p>{transaction.trans_ref}</p>
+                      <p>{transaction.revenue_item}</p>
+                      <p>{new Date(transaction.createtime).toLocaleString()}</p>
+                      <p>Ref: {transaction.payment_ref}</p>
+                    </div>
+                    <div>
+                      <p>₦{formatAmount(transaction.amount)}</p>
+                      <p
+                        className={`${
+                          transaction.status === "Completed"
+                            ? "completed"
+                            : "pending"
+                        }`}
+                      >
+                        {transaction.status === "Completed" ? (
+                          <GoVerified />
+                        ) : (
+                          <TbLoader />
+                        )}
+                        {transaction.status}
+                      </p>
+
+                      <p className="next_date">
+                        <span>
+                          <LuListRestart className="icon" />
+                        </span>
+                        <span>
+                          {" "}
+                          {new Date(transaction.next_date).toLocaleString()}
+                        </span>
+                      </p>
+                      <p>Valid for: {transaction.payment_period}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <Empty text="No emblems found" />
+          )}
+        </>
       )}
     </section>
   );
