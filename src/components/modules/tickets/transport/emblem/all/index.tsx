@@ -95,11 +95,11 @@ const AllEmblemModule: React.FC = () => {
               <div className="tickets">
                 {filteredTransactions.map((transaction: any) => (
                   <div
-                    key={transaction.idagent_transactions}
+                    key={transaction.payment_ref}
                     className="ticket"
                     onClick={() =>
                       router.push(
-                        `/tickets/transport/${transaction.idagent_transactions}`
+                        `/tickets/transport/emblem/summary?payment_ref=${transaction.payment_ref}`
                       )
                     }
                   >
