@@ -89,6 +89,10 @@
 
         display: grid;
         grid-template-columns: 1fr 1fr;
+
+        @include custom-media-query("mobile", 729px) {
+          grid-template-columns: 1fr;
+        }
       }
     }
     &_footer {

@@ -107,7 +107,7 @@ const EmblemSummary: React.FC = () => {
               <div className="btn_container">
                 <PrimaryButton
                   text="View Certificate"
-                  link={`/tickets/transport/emblem/${data?.plate_number}?payment_ref=${pay_ref}`}
+                  link={`/tickets/transport/emblem/${data?.response_data[0]?.plate_number}?payment_ref=${pay_ref}`}
                 />
                 <Button text="Share Receipt" onClick={handlePrint} />
               </div>
