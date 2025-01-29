@@ -24,7 +24,9 @@ const AllEmblemModule: React.FC = () => {
     },
   });
 
-  const fetched_data = data?.data || [];
+  const fetched_data = data?.response_data || [];
+
+  console.log("Fetched Data:", fetched_data);
 
   const filteredTransactions = useMemo(() => {
     if (!debouncedSearchTerm) return fetched_data;
@@ -62,6 +64,8 @@ const AllEmblemModule: React.FC = () => {
       </div>
     );
   }
+
+  console.log("Filtered Transactions:", filteredTransactions);
 
   return (
     <section className="main-table">
