@@ -94,6 +94,7 @@ const ViewTransportEmblemReceipt = ({
             </div>
           </header>
 
+
           <div className={style.emblem_receipt_clearance}>
             <header className={style.emblem_receipt_clearance_header}>
               CLEARANCE CERTIFICATE
