@@ -110,6 +110,27 @@ export const fetchTransactions = async () => {
   }
 };
 
+export const fetchAllEmblem = async () => {
+  try {
+    const { data } = await axiosInstance.post(`${url}/transport/fetch-emblem`, {
+      page: 1,
+      limit: 200,
+    });
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const fetchSingleEmblem = async (ref: string) => {
+  try {
+    const { data } = await axiosInstance.get(`${url}/transport/search-emblem?ref=${ref}`);
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
 export const retryPayment = async (reqData: { payment_ref: string }) => {
   try {
     const { data } = await axiosInstance.post(

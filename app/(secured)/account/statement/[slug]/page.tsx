@@ -26,8 +26,15 @@ import { fetchBanks } from "@/src/services/common";
 import { IndividualTransferWalletCards } from "@/src/components/modules/wallet/components/wallet-cards";
 import { TbSend } from "react-icons/tb";
 import { getErrorMessages } from "@/src/utils/helper";
+import { redirect } from "next/navigation";
+import queryClient from "@/src/lib/reactQuery";
 
 const StatementPage = ({ params }: { params: { slug: string } }) => {
+
+  if(params.slug !== "fidelity" && params.slug !== "access"){
+    redirect("/account/statement");
+  };
+
   const activeAccount = params.slug;
   const [showSuccessModal, setShowSuccessModal] = useState({
     show: false,
@@ -70,6 +77,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
   const { onChange } = registerTransferToBank("amount");
 
   const walletNo = watchTransferWallet("recipient_wallet_no");
+  console.log("walletNo", walletNo);
   const debouncedWalletNo = useDebounce(walletNo, 500);
 
   const { data } = useQuery({
@@ -79,12 +87,6 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
     },
   });
 
-    console.log(data);
-
-    // const { data, isPending } = useQuery({
-    //   queryKey: ["my-statement"],
-    //   queryFn: fetchAccountStatement,
-    // });
 
   const { data: dasboardData } = useQuery({
     queryKey: ["get_dashboard_data"],
@@ -139,6 +141,8 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
     },
   });
 
+  console.log("beneficiary",beneficiary);
+
   const { mutate: mutateTransfer, isPending: isPendingTransfer } = useMutation({
     mutationFn: (data: any) => {
       if (cashoutType == "wallet") {
@@ -173,6 +177,9 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
           "Error completing transaction"
       );
       console.log(error);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["get_dashboard_data"] });
     },
   });
 
@@ -353,7 +360,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
           <Button
             text="Transfer Funds"
             loading={isPendingTransfer}
-            disabled={isPendingTransfer}
+            disabled={isPendingTransfer || beneficiary == ""}
           />
         </form>
       )}

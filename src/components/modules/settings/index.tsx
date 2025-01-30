@@ -49,13 +49,13 @@ const walletItems: WalletItemsProps[] = [
 
 const dailyServices: WalletItemsProps[] = [
   {
-    href: "/services/airtime",
+    href: "/airtime",
     title: "Airtime",
     icon: <FcCallback className="icon" />,
-    cat: "coming soon",
+    // cat: "coming soon",
   },
   {
-    href: "/services/data",
+    href: "/data",
     title: "Data",
     icon: <FcCollaboration className="icon" />,
     cat: "coming soon",

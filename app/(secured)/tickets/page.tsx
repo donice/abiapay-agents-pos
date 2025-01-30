@@ -59,7 +59,7 @@ const tickets: TicketsProps[] = [
     icon: <FcAutomatic className="icon" />,
   },
   {
-    name: "tickets/transport/emblem",
+    name: "tickets/transport/emblem/view",
     title: "Transport Emblem",
     desc: "Create transport emblem",
     icon: <FcDiploma2 className="icon" />,

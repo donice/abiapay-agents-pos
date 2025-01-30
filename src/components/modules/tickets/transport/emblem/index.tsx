@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import CreateEmblemForm from "./form";
 import { useRouter } from "next/navigation";
 import { EmblemModal } from "@/src/components/common/modal";
+import { GoBackButton } from "@/src/components/common/button";
 
 const TransportEmblemComponent = () => {
   const router = useRouter();
@@ -17,6 +18,7 @@ const TransportEmblemComponent = () => {
 
   return (
     <div>
+      <GoBackButton />
       <CustomHeader
         title="Transport Emblem"
         desc="Create Transport Emblem"

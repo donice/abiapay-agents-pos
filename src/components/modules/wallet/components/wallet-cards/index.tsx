@@ -7,13 +7,19 @@ import FidelityBankLogo from "../../../../assets/fidelity_bank.png";
 import { formatAmount } from "@/src/utils/formatAmount";
 
 
-const TransferWalletCards = ({data, activeAccount, setActiveAccount}: any) => {
+const TransferWalletCards = ({data, activeAccount, setActiveAccount, type, onWalletSelect}: {
+  data: any,
+  activeAccount: string,
+  setActiveAccount: any,
+  type?: "balance" | "earnings"
+  onWalletSelect?: any
+}) => {
 
   return (
     <section className="walletcard">
       <div className="walletcard_container">
         <div
-          onClick={() => setActiveAccount("fidelity")}
+          onClick={() => {setActiveAccount("fidelity"), onWalletSelect("fidelity")}}
           className={`wallet ${activeAccount === "fidelity" ? "active" : ""}`}
         >
           <div className="wallet_details">
@@ -22,7 +28,7 @@ const TransferWalletCards = ({data, activeAccount, setActiveAccount}: any) => {
             </div>
             <div>
               <p className="amount">
-                ₦ {formatAmount(data?.fidelity?.balance)}
+                ₦ {formatAmount(type === "earnings" ? data?.fidelity?.earnings : data?.fidelity?.balance)}
               </p>
               <p>
                 Wallet: <span>{data?.fidelity?.account_number}</span>
@@ -36,7 +42,7 @@ const TransferWalletCards = ({data, activeAccount, setActiveAccount}: any) => {
           </div>
         </div>
         <div
-          onClick={() => setActiveAccount("access")}
+          onClick={() => {setActiveAccount("access"), onWalletSelect("access")}}
           className={`wallet ${activeAccount === "access" ? "active" : ""}`}
         >
           <div className="wallet_details">
@@ -45,7 +51,7 @@ const TransferWalletCards = ({data, activeAccount, setActiveAccount}: any) => {
             </div>
             <div>
               <p className="amount">
-                ₦ {formatAmount(data?.access?.wallet_balance)}
+                ₦ {formatAmount( type === "earnings" ? data?.access?.current_earnings : data?.access?.wallet_balance)}
               </p>
               <p>
                 Wallet: <span>{data?.access?.wallet_id}</span>

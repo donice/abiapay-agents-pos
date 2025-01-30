@@ -6,7 +6,6 @@ import {
   Button,
   GoBackButton,
   PrimaryButton,
-  SecondaryButton,
 } from "@/src/components/common/button";
 import { Loading } from "@/src/components/common/loader/redirecting";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
@@ -14,97 +13,110 @@ import { formatAmount } from "@/src/utils/formatAmount";
 import { AbiaStateLogo } from "@/src/components/common/Images";
 import { useReactToPrint } from "react-to-print";
 import { useSearchParams } from "next/navigation";
-
-interface TicketData {
-  [key: string]: any;
-}
+import { useQuery } from "@tanstack/react-query";
+import { fetchSingleEmblem } from "@/src/services/ticketsServices";
+import Empty from "@/src/components/common/empty";
 
 const EmblemSummary: React.FC = () => {
-  const params = useSearchParams()
-  const pay_ref = params.get("payment_ref")
+  const params = useSearchParams();
+  const pay_ref = params.get("payment_ref");
 
-  const [data, setData] = useState<TicketData | null>(null);
   const componentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedData = sessionStorage.getItem("TRANSPORT_INVOICE");
-      if (storedData) {
-        setData(JSON.parse(storedData));
-      }
-    }
-  }, []);
+  const {data, isLoading} = useQuery({
+    queryKey: ["emblemSummary", pay_ref],
+    queryFn: () => {
+      return fetchSingleEmblem(pay_ref as string);
+    },
+  });
+
+  console.log(data?.response_data[0]);
+
 
   const displayKeys = [
-    "transaction_date",
-    "invoice_id",
+    "trans_date",
+    "trans_ref",
+    "rev_head",
+    "rev_code",
+    "payment_ref",
     "payment_period",
-    "customer_email",
-    "plate_number",
+    "trans_channel",
+    "status",
+    "trans_type",
+    "lga",
+    "vehicle_type",
+    "vehicle_content",
+    "taxpayer_name",
+    "taxpayer_email",
     "taxpayer_phone",
-    "customer_name",
-    "wallet_type",
-    "merchant_key",
-    "product_code",
-    "description",
-    "payment_method"
+    "revenue_item",
+    "payment_method",
+    "plate_number",
+    "payment_date",
+    // "taxoffice"
   ];
 
   const amount = data?.amount;
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: `receipt_${data?.invoice_id}`,
+    documentTitle: `receipt_$`,
+    // documentTitle: `receipt_${res?.invoice_id}`,
   });
 
   return (
     <section className="tickets">
       <GoBackButton />
 
-      {data ? (
-        <div id="tickets-summary-comp" className="tickets-summary-comp">
-          <div
-            style={{ width: "100%", maxWidth: "500px" }}
-            ref={componentRef}
-            className="tickets-summary-comp_container"
-          >
-            <div className="tickets-summary-comp_container_logo">
-              <AbiaStateLogo />
-              <CustomFormHeader
-                title="Transaction Receipt"
-                desc="View the details for your Purchased Ticket"
-              />
-            </div>
-            <div
-              key={"amount"}
-              className="tickets-summary-comp_container_amount"
-            >
-              <p>{formatAmount(amount)}</p>
-            </div>
-
-            <div>
-              {Object.entries(data)
-                .filter(([key]) => displayKeys.includes(key))
-                .map(([key, value]) => (
-                  <div key={key} className="line-items">
-                    <p>{CamelCaseToTitleCase(key)}:</p>
-                    <p>
-                      {key === "wallet_type"
-                        ? CamelCaseToTitleCase(value)
-                        : value}
-                    </p>
-                  </div>
-                ))}
-            </div>
+      <div id="tickets-summary-comp" className="tickets-summary-comp">
+        <div
+          style={{ width: "100%", maxWidth: "500px" }}
+          ref={componentRef}
+          className="tickets-summary-comp_container"
+        >
+          <div className="tickets-summary-comp_container_logo">
+            <AbiaStateLogo />
+            <CustomFormHeader
+              title="Transaction Receipt"
+              desc="View the details for your Purchased Ticket"
+            />
           </div>
-          <div className="btn_container">
-           <PrimaryButton text="View Certificate"  link={`/tickets/transport/emblem/${data?.plate_number }?payment_ref=${pay_ref }`}/>
-            <Button text="Share Receipt" onClick={handlePrint} />
-          </div>
+          {isLoading ? <Loading /> : data ? (
+            <>
+              {" "}
+              <div
+                key={"amount"}
+                className="tickets-summary-comp_container_amount"
+              >
+                <p>{formatAmount(data?.response_data[0]?.amount)}</p>
+              </div>
+              <div>
+                {Object.entries(data?.response_data[0])
+                  .filter(([key]) => displayKeys.includes(key))
+                  .map(([key, value]) => (
+                    <div key={key} className="line-items">
+                      <p>{CamelCaseToTitleCase(key)}:</p>
+                      <p className="text-right">
+                        {key === "wallet_type"
+                          ? CamelCaseToTitleCase(value as string)
+                          : String(value)}
+                      </p>
+                    </div>
+                  ))}
+              </div>{" "}
+              <div className="btn_container">
+                <PrimaryButton
+                  text="View Certificate"
+                  link={`/tickets/transport/emblem/${data?.response_data[0]?.plate_number}?payment_ref=${pay_ref}`}
+                />
+                <Button text="Share Receipt" onClick={handlePrint} />
+              </div>
+            </>
+          ) : (
+            <Empty />
+          )}
         </div>
-      ) : (
-        <Loading />
-      )}
+      </div>
     </section>
   );
 };

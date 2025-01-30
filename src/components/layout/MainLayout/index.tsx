@@ -15,6 +15,7 @@ export interface RouteConfig {
   meta?: {
     title?: string;
     description?: string;
+    ignoreRouteCheck?: boolean;
   };
 }
 
@@ -27,10 +28,13 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const isUnprotectedRoute = unprotectedRoutes.includes(pathname);
   const [queryClient] = useState(() => new QueryClient());
 
+  console.log("pathname", pathname);
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        {isProtectedRoute ? (
+        {pathname == "/gateway" || pathname.includes("/gateway") ? (
+          <section>{children}</section>
+        ) : isProtectedRoute ? (
           <SecuredPagesLayout>{children}</SecuredPagesLayout>
         ) : isUnprotectedRoute ? (
           <UnsecuredPagesLayout>{children}</UnsecuredPagesLayout>
