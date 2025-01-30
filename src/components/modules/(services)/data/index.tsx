@@ -56,6 +56,7 @@ const DataModule = () => {
       setDataPlans(plans);
     },
   });
+
   useEffect(() => {
     getDataPlans({ network: watch("network") });
   }, [watch("network")]);
@@ -129,7 +130,7 @@ const DataModule = () => {
               disabled
               validation={{
                 required: "Amount is required",
-                min: { value: 50, message: "Amount must be at least ₦50" },
+                min: { value: 40, message: "Amount must be at least ₦50" },
               }}
               error={errors.amount}
               register={register}

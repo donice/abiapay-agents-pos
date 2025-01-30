@@ -50,7 +50,11 @@ const AirtimeModule = () => {
     },
     onSuccess: async (data: any) => {
       await refetch();
-      router.push("/success");
+
+      if (data?.response_code == "00") {
+          router.push("/success");
+      }
+
 
     },
     onError: (error) => {
