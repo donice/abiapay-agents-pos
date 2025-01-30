@@ -11,7 +11,6 @@ const isToken =
 setToken(isToken);
 
 export const BuyAirtimeService = async (reqData: {
-  // merchant_key: string,
   amount: number,
   phone_number: string,
   network: string,
@@ -23,6 +22,22 @@ export const BuyAirtimeService = async (reqData: {
       {
         ...reqData,
         merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY,
+      }
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const GetDataPlans = async (reqData: {
+  network: string,
+}) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/topup/data`,
+      {
+        ...reqData,
       }
     );
     return data;
