@@ -77,6 +77,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
   const { onChange } = registerTransferToBank("amount");
 
   const walletNo = watchTransferWallet("recipient_wallet_no");
+  console.log("walletNo", walletNo);
   const debouncedWalletNo = useDebounce(walletNo, 500);
 
   const { data } = useQuery({
@@ -86,12 +87,6 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
     },
   });
 
-    console.log(data);
-
-    // const { data, isPending } = useQuery({
-    //   queryKey: ["my-statement"],
-    //   queryFn: fetchAccountStatement,
-    // });
 
   const { data: dasboardData } = useQuery({
     queryKey: ["get_dashboard_data"],
@@ -145,6 +140,8 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
       console.log(error);
     },
   });
+
+  console.log("beneficiary",beneficiary);
 
   const { mutate: mutateTransfer, isPending: isPendingTransfer } = useMutation({
     mutationFn: (data: any) => {
@@ -363,7 +360,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
           <Button
             text="Transfer Funds"
             loading={isPendingTransfer}
-            disabled={isPendingTransfer}
+            disabled={isPendingTransfer || beneficiary == ""}
           />
         </form>
       )}
