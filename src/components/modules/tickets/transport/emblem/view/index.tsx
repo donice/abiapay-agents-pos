@@ -151,7 +151,7 @@ const ViewTransportEmblemReceipt = ({
 
 
             </div>
-            <div className="hidden grid text-[6px] md:text-xs. md:block">
+            <div className="hidden text-[6px] md:text-xs. md:block">
               <p>Scan the above url to verify, or visit:</p> <p className="underline">{`https://abiapay.com//verify/emblem?=${payment_ref}`}</p>
             </div>
 
