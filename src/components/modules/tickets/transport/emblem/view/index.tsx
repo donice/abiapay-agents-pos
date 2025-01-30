@@ -1,6 +1,5 @@
 import { CustomHeader } from "@/src/components/common/header";
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import style from "./style.module.scss";
 import QRCode from "react-qr-code";
 
@@ -10,6 +9,8 @@ import jtb from "@/public/logos/emblem/jtb.png";
 import useIsBrower from "@/src/hooks/useIsBrower";
 import { Button } from "@/src/components/common/button";
 import html2canvas from "html2canvas"
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "@/src/lib/axiosInstance";
 
 const ViewTransportEmblemReceipt = ({
   plate_no,
@@ -39,6 +40,7 @@ const ViewTransportEmblemReceipt = ({
       }
     }
   }, []);
+
   const handleDownload = async () => {
     if (componentRef.current) {
       try {
@@ -49,12 +51,11 @@ const ViewTransportEmblemReceipt = ({
           allowTaint: true,
         });
 
-        // Import jsPDF dynamically to avoid SSR issues
         const { jsPDF } = await import('jspdf');
         const pdf = new jsPDF('p', 'mm', 'a4');
 
-        const imgWidth = 210; // A4 width in mm
-        const pageHeight = 297; // A4 height in mm
+        const imgWidth = 210;
+        const pageHeight = 297;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
         pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
@@ -150,14 +151,18 @@ const ViewTransportEmblemReceipt = ({
 
 
             </div>
-            <div className="grid text-xs">
-              <p>Scan the aove url to verify, or visit:</p> <p className="underline">{`https://abiapay.com//verify/emblem?=${payment_ref}`}</p>
+            <div className="hidden grid text-[6px] md:text-xs. md:block">
+              <p>Scan the above url to verify, or visit:</p> <p className="underline">{`https://abiapay.com//verify/emblem?=${payment_ref}`}</p>
             </div>
 
           </div>
         </div>
-      </section>{" "}
-      <Button text="Download Certificate" onClick={handleDownload} />
+      </section>
+      <Button
+        text="Download Certificate"
+        // onClick={() => handleDownloadPDF()}
+        onClick={handleDownload}
+        />
     </div>
   );
 };

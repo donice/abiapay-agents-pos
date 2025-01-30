@@ -10,6 +10,7 @@
 
   @include custom-media-query("mobile", 729px) {
     margin-top: 0;
+    border: none;
   }
 
   &_receipt {
@@ -17,6 +18,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @include custom-media-query("mobile", 729px) {
+      margin: 0.75rem;
+    }
 
     &_header {
       width: 100%;
@@ -39,6 +44,10 @@
         img {
           display: inline-flex;
 
+          @include custom-media-query("mobile", 729px) {
+            width: 3.5rem;
+          }
+
           &:nth-child(1) {
             padding: 1rem;
           }
@@ -56,10 +65,23 @@
           font-weight: 600;
           color: #2f2f2f;
           line-height: 1.5rem;
+          @include custom-media-query("mobile", 729px) {
+            line-height: 1rem;
+          }
+
+
         }
         h1 {
           font-weight: 700;
           font-size: 1.35rem;
+           @include custom-media-query("mobile", 729px) {
+            font-size: 0.75rem;
+          }
+        }
+        h2 {
+           @include custom-media-query("mobile", 729px) {
+            font-size: 0.65rem;
+          }
         }
       }
 
@@ -67,9 +89,17 @@
         display: flex;
         justify-content: space-between;
         margin: 1rem 0;
+
+        @include custom-media-query("mobile", 729px) {
+          margin: 0;
+        }
         p {
           font-weight: 600;
           font-size: 0.85rem;
+          @include custom-media-query("mobile", 729px) {
+            font-size: 0.45rem;
+line-height: 0.5rem;
+          }
         }
       }
     }
@@ -80,6 +110,10 @@
 
       &_header {
         text-align: center;
+
+        @include custom-media-query("mobile", 729px) {
+          font-size: 0.65rem;
+        }
       }
 
       &_list {
@@ -91,7 +125,10 @@
         grid-template-columns: 1fr 1fr;
 
         @include custom-media-query("mobile", 729px) {
-          grid-template-columns: 1fr;
+          margin: 0.25rem 0;
+          font-size: 0.45rem;
+          padding: 0;
+          line-height: 0.5rem;
         }
       }
     }
@@ -105,15 +142,30 @@
       text-align: center;
       justify-content: center;
 
+      @include custom-media-query("mobile", 729px) {
+        padding: 0;
+        gap: 0.45rem;
+      }
+
       &_text {
         width: 100%;
         max-width: 625px;
         font-size: 0.75rem;
+
+        @include custom-media-query("mobile", 729px) {
+          font-size: 0.45rem;
+          line-height: 0.5rem;
+        }
       }
 
       &_signature {
         font-size: 0.75rem;
         font-weight: 600;
+
+        @include custom-media-query("mobile", 729px) {
+          font-size: 0.45rem;
+          line-height: 0.55rem;
+        }
       }
     }
   }
@@ -121,4 +173,8 @@
 
 .qr_container {
   width: 7.5rem;
+
+  @include custom-media-query("mobile", 729px) {
+    width: 3rem;
+  }
 }
