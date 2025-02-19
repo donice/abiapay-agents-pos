@@ -4,7 +4,7 @@ import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
-import { Button } from "@/src/components/common/button";
+import { Button, CancelButton } from "@/src/components/common/button";
 import {
   fetchLGAData,
   fetchStates,
@@ -17,6 +17,8 @@ import {
   InfantFormData,
 } from "@/src/services/identityService";
 import FaceCam from "./faceCam";
+import CustomDialog from "@/src/components/common/modal/CustomDialog";
+import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
 
 const CreateInfantAbssinModule = () => {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -60,6 +62,7 @@ const CreateInfantAbssinModule = () => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<InfantFormData>({
     defaultValues: {
@@ -71,16 +74,20 @@ const CreateInfantAbssinModule = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: (data: InfantFormData) => createInfantABSSIN(data),
     onError: (error: any) => {
-      console.error("Error creating infant ABSSIN", error);
+      // console.error("Error creating infant ABSSIN", error);
     },
+
     onSuccess: (data: any) => {
-      console.log("Dependent (Minor) ABSSIN created", data);
+      // console.log("Dependent (Minor) ABSSIN created", data);
+      (
+        document.getElementById("createInfantABSSINDialog") as HTMLDialogElement
+      )?.showModal();
     },
   });
 
   const onSubmit = (data: InfantFormData) => {
     console.log("data", data);
-    mutate(data);
+    mutate({ ...data, image: capturedImage || "" });
   };
 
   return (
@@ -286,7 +293,13 @@ const CreateInfantAbssinModule = () => {
           placeholder="Guardian ABSSIN"
           name={"guardian_abssin"}
           register={register}
-          validation={{ required: true }}
+          validation={{
+            required: true,
+            pattern: {
+              value: /^\d{9,11}$/,
+              message: "ABSSIN must be between 9 and 11 digits",
+            },
+          }}
           error={errors.guardian_abssin}
         />
         <FormTextInput
@@ -308,6 +321,38 @@ const CreateInfantAbssinModule = () => {
 
         <Button text="Submit" loading={isPending} disabled={isPending} />
       </form>
+      <CustomDialog
+        id="createInfantABSSINDialog"
+        onClose={() =>
+          (
+            document.getElementById(
+              "createInfantABSSINDialog"
+            ) as HTMLDialogElement
+          )?.close()
+        }
+      >
+        <div className="flex gap-1 items-center justify-center flex-col text-center">
+          <TbRosetteDiscountCheckFilled className="text-green-600 text-7xl" />
+          <h1 className="text-lg font-semibold">Created Successfully</h1>
+          <p className="text-xs md:text-sm text-gray-400 max-w-[14rem]">
+            You have successfully created an Infant ABSSIN
+          </p>
+          <div className="w-full grid grid-cols-2 gap-2 mt-4">
+            <CancelButton link={"/identity"}              />
+            <Button
+              text="Create New"
+              onClick={() => {
+                (
+                  document.getElementById(
+                    "createInfantABSSINDialog"
+                  ) as HTMLDialogElement
+                )?.close();
+                reset();
+              }}
+            />
+          </div>
+        </div>
+      </CustomDialog>
     </section>
   );
 };
