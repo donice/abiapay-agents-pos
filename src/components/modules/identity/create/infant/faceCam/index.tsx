@@ -1,16 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
 
 interface FaceCamProps {
-  onCapture: (base64Image: string) => void; // Callback to send base64 image to the parent
+  onCapture: (base64Image: string) => void;
 }
 
 const FaceCam: React.FC<FaceCamProps> = ({ onCapture }) => {
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isFrontCamera, setIsFrontCamera] = useState(true);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
-  // Start camera when component mounts
   useEffect(() => {
     startCamera();
     return () => {
@@ -32,17 +32,9 @@ const FaceCam: React.FC<FaceCamProps> = ({ onCapture }) => {
       }
     } catch (error) {
       console.error("Error starting camera:", error);
-      const [errorMessage, setErrorMessage] = useState<string>("");
+
       setErrorMessage("Failed to start camera. Please check your camera permissions.");
-      return (
-        <div>
-          {errorMessage && (
-        <div className="text-red-500 bg-red-100 p-2 rounded-lg mb-2">
-          {errorMessage}
-        </div>
-          )}
-        </div>
-      );
+
     }
   };
 
@@ -72,6 +64,10 @@ const FaceCam: React.FC<FaceCamProps> = ({ onCapture }) => {
 
   return (
     <div className="facecam-container">
+      {errorMessage && (
+        <div className="text-red-500 bg-red-100 p-2 rounded-lg mb-2 text-sm">
+          {errorMessage}
+        </div>)}
       <div className="video-wrapper">
         <video
           ref={videoRef}
