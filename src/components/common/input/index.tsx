@@ -4,6 +4,7 @@ import "./style.scss";
 import { TbCreditCard, TbEye, TbEyeOff, TbLockCheck } from "react-icons/tb";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FieldError } from "react-hook-form";
+import { LuAsterisk } from "react-icons/lu";
 
 interface InputProps {
   disabled?: boolean;
@@ -134,7 +135,7 @@ export const FormTextInput: React.FC<InputProps> = ({
   return (
     <div className="form-input-container">
       <span>
-        <label className="form-input_icon">{label}</label>
+        <label className="form-input_icon flex">{label} {validation?.required && <LuAsterisk className="text-red-600" />}</label>
       </span>
       <input
         type={type === "password" && showPassword ? "text" : type}
@@ -253,7 +254,7 @@ export const SelectSearchInput: React.FC<SelectComponentProps> = ({
         disabled={disabled}
         onChange={onChange}
         placeholder={placeholder}
-        {...(register && register(name, validation))} 
+        {...(register && register(name, validation))}
       />
       <datalist id={`${id}-list`}>
         {options &&

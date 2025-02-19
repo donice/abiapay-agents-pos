@@ -6,6 +6,32 @@ import toast from "react-hot-toast";
 import { getErrorMessages } from "../utils/helper";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
+const portal_url = process.env.NEXT_PUBLIC_PORTAL_URL;
+
+export type InfantFormData = {
+  first_name: string;
+  middle_name: string;
+  surname: string;
+  birth_date: string;
+  birth_place: string;
+  gender: string;
+  nationality: string;
+  state_of_origin: string;
+  tax_office: string;
+  state_of_residence: string;
+  house_no: string;
+  city: string;
+  ward: string;
+  street: string;
+  lga: number;
+  guardian_phone_number: string;
+  guardian_abssin: string;
+  school_name: string;
+  school_address: string;
+  agent_email: string;
+  image: string;
+};
+
 
 const isToken =
   useIsBrower() && window.sessionStorage.getItem("TOKEN")
@@ -203,6 +229,33 @@ export const createIndividualAbssin = async (
   } catch (error: any) {
     toast.error(
       getErrorMessages(error?.data?.response_message) ||
+        "Error creating individual abssin account"
+    );
+    console.log(error);
+    throw new Error(`Error fetching transactions: ${error}`);
+  }
+};
+
+export const createInfantABSSIN = async (
+  requestData: InfantFormData
+) => {
+  try {
+    const data = await https(`${portal_url}/user/create-infant`, {
+      method: "POST",
+      body: JSON.stringify(requestData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${
+          window.sessionStorage.getItem("TOKEN") || isToken || ""
+        }`,
+      },
+    });
+
+    return data;
+  } catch (error: any) {
+    console.log(error?.data);
+    toast.error(
+      getErrorMessages(error?.data) ||
         "Error creating individual abssin account"
     );
     console.log(error);
