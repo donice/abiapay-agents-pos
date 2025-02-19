@@ -90,9 +90,10 @@ const ViewTransportEmblemReceipt = ({
               <h2>for {data?.product_code} </h2>
             </div>
             <div className={style.emblem_receipt_header_reference}>
-              <p>{plate_no}</p> <p>{payment_ref}</p>
+              <p>Plate Number: <br/> {plate_no}</p> <p>Payment Ref:<br/> {payment_ref}</p>
             </div>
           </header>
+
 
           <div className={style.emblem_receipt_clearance}>
             <header className={style.emblem_receipt_clearance_header}>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { type ReactElement } from "react";
 import {
   FcBusinessman,
+  FcButtingIn,
   FcReading,
   FcShop,
 } from "react-icons/fc";
@@ -30,6 +31,11 @@ const items: AccountsProps[] = [
     desc: "Create an ABSSIN for individual",
     icon: <FcBusinessman className="icon" />,
     // comingsoon: true
+  },  {
+    link: "identity/create/infant",
+    title: "Create Dependent (Minor) ABSSIN",
+    desc: "Create an ABSSIN for infant",
+    icon: <FcButtingIn className="icon" />,
   },
   {
     link: "identity/create/business",
@@ -37,25 +43,20 @@ const items: AccountsProps[] = [
     desc: "Create an ABSSIN for business",
     icon: <FcShop className="icon" />,
   },
+
   {
     link: "identity/view/individual",
     title: "View Individuals",
     desc: "View all individual ABSSIN",
     icon: <FcReading className="icon" />,
   },
-  // {
-  //   link: "identity/view/business",
-  //   title: "View Business",
-  //   desc: "View all Business ABSSIN",
-  //   icon: <FcReading className="icon" />,
-  // },
 ];
 
 const IdentityPage = () => {
   return (
     <div className="identity">
       <CustomHeader title="Identity Dashboard" desc={"Manage identities"} />
-      
+
 
       <div className="identity_container">
         <IdentityStatsCard />
