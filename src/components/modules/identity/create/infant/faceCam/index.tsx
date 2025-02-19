@@ -1,101 +1,102 @@
-import { useRef, useState } from "react";
-import toast from "react-hot-toast";
-import { TbCameraPlus, TbCameraRotate } from "react-icons/tb";
-import Webcam from "react-webcam";
-import axios from "axios";
-import { Button } from "@/src/components/common/button";
+import React, { useRef, useState, useEffect } from "react";
 
-const FaceCam = ({setFormData}: any) => {
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
-  const [base64URL, setBase64URL] = useState<string>("");
-  const [isFaceDetected, setIsFaceDetected] = useState<boolean | null>(null);
-  const webcamRef = useRef<Webcam>(null);
+interface FaceCamProps {
+  onCapture: (base64Image: string) => void; // Callback to send base64 image to the parent
+}
 
-  const capture = () => {
-    const imageSrc = webcamRef.current?.getScreenshot();
-    if (imageSrc) {
-      setImageSrc(imageSrc);
-      setBase64URL(imageSrc);
-      verifyFace(imageSrc);
-     
-      setFormData((prev: any) => {
-        return {
-          ...prev,
-          image: imageSrc,
-        };
-      })
-    }
-  };
+const FaceCam: React.FC<FaceCamProps> = ({ onCapture }) => {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [isFrontCamera, setIsFrontCamera] = useState(true);
+  const [stream, setStream] = useState<MediaStream | null>(null);
 
-  const verifyFace = async (imageSrc: string) => {
-    setIsLoading(true);
-    setMessage("");
+  // Start camera when component mounts
+  useEffect(() => {
+    startCamera();
+    return () => {
+      stopCamera();
+    };
+  }, [isFrontCamera]);
 
+  const startCamera = async () => {
     try {
-      // const response = await axios.post(
-      //   "/api/v1/verify-face",
-      //   { imageSrc },
-      //   { headers: { 'Content-Type': 'application/json' } }
-      // );
-
-      // console.log("API RES", response);
-
-      // const result = response.data;
-      // toast.success(result.isFace ? "Face detected!" : "No face detected!");
-      // setIsFaceDetected(result.isFace);
-      toast.success("Face detected!");
+      const constraints = {
+        video: {
+          facingMode: isFrontCamera ? "user" : "environment",
+        },
+      };
+      const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+      setStream(mediaStream);
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream;
+      }
     } catch (error) {
-      console.error('Error in API call:', error);
-      toast.error("Error detecting face");
-      setIsFaceDetected(null);
-    } finally {
-      setIsLoading(false);
+      console.error("Error starting camera:", error);
+      const [errorMessage, setErrorMessage] = useState<string>("");
+      setErrorMessage("Failed to start camera. Please check your camera permissions.");
+      return (
+        <div>
+          {errorMessage && (
+        <div className="text-red-500 bg-red-100 p-2 rounded-lg mb-2">
+          {errorMessage}
+        </div>
+          )}
+        </div>
+      );
     }
   };
 
-  const reset = () => {
-    setImageSrc(null);
-    setMessage("");
-    setBase64URL("");
-    setIsFaceDetected(null);
+  const stopCamera = () => {
+    stream?.getTracks().forEach((track) => track.stop());
+  };
+
+  const captureImage = () => {
+    if (videoRef.current && canvasRef.current) {
+      const canvas = canvasRef.current;
+      const video = videoRef.current;
+      const context = canvas.getContext("2d");
+
+      if (context) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const base64Image = canvas.toDataURL("image/png");
+        onCapture(base64Image);
+      }
+    }
+  };
+
+  const toggleCamera = () => {
+    setIsFrontCamera((prev) => !prev);
   };
 
   return (
-    <div className="identity-form_image">
-     
-      {imageSrc ? (
-        <>
-          <div className="identity-form_imagecapture">
-            <img src={imageSrc} alt="Captured face" />
-          </div>
-          <Button text="Capture Again" onClick={reset}>
-            <TbCameraRotate className="icon"/>
-          </Button>
-        </>
-      ) :  <>
-       <div className="identity-form_imagecapture">
-        <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
+    <div className="facecam-container">
+      <div className="video-wrapper">
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted
+          className="rounded-lg border"
+          style={{ width: "100%", height: "auto" }}
+        />
       </div>
-      <Button onClick={capture} text="Capture">
-        <TbCameraPlus className="icon"/>
-      </Button>
-      </>}
-      {/* {isLoading && <p>Loading...</p>} */}
-      {isFaceDetected !== null && (
-        <div>
-          {isFaceDetected ? (
-            <p style={{ color: "green" }}>
-              Image detection successful: Face detected!
-            </p>
-          ) : (
-            <p style={{ color: "red" }}>
-              Image detection unsuccessful: No face detected!
-            </p>
-          )}
-        </div>
-      )}
+      <canvas ref={canvasRef} style={{ display: "none" }} />
+      <div className="controls flex gap-2 mt-4">
+        <span
+          onClick={captureImage}
+          className="px-4 py-2 bg-green-700 text-white rounded-lg"
+        >
+          Capture
+        </span>
+        <span
+          onClick={toggleCamera}
+          className="px-4 py-2 bg-gray-500 text-white rounded-lg"
+        >
+          Switch Camera
+        </span>
+      </div>
     </div>
   );
 };

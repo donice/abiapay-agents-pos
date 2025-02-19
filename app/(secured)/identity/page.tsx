@@ -33,7 +33,7 @@ const items: AccountsProps[] = [
     // comingsoon: true
   },  {
     link: "identity/create/infant",
-    title: "Create Infant ABSSIN",
+    title: "Create Dependent (Minor) ABSSIN",
     desc: "Create an ABSSIN for infant",
     icon: <FcButtingIn className="icon" />,
   },

@@ -3,7 +3,7 @@ import { Metadata } from 'next/types';
 import React from 'react'
 
 export const metadata: Metadata = {
-  title: "Infant ABSSIN",
+  title: "Dependent (Minor) ABSSIN",
   description: "Create Individual ABSSIN for Infant",
 };
 

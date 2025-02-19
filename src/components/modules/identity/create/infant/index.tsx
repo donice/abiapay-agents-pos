@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ProgressBar from "./progressBar";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
@@ -17,8 +16,15 @@ import {
   createInfantABSSIN,
   InfantFormData,
 } from "@/src/services/identityService";
+import FaceCam from "./faceCam";
 
 const CreateInfantAbssinModule = () => {
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+
+  const handleCapture = (base64Image: string) => {
+    setCapturedImage(base64Image);
+  };
+
   const [userData, setUserData] = useState<{
     name?: string;
     email?: string;
@@ -68,7 +74,7 @@ const CreateInfantAbssinModule = () => {
       console.error("Error creating infant ABSSIN", error);
     },
     onSuccess: (data: any) => {
-      console.log("Infant ABSSIN created", data);
+      console.log("Dependent (Minor) ABSSIN created", data);
     },
   });
 
@@ -80,11 +86,26 @@ const CreateInfantAbssinModule = () => {
   return (
     <section>
       <CustomHeader
-        title="Create Infant ABSSIN"
+        title="Create Dependent (Minor) ABSSIN"
         desc={"Ensure to fill all important fields with (*)"}
       />
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
+        <div className="app-container">
+          {/* <h1 className="text-xl font-bold mb-4">FaceCam Demo</h1> */}
+          <FaceCam onCapture={handleCapture} />
+          {capturedImage && (
+            <div className="captured-image mt-4">
+              <h2 className="text-lg font-semibold mb-2">Image:</h2>
+              <img
+                src={capturedImage}
+                alt="Captured"
+                className="border rounded-lg"
+                style={{ maxWidth: "100%" }}
+              />
+            </div>
+          )}
+        </div>
         <FormTextInput
           label="First Name"
           placeholder="First Name"
@@ -214,7 +235,7 @@ const CreateInfantAbssinModule = () => {
           }
         />
         <FormTextInput
-        type="number"
+          type="number"
           label="House No"
           placeholder="House No"
           name={"house_no"}
@@ -246,20 +267,20 @@ const CreateInfantAbssinModule = () => {
           validation={{ required: true }}
           error={errors.street}
         />
-       <FormTextInput
-        label="Guardian Phone Number"
-        placeholder="Guardian Phone Number"
-        name={"guardian_phone_number"}
-        register={register}
-        validation={{
-          required: true,
-          pattern: {
-            value: /^\d{11}$/,
-            message: "Phone number must be 11 digits"
-          }
-        }}
-        error={errors.guardian_phone_number}
-      />
+        <FormTextInput
+          label="Guardian Phone Number"
+          placeholder="Guardian Phone Number"
+          name={"guardian_phone_number"}
+          register={register}
+          validation={{
+            required: true,
+            pattern: {
+              value: /^\d{11}$/,
+              message: "Phone number must be 11 digits",
+            },
+          }}
+          error={errors.guardian_phone_number}
+        />
         <FormTextInput
           label="Guardian ABSSIN"
           placeholder="Guardian ABSSIN"
@@ -283,14 +304,6 @@ const CreateInfantAbssinModule = () => {
           register={register}
           validation={{ required: true }}
           error={errors.school_address}
-        />
-        <FormTextInput
-          label="Image"
-          placeholder="Image"
-          name={"image"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.image}
         />
 
         <Button text="Submit" loading={isPending} disabled={isPending} />
