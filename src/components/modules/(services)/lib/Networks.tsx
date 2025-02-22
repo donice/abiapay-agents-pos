@@ -19,7 +19,7 @@ const networkArr = [
   {
     name: "Glo",
     value: "glo",
-    img: "https://www.gloworld.com/logo.png",
+    img: "https://static-00.iconduck.com/assets.00/globacom-limited-icon-512x512-nsbqgsyf.png",
   },
   {
     name: "9mobile",

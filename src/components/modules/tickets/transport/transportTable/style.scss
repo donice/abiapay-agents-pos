@@ -19,15 +19,14 @@
       .ticket {
         cursor: pointer;
         border-radius: 0.7rem;
-        border: 2px solid red;
         display: flex;
         justify-content: space-between;
         padding: 1rem;
-        border: 1px solid #86efac;
+        border: 1px solid #e0e0e0;
         background-color: #ffffff;
-        -webkit-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
-        -moz-box-shadow: 11px 10px 34px 0px rgba(173, 173, 173, 0.9);
-        box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
+        -webkit-box-shadow: 11px 10px 34px 0px #d0d0d01f;
+        -moz-box-shadow: 11px 10px 34px 0px #d0d0d01f;
+        box-shadow: 11px 10px 14px 0px #d0d0d01f;
 
         div:first-child {
           p {
@@ -69,12 +68,11 @@
             gap: 0.25rem;
 
             span {
-              max-width: 70px;
               text-align: end;
             }
 
             .icon {
-              color: rgb(200, 144, 0);
+              color: #ffb700;
             }
           }
         }

@@ -9,8 +9,9 @@ import { formatAmount } from "@/src/utils/formatAmount";
 import { useRouter } from "next/navigation";
 import { GoVerified } from "react-icons/go";
 import { fetchTransactions } from "@/src/services/ticketsServices";
-import { TbLoader } from "react-icons/tb";
+import { TbLoader, TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import { LuListRestart } from "react-icons/lu";
+import { MdOutlineRestartAlt } from "react-icons/md";
 
 const TransactionsTable: React.FC = () => {
   const router = useRouter();
@@ -19,10 +20,6 @@ const TransactionsTable: React.FC = () => {
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["get_transactions"],
-    /**
-     * Fetches all the transactions
-     * @returns {Promise<Object>} promise that resolves to an object containing the transactions
-     */
     queryFn: () => {
       return fetchTransactions();
     },
@@ -124,7 +121,7 @@ const TransactionsTable: React.FC = () => {
                     }`}
                   >
                     {transaction.status === "Completed" ? (
-                      <GoVerified />
+                      <TbRosetteDiscountCheckFilled />
                     ) : (
                       <TbLoader />
                     )}
@@ -133,7 +130,7 @@ const TransactionsTable: React.FC = () => {
 
                   <p className="next_date">
                     <span>
-                      <LuListRestart className="icon" />
+                      <MdOutlineRestartAlt className="icon" />
                     </span>
                     <span>
                       {" "}
