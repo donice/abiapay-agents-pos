@@ -14,7 +14,7 @@ import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import { useMutation } from "@tanstack/react-query";
 import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import { fetchVerificationType } from "@/src/services/trafficOffences";
+import { fetchAllOffences } from "@/src/services/trafficOffences";
 
 const AddTrafficOffenceTicketForm = ({
   setSelectedType,
@@ -44,7 +44,7 @@ const AddTrafficOffenceTicketForm = ({
 
   const getOffences = async () => {
     try {
-      const response = await fetchVerificationType();
+      const response = await fetchAllOffences();
       setOffences(response.data);
     } catch (error) {
       console.log(error);
