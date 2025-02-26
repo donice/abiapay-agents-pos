@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import { useForm } from "react-hook-form";
+import { Form, useForm } from "react-hook-form";
 import { Button, CancelButton } from "@/src/components/common/button";
 import {
   fetchLGAData,
+  fetchSchool,
   fetchStates,
   fetchTaxOffice,
 } from "@/src/services/common";
@@ -58,11 +59,17 @@ const CreateInfantAbssinModule = () => {
     queryKey: ["taxOffice"],
     queryFn: fetchTaxOffice,
   });
+  const { data: schools } = useQuery({
+    queryKey: ["getSchools"],
+    queryFn: fetchSchool,
+  });
 
   const {
     handleSubmit,
     register,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<InfantFormData>({
     defaultValues: {
@@ -74,11 +81,9 @@ const CreateInfantAbssinModule = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: (data: InfantFormData) => createInfantABSSIN(data),
     onError: (error: any) => {
-      // console.error("Error creating infant ABSSIN", error);
     },
 
     onSuccess: (data: any) => {
-      // console.log("Dependent (Minor) ABSSIN created", data);
       (
         document.getElementById("createInfantABSSINDialog") as HTMLDialogElement
       )?.showModal();
@@ -90,14 +95,31 @@ const CreateInfantAbssinModule = () => {
     mutate({ ...data, image: capturedImage || "" });
   };
 
+  const watchSchoolName = watch("school_name");
+
+  useEffect(() => {
+    if (watchSchoolName) {
+      console.log("watchSchoolName", watchSchoolName);
+      const school = schools?.response_data.find(
+        (item: any) => item.id == watchSchoolName
+      );
+
+      if (school) {
+        setValue("school_address", school.adress + ", " + school.lga);
+       console.log("school", school);
+      }
+    }
+  }
+  , [watchSchoolName]);
+
   return (
     <section>
       <CustomHeader
-        title="Create Dependent (Minor) ABSSIN"
+        title="Create Dependent ABSSIN"
         desc={"Ensure to fill all important fields with (*)"}
       />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <div className="app-container">
           {/* <h1 className="text-xl font-bold mb-4">FaceCam Demo</h1> */}
           <FaceCam onCapture={handleCapture} />
@@ -173,6 +195,32 @@ const CreateInfantAbssinModule = () => {
             },
           ]}
         />
+        <SelectInput
+          label="School Name"
+          placeholder="Select School Name"
+          name={"school_name"}
+          register={register}
+          validation={{ required: true }}
+          error={!!errors.school_name}
+          id={"school_name"}
+          options={
+            schools
+              ? schools?.response_data.map((item: any) => ({
+                  value: item.id,
+                  label: item.school_name,
+                }))
+              : []
+          }
+        />
+        <FormTextInput
+          label="School Address"
+          placeholder="School Address"
+          name={"school_address"}
+          register={register}
+          validation={{ required: true }}
+          error={errors.school_address}
+        />
+
         <SelectInput
           label="State of Origin"
           placeholder="State of Origin"
@@ -301,22 +349,6 @@ const CreateInfantAbssinModule = () => {
             },
           }}
           error={errors.guardian_abssin}
-        />
-        <FormTextInput
-          label="School Name"
-          placeholder="School Name"
-          name={"school_name"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.school_name}
-        />
-        <FormTextInput
-          label="School Address"
-          placeholder="School Address"
-          name={"school_address"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.school_address}
         />
 
         <Button text="Submit" loading={isPending} disabled={isPending} />
