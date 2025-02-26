@@ -153,7 +153,6 @@ export const MarketTicketModal: React.FC<MarketTicketModalProps> = ({
           </div>
 
           <div className="w-full border-2 p-4 rounded-xl mt-2 grid gap-4">
-
             <div className="flex justify-between ">
               <span className="block text-xs text-gray-500">
                 Payment Reference:
@@ -162,7 +161,6 @@ export const MarketTicketModal: React.FC<MarketTicketModalProps> = ({
                 <span className=" text-sm text-gray-600 font-semibold">
                   {details.payment_ref}
                 </span>
-
               </div>
             </div>
             <div className="flex justify-between">
@@ -174,7 +172,7 @@ export const MarketTicketModal: React.FC<MarketTicketModalProps> = ({
                   {details.enum_id}
                 </span>
                 <div className="flex gap-2 ">
-                 <p>Copy</p>
+                  <p>Copy</p>
                   <TbCopy
                     className="icon"
                     onClick={() => handleCopy(details.enum_id)}
@@ -184,7 +182,10 @@ export const MarketTicketModal: React.FC<MarketTicketModalProps> = ({
               </div>
             </div>
           </div>
-          <PrimaryButton text={"View Receipt"} link={`/tickets/market/receipt/${details.enum_id}`} />
+          <PrimaryButton
+            text={"View Receipt"}
+            link={`/tickets/market/receipt/${details.enum_id}`}
+          />
         </div>
       </div>
     </div>
@@ -721,6 +722,7 @@ export const InformationModal = ({
   link,
   success_text,
   success_link,
+  close,
 }: {
   icon?: React.ReactNode;
   mode?: "success" | "error" | "warning" | "info";
@@ -729,6 +731,7 @@ export const InformationModal = ({
   link?: string;
   success_text?: string;
   success_link?: string;
+  close?: void;
 }) => {
   const router = useRouter();
 
@@ -736,7 +739,7 @@ export const InformationModal = ({
     if (link) {
       router.push(link);
     } else if (success_link) {
-      router.push(success_link);
+      // router.push(success_link);
     }
   };
 
@@ -761,11 +764,16 @@ export const InformationModal = ({
             {maintext ? maintext : "Cannot Proceed"}{" "}
           </h2>
           <p>{subtext}</p>
-          {link && (
+          {link ? (
             <button onClick={handleClick} className="button primary top">
               Done
             </button>
+          ) : (
+            <button onClick={handleClick} className="button primary top">
+              Ok
+            </button>
           )}
+
           {mode == "success" && (
             <SecondaryButton
               onClick={handleClick}
