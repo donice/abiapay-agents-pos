@@ -19,6 +19,7 @@ export interface Offences {
     point: number;
     violation_type: string;
     code: string;
+    id:number;
   }
 
 export interface CreateOffencePayload {
