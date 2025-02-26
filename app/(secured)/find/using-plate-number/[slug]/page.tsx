@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import { getLastPathSegment } from "@/src/utils/getLastPathSegment";
 import React, { useEffect, useState } from "react";
-import { SelectInput } from "@/src/components/common/input";
+import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { BackButton, Button } from "@/src/components/common/button";
 import "./style.scss";
 import { formatAmount } from "@/src/utils/formatAmount";
@@ -92,21 +92,21 @@ const Dynamic = () => {
         setShow({
           mode: true,
           state: "success",
-          message: data.response_message
+          message: data.response_message,
         });
       } else if (data.response_code == "12") {
         toast.custom(data.response_message || getErrorMessages(data.message));
         setShow({
           mode: true,
           state: "warning",
-          message: data.response_message
+          message: data.response_message,
         });
       } else {
         toast.error(data.response_message || getErrorMessages(data.message));
         setShow({
           mode: true,
           state: "error",
-          message: data.response_message || getErrorMessages(data.message)
+          message: data.response_message || getErrorMessages(data.message),
         });
       }
     },
@@ -160,6 +160,16 @@ const Dynamic = () => {
       </div>
 
       <form className="ticket-details_form" onSubmit={handleSubmit(onSubmit)}>
+        {ticket[0]?.no_of_days == "" || ticket[0]?.no_of_days == null && (
+          <FormTextInput
+            label={"No of Days"}
+            placeholder="Enter No of Days"
+            name={"no_of_days"}
+            register={register}
+            validation={{ required: true }}
+            error={errors.no_of_days}
+          />
+        )}
         <SelectInput
           label={"Choose Wallet"}
           name={"wallet_type"}
@@ -188,7 +198,7 @@ const Dynamic = () => {
       {show.mode == true && show.state == "warning" && (
         <InformationModal
           mode="warning"
-          maintext= {show.message}
+          maintext={show.message}
           subtext="Cannot proceed the revending of this ticket"
           link="/find/using-plate-number"
         />
@@ -196,9 +206,10 @@ const Dynamic = () => {
       {show.mode == true && show.state == "error" && (
         <InformationModal
           mode="error"
-          maintext= {show.message}
+          maintext={show.message}
           subtext="Cannot proceed the revending of this ticket"
-          link="/find/using-plate-number"
+          close={setShow({ mode: false, state: "", message: "" })}
+          // link="/find/using-plate-number"
         />
       )}
     </div>

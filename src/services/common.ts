@@ -96,6 +96,15 @@ export const fetchTaxOffice = async () => {
   }
 }
 
+export const fetchSchool = async () => {
+  try {
+    const res = await axiosInstance.get(`${portal_url}/user/school-list`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export const fetchCategory = async () => {
   try {
     const res = await axiosInstance.post(`${portal_url}/cdn/category`);
