@@ -22,7 +22,7 @@ const SearchTrafficTicket = () => {
 
         <div className="find">
             <header>
-                <CustomHeader title='Search Traffic Offence Ticket' desc='Enter Traffic Ticket Number to search ' />    
+                <CustomHeader title='Search Traffic Offence Ticket' desc=' ' />    
             </header>
 
             <div className="find-comp-form">

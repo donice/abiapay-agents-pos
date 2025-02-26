@@ -71,8 +71,8 @@ const AddTrafficOffenceTicketForm = ({
       return createTrafficoffence(data);
     },
     onSuccess: (response: any) => {
-      if (response.response_code === "00") {
-        toast.success(response.response_message);
+      if (response.responseCode === "00") {
+        toast.success(response.message);
         // setPaymentRef(response.payment_ref);
         // setShow(true);
       } else if (response.response_code === "74") {
@@ -136,7 +136,7 @@ const AddTrafficOffenceTicketForm = ({
           },
         }}
         options={offences.map((offences) => ({
-          value: offences.code,
+          value: offences.id,
           label: offences.title,
         }))}
         placeholder="Select Offence"
@@ -231,7 +231,7 @@ const AddTrafficOffenceTicketForm = ({
       />
 
       <div className="btn_container">
-        <BackButton link="/tickets/transport" />
+        <BackButton link="/traffic-offence" />
         <Button text="Create Ticket" loading={isPending} />
       </div>
     </form>
