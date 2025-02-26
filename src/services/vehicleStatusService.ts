@@ -22,7 +22,6 @@ export const verifyVehicleStatus = async (
   requestData: verifyVehicleStatusPayload
 ) => {
   try {
-    // const { data } = await axiosInstance.post(`${url}/transport/verify-ticket`, requestData);
     const { data } = await axiosInstance.post(
       `${portal_url}/assets/get-vehicle`,
       requestData
