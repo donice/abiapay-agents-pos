@@ -6,6 +6,7 @@ import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
 import { Button, CancelButton } from "@/src/components/common/button";
 import {
+  fetchABSSINInfo,
   fetchLGAData,
   fetchSchool,
   fetchStates,
@@ -20,6 +21,8 @@ import {
 import FaceCam from "./faceCam";
 import CustomDialog from "@/src/components/common/modal/CustomDialog";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { useDebounce } from "@/src/hooks/useDebounce";
+import toast from "react-hot-toast";
 
 const CreateInfantAbssinModule = () => {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -51,14 +54,7 @@ const CreateInfantAbssinModule = () => {
     queryKey: ["lgaData"],
     queryFn: fetchLGAData,
   });
-  const { data: stateData } = useQuery({
-    queryKey: ["stateData"],
-    queryFn: fetchStates,
-  });
-  const { data: taxOffice } = useQuery({
-    queryKey: ["taxOffice"],
-    queryFn: fetchTaxOffice,
-  });
+
   const { data: schools } = useQuery({
     queryKey: ["getSchools"],
     queryFn: fetchSchool,
@@ -76,6 +72,28 @@ const CreateInfantAbssinModule = () => {
       agent_email: userData?.email || "",
     },
   });
+
+  const abssin = watch("guardian_abssin");
+  const debouncedABSSIN = useDebounce(abssin, 500);
+
+  useEffect(() => {
+    if (debouncedABSSIN) {
+      const getPlateNumberInfo = async (abssin: string) => {
+        try {
+          const response = await fetchABSSINInfo({ id: abssin });
+          if (response.data.length !== 0) {
+            toast.success(response.message);
+
+            setValue("guardian_phone_number", response.data.phone_number);
+          }
+        } catch (error) {
+          toast.error("Error fetching ABSSIN information");
+        }
+      };
+
+      getPlateNumberInfo(debouncedABSSIN);
+    }
+  }, [debouncedABSSIN, setValue]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: InfantFormData) => createInfantABSSIN(data),
@@ -212,21 +230,6 @@ const CreateInfantAbssinModule = () => {
           validation={{ required: true }}
           error={errors.student_school_id}
         />
-
-        <FormTextInput
-          label="Guardian Phone Number"
-          placeholder="Guardian Phone Number"
-          name={"guardian_phone_number"}
-          register={register}
-          validation={{
-            required: true,
-            pattern: {
-              value: /^\d{11}$/,
-              message: "Phone number must be 11 digits",
-            },
-          }}
-          error={errors.guardian_phone_number}
-        />
         <FormTextInput
           label="Guardian ABSSIN"
           placeholder="Guardian ABSSIN"
@@ -240,6 +243,20 @@ const CreateInfantAbssinModule = () => {
             },
           }}
           error={errors.guardian_abssin}
+        />
+        <FormTextInput
+          label="Guardian Phone Number"
+          placeholder="Guardian Phone Number"
+          name={"guardian_phone_number"}
+          register={register}
+          validation={{
+            required: true,
+            pattern: {
+              value: /^\d{11}$/,
+              message: "Phone number must be 11 digits",
+            },
+          }}
+          error={errors.guardian_phone_number}
         />
 
         <SelectInput
@@ -264,7 +281,6 @@ const CreateInfantAbssinModule = () => {
           placeholder="School Address"
           name={"school_address"}
           register={register}
-          validation={{ required: true }}
           error={errors.school_address}
         />
 
