@@ -1,5 +1,5 @@
 "use client";
-import { SecondaryButton, PrimaryButton } from "@/src/components/common/button";
+import { SecondaryButton, PrimaryButton, GoBackButton } from "@/src/components/common/button";
 import { AbiaEnumerationLarge } from "@/src/components/common/Images";
 import QRCode from "react-qr-code";
 import { fetchCompletedTransportEnumeration } from "@/src/services/transportEnumerationService";
@@ -53,6 +53,7 @@ const ViewEnumeration = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div className="">
+      <GoBackButton  />
       <div className="modal" id="enumeration_modal">
         <AbiaEnumerationLarge />
         <div className="modalHeader">
