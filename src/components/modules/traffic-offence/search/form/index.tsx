@@ -57,7 +57,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
           input_icon={<TbSearch />}
           type="text"
           name="ref"
-          placeholder="Enter Taxpayer Plate Number"
+          placeholder="Enter Traffic Ticket Number"
             register={register}
           validation={{
             required: "Plate Number is Required",

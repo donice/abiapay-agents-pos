@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button, CancelButton } from "@/src/components/common/button";
 import {
   fetchLGAData,
@@ -73,15 +73,13 @@ const CreateInfantAbssinModule = () => {
     formState: { errors },
   } = useForm<InfantFormData>({
     defaultValues: {
-      nationality: "Nigerian",
       agent_email: userData?.email || "",
     },
   });
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: InfantFormData) => createInfantABSSIN(data),
-    onError: (error: any) => {
-    },
+    onError: (error: any) => {},
 
     onSuccess: (data: any) => {
       (
@@ -106,11 +104,10 @@ const CreateInfantAbssinModule = () => {
 
       if (school) {
         setValue("school_address", school.adress + ", " + school.lga);
-       console.log("school", school);
+        console.log("school", school);
       }
     }
-  }
-  , [watchSchoolName]);
+  }, [watchSchoolName]);
 
   return (
     <section>
@@ -168,14 +165,6 @@ const CreateInfantAbssinModule = () => {
           validation={{ required: true }}
           error={errors.birth_date}
         />
-        <FormTextInput
-          label="Birth Place"
-          placeholder="Birth Place"
-          name={"birth_place"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.birth_place}
-        />
         <SelectInput
           label="Gender"
           placeholder="Gender"
@@ -195,83 +184,7 @@ const CreateInfantAbssinModule = () => {
             },
           ]}
         />
-        <SelectInput
-          label="School Name"
-          placeholder="Select School Name"
-          name={"school_name"}
-          register={register}
-          validation={{ required: true }}
-          error={!!errors.school_name}
-          id={"school_name"}
-          options={
-            schools
-              ? schools?.response_data.map((item: any) => ({
-                  value: item.id,
-                  label: item.school_name,
-                }))
-              : []
-          }
-        />
-        <FormTextInput
-          label="School Address"
-          placeholder="School Address"
-          name={"school_address"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.school_address}
-        />
 
-        <SelectInput
-          label="State of Origin"
-          placeholder="State of Origin"
-          name={"state_of_origin"}
-          register={register}
-          validation={{ required: true }}
-          error={!!errors.state_of_origin}
-          id={"state_of_origin"}
-          options={
-            stateData
-              ? stateData?.data.map((item: any) => ({
-                  label: item.state,
-                  value: item.idstates,
-                }))
-              : []
-          }
-        />
-        <SelectInput
-          label="Tax Office"
-          placeholder="Tax Office"
-          name={"tax_office"}
-          register={register}
-          validation={{ required: true }}
-          error={!!errors.tax_office}
-          options={
-            taxOffice
-              ? taxOffice?.data.map((station: any) => ({
-                  label: station.name,
-                  value: station.idstation,
-                }))
-              : []
-          }
-          id={"tax_office"}
-        />
-        <SelectInput
-          label="State of Residence"
-          placeholder="State of Residence"
-          name={"state_of_residence"}
-          register={register}
-          validation={{ required: true }}
-          error={!!errors.state_of_residence}
-          id={"state_of_residence"}
-          options={
-            stateData
-              ? stateData?.data.map((item: any) => ({
-                  label: item.state,
-                  value: item.idstates,
-                }))
-              : []
-          }
-        />
         <SelectInput
           label="LGA"
           placeholder="LGA"
@@ -289,39 +202,17 @@ const CreateInfantAbssinModule = () => {
               : []
           }
         />
+
         <FormTextInput
-          type="number"
-          label="House No"
-          placeholder="House No"
-          name={"house_no"}
+          type="text"
+          label="Student School ID"
+          placeholder="Student School ID"
+          name={"student_school_id"}
           register={register}
           validation={{ required: true }}
-          error={errors.house_no}
+          error={errors.student_school_id}
         />
-        <FormTextInput
-          label="City"
-          placeholder="City"
-          name={"city"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.city}
-        />
-        <FormTextInput
-          label="Ward"
-          placeholder="Ward"
-          name={"ward"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.ward}
-        />
-        <FormTextInput
-          label="Street"
-          placeholder="Street"
-          name={"street"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.street}
-        />
+
         <FormTextInput
           label="Guardian Phone Number"
           placeholder="Guardian Phone Number"
@@ -351,6 +242,32 @@ const CreateInfantAbssinModule = () => {
           error={errors.guardian_abssin}
         />
 
+        <SelectInput
+          label="School Name"
+          placeholder="Select School Name"
+          name={"school_name"}
+          register={register}
+          validation={{ required: true }}
+          error={!!errors.school_name}
+          id={"school_name"}
+          options={
+            schools
+              ? schools?.response_data.map((item: any) => ({
+                  value: item.id,
+                  label: item.school_name,
+                }))
+              : []
+          }
+        />
+        <FormTextInput
+          label="School Address"
+          placeholder="School Address"
+          name={"school_address"}
+          register={register}
+          validation={{ required: true }}
+          error={errors.school_address}
+        />
+
         <Button text="Submit" loading={isPending} disabled={isPending} />
       </form>
       <CustomDialog
@@ -370,7 +287,7 @@ const CreateInfantAbssinModule = () => {
             You have successfully created an Infant ABSSIN
           </p>
           <div className="w-full grid grid-cols-2 gap-2 mt-4">
-            <CancelButton link={"/identity"}              />
+            <CancelButton link={"/identity"} />
             <Button
               text="Create New"
               onClick={() => {

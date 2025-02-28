@@ -10,7 +10,7 @@ interface InputProps {
   disabled?: boolean;
   input_icon?: ReactNode;
   label: string;
-  type?: "text" | "password" | "email" | "number" | "date";
+  type?: "text" | "password" | "email" | "number" | "date" | "file";
   name: string;
   placeholder?: string;
   value?: string | number;

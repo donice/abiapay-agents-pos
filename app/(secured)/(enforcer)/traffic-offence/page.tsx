@@ -1,10 +1,11 @@
-
+"use client"
 
 import { CustomHeader } from '@/src/components/common/header'
 import Link from 'next/link';
 import React, { ReactElement } from 'react';
 import './style.scss';
 import { FcDisclaimer, FcList, FcSearch, FcTimeline } from 'react-icons/fc';
+import { GoBackButton } from '@/src/components/common/button';
 
 
 interface AccountsProps {
@@ -22,7 +23,7 @@ const items: AccountsProps[] = [
   },
   {
     link: "traffic-offence/search-traffic-offence",
-    title: "Search for traffic Ticket",
+    title: "Search for Traffic Ticket",
     // desc: "Confirm Vehicle Enumeration Status",
     icon:<FcSearch className="icon" />,
   },
@@ -38,6 +39,7 @@ const items: AccountsProps[] = [
 const UserAccountPage = () => {
   return (
     <div className=''>
+      <GoBackButton />
         <CustomHeader
             title='Traffic Offences'
             desc={"Select an option"}

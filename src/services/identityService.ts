@@ -15,14 +15,6 @@ export type InfantFormData = {
   birth_date: string;
   birth_place: string;
   gender: string;
-  nationality: string;
-  state_of_origin: string;
-  tax_office: string;
-  state_of_residence: string;
-  house_no: string;
-  city: string;
-  ward: string;
-  street: string;
   lga: number;
   guardian_phone_number: string;
   guardian_abssin: string;
@@ -30,6 +22,7 @@ export type InfantFormData = {
   school_address: string;
   agent_email: string;
   image: string;
+  student_school_id: string;
 };
 
 
@@ -290,6 +283,19 @@ export const getIndividualABSSINs = async () => {
   try {
     const { data } = await axiosInstance.post(
       `${url}/abssin/manage-individual`
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const postRegisterBulkAbssin = async ({file}: {file: string}) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/abssin/bulk-school-registration`, {
+        file: file
+      }
     );
     return data;
   } catch (error: any) {
