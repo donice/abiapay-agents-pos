@@ -2,18 +2,12 @@ import { CustomHeader } from "@/src/components/common/header";
 import type { Metadata } from "next";
 import Link from "next/link";
 import React, { type ReactElement } from "react";
-import {
-  FcBusinessman,
-  FcButtingIn,
-  FcReading,
-  FcShop,
-} from "react-icons/fc";
-import "./style.scss";
-import IdentityStatsCard from "@/src/components/modules/identity/identityStatsCard";
+import { FcButtingIn, FcStackOfPhotos } from "react-icons/fc";
+import "./../../style.scss";
 
 export const metadata: Metadata = {
-  title: "ABIAPAY Identity",
-  description: "Manage all Identities tied to your ABIAPAY account",
+  title: "Dependent ABSSIN",
+  description: "Create Individual ABSSIN for Infant",
 };
 
 interface AccountsProps {
@@ -26,40 +20,28 @@ interface AccountsProps {
 
 const items: AccountsProps[] = [
   {
-    link: "identity/create/individual/verify",
-    title: "Create Individual ABSSIN",
-    desc: "Create an ABSSIN for individual",
-    icon: <FcBusinessman className="icon" />,
-    // comingsoon: true
-  },  {
-    link: "identity/infant",
-    title: "Dependent ABSSIN",
-    desc: "ABSSIN for dependents",
+    link: "identity/create/infant",
+    title: "Create Single",
+    desc: " Single ABSSIN for dependents",
     icon: <FcButtingIn className="icon" />,
   },
   {
-    link: "identity/create/business",
-    title: "Create Business ABSSIN",
-    desc: "Create an ABSSIN for business",
-    icon: <FcShop className="icon" />,
-  },
-
-  {
-    link: "identity/view/individual",
-    title: "View Individuals",
-    desc: "View all individual ABSSIN",
-    icon: <FcReading className="icon" />,
+    link: "identity/infant/bulk-add",
+    title: "Create Bulk",
+    desc: " Bulk ABSSIN for dependents",
+    icon: <FcStackOfPhotos className="icon" />,
   },
 ];
 
-const IdentityPage = () => {
+const DependentsAbssinPage = () => {
   return (
     <div className="identity">
-      <CustomHeader title="Identity Dashboard" desc={"Manage identities"} />
-
+      <CustomHeader
+        title="Dependent ABSSIN Dashboard"
+        desc={"Manage Dependents"}
+      />
 
       <div className="identity_container">
-        <IdentityStatsCard />
         <div className="identity_items">
           {items.map((item) => (
             <Link
@@ -86,4 +68,4 @@ const IdentityPage = () => {
   );
 };
 
-export default IdentityPage;
+export default DependentsAbssinPage;

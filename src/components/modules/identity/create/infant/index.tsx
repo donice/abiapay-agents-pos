@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button, CancelButton } from "@/src/components/common/button";
 import {
   fetchLGAData,

@@ -289,3 +289,16 @@ export const getIndividualABSSINs = async () => {
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
+
+export const postRegisterBulkAbssin = async ({file}: {file: string}) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/abssin/bulk-school-registration`, {
+        file: file
+      }
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};

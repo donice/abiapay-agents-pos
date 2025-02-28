@@ -4,6 +4,7 @@ import { setToken } from "./setToken";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 const portal_url = process.env.NEXT_PUBLIC_PORTAL_URL;
+const portal_url_2 = process.env.NEXT_PUBLIC_PORTAL_URL_2;
 const central_api_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
@@ -98,7 +99,7 @@ export const fetchTaxOffice = async () => {
 
 export const fetchSchool = async () => {
   try {
-    const res = await axiosInstance.get(`${portal_url}/user/school-list`);
+    const res = await axiosInstance.get(`${portal_url_2}/user/school-list`);
     return res.data;
   } catch (error: any) {
     console.log(error);
