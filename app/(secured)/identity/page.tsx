@@ -36,6 +36,7 @@ const items: AccountsProps[] = [
     title: "Dependent ABSSIN",
     desc: "ABSSIN for dependents",
     icon: <FcButtingIn className="icon" />,
+    comingsoon: true
   },
   {
     link: "identity/create/business",
