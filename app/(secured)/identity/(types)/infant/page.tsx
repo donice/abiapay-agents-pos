@@ -30,6 +30,7 @@ const items: AccountsProps[] = [
     title: "Create Bulk",
     desc: " Bulk ABSSIN for dependents",
     icon: <FcStackOfPhotos className="icon" />,
+    comingsoon: true,
   },
 ];
 
@@ -43,25 +44,34 @@ const DependentsAbssinPage = () => {
 
       <div className="identity_container">
         <div className="identity_items">
-          {items.map((item) => (
-            <Link
-              href={`/${item.link ? item.link : "identity"}`}
-              key={item.link}
-              className={`identity_item`}
-            >
-              {item.comingsoon ? (
+          {items.map((item) =>
+            item.comingsoon ? (
+              <div key={item.title} className={`identity_item`}>
                 <div className="comingsoon">Coming Soon</div>
-              ) : null}
-              <div>
-                {" "}
-                <span>{item.icon}</span>
                 <div>
-                  <h2>{item.title}</h2>
-                  <p>{item.desc}</p>
+                  <span>{item.icon}</span>
+                  <div>
+                    <h2>{item.title}</h2>
+                    <p>{item.desc}</p>
+                  </div>
                 </div>
               </div>
-            </Link>
-          ))}
+            ) : (
+              <Link
+                href={`/${item.link ? item.link : "identity"}`}
+                key={item.link}
+                className={`identity_item`}
+              >
+                <div>
+                  <span>{item.icon}</span>
+                  <div>
+                    <h2>{item.title}</h2>
+                    <p>{item.desc}</p>
+                  </div>
+                </div>
+              </Link>
+            )
+          )}
         </div>
       </div>
     </div>

@@ -68,7 +68,7 @@ const FaceCam: React.FC<FaceCamProps> = ({ onCapture }) => {
         <div className="text-red-500 bg-red-100 p-2 rounded-lg mb-2 text-sm">
           {errorMessage}
         </div>)}
-      <div className="video-wrapper">
+      <div className="video-wrapper max-w-sm ">
         <video
           ref={videoRef}
           autoPlay
