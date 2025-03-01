@@ -5,6 +5,7 @@ import { postRegisterBulkAbssin } from "@/src/services/identityService";
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { TbFileDownload } from "react-icons/tb";
 
 const BulkAbssinPage = () => {
@@ -30,6 +31,10 @@ const BulkAbssinPage = () => {
     mutationFn: async (data: any) => {
       await postRegisterBulkAbssin(data);
     },
+
+    onSuccess: () => {
+      toast.success("Bulk ABSSIN created successfully");
+    }
   });
 
   const onSubmit = () => {
