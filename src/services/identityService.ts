@@ -290,7 +290,7 @@ export const getIndividualABSSINs = async () => {
   }
 };
 
-export const postRegisterBulkAbssin = async ({file}: {file: string}) => {
+export const postRegisterBulkAbssin = async ({file}: {file: any}) => {
   try {
     const { data } = await axiosInstance.post(
       `${url}/abssin/bulk-school-registration`, {
