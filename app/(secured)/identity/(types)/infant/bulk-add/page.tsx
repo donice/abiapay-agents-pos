@@ -3,7 +3,7 @@ import { Button } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
 import { postRegisterBulkAbssin } from "@/src/services/identityService";
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { TbFileDownload } from "react-icons/tb";
@@ -11,6 +11,7 @@ import { TbFileDownload } from "react-icons/tb";
 const BulkAbssinPage = () => {
   const { handleSubmit } = useForm();
   const [file, setFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const csvData = `first_name,middle_name,surname,birth_date,gender,lga,guardian_phone_number,guardian_abssin,school_name,school_address,student_school_id,state_of_origin,state_of_residence,house_no,street\nJohnson,,Mba,1/20/2020,Male,1,9126818976,1624653099,St. Maris,,,901992012,Abia State,,,\nMark,,Mobebe,9/18/2021,Male,8,9130989281,1624653099,Catholic Secondary School,,129102921,,Abia State,,,`;
 
@@ -31,10 +32,9 @@ const BulkAbssinPage = () => {
     mutationFn: async (data: any) => {
       await postRegisterBulkAbssin(data);
     },
-
     onSuccess: () => {
       toast.success("Bulk ABSSIN created successfully");
-    }
+    },
   });
 
   const onSubmit = () => {
@@ -56,6 +56,7 @@ const BulkAbssinPage = () => {
     <div>
       <CustomHeader title="Bulk Dependent ABSSIN" desc="Create Bulk ABSSIN for dependents" />
 
+      {/* CSV Download Section */}
       <div
         onClick={downloadCSV}
         className="border-2 border-green-400 bg-green-100 border-dashed p-4 rounded-lg flex items-center gap-2 my-0 md:my-4 cursor-pointer"
@@ -64,11 +65,12 @@ const BulkAbssinPage = () => {
         <p className="text-xs text-green-600">Click here to download the example CSV file for bulk upload of dependent ABSSIN</p>
       </div>
 
-
+      {/* Drag-and-Drop and File Selection */}
       <div
         className="border-2 border-dashed border-gray-400 p-6 rounded-lg text-center cursor-pointer mt-4"
         onDragOver={(e) => e.preventDefault()}
         onDrop={handleDrop}
+        onClick={() => fileInputRef.current?.click()} // Clicking the box opens file input
       >
         {file ? (
           <p className="text-green-600">{file.name}</p>
@@ -78,12 +80,14 @@ const BulkAbssinPage = () => {
       </div>
 
       <input
+        ref={fileInputRef}
         type="file"
         accept=".csv"
         className="hidden"
         onChange={(e) => setFile(e.target.files?.[0] || null)}
       />
 
+      {/* Submit Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="my-4 grid gap-4">
         <Button text="Upload" loading={isPending} disabled={isPending || !file} />
       </form>
