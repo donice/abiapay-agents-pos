@@ -30,7 +30,6 @@ const items: AccountsProps[] = [
     title: "Create Bulk",
     desc: " Bulk ABSSIN for dependents",
     icon: <FcStackOfPhotos className="icon" />,
-    comingsoon: true,
   },
 ];
 

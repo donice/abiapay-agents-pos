@@ -5,7 +5,7 @@ import { https } from "../lib/axiosInstance";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "../utils/helper";
 
-const url = process.env.NEXT_PUBLIC_BASE_URL;
+export const url = process.env.NEXT_PUBLIC_BASE_URL;
 const portal_url = process.env.NEXT_PUBLIC_PORTAL_URL;
 
 export type InfantFormData = {
