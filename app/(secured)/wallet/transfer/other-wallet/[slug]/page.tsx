@@ -8,10 +8,8 @@ import { Button, GoBackButton } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import {
-  AccessTransferFunds,
   AccessWalletToWallet,
   fetchWalletInfo,
-  FidelityTransferFunds,
   FidelityWalletToWallet,
   WalletInfoType,
 } from "@/src/services/walletService";
