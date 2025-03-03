@@ -4,7 +4,7 @@ import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 import {
   FormTextInput,
-  SearchableDropdown,
+  SelectSearchInput,
   SelectInput,
 } from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
@@ -13,8 +13,6 @@ import {
   fetchABSSINInfo,
   fetchLGAData,
   fetchSchool,
-  fetchStates,
-  fetchTaxOffice,
 } from "@/src/services/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useIsBrower from "@/src/hooks/useIsBrower";
@@ -77,6 +75,12 @@ const CreateInfantAbssinModule = () => {
       agent_email: userData?.email || "",
     },
   });
+
+  useEffect(() => {
+    if (userData) {
+      setValue("agent_email", userData.email || "");
+    }
+  }, [userData, setValue]);
 
   const abssin = watch("guardian_abssin");
   const debouncedABSSIN = useDebounce(abssin, 500);
@@ -282,15 +286,17 @@ const CreateInfantAbssinModule = () => {
           }
         /> */}
 
-        <SearchableDropdown
+        <SelectSearchInput
           name={"school_name"}
           label={"School Name"}
-          options={schools
-            ? schools?.response_data.map((item: any) => ({
-                value: item.id,
-                label: item.school_name,
-              }))
-            : []}
+          options={
+            schools
+              ? schools?.response_data.map((item: any) => ({
+                  value: item.id,
+                  label: item.school_name,
+                }))
+              : []
+          }
           control={control}
         />
 

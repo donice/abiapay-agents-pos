@@ -232,46 +232,7 @@ export const SelectInput: React.FC<SelectComponentProps> = ({
   );
 };
 
-export const SelectSearchInput: React.FC<SelectComponentProps> = ({
-  label,
-  name,
-  id,
-  className,
-  value,
-  onChange,
-  options,
-  placeholder,
-  disabled,
-  register,
-  validation,
-  error,
-}) => {
-  return (
-    <div className="selectsearch-container">
-      <label htmlFor={id}>{label}</label>
-      <input
-        list={`${id}-list`}
-        name={name}
-        id={id}
-        className={className}
-        value={value}
-        disabled={disabled}
-        onChange={onChange}
-        placeholder={placeholder}
-        {...(register && register(name, validation))}
-      />
-      <datalist id={`${id}-list`}>
-        {options &&
-          options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-      </datalist>
-      {error && <span className="error">Field Required</span>}
-    </div>
-  );
-};
+
 
 type SearchableDropdownProps = {
   name: string;
@@ -281,7 +242,7 @@ type SearchableDropdownProps = {
   placeholder?: string;
 };
 
-export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
+export const SelectSearchInput: React.FC<SearchableDropdownProps> = ({
   name,
   label,
   options,
@@ -299,7 +260,7 @@ export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
       : options; // Show all initially
 
   return (
-    <div className="SearchableDropdown">
+    <div className="SearchableDropdown selectsearch-container">
       <label htmlFor={name} className="SearchableDropdown-label">
         {label}
       </label>

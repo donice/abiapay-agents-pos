@@ -1,27 +1,27 @@
 .SearchableDropdown {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-family: Arial, sans-serif;
+  // display: flex;
+  // flex-direction: column;
+  // gap: 8px;
+  // font-family: Arial, sans-serif;
   position: relative;
-  width: 100%;
+  // width: 100%;
 
-  &-label {
-    font-weight: bold;
-  }
+  // &-label {
+  //   font-weight: bold;
+  // }
 
-  &-container {
-    position: relative;
-    width: 100%;
-  }
+  // &-container {
+  //   position: relative;
+  //   width: 100%;
+  // }
 
-  &-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+  // &-input {
+  //   width: 100%;
+  //   padding: 10px;
+  //   border: 1px solid #ccc;
+  //   border-radius: 4px;
+  //   cursor: pointer;
+  // }
 
   &-menu {
     position: absolute;

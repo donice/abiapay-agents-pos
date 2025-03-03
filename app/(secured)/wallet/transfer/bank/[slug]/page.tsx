@@ -192,14 +192,6 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
           className="bank_form"
         >
           {" "}
-          {/* <SelectSearchInput
-            label={"Bank Name"}
-            name={"bank_code"}
-            id={"bank_code"}
-            register={registerTransferToBank}
-            options={banks}
-            placeholder="Search and Select Bank"
-          /> */}
           <SelectInput
             label={"Bank Name"}
             name={"bank_code"}
