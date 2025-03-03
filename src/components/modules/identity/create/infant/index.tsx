@@ -2,15 +2,17 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
-import { FormTextInput, SelectInput } from "@/src/components/common/input";
+import {
+  FormTextInput,
+  SelectSearchInput,
+  SelectInput,
+} from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
 import { Button, CancelButton } from "@/src/components/common/button";
 import {
   fetchABSSINInfo,
   fetchLGAData,
   fetchSchool,
-  fetchStates,
-  fetchTaxOffice,
 } from "@/src/services/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useIsBrower from "@/src/hooks/useIsBrower";
@@ -66,12 +68,19 @@ const CreateInfantAbssinModule = () => {
     reset,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm<InfantFormData>({
     defaultValues: {
       agent_email: userData?.email || "",
     },
   });
+
+  useEffect(() => {
+    if (userData) {
+      setValue("agent_email", userData.email || "");
+    }
+  }, [userData, setValue]);
 
   const abssin = watch("guardian_abssin");
   const debouncedABSSIN = useDebounce(abssin, 500);
@@ -259,7 +268,7 @@ const CreateInfantAbssinModule = () => {
           error={errors.guardian_phone_number}
         />
 
-        <SelectInput
+        {/* <SelectInput
           label="School Name"
           placeholder="Select School Name"
           name={"school_name"}
@@ -275,7 +284,22 @@ const CreateInfantAbssinModule = () => {
                 }))
               : []
           }
+        /> */}
+
+        <SelectSearchInput
+          name={"school_name"}
+          label={"School Name"}
+          options={
+            schools
+              ? schools?.response_data.map((item: any) => ({
+                  value: item.id,
+                  label: item.school_name,
+                }))
+              : []
+          }
+          control={control}
         />
+
         <FormTextInput
           label="School Address"
           placeholder="School Address"

@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import {
   FormTextInput,
-  SelectInput,
-  SelectSearchInput,
 } from "@/src/components/common/input";
 import { Button, GoBackButton } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
@@ -113,7 +111,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
     mutationKey: ["fetch_wallet_info"],
     onSuccess: (data) => {
       if (data.status == true) {
-        if(activeAccount == "fidelity"){ 
+        if(activeAccount == "fidelity"){
           setBeneficiary(
           data?.data.surname +
             " " +
@@ -123,7 +121,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
             ")"
         )
         }
-        if(activeAccount == "access"){ 
+        if(activeAccount == "access"){
           setBeneficiary(
           data?.data.WalletName +
             " (" +
@@ -133,7 +131,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
         }
 
 
-        
+
       } else {
         setBeneficiary("");
       }
