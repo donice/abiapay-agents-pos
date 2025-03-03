@@ -240,20 +240,6 @@ const CreateInfantAbssinModule = () => {
           error={errors.student_school_id}
         />
         <FormTextInput
-          label="Guardian ABSSIN"
-          placeholder="Guardian ABSSIN"
-          name={"guardian_abssin"}
-          register={register}
-          validation={{
-            required: true,
-            pattern: {
-              value: /^\d{9,11}$/,
-              message: "ABSSIN must be between 9 and 11 digits",
-            },
-          }}
-          error={errors.guardian_abssin}
-        />
-        <FormTextInput
           label="Guardian Phone Number"
           placeholder="Guardian Phone Number"
           name={"guardian_phone_number"}
@@ -268,23 +254,20 @@ const CreateInfantAbssinModule = () => {
           error={errors.guardian_phone_number}
         />
 
-        {/* <SelectInput
-          label="School Name"
-          placeholder="Select School Name"
-          name={"school_name"}
+<FormTextInput
+          label="Guardian ABSSIN"
+          placeholder="Guardian ABSSIN"
+          name={"guardian_abssin"}
           register={register}
-          validation={{ required: true }}
-          error={!!errors.school_name}
-          id={"school_name"}
-          options={
-            schools
-              ? schools?.response_data.map((item: any) => ({
-                  value: item.id,
-                  label: item.school_name,
-                }))
-              : []
-          }
-        /> */}
+          validation={{
+            // required: true,
+            pattern: {
+              value: /^\d{9,11}$/,
+              message: "ABSSIN must be between 9 and 11 digits",
+            },
+          }}
+          error={errors.guardian_abssin}
+        />
 
         <SelectSearchInput
           name={"school_name"}
