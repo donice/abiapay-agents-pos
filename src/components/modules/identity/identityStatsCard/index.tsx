@@ -27,44 +27,32 @@ const IdentityStatsCard = () => {
     );
   }
 
-
+  console.log(data, "data");
 
   return (
     <>
       {data ? (
         <figure className="identity-stats">
           <div className="identity-stats-card">
-            <div className="ticket_container">
-              <div className="identity-stats-card_balance">
-                <span>Today's ABSSIN</span>
-                <span>{data && data?.response_data?.tp_indv?.thisDay || "0"}</span>
-              </div>
-
-              <div className="identity-stats-card_image"></div>
-
-              <div className="identity-stats-card_balance">
-                <span>This Month's ABSSIN</span>
-                <span>{data && data?.response_data?.tp_indv?.thisMonth || ""}</span>
+            <div className="ticket_container grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1">
+                <span>Total ABSSIN (This Year)</span>
+                <span className="text-white text-2xl font-semibold">
+                  {(data &&
+                    data?.response_data?.tp_indv?.thisYear +
+                      data?.response_data?.tp_non_indv?.thisDay) ||
+                    "0"}{" "}
+                  ABSSIN
+                  {data?.response_data?.tp_indv?.thisYear +
+                    data?.response_data?.tp_non_indv?.thisDay >
+                  1
+                    ? "s"
+                    : ""}{" "}
+                  Created
+                </span>
               </div>
             </div>
           </div>
-          {/* <div className="identity-stats-card">
-            <div className="ticket_container">
-              <div className="identity-stats-card_balance">
-                <span>Week's Collections</span>
-                <span>
-                  ₦{formatAmount(data.data?.[0].total_amount_monthly)}
-                </span>
-              </div>
-
-              <div className="identity-stats-card_image"></div>
-
-              <div className="identity-stats-card_balance">
-                <span>Month's Collection</span>
-                <span>{data.data?.[0].total_transaction_weekly}</span>
-              </div>
-            </div>
-          </div> */}
         </figure>
       ) : (
         <LoaderSkeleton height="200px" />
