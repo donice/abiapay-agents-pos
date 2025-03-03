@@ -307,7 +307,7 @@ const CreateInfantAbssinModule = () => {
           <TbRosetteDiscountCheckFilled className="text-green-600 text-7xl" />
           <h1 className="text-lg font-semibold">Created Successfully</h1>
           <p className="text-xs md:text-sm text-gray-400 max-w-[14rem]">
-            You have successfully created an Infant ABSSIN
+            You have successfully created a Dependent ABSSIN
           </p>
           <div className="w-full grid grid-cols-2 gap-2 mt-4">
             <CancelButton link={"/identity"} />
