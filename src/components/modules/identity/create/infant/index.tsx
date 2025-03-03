@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
-import { FormTextInput, SelectInput } from "@/src/components/common/input";
+import {
+  FormTextInput,
+  SearchableDropdown,
+  SelectInput,
+} from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
 import { Button, CancelButton } from "@/src/components/common/button";
 import {
@@ -66,6 +70,7 @@ const CreateInfantAbssinModule = () => {
     reset,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm<InfantFormData>({
     defaultValues: {
@@ -259,7 +264,7 @@ const CreateInfantAbssinModule = () => {
           error={errors.guardian_phone_number}
         />
 
-        <SelectInput
+        {/* <SelectInput
           label="School Name"
           placeholder="Select School Name"
           name={"school_name"}
@@ -275,7 +280,20 @@ const CreateInfantAbssinModule = () => {
                 }))
               : []
           }
+        /> */}
+
+        <SearchableDropdown
+          name={"school_name"}
+          label={"School Name"}
+          options={schools
+            ? schools?.response_data.map((item: any) => ({
+                value: item.id,
+                label: item.school_name,
+              }))
+            : []}
+          control={control}
         />
+
         <FormTextInput
           label="School Address"
           placeholder="School Address"

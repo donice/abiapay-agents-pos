@@ -1,9 +1,10 @@
 // components/common/Input.tsx
 import React, { ReactNode, useState } from "react";
 import "./style.scss";
+import "./SearchableDropdown.scss";
 import { TbCreditCard, TbEye, TbEyeOff, TbLockCheck } from "react-icons/tb";
 import { MdOutlineAlternateEmail } from "react-icons/md";
-import { FieldError } from "react-hook-form";
+import { Controller, FieldError } from "react-hook-form";
 import { LuAsterisk } from "react-icons/lu";
 
 interface InputProps {
@@ -135,7 +136,10 @@ export const FormTextInput: React.FC<InputProps> = ({
   return (
     <div className="form-input-container">
       <span>
-        <label className="form-input_icon flex">{label} {validation?.required && <LuAsterisk className="text-red-600" />}</label>
+        <label className="form-input_icon flex">
+          {label}{" "}
+          {validation?.required && <LuAsterisk className="text-red-600" />}
+        </label>
       </span>
       <input
         type={type === "password" && showPassword ? "text" : type}
@@ -269,5 +273,78 @@ export const SelectSearchInput: React.FC<SelectComponentProps> = ({
   );
 };
 
+type SearchableDropdownProps = {
+  name: string;
+  label: string;
+  options: Option[];
+  control: any;
+  placeholder?: string;
+};
 
+export const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
+  name,
+  label,
+  options,
+  control,
+  placeholder = "Search...",
+}) => {
+  const [search, setSearch] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
+  const filteredOptions =
+    search.length > 0
+      ? options.filter((option) =>
+          option.label.toLowerCase().includes(search.toLowerCase())
+        )
+      : options; // Show all initially
+
+  return (
+    <div className="SearchableDropdown">
+      <label htmlFor={name} className="SearchableDropdown-label">
+        {label}
+      </label>
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <div className="SearchableDropdown-container">
+            {/* Input Field (Mimics the Dropdown) */}
+            <input
+              type="text"
+              placeholder={placeholder}
+              value={search}
+              onFocus={() => setIsOpen(true)}
+              onChange={(e) => setSearch(e.target.value)}
+              className="SearchableDropdown-input"
+            />
+
+            {/* Dropdown Menu */}
+            {isOpen && (
+              <ul className="SearchableDropdown-menu">
+                {filteredOptions.length > 0 ? (
+                  filteredOptions.map((option) => (
+                    <li
+                      key={option.value}
+                      onClick={() => {
+                        field.onChange(option.value);
+                        setSearch(option.label); // Display selected value in input
+                        setIsOpen(false); // Close dropdown
+                      }}
+                      className="SearchableDropdown-option"
+                    >
+                      {option.label}
+                    </li>
+                  ))
+                ) : (
+                  <li className="SearchableDropdown-option disabled">
+                    No results found
+                  </li>
+                )}
+              </ul>
+            )}
+          </div>
+        )}
+      />
+    </div>
+  );
+};
