@@ -151,7 +151,6 @@ const CreateInfantAbssinModule = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <div className="app-container">
-          {/* <h1 className="text-xl font-bold mb-4">FaceCam Demo</h1> */}
           <FaceCam onCapture={handleCapture} />
           {capturedImage && (
             <div className="captured-image mt-4">
@@ -178,7 +177,6 @@ const CreateInfantAbssinModule = () => {
           placeholder="Middle Name"
           name={"middle_name"}
           register={register}
-          // validation={{ required: true }}
           error={errors.middle_name}
         />
         <FormTextInput
