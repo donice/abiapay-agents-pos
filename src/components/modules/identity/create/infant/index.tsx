@@ -10,8 +10,9 @@ import {
 import { useForm } from "react-hook-form";
 import { Button, CancelButton } from "@/src/components/common/button";
 import {
-  fetchABSSINInfo,
-  fetchLGAData,
+  fetchABSSINInfoWIthPhone,
+  fetchLocationState,
+  fetchLocationStateLGA,
   fetchSchool,
 } from "@/src/services/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -27,12 +28,6 @@ import { useDebounce } from "@/src/hooks/useDebounce";
 import toast from "react-hot-toast";
 
 const CreateInfantAbssinModule = () => {
-  const [capturedImage, setCapturedImage] = useState<string | null>(null);
-
-  const handleCapture = (base64Image: string) => {
-    setCapturedImage(base64Image);
-  };
-
   const [userData, setUserData] = useState<{
     name?: string;
     email?: string;
@@ -51,17 +46,6 @@ const CreateInfantAbssinModule = () => {
       }
     }
   }, []);
-
-  const { data: lgaData } = useQuery({
-    queryKey: ["lgaData"],
-    queryFn: fetchLGAData,
-  });
-
-  const { data: schools } = useQuery({
-    queryKey: ["getSchools"],
-    queryFn: fetchSchool,
-  });
-
   const {
     handleSubmit,
     register,
@@ -73,7 +57,29 @@ const CreateInfantAbssinModule = () => {
   } = useForm<InfantFormData>({
     defaultValues: {
       agent_email: userData?.email || "",
+      state_of_origin: "",
     },
+  });
+
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+
+  const handleCapture = (base64Image: string) => {
+    setCapturedImage(base64Image);
+  };
+
+  const { data: lgaData } = useQuery({
+    queryKey: ["lgaData", watch("state_of_origin")],
+    queryFn: () =>
+      fetchLocationStateLGA({ stateId: watch("state_of_origin") as string }),
+  });
+
+  const { data: schools } = useQuery({
+    queryKey: ["getSchools"],
+    queryFn: fetchSchool,
+  });
+  const { data: stateData } = useQuery({
+    queryKey: ["fetchStates"],
+    queryFn: () => fetchLocationState(),
   });
 
   useEffect(() => {
@@ -82,27 +88,27 @@ const CreateInfantAbssinModule = () => {
     }
   }, [userData, setValue]);
 
-  const abssin = watch("guardian_abssin");
-  const debouncedABSSIN = useDebounce(abssin, 500);
+  const phone = watch("guardian_phone_number");
+  const debouncedPhoneNumber = useDebounce(phone, 500);
 
   useEffect(() => {
-    if (debouncedABSSIN) {
-      const getPlateNumberInfo = async (abssin: string) => {
+    if (debouncedPhoneNumber) {
+      const getAbssinDetails = async (phone: string) => {
         try {
-          const response = await fetchABSSINInfo({ id: abssin });
-          if (response.data.length !== 0) {
-            toast.success(response.message);
-
-            setValue("guardian_phone_number", response.data.phone_number);
+          const response = await fetchABSSINInfoWIthPhone({ phone: phone });
+          console.log("response", response);
+          if (response.response_data.length !== 0) {
+            toast.success(response.message ?? "ABSSIN information fetched");
+            setValue("guardian_abssin", response.response_data.state_id);
           }
         } catch (error) {
           toast.error("Error fetching ABSSIN information");
         }
       };
 
-      getPlateNumberInfo(debouncedABSSIN);
+      getAbssinDetails(debouncedPhoneNumber);
     }
-  }, [debouncedABSSIN, setValue]);
+  }, [debouncedPhoneNumber, setValue]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: InfantFormData) => createInfantABSSIN(data),
@@ -211,6 +217,23 @@ const CreateInfantAbssinModule = () => {
             },
           ]}
         />
+        <SelectInput
+          label="State of Origin"
+          placeholder="State of Origin"
+          name={"state_of_origin"}
+          register={register}
+          validation={{ required: true }}
+          error={!!errors.state_of_origin}
+          id={"state_of_origin"}
+          options={
+            stateData
+              ? stateData?.data.map((state_of_origin: any) => ({
+                  label: state_of_origin.state,
+                  value: state_of_origin.idstates,
+                }))
+              : []
+          }
+        />
 
         <SelectInput
           label="LGA"
@@ -218,13 +241,14 @@ const CreateInfantAbssinModule = () => {
           name={"lga"}
           register={register}
           validation={{ required: true }}
+          disabled={!watch("state_of_origin")}
           error={!!errors.lga}
           id={"lga"}
           options={
             lgaData
               ? lgaData?.data.map((lga: any) => ({
-                  label: lga.lgaName,
-                  value: lga.lgaID,
+                  label: lga.name,
+                  value: lga.idlga,
                 }))
               : []
           }
@@ -239,6 +263,7 @@ const CreateInfantAbssinModule = () => {
           validation={{ required: true }}
           error={errors.student_school_id}
         />
+
         <FormTextInput
           label="Guardian Phone Number"
           placeholder="Guardian Phone Number"
@@ -254,7 +279,7 @@ const CreateInfantAbssinModule = () => {
           error={errors.guardian_phone_number}
         />
 
-<FormTextInput
+        <FormTextInput
           label="Guardian ABSSIN"
           placeholder="Guardian ABSSIN"
           name={"guardian_abssin"}

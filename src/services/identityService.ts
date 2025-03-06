@@ -16,6 +16,7 @@ export type InfantFormData = {
   birth_place: string;
   gender: string;
   lga: number;
+  state_of_origin: string;
   guardian_phone_number: string;
   guardian_abssin: string;
   school_name: string;
