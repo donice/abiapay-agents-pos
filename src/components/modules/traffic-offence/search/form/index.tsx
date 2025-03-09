@@ -15,8 +15,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
         handleSubmit,
         formState: { errors },
       } = useForm<SearchOffencePayload>({
-        defaultValues: {
-          search_by: "",
+        defaultValues: {         
           search_value: "",
         },
       });
@@ -56,7 +55,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
           label="Traffic Ticket Number"
           input_icon={<TbSearch />}
           type="text"
-          name="ref"
+          name="search_value"
           placeholder="Enter Traffic Ticket Number"
             register={register}
           validation={{

@@ -15,14 +15,9 @@ interface TicketFinesProps {
 
 const items: TicketFinesProps[] = [
   {
-    link: "traffic-offence/create-traffic-offence",
-    title: "Create Ticket Fines",
+    link: "verify-ticket",
+    title: "Verify Vehicle Ticket Status",
     icon:<FcDisclaimer className="icon" />,
-  },
-  {
-    link: "traffic-offence/search-traffic-offence",
-    title: "Ticket Fines History",
-    icon:<FcSearch className="icon" />,
   }
 
 ];
@@ -31,7 +26,7 @@ const TicketFines = () => {
   return (
     <div>
         <CustomHeader
-            title='Ticket Fines'
+            title='Verify Vehicle Status'
             desc={"Select an option"}
         />
 

@@ -313,7 +313,7 @@ const DashboardComponent: React.FC = () => {
           <>
             <QuickLink name="Verify Vehicle Status" link="/vehicle-status" />
             <QuickLink name="Traffic Offence Ticket" link="/traffic-offence"  />
-            <QuickLink name="Ticket Fines" comingSoon={true} link="/ticket-fines"  />
+            <QuickLink name="Verify Ticket Status" link="/verify-ticket"  />
           </>
         )}
       </div>

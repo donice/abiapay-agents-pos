@@ -122,6 +122,19 @@ const AddTrafficOffenceTicketForm = ({
     }
   }, [debouncedPlateNumber, setValue]);
 
+  const offenceType = watch("offence_type");
+
+  useEffect(() => {
+    if (offenceType) {
+      const selectedOffence = offences.find((off) => off.id === Number(offenceType)); 
+      if (selectedOffence) {
+        setValue("amount", String(selectedOffence.fee));
+      }
+    }
+  }, [offenceType, offences, setValue]);
+  
+  
+
   return (
     <form className="add-offence" onSubmit={handleSubmit(onSubmit)}>
       <SelectInput
@@ -211,7 +224,7 @@ const AddTrafficOffenceTicketForm = ({
         name="amount"
         placeholder="Enter Amount"
         register={register}
-        // readOnly
+        readOnly
         validation={{ required: true }}
         error={errors.amount}
       />
