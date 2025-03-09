@@ -28,7 +28,9 @@ const QuickLinks = ({
     | "Receipts"
     | "Verify Vehicle Status"
     | "Traffic Offence Ticket"
-    | "Ticket Fines";
+    | "Ticket Fines"
+    | "Verify Ticket Status"
+    ;
   link: string;
   comingSoon?: boolean;
 }) => {
