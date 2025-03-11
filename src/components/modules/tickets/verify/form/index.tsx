@@ -8,7 +8,6 @@ import {
 } from "@/src/services/verifyTickets";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import "./style.scss";
 import toast from "react-hot-toast";
 
 const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
