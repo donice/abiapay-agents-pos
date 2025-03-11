@@ -34,7 +34,6 @@ export interface CreateOffencePayload {
 }
 
 export interface SearchOffencePayload {
-    search_by: string,
   search_value: string
 }
 

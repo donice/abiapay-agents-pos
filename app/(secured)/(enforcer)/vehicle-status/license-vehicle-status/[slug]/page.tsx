@@ -122,7 +122,7 @@ const Dynamic = () => {
         </div>
       </div>
 
-      <Button text={"Cancel"} onClick={() => router.back()} />
+      <Button text={"Back"} onClick={() => router.back()} />
     </div>
   );
 };
