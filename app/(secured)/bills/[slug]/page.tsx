@@ -281,7 +281,7 @@ const Dynamic = () => {
         </div>
       </form>
       <div className="w-full grid gap-2 -mt-3">
-      <PrimaryButton text={"Send Bill"} />
+      <PrimaryButton text={"Send Bill"} disabled/>
       <BackButton link={"/bills"} />
       </div>
       {show.mode == true && show.state == "success" && (
