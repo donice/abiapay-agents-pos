@@ -41,7 +41,7 @@ interface LGA {
   value: string;
 }
 
-const CreateEmblemForm = ({ show, setShow }: { show: any, setShow: any }) => {
+const CreateEmblemForm = ({ show, setShow }: { show: any; setShow: any }) => {
   const [embleProductCode, setEmbleProductCode] = useState<EmblemProduct[]>([]);
   const [lga, setLga] = useState<LGA[]>([]);
 
@@ -143,16 +143,16 @@ const CreateEmblemForm = ({ show, setShow }: { show: any, setShow: any }) => {
     },
     onSuccess: (data) => {
       if (data?.response_code) {
-       if( data?.response_code == "00"){
-           toast.success(data?.response_message) &&
+        if (data?.response_code == "00") {
+          toast.success(data?.response_message) &&
             setShow({
               mode: true,
               message: data?.response_message,
               expiry_date: data?.next_expiration_date,
               payment_ref: data?.payment_ref,
               plate_no: watch("plate_number"),
-            })
-          } else toast.error(data?.response_message);
+            });
+        } else toast.error(data?.response_message);
       } else {
         toast.error(getErrorMessages(data?.message));
       }
@@ -164,7 +164,7 @@ const CreateEmblemForm = ({ show, setShow }: { show: any, setShow: any }) => {
 
   const onSubmit = (reqData: any) => {
     mutate(reqData);
-    sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify({...reqData}));
+    sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify({ ...reqData }));
   };
 
   return (
@@ -181,24 +181,24 @@ const CreateEmblemForm = ({ show, setShow }: { show: any, setShow: any }) => {
         onChange={handleEmblemTypeChange}
       />
 
-<FormTextInput
-      label={"Plate Number"}
-      name={"plate_number"}
-      placeholder="Enter Vehicle Plate Number"
-      register={register}
-      validation={{
-        required: true,
-        pattern: {
-        value: /^[A-Za-z0-9]{1,8}$/,
-        message: "Only letters and numbers allowed, maximum 8 characters",
-        },
-        maxLength: {
-        value: 8,
-        message: "Maximum 8 characters allowed"
-        },
-        setValueAs: (value: string) => value.toUpperCase(),
-      }}
-      error={errors.plate_number}
+      <FormTextInput
+        label={"Plate Number"}
+        name={"plate_number"}
+        placeholder="Enter Vehicle Plate Number"
+        register={register}
+        validation={{
+          required: true,
+          pattern: {
+            value: /^[A-Za-z0-9]{1,8}$/,
+            message: "Only letters and numbers allowed, maximum 8 characters",
+          },
+          maxLength: {
+            value: 8,
+            message: "Maximum 8 characters allowed",
+          },
+          setValueAs: (value: string) => value.toUpperCase(),
+        }}
+        error={errors.plate_number}
       />
 
       <FormTextInput
