@@ -181,20 +181,24 @@ const CreateEmblemForm = ({ show, setShow }: { show: any, setShow: any }) => {
         onChange={handleEmblemTypeChange}
       />
 
-      <FormTextInput
-        label={"Plate Number"}
-        name={"plate_number"}
-        placeholder="Enter Vehicle Plate Number"
-        register={register}
-        validation={{
-          required: true,
-          pattern: {
-            value: /^[A-Z0-9]{1,8}$/i,
-            message: "Plate number must be alphanumeric and maximum 8 characters",
-          },
-          setValueAs: (value: string) => value.toUpperCase(),
-        }}
-        error={errors.plate_number}
+<FormTextInput
+      label={"Plate Number"}
+      name={"plate_number"}
+      placeholder="Enter Vehicle Plate Number"
+      register={register}
+      validation={{
+        required: true,
+        pattern: {
+        value: /^[A-Za-z0-9]{1,8}$/,
+        message: "Only letters and numbers allowed, maximum 8 characters",
+        },
+        maxLength: {
+        value: 8,
+        message: "Maximum 8 characters allowed"
+        },
+        setValueAs: (value: string) => value.toUpperCase(),
+      }}
+      error={errors.plate_number}
       />
 
       <FormTextInput
