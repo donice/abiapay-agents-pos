@@ -58,7 +58,7 @@ const dailyServices: WalletItemsProps[] = [
     href: "/data",
     title: "Data",
     icon: <FcCollaboration className="icon" />,
-    cat: "coming soon",
+    // cat: "coming soon",
   },
   {
     href: "/services/loan",
