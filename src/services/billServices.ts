@@ -22,6 +22,23 @@ export interface BillPaymentPayload {
   account_type: string;
 }
 
+export interface CreateBillPayload {
+  
+    taxpayer_id: string,
+    full_name: string,
+    email: string,
+    phone_number: string,
+    revenue_office: string,
+    occurrence: string,
+    items: [
+      {
+        rev_item_name: string,
+        amount: number,
+        rev_code: string
+      }
+    ]
+}
+
 export interface ConfirmInstantAccountPaymentPayload {
   notice_number: string;
 }
@@ -71,3 +88,31 @@ export const confirmInstantAccountPayment = async (
     throw new Error(`Error confirming payment: ${error?.message}`);
   }
 };
+
+export const fetchBillProducts = async () => {
+  try {
+    const { data } = await axiosInstance.get(
+      `${url}/payment/fetch-bill-products`
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching bill payment: ${error?.message}`);
+  }
+};
+
+export const createBill = async (
+  requestBody: CreateBillPayload
+) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/payment/create-bill`,
+      requestBody 
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error creating bill: ${error?.message}`);
+  }
+};
+
+
+
