@@ -9,9 +9,9 @@ const BillsComponent = () => {
     <div className="bills_comp">
       <header className="bills_comp_header">
         <CustomHeader title="Bills" desc="View your bills" />
-        <div className="bills_header_buttons mb-4">
+        {/* <div className="bills_header_buttons mb-4">
           <SecondaryButton text="Add Bills" link="/bills/add" />
-        </div>
+        </div> */}
       </header>
       {/* <TicketsWalletCard /> */}
 
