@@ -5,7 +5,7 @@ import { https } from "../lib/axiosInstance";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "../utils/helper";
 
-const url = process.env.NEXT_PUBLIC_BASE_URL;
+export const url = process.env.NEXT_PUBLIC_BASE_URL;
 const portal_url = process.env.NEXT_PUBLIC_PORTAL_URL;
 
 export type InfantFormData = {
@@ -16,6 +16,7 @@ export type InfantFormData = {
   birth_place: string;
   gender: string;
   lga: number;
+  state_of_origin: string;
   guardian_phone_number: string;
   guardian_abssin: string;
   school_name: string;
@@ -283,6 +284,19 @@ export const getIndividualABSSINs = async () => {
   try {
     const { data } = await axiosInstance.post(
       `${url}/abssin/manage-individual`
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const postRegisterBulkAbssin = async ({file}: {file: any}) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/abssin/bulk-school-registration`, {
+        file: file
+      }
     );
     return data;
   } catch (error: any) {

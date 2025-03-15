@@ -4,7 +4,6 @@ import "./style.scss";
 import {
   FormTextInput,
   SelectInput,
-  SelectSearchInput,
 } from "@/src/components/common/input";
 import { Button, GoBackButton } from "@/src/components/common/button";
 import { useForm } from "react-hook-form";
@@ -228,14 +227,7 @@ const StatementPage = ({ params }: { params: { slug: string } }) => {
           className="other-wallet_form"
         >
           {" "}
-          {/* <SelectSearchInput
-            label={"Bank Name"}
-            name={"bank_code"}
-            id={"bank_code"}
-            register={registerTransferToBank}
-            options={banks}
-            placeholder="Search and Select Bank"
-          /> */}
+
           <SelectInput
             label={"Bank Name"}
             name={"bank_code"}

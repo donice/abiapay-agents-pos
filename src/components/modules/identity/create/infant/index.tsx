@@ -2,14 +2,18 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
-import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import { Form, useForm } from "react-hook-form";
+import {
+  FormTextInput,
+  SelectSearchInput,
+  SelectInput,
+} from "@/src/components/common/input";
+import { useForm } from "react-hook-form";
 import { Button, CancelButton } from "@/src/components/common/button";
 import {
-  fetchLGAData,
+  fetchABSSINInfoWIthPhone,
+  fetchLocationState,
+  fetchLocationStateLGA,
   fetchSchool,
-  fetchStates,
-  fetchTaxOffice,
 } from "@/src/services/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useIsBrower from "@/src/hooks/useIsBrower";
@@ -20,14 +24,10 @@ import {
 import FaceCam from "./faceCam";
 import CustomDialog from "@/src/components/common/modal/CustomDialog";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { useDebounce } from "@/src/hooks/useDebounce";
+import toast from "react-hot-toast";
 
 const CreateInfantAbssinModule = () => {
-  const [capturedImage, setCapturedImage] = useState<string | null>(null);
-
-  const handleCapture = (base64Image: string) => {
-    setCapturedImage(base64Image);
-  };
-
   const [userData, setUserData] = useState<{
     name?: string;
     email?: string;
@@ -46,36 +46,69 @@ const CreateInfantAbssinModule = () => {
       }
     }
   }, []);
-
-  const { data: lgaData } = useQuery({
-    queryKey: ["lgaData"],
-    queryFn: fetchLGAData,
-  });
-  const { data: stateData } = useQuery({
-    queryKey: ["stateData"],
-    queryFn: fetchStates,
-  });
-  const { data: taxOffice } = useQuery({
-    queryKey: ["taxOffice"],
-    queryFn: fetchTaxOffice,
-  });
-  const { data: schools } = useQuery({
-    queryKey: ["getSchools"],
-    queryFn: fetchSchool,
-  });
-
   const {
     handleSubmit,
     register,
     reset,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm<InfantFormData>({
     defaultValues: {
       agent_email: userData?.email || "",
+      state_of_origin: "",
     },
   });
+
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+
+  const handleCapture = (base64Image: string) => {
+    setCapturedImage(base64Image);
+  };
+
+  const { data: lgaData } = useQuery({
+    queryKey: ["lgaData", watch("state_of_origin")],
+    queryFn: () =>
+      fetchLocationStateLGA({ stateId: watch("state_of_origin") as string }),
+  });
+
+  const { data: schools } = useQuery({
+    queryKey: ["getSchools"],
+    queryFn: fetchSchool,
+  });
+  const { data: stateData } = useQuery({
+    queryKey: ["fetchStates"],
+    queryFn: () => fetchLocationState(),
+  });
+
+  useEffect(() => {
+    if (userData) {
+      setValue("agent_email", userData.email || "");
+    }
+  }, [userData, setValue]);
+
+  const phone = watch("guardian_phone_number");
+  const debouncedPhoneNumber = useDebounce(phone, 500);
+
+  useEffect(() => {
+    if (debouncedPhoneNumber) {
+      const getAbssinDetails = async (phone: string) => {
+        try {
+          const response = await fetchABSSINInfoWIthPhone({ phone: phone });
+          console.log("response", response);
+          if (response.response_data.length !== 0) {
+            toast.success(response.message ?? "ABSSIN information fetched");
+            setValue("guardian_abssin", response.response_data.state_id);
+          }
+        } catch (error) {
+          toast.error("Error fetching ABSSIN information");
+        }
+      };
+
+      getAbssinDetails(debouncedPhoneNumber);
+    }
+  }, [debouncedPhoneNumber, setValue]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: InfantFormData) => createInfantABSSIN(data),
@@ -118,7 +151,6 @@ const CreateInfantAbssinModule = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <div className="app-container">
-          {/* <h1 className="text-xl font-bold mb-4">FaceCam Demo</h1> */}
           <FaceCam onCapture={handleCapture} />
           {capturedImage && (
             <div className="captured-image mt-4">
@@ -145,7 +177,6 @@ const CreateInfantAbssinModule = () => {
           placeholder="Middle Name"
           name={"middle_name"}
           register={register}
-          // validation={{ required: true }}
           error={errors.middle_name}
         />
         <FormTextInput
@@ -184,6 +215,23 @@ const CreateInfantAbssinModule = () => {
             },
           ]}
         />
+        <SelectInput
+          label="State of Origin"
+          placeholder="State of Origin"
+          name={"state_of_origin"}
+          register={register}
+          validation={{ required: true }}
+          error={!!errors.state_of_origin}
+          id={"state_of_origin"}
+          options={
+            stateData
+              ? stateData?.data.map((state_of_origin: any) => ({
+                  label: state_of_origin.state,
+                  value: state_of_origin.idstates,
+                }))
+              : []
+          }
+        />
 
         <SelectInput
           label="LGA"
@@ -191,13 +239,14 @@ const CreateInfantAbssinModule = () => {
           name={"lga"}
           register={register}
           validation={{ required: true }}
+          disabled={!watch("state_of_origin")}
           error={!!errors.lga}
           id={"lga"}
           options={
             lgaData
               ? lgaData?.data.map((lga: any) => ({
-                  label: lga.lgaName,
-                  value: lga.lgaID,
+                  label: lga.name,
+                  value: lga.idlga,
                 }))
               : []
           }
@@ -227,13 +276,14 @@ const CreateInfantAbssinModule = () => {
           }}
           error={errors.guardian_phone_number}
         />
+
         <FormTextInput
           label="Guardian ABSSIN"
           placeholder="Guardian ABSSIN"
           name={"guardian_abssin"}
           register={register}
           validation={{
-            required: true,
+            // required: true,
             pattern: {
               value: /^\d{9,11}$/,
               message: "ABSSIN must be between 9 and 11 digits",
@@ -242,14 +292,9 @@ const CreateInfantAbssinModule = () => {
           error={errors.guardian_abssin}
         />
 
-        <SelectInput
-          label="School Name"
-          placeholder="Select School Name"
+        <SelectSearchInput
           name={"school_name"}
-          register={register}
-          validation={{ required: true }}
-          error={!!errors.school_name}
-          id={"school_name"}
+          label={"School Name"}
           options={
             schools
               ? schools?.response_data.map((item: any) => ({
@@ -258,13 +303,14 @@ const CreateInfantAbssinModule = () => {
                 }))
               : []
           }
+          control={control}
         />
+
         <FormTextInput
           label="School Address"
           placeholder="School Address"
           name={"school_address"}
           register={register}
-          validation={{ required: true }}
           error={errors.school_address}
         />
 
@@ -284,7 +330,7 @@ const CreateInfantAbssinModule = () => {
           <TbRosetteDiscountCheckFilled className="text-green-600 text-7xl" />
           <h1 className="text-lg font-semibold">Created Successfully</h1>
           <p className="text-xs md:text-sm text-gray-400 max-w-[14rem]">
-            You have successfully created an Infant ABSSIN
+            You have successfully created a Dependent ABSSIN
           </p>
           <div className="w-full grid grid-cols-2 gap-2 mt-4">
             <CancelButton link={"/identity"} />

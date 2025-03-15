@@ -44,11 +44,12 @@ const TransportEnumerationTable: React.FC = () => {
     <section className="main-table">
       {fetced_data.length > 0 ? (
         <div className="main-table_form_tickets_container">
-          <div className="tickets">
+          <div className="">
             {fetced_data.map((transaction: any) => (
               <div
                 key={transaction.idagent_transactions}
-                className="ticket"
+                // className="ticket"
+                className="border border-green-200  shadow-sm p-4 rounded-lg mb-4 grid grid-cols-2 justify-between"
                 onClick={() =>
                   router.push(
                     `/enumeration/transport/view/${transaction.EnumerationID}`
@@ -56,20 +57,75 @@ const TransportEnumerationTable: React.FC = () => {
                 }
               >
                 <div>
-                  <p>Enumeration ID: {transaction.EnumerationID}</p>
+                  <p className="grid">
+                    <span className="text-[10px] text-gray-500 uppercase tracking-wide">
+                      Enumeration ID:
+                    </span>{" "}
+                    <span className="text-green-700 text-xl font-bold">
+                      {transaction.EnumerationID}
+                    </span>{" "}
+                  </p>
 
-                  <p>{new Date(transaction.CreateTime).toLocaleString()}</p>
-                  {/* <p>{addEllipses(transaction?.reference, 20)}</p> */}
-                  <p>Taxpayer: {transaction.TaxpayerName }, {transaction.TaxpayerID}</p>
-                  <p>Plate Number: {transaction.PlateNumber}</p>
+                  <p>
+                    {" "}
+                    <span className="text-[10px] text-gray-500 uppercase tracking-wide">
+                      Date & Time:
+                    </span>{" "}
+                    <p className="font-semibold text-gray-600 text-sm">
+                      {new Date(transaction.CreateTime).toLocaleString()}
+                    </p>
+                  </p>
 
+                  <p className="grid">
+                    <span className="text-[10px] text-gray-500 uppercase tracking-wide">
+                      Taxpayer Name:
+                    </span>{" "}
+                    <span className="text-gray-900 text-[12px] font-semibold">
+                      {transaction.TaxpayerName}, {transaction.TaxpayerID}
+                    </span>
+                  </p>
                 </div>
-                <div>
-                  <p>Asset Code: {transaction.assetCode}</p>
-                  <p>₦{formatAmount(transaction.IncomeAmount)}</p>
-                  <p>{transaction.IncomeCategory}</p>
-                  <p>{transaction.UnionName}</p>
-                  
+                <div className="text-right">
+
+                  <div className="grid grid-cols-2">
+                     <p>
+                    {" "}
+                    <span className="text-[10px] text-gray-500 uppercase tracking-wide">
+                      Asset Code:
+                    </span>{" "}
+                    <p className="font-semibold text-gray-600 text-sm">
+                      {transaction.assetCode}
+                    </p>
+                  </p>
+                  <p>
+                    {" "}
+                    <span className="text-[10px] text-gray-500 uppercase tracking-wide">
+                      Amount:
+                    </span>{" "}
+                    <p className="font-semibold text-gray-600 text-sm">
+                    ₦{formatAmount(transaction.IncomeAmount)}
+                    </p>
+                  </p>
+                  </div>
+
+                  <p>
+                    {" "}
+                    <span className="text-[10px] text-gray-500 uppercase tracking-wide">
+                      Category & Union:
+                    </span>{" "}
+                    <p className="font-semibold text-gray-600 text-sm">
+                    {transaction.IncomeCategory}, {transaction.UnionName}
+                    </p>
+                  </p>
+                  <p>
+                    {" "}
+                    <span className="text-[10px] text-gray-500 uppercase tracking-wide">
+                      Plate Number:
+                    </span>{" "}
+                    <p className="font-semibold text-gray-600 text-sm">
+                    {transaction.PlateNumber}
+                    </p>
+                  </p>
                 </div>
               </div>
             ))}

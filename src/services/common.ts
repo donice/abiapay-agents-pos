@@ -4,6 +4,7 @@ import { setToken } from "./setToken";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 const portal_url = process.env.NEXT_PUBLIC_PORTAL_URL;
+const portal_url_2 = process.env.NEXT_PUBLIC_PORTAL_URL_2;
 const central_api_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
@@ -33,6 +34,17 @@ export const fetchABSSINInfo = async (reqData: {
   }
 }
 
+export const fetchABSSINInfoWIthPhone = async (reqData: {
+  phone: string
+}) => {
+  try {
+    const res = await axiosInstance.post(`${portal_url_2}/user/individual/phone`, reqData);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export const fetchLGAData = async () => {
   try {
     const res = await axiosInstance.post(`${url}/state/lga`);
@@ -45,6 +57,24 @@ export const fetchLGAData = async () => {
 export const fetchStates = async () => {
   try {
     const res = await axiosInstance.post(`${url}/state`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+export const fetchLocationStateLGA = async ({stateId}: { stateId: string}) => {
+  try {
+    const res = await axiosInstance.get(`${portal_url_2}/location/states/lga?stateId=${stateId}`);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+export const fetchLocationState = async () => {
+  try {
+    const res = await axiosInstance.get(`${portal_url_2}/location/states`);
     return res.data;
   } catch (error: any) {
     console.log(error);
@@ -98,7 +128,8 @@ export const fetchTaxOffice = async () => {
 
 export const fetchSchool = async () => {
   try {
-    const res = await axiosInstance.get(`${portal_url}/user/school-list`);
+    const res = await axiosInstance.get(`https://portalapi.abiapay.com/api/v1/user/school-list`);
+    // const res = await axiosInstance.get(`${portal_url_2}/user/school-list`);
     return res.data;
   } catch (error: any) {
     console.log(error);
