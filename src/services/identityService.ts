@@ -291,6 +291,17 @@ export const getIndividualABSSINs = async () => {
   }
 };
 
+export const getBusinessABSSINs = async () => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/abssin/manage-business`
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
 export const postRegisterBulkAbssin = async ({file}: {file: any}) => {
   try {
     const { data } = await axiosInstance.post(
