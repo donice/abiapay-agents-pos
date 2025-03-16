@@ -16,9 +16,9 @@ const ViewAllIndividualABSSIN = (data: any) => {
         <Link
           href={`/identity/view/individual/${abssin?.state_id}`}
           key={idx}
-          className="border-b border-gray-300 py-4 grid grid-cols-3 gap-4"
+          className="border-b border-gray-300 py-4 grid  gap-4"
         >
-          <div className="w-full h-28 border rounded-lg flex items-center justify-center bg-gray-100">
+          <div className="">
             {/* {abssin?.PhotoID ? <Image src={abssin?.PhotoID  || '/images/default.png'} alt={""} width={100} height={100} className="object-cover"/> : <div></div>} */}
             {abssin?.PhotoID ? (
               <TbUser className="text-3xl text-gray-400" />

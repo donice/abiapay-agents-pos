@@ -28,3 +28,99 @@
     }
   }
 }
+
+.card {
+  position: relative;
+  border-radius: 4px;
+  // background-color: green;
+  background: linear-gradient(
+    to bottom right,
+    rgb(22, 177, 22),
+    rgb(11, 64, 11)
+  );
+  width: 500px;
+  color: white;
+  height: 310px;
+  z-index: 1;
+  background: url(https://freeimage.host/i/3nz6bV4) 
+}
+
+.overlay {
+  background: url(https://iili.io/3nz6bV4.png)center/cover no-repeat; 
+  mix-blend-mode: multiply;
+  inset: 0;
+  position: absolute;
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  padding: 10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.header > * {
+  flex: 1;
+}
+
+.header .title {
+  text-transform: uppercase;
+  font-weight: 600;
+  max-width: 160px;
+}
+.title .abssin {
+  color: yellow;
+  font-size: 15px;
+}
+
+.header .logo,
+.header > :first-child {
+  max-width: 70px;
+}
+
+table {
+  width: 100%;
+  color: white;
+}
+
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  .tab {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    background: #f1f1f1;
+    border-radius: 5px;
+    transition: 0.3s;
+    
+
+    &:hover {
+      background: $primary-hover;
+      color: white;
+    }
+
+    &.active {
+      background: $primary;
+      color: white;
+    }
+  }
+}
+
+.tab-content {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+
+

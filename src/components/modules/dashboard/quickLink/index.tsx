@@ -25,6 +25,7 @@ const QuickLinks = ({
     | "Enforcement"
     | "Bills"
     | "Bulk Prints"
+    | "Demand Notices"
     | "Receipts"
     | "Verify Vehicle Status"
     | "Traffic Offence Ticket"
@@ -49,6 +50,8 @@ const QuickLinks = ({
         ) : name == "Bills" ? (
           <FcNews className="icon" />
         ) : name == "Receipts" ? (
+          <FcRules className="icon" />
+        ) :name == "Demand Notices" ? (
           <FcRules className="icon" />
         ) : name == "Verify Vehicle Status" ? (
           <FcAutomotive className="icon" />

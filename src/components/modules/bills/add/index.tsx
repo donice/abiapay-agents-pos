@@ -10,9 +10,12 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import "./style.scss";
 import { createBill } from "@/src/services/billServices";
+import { useRouter } from "next/router";
 
 const CreateBillModule = () => {
   const { register, handleSubmit, setValue, watch } = useForm();
+
+  const router = useRouter();
 
   const onSubmit = async (formData: any) => {
     if (!selectedProduct) {
@@ -38,6 +41,7 @@ const CreateBillModule = () => {
     try {
       await createBill(requestBody);
       toast.success("Bill created successfully");
+      router.push('/bills');
     } catch (error: any) {
       toast.error(error.message || "Failed to create bill");
     }
