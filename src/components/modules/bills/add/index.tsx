@@ -10,7 +10,8 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import "./style.scss";
 import { createBill } from "@/src/services/billServices";
-import { useRouter } from "next/router";
+import {  useRouter } from "next/navigation";
+
 
 const CreateBillModule = () => {
   const { register, handleSubmit, setValue, watch } = useForm();
