@@ -5,10 +5,14 @@
   flex-direction: column;
   gap: 1.5rem;
   border-radius: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 
   form {
     display: grid;
     gap: 1rem;
+    width: 100%;
   }
 
   h1 {
@@ -16,19 +20,22 @@
     color: $primary;
     text-align: center;
     font-weight: 700;
+    word-wrap: break-word;
   }
 
   &_comp {
     display: grid;
     border: 2px solid $gray;
-    padding: 0 1rem;
+    padding: 1rem;
     border-radius: 0.5rem;
     background-color: white;
+    width: 100%;
+    overflow-x: auto;
 
     div {
       display: flex;
       justify-content: space-between;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      flex-wrap: wrap; 
       gap: 1rem;
       padding: 0.75rem 0;
       border-bottom: 2px solid $gray;
@@ -40,10 +47,19 @@
       p {
         font-size: 15px;
         color: $text-primary;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        flex: 1;
+        min-width: 50%; 
         &:last-child {
           font-weight: 500;
           max-width: 15rem;
           text-align: right;
+
+          @include custom-media-query("mobile", $sm) {
+            text-align: left;
+            max-width: 100%;
+          }
         }
       }
     }
@@ -60,20 +76,23 @@
     background-color: #f0fdf4;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
     color: green;
+    width: 100%;
 
     .icon {
       font-size: 1.5rem;
     }
   }
 
-   &_form {
+  &_form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
 
     &_btn {
       display: grid;
       gap: 1rem;
+      width: 100%;
     }
   }
 }

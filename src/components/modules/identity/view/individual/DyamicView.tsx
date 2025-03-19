@@ -150,13 +150,13 @@ const DyamicView = ({ id }: { id: string }) => {
 
         {activeTab === "demandNotices" && (
           <div className="text-gray-600 p-4">
-            <p>No demand notices available.</p>
+            <p>Coming Soon.....</p>
           </div>
         )}
 
         {activeTab === "bills" && (
           <div className="text-gray-600 p-4">
-            <p>No bills available.</p>
+            <p>No bills available....</p>
           </div>
         )}
       </div>

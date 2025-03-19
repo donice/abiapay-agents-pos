@@ -6,7 +6,7 @@ import Basic from "./basic";
 import { createBusinessAbssinPayloadType } from "@/src/services/identityService";
 import Business from "./business";
 import Address from "./address";
-import { Button } from "@/src/components/common/button";
+import { Button, GoBackButton } from "@/src/components/common/button";
 import Summary from "./summary";
 
 const BusinessIndividualAbssinComponent = () => {
