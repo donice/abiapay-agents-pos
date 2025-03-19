@@ -91,6 +91,7 @@ const CreateBillModule = () => {
         paymentFrequency: bill.paymentFrequency || "N/A", 
         items: bill.items || [], 
         amount: bill?.totalamount || "0", 
+        occurrence: bill.occurrence || "N/A",
       }));
       console.log("extractedBills",extractedBills);
       setProducts(extractedBills);
@@ -200,10 +201,10 @@ const CreateBillModule = () => {
         <div className="bill-details">
           {/* <h3>Bill Details</h3> */}
           <p>
-            <strong>Collection Title:</strong> {selectedProduct.collectionTitle}
+            <strong>Collection Title:</strong> {selectedProduct.productname}
           </p>
           <p>
-            <strong>Payment Frequency:</strong> {selectedProduct.paymentFrequency}
+            <strong>Payment Frequency:</strong> {selectedProduct.occurrence}
           </p>
 
           {/* Bill Revenue Items */}
@@ -211,7 +212,7 @@ const CreateBillModule = () => {
           <table>
             <thead>
               <tr>
-                <th>MDA</th>
+                <th>Revenue Code</th>
                 <th>Revenue Item</th>
                 <th>Amount</th>
               </tr>
@@ -219,9 +220,9 @@ const CreateBillModule = () => {
             <tbody>
               {selectedProduct.items.map((item: any, index: number) => (
                 <tr key={index}>
-                  <td>{item.mda}</td>
+                  <td>{item.rev_code}</td>
                   <td>{item.rev_item}</td>
-                  <td>{item.amount}</td>
+                  <td>₦{item.amount}</td>
                 </tr>
               ))}
             </tbody>
