@@ -50,7 +50,7 @@
   padding: 0.5rem;
   text-transform: uppercase;
   color: gray;
-  top: 400px;
+  /* top: 400px; */
 }
 
 .bulk-sticker .card-asset_code {
@@ -62,6 +62,7 @@
   padding: 1.5rem;
   text-transform: uppercase;
   color: green;
+  top: 400px;
 }
 
 .bulk-sticker .card-lga {
