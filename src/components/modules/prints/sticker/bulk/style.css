@@ -41,7 +41,7 @@
 
 .bulk-sticker .card-plate_no {
   position: absolute;
-  top: 8.65rem;
+  top: 8.15rem;
   left: 50%;
   transform: translateX(-50%);
   font-weight: 600;
@@ -68,9 +68,10 @@
   top: 4rem;
   left: 1.5rem;
   color: gray;
-  font-size: 1rem;
+  font-size: 1.1rem;
   padding: 0.5rem;
   text-transform: uppercase;
+  color:green;
 }
 
 .bulk-sticker .card-cat,
