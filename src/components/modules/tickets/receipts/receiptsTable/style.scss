@@ -2,7 +2,8 @@
 
 .main-table {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: auto; // Allows horizontal scrolling when needed
+  display: block; // Ensures table does not shrink unexpectedly
 
   &_form_tickets_container {
     .tickets {
@@ -17,26 +18,19 @@
       .ticket {
         cursor: pointer;
         border-radius: 0.7rem;
-        border: 1px solid #86efac;
-        background-color: #ffffff;
-        padding: 1rem;
+        border: 2px solid red;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        padding: 1rem;
+        border: 1px solid #86efac;
+        background-color: #ffffff;
         box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
-        max-width: 100%;
-        overflow: hidden;
+        flex-wrap: wrap; // Ensures content wraps properly on small screens
 
         div:first-child {
-          flex: 1;
-          min-width: 50%;
           p {
             font-size: 14px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-
             &:first-child {
               font-weight: bold;
               font-size: 16px;
@@ -52,10 +46,11 @@
 
         div:last-child {
           display: flex;
-          flex-direction: column;
+          // flex-direction: column;
           gap: 0.25rem;
           align-items: flex-end;
-          min-width: 40%;
+          min-width: fit-content; // Ensures text does not shrink too much
+
           p {
             &:nth-child(1) {
               font-weight: bold;
@@ -73,16 +68,13 @@
           .next_date {
             font-size: 12px;
             color: $text-primary;
-            display: inline-flex;
+            display: flex;
+            flex-wrap: wrap; // Ensures items do not overflow
             gap: 0.25rem;
-            align-items: center;
-            flex-wrap: wrap;
 
             span {
-              max-width: 70px;
+              max-width: 100px;
               text-align: end;
-              word-wrap: break-word;
-              overflow-wrap: break-word;
             }
 
             .icon {
@@ -92,6 +84,7 @@
         }
       }
 
+      // Status badges
       .completed,
       .pending {
         cursor: pointer;
@@ -102,11 +95,11 @@
         padding: 0.1rem 0.7rem;
         gap: 0.25rem;
         font-size: 12px;
-        max-width: 100px;
-        white-space: nowrap;
+        min-width: fit-content; // Ensures text does not shrink too much
+        white-space: nowrap; // Prevents text from breaking into multiple lines
 
         &:hover {
-          opacity: 0.8;
+          background-color: rgba(110, 231, 183, 0.528);
         }
 
         .icon {
