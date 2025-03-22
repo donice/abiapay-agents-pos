@@ -3,16 +3,14 @@
 .main-table {
   width: 100%;
   overflow-x: auto; 
-  max-width: 100%;
-  display: block;
+  display: block; 
 
   &_form_tickets_container {
     .tickets {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
-      width: 100%;
-      
+
       @include custom-media-query("mobile", $sm) {
         grid-template-columns: repeat(1, minmax(0, 1fr));
       }
@@ -22,28 +20,17 @@
         border-radius: 0.7rem;
         border: 2px solid red;
         display: flex;
-        flex-direction: column; 
         justify-content: space-between;
+        align-items: center;
         padding: 1rem;
         border: 1px solid #86efac;
         background-color: #ffffff;
         box-shadow: 11px 10px 14px 0px rgba(208, 208, 208, 0.28);
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        width: 100%;
-
-        @include custom-media-query("mobile", $sm) {
-          padding: 0.75rem;
-        }
+        flex-wrap: wrap; 
 
         div:first-child {
-          width: 100%;
-
           p {
             font-size: 14px;
-            max-width: 100%;
-            overflow-wrap: break-word;
-
             &:first-child {
               font-weight: bold;
               font-size: 16px;
@@ -59,10 +46,10 @@
 
         div:last-child {
           display: flex;
-          flex-direction: column;
+          // flex-direction: column;
           gap: 0.25rem;
           align-items: flex-end;
-          width: 100%;
+          min-width: fit-content; 
 
           p {
             &:nth-child(1) {
@@ -82,14 +69,12 @@
             font-size: 12px;
             color: $text-primary;
             display: flex;
+            flex-wrap: wrap; 
             gap: 0.25rem;
-            justify-content: flex-end;
-            flex-wrap: wrap;
 
             span {
-              max-width: 100%;
+              max-width: 100px;
               text-align: end;
-              overflow-wrap: break-word;
             }
 
             .icon {
@@ -99,7 +84,9 @@
         }
       }
 
-      .completed, .pending {
+     
+      .completed,
+      .pending {
         cursor: pointer;
         display: flex;
         justify-content: center;
@@ -108,36 +95,26 @@
         padding: 0.1rem 0.7rem;
         gap: 0.25rem;
         font-size: 12px;
-        max-width: 100px;
-        text-align: center;
-        white-space: nowrap; 
+        min-width: fit-content; 
+        white-space: nowrap;
 
-        @include custom-media-query("mobile", $sm) {
-          font-size: 10px;
-          padding: 0.1rem 0.5rem;
+        &:hover {
+          background-color: rgba(110, 231, 183, 0.528);
         }
 
         .icon {
-          font-size: 14px;
+          font-size: 16px;
         }
       }
 
       .completed {
         color: rgb(5 150 105);
         background-color: rgba(110, 231, 183, 0.316);
-
-        &:hover {
-          background-color: rgba(110, 231, 183, 0.528);
-        }
       }
 
       .pending {
         color: rgb(202 138 4);
         background-color: #fde04751;
-
-        &:hover {
-          background-color: rgba(110, 231, 183, 0.528);
-        }
       }
     }
   }
