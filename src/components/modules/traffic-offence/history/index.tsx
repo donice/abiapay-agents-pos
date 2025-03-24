@@ -66,7 +66,7 @@ const History = () => {
               {products.map((transaction: any, index: any) => (
                 <div key={index} className="ticket">
                   <div>
-                    <p>Plate Number: {transaction.plate_number}</p>
+                    <p> {transaction.plate_number}</p>
                     <p>{transaction.offence_type}</p>
                     <p>{transaction.payment_reference}</p>
                   </div>
