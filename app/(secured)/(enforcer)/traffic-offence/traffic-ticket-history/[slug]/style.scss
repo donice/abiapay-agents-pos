@@ -36,9 +36,11 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap; 
-      gap: 1rem;
       padding: 0.75rem 0;
       border-bottom: 2px solid $gray;
+      @include custom-media-query("mobile", $sm) {
+        gap: 1rem;
+      }
 
       &:last-child {
         border-bottom: none;
