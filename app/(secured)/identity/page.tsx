@@ -45,6 +45,12 @@ const items: AccountsProps[] = [
     desc: "View all individual ABSSIN",
     icon: <FcReading className="icon" />,
   },
+  {
+    link: "identity/view/business",
+    title: "View Businesses",
+    desc: "View all Business ABSSIN",
+    icon: <FcReading className="icon" />,
+  },
 ];
 
 const IdentityPage = () => {

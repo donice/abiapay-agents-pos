@@ -60,38 +60,38 @@ const Dynamic = () => {
       {data ? (
         <div className="receipts-details_comp">
           <div>
-            <p>Bill Status</p>
+            <p className="font-bold">Bill Status</p>
             <p>{ticket[0]?.status || "-"}</p>
           </div>
           <div>
-            <p>Occurrence</p>
+            <p className="font-bold">Occurrence</p>
             <p>{ticket[0]?.occurrence || "-"}</p>
           </div>
 
           <div>
-            <p>Amount</p>
+            <p className="font-bold">Amount</p>
             <p>₦{formatAmount(ticket[0]?.amount) || "-"}</p>
           </div>
          
           <div>
-            <p>ABSSIN</p>
+            <p className="font-bold">ABSSIN</p>
             <p>{ticket[0]?.taxpayer || "-"}</p>
           </div>
 
           <div>
-            <p>MDA</p>
+            <p className="font-bold">MDA</p>
             <p>{ticket[0]?.mda || "-"}</p>
           </div>
           <div>
-            <p>Revenue Item</p>
+            <p className="font-bold">Revenue Item</p>
             <p>{ticket[0]?.rev_item || "-"}</p>
           </div>
           <div>
-            <p>Bill Reference</p>
+            <p className="font-bold">Bill Reference</p>
             <p>{ticket[0]?.transref || "-"}</p>
           </div>
           <div>
-            <p>Date Created</p>
+            <p className="font-bold">Date Created</p>
             <p>{ticket[0]?.transdate || "-"}</p>
           </div>
         </div>

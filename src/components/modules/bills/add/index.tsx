@@ -2,22 +2,57 @@
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useDebounce } from "@/src/hooks/useDebounce";
+import { fetchBillProducts } from "@/src/services/billServices";
 import { fetchABSSINInfo, fetchTaxOffice } from "@/src/services/common";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import "./style.scss";
+import { createBill } from "@/src/services/billServices";
+import {  useRouter } from "next/navigation";
+
 
 const CreateBillModule = () => {
   const { register, handleSubmit, setValue, watch } = useForm();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    toast.success("Bill created successfully");
+  const router = useRouter();
+
+  const onSubmit = async (formData: any) => {
+    if (!selectedProduct) {
+      toast.error("Please select a product");
+      return;
+    }
+    console.log(selectedProduct)
+
+    const requestBody = {
+      taxpayer_id: formData.taxpayer_id,
+      full_name: formData.full_name,
+      email: formData.email || "", 
+      phone_number: formData.phone_number,
+      revenue_office: formData.revenue_office,
+      occurrence: selectedProduct.paymentFrequency,
+      items: selectedProduct.items.map((item: any) => ({
+        rev_item_name: item.productname || "Unknown",
+        amount: Number(item.amount) || 0,
+        rev_code: item.rev_code || "N/A",
+      })),
+    };
+
+    try {
+      await createBill(requestBody);
+      toast.success("Bill created successfully");
+      router.push('/bills');
+    } catch (error: any) {
+      toast.error(error.message || "Failed to create bill");
+    }
   };
 
-  const abssin = watch("abssin");
+  const abssin = watch("taxpayer_id");
   const debouncedAbssin = useDebounce(abssin, 300);
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+
 
   const { data: revenueOfficesData } = useQuery({
     queryKey: ["revenue_offices"],
@@ -25,6 +60,45 @@ const CreateBillModule = () => {
       return await fetchTaxOffice();
     },
   });
+
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["get_bills_products"],
+    queryFn: () => fetchBillProducts(),
+  });
+
+  const selectedProductId = watch("product");
+  useEffect(() => {
+    console.log("Products List:", products);
+    console.log("Selected Product ID:", selectedProductId);
+    const foundProduct = products.find((p: any) => p.id === Number(selectedProductId));
+    console.log("Found Product:", foundProduct);
+    setSelectedProduct(foundProduct || null);
+  }, [selectedProductId, products]);
+  
+  
+
+  
+  useEffect(() => {
+    if (data?.response_data) {
+      console.log("data",data.response_data.map((bill:any) => ({
+        items:bill.productname
+      })));
+      const extractedBills = data.response_data.map((bill:any) => ({
+        id: bill.id,
+        productname: bill.productname || "No product",
+        totalamount: bill.totalamount || "0",
+        collectionTitle: bill.collectionTitle || "N/A", 
+        paymentFrequency: bill.paymentFrequency || "N/A", 
+        items: bill.items || [], 
+        amount: bill?.totalamount || "0", 
+        occurrence: bill.occurrence || "N/A",
+      }));
+      console.log("extractedBills",extractedBills);
+      setProducts(extractedBills);
+    }
+  
+  }, [data]);
+  
 
 
   useEffect(() => {
@@ -36,14 +110,14 @@ const CreateBillModule = () => {
           if (response.data?.length !== 0) {
             toast.success(response.message);
             setValue(
-              "taxpayer_name",
+              "full_name",
               response.data.firstname +
                 " " +
                 response.data.middle_name +
                 " " +
                 response.data.lastname
             );
-            setValue("taxpayer_phone", response.data.phone_number);
+            setValue("phone_number", response.data.phone_number);
           }
         } catch (error) {
           console.log(error);
@@ -75,21 +149,21 @@ const CreateBillModule = () => {
 
       <FormTextInput
         label="ABSSIN"
-        name="abssin"
+        name="taxpayer_id"
         register={register}
         validation={{ required: true }}
         placeholder="Enter ABSSIN"
       />
       <FormTextInput
         label="Taxpayer Name"
-        name="taxpayer_name"
+        name="full_name"
         register={register}
         validation={{ required: true }}
         placeholder="Enter Taxpayer Name"
       />
       <FormTextInput
         label="Taxpayer Phone"
-        name="taxpayer_phone"
+        name="phone_number"
         register={register}
         validation={{ required: true }}
         placeholder="Enter Taxpayer Phone"
@@ -97,8 +171,8 @@ const CreateBillModule = () => {
 
       <SelectInput
         label={"Revenue Office"}
-        name={"rev_office"}
-        id={"rev_office"}
+        name={"revenue_office"}
+        id={"revenue_office"}
         register={register}
         options={revenueOfficesData?.data.map((office: any) => ({
           label: office.name,
@@ -107,55 +181,60 @@ const CreateBillModule = () => {
       />
 
       <SelectInput
-        label={"Product"}
+        label={"Bill Product"}
         name={"product"}
         id={"product"}
         register={register}
-        options={[
-          {
-            label: "Product 1",
-            value: "product1",
-          },
-          {
-            label: "Product 2",
-            value: "product2",
-          },
-        ]}
+        options={products?.map((product: any) => ({
+          label: `${product.productname} - ${product.amount}`,
+          value: product.id,
+        }))}
       />
 
-      <SelectInput
-        label={"Occurrence"}
-        name={"occurrence"}
-        id={"occurrence"}
-        register={register}
-        options={[
-          {
-            label: "Daily",
-            value: "Daily",
-          },
-          {
-            label: "Weekly",
-            value: "Weekly",
-          },
-        ]}
-      />
+      
 
-      <SelectInput
-        label={"Payment Channel"}
-        name={"payment_channel"}
-        id={"payment_channel"}
-        register={register}
-        options={[
-          {
-            label: "Payment Channel 1",
-            value: "occurrence1",
-          },
-          {
-            label: "Payment Channel 2",
-            value: "occurrence2",
-          },
-        ]}
-        />
+
+{selectedProduct && (
+  <>
+  
+   
+        <div className="bill-details">
+          {/* <h3>Bill Details</h3> */}
+          <p>
+            <strong>Collection Title:</strong> {selectedProduct.productname}
+          </p>
+          <p>
+            <strong>Payment Frequency:</strong> {selectedProduct.occurrence}
+          </p>
+
+          {/* Bill Revenue Items */}
+          <h4>Bill Revenue Items</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Revenue Code</th>
+                <th>Revenue Item</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedProduct.items.map((item: any, index: number) => (
+                <tr key={index}>
+                  <td>{item.rev_code}</td>
+                  <td>{item.rev_item}</td>
+                  <td>₦{item.amount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p>
+            <strong>Total Bill Amount: ₦</strong>{selectedProduct.totalamount}
+          </p>
+        </div>
+        </>
+      )}
+
+      
         <Button text={"Create Bill"}  />
     </form>
   );

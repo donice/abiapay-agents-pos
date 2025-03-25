@@ -37,6 +37,10 @@ export interface SearchOffencePayload {
   search_value: string
 }
 
+export interface fetchOffenceHistoryPayload {
+  email: string
+}
+
 export const createTrafficoffence = async (requestData: CreateOffencePayload) => {
     try {
       const { data } = await axiosInstance.post(
@@ -70,3 +74,15 @@ export const fetchAllOffences = async () => {
     console.log(error);
   }
 }
+
+export const fetchOffenceHistory = async (requestData: fetchOffenceHistoryPayload) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/enforcer/traffic-offence/agent`,
+      requestData
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching history: ${error?.message}`);
+  }
+};

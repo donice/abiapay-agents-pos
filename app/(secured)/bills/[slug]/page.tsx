@@ -184,47 +184,47 @@ const Dynamic = () => {
       {data?.response_data ? (
         <div className="bill-details_comp">
           <div>
-            <p>Bill Status</p>
+            <p className="font-bold">Bill Status</p>
             <p>{ticket[0]?.status || "-"}</p>
           </div>
           <div>
-            <p>Occurrence</p>
+            <p className="font-bold">Occurrence</p>
             <p>{ticket[0]?.occurrence || "-"}</p>
           </div>
 
           <div>
-            <p>Amount</p>
+            <p className="font-bold">Amount</p>
             <p>₦{formatAmount(ticket[0]?.amount) || "-"}</p>
           </div>
 
           <div>
-            <p>Taxpayer Name</p>
+            <p className="font-bold">Taxpayer Name</p>
             <p>{billIsueeDetails?.taxpayer_name || "-"}</p>
           </div>
 
           <div>
-            <p>Taxpayer Phone</p>
+            <p className="font-bold">Taxpayer Phone</p>
             <p>{billIsueeDetails?.taxpayer_phone || "-"}</p>
           </div>
           <div>
-            <p>ABSSIN</p>
+            <p className="font-bold">ABSSIN</p>
             <p>{ticket[0]?.taxpayer || "-"}</p>
           </div>
 
           <div>
-            <p>MDA</p>
+            <p className="font-bold">MDA</p>
             <p>{ticket[0]?.mda || "-"}</p>
           </div>
           <div>
-            <p>Revenue Item</p>
+            <p className="font-bold">Revenue Item</p>
             <p>{ticket[0]?.rev_item || "-"}</p>
           </div>
           <div>
-            <p>Bill Reference</p>
+            <p className="font-bold">Bill Reference</p>
             <p>{ticket[0]?.transref || "-"}</p>
           </div>
           <div>
-            <p>Date Created</p>
+            <p className="font-bold">Date Created</p>
             <p>{ticket[0]?.transdate || "-"}</p>
           </div>
         </div>
@@ -244,15 +244,15 @@ const Dynamic = () => {
         billIsueeDetails?.items?.map((item: any, index: number) => (
           <div className="bill-details_comp" key={index}>
             <div>
-              <p>Revenue Item</p>
+              <p className="font-bold">Revenue Item</p>
               <p>{item?.revenue_item || "-"}</p>
             </div>
             <div>
-              <p>Amount</p>
+              <p className="font-bold">Amount</p>
               <p>₦{formatAmount(item?.amount) || "-"}</p>
             </div>
             <div>
-              <p>Payment Ref</p>
+              <p className="font-bold">Payment Ref</p>
               <p>{item?.payment_ref || "-"}</p>
             </div>
           </div>

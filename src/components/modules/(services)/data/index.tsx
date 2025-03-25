@@ -9,13 +9,12 @@ import "../style.scss";
 import { useForm } from "react-hook-form";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { FormButton } from "@/src/components/common/button";
-import { BuyAirtimeService, GetDataPlans } from "@/src/services/VATService";
+import { BuyDataService, GetDataPlans } from "@/src/services/VATService";
 import { useRouter } from "next/navigation";
 
 const DataModule = () => {
   const router = useRouter();
   const [activeAccount, setActiveAccount] = React.useState("fidelity");
-  const [dataPlans, setDataPlans] = React.useState<Array<{label: string, value: string}>>([]);
 
   const {
     register,
@@ -26,49 +25,49 @@ const DataModule = () => {
   } = useForm<AirtimeServiceTypes>({
     defaultValues: {
       wallet: "fidelity",
+      amount: 0,
     },
   });
 
   const handleNetworkSelect = (network: string) => {
-    setValue("network", network);
+    setValue("network", network, { shouldValidate: true });
   };
+
   const handleWalletSelect = (wallet: string) => {
-    setValue("wallet", wallet);
+    setValue("wallet", wallet, { shouldValidate: true });
   };
 
   const { data, refetch } = useQuery({
     queryKey: ["get_dashboard_data"],
-    queryFn: () => {
-      return fetchDashboardData();
-    },
-  });
-  const { mutate: getDataPlans } = useMutation({
-    mutationKey: ["get_data_plans"],
-    mutationFn: (req: { network: string }) => {
-      return GetDataPlans(req);
-    },
-    onSuccess: (data) => {
-      const plans = data.response_data?.map((item: any) => ({
-        label: item.name,
-        value: item.tarrifTypeId
-      })) || [];
-      setValue("amount", data.response_data?.[0]?.price || 0);
-      setDataPlans(plans);
-    },
+    queryFn: fetchDashboardData,
   });
 
+  const { data: dataPlans } = useQuery({
+    queryKey: ["get_data_plans", watch("network")],
+    queryFn: () => GetDataPlans({ network: watch("network") }),
+    enabled: !!watch("network"), // Ensures query runs only if network is selected
+  });
+
+  console.log("Data Plans: ", dataPlans); // Debugging
+
   useEffect(() => {
-    getDataPlans({ network: watch("network") });
-  }, [watch("network")]);
+    const selectedPlan = dataPlans?.response_data?.find(
+      (item: { tarrifTypeId: string; price: number }) =>
+        item.tarrifTypeId === watch("tarrifTypeId")
+    );
+
+    if (selectedPlan) {
+      setValue("amount", selectedPlan.price, { shouldValidate: true });
+    }
+  }, [watch("tarrifTypeId"), dataPlans, setValue]);
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["buy_airtime"],
-
     mutationFn: async (data: AirtimeServiceTypes) => {
-      const res = await BuyAirtimeService(data);
+      const res = await BuyDataService(data);
       return res;
     },
-    onSuccess: async (data: any) => {
+    onSuccess: async () => {
       await refetch();
       router.push("/success");
     },
@@ -77,7 +76,7 @@ const DataModule = () => {
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: AirtimeServiceTypes) => {
     mutate(data);
   };
 
@@ -95,13 +94,24 @@ const DataModule = () => {
 
         <Networks onNetworkSelect={handleNetworkSelect} />
 
-        {watch("network") !== null && (
+        {watch("network") && (
           <form className="service_form" onSubmit={handleSubmit(onSubmit)}>
             <SelectInput
               label={"Tarrif Plans"}
               name={"tarrifTypeId"}
               id={"tarrifTypeId"}
-              options={dataPlans || []}
+              register={register}
+              onChange={(e) => {
+                setValue("tarrifTypeId", e.target.value, { shouldValidate: true });
+              }}
+              options={
+                dataPlans?.response_data?.map(
+                  (item: { name: string; tarrifTypeId: string }) => ({
+                    label: item.name,
+                    value: item.tarrifTypeId,
+                  })
+                ) || []
+              }
             />
 
             <FormTextInput
@@ -110,14 +120,8 @@ const DataModule = () => {
               type={"number"}
               validation={{
                 required: "Phone number is required",
-                minLength: {
-                  value: 11,
-                  message: "Phone number must be 11 digits",
-                },
-                maxLength: {
-                  value: 11,
-                  message: "Phone number must be 11 digits",
-                },
+                minLength: { value: 11, message: "Phone number must be 11 digits" },
+                maxLength: { value: 11, message: "Phone number must be 11 digits" },
               }}
               error={errors.phone_number}
               register={register}
@@ -136,11 +140,7 @@ const DataModule = () => {
               register={register}
             />
 
-            <FormButton
-              text={"Buy Airtime"}
-              disabled={isPending}
-              loading={isPending}
-            />
+            <FormButton text={"Buy Airtime"} disabled={isPending} loading={isPending} />
           </form>
         )}
       </section>
@@ -153,6 +153,7 @@ export default DataModule;
 type AirtimeServiceTypes = {
   amount: number;
   phone_number: string;
+  tarrifTypeId: string;
   network: string;
   wallet: string;
 };

@@ -1,9 +1,10 @@
-import React, { ReactElement } from 'react'
-import type { Metadata } from "next";
-import BillsComponent from '@/src/components/modules/tickets/bills';
-import { GoBackButton } from '@/src/components/common/button';
-import { CustomHeader } from '@/src/components/common/header';
+
+
+import { Metadata } from 'next';
+import React, { ReactElement } from 'react';
 import { FcAddDatabase, FcNews } from 'react-icons/fc';
+import { GoBackButton } from '../../common/button';
+import { CustomHeader } from '../../common/header';
 import Link from 'next/link';
 import './style.scss';
 
@@ -11,7 +12,6 @@ export const metadata: Metadata = {
   title: "Transport Tickets - Agent Portal",
   description: "Agents Portal Tickets Page",
 };
-
 
 interface AccountsProps {
   link: string;
@@ -21,26 +21,30 @@ interface AccountsProps {
 }
 const items: AccountsProps[] = [
   {
-    link: "bills/add",
-    title: "Create Bills",
+    link: "demand-notices/create",
+    title: "Generate New Notice",
     icon:<FcAddDatabase className="icon" />,
   },
   {
     link: "bills/view-bills",
-    title: "View Bills",
+    title: "Assign Blank Notice",
+    icon:<FcNews className="icon" />,
+  },
+  {
+    link: "bills/view-bills",
+    title: "Search Demand Notice",
     icon:<FcNews className="icon" />,
   }
 
 ];
 
-
-const BillsPage = () => {
+const DemandNoticesComponent = () => {
   return (
     <div>
       <div className="">
         <GoBackButton />
         <CustomHeader
-          title='Bills'
+          title='Demand Notices'
           desc={"Select an option"}
         />
 
@@ -69,4 +73,4 @@ const BillsPage = () => {
   )
 }
 
-export default BillsPage;
+export default DemandNoticesComponent

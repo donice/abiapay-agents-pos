@@ -57,10 +57,14 @@ const ReceiptsTable: React.FC = () => {
                 }
               >
                 <div>
-                  <p>Taxpayer ID:{transaction.taxpayer}</p>
+                  <p title={transaction.taxpayer}>
+                     ID: <span className="">{transaction.taxpayer}</span>
+                  </p>
                   <p>{transaction.rev_item}</p>
                   <p>{transaction.mda}</p>
-                  <p>Ref: {transaction.transref}</p>
+                  <p title={transaction.transref}>
+                    Ref: <span className="truncate">{transaction.transref}</span>
+                  </p>
                 </div>
                 <div>
                   <p>₦{formatAmount(transaction.amount)}</p>
