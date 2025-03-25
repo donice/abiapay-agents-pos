@@ -92,13 +92,11 @@ const PrintIDComp = () => {
                 left: 50%;
                 transform: translateX(-50%);
                 font-weight: 800;
-                font-family: Tahoma, sans-serif;
-                bottom: 1.5rem;
                 font-size: 2.75rem;
                 padding: 1.5rem;
                 text-transform: uppercase;
                 color: green;
-                top:400px;
+                top: 400px;
               }
 
               .bulk-sticker .card-lga {
