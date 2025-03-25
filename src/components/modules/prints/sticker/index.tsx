@@ -53,7 +53,7 @@ const PrintIDComp = () => {
                 justify-content: center;
                 position: relative;
                 gap: 1rem;
-                background-image: url("/prints/sticker-bg.jpg");
+                background-image: url("/prints/sticker_bg.JPG");
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: contain;
@@ -103,8 +103,8 @@ const PrintIDComp = () => {
 
               .bulk-sticker .card-lga {
                 position: absolute;
-                top: 4.5rem;
-                left: 1.5rem;
+                 top: .5rem;
+                 left: 1.1rem;
                 color: gray;
                 font-size: 0.75rem;
                 padding: 0.5rem;
