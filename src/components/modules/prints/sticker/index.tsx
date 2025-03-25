@@ -108,6 +108,7 @@ const PrintIDComp = () => {
                 font-size: 0.75rem;
                 padding: 0.5rem;
                 text-transform: uppercase;
+                color:green;
               }
 
               .bulk-sticker .card-cat,
