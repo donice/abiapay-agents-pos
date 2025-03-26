@@ -76,7 +76,7 @@ const PrintIDComp = () => {
 
               .bulk-sticker .card-plate_no {
                 position: absolute;
-                top: 9.5rem;
+                top: 8.51rem;
                 left: 50%;
                 transform: translateX(-50%);
                 font-weight: 600;
