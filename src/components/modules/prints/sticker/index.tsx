@@ -76,7 +76,7 @@ const PrintIDComp = () => {
 
               .bulk-sticker .card-plate_no {
                 position: absolute;
-                top: 9.5rem;
+                top: 9.2rem;
                 left: 50%;
                 transform: translateX(-50%);
                 font-weight: 600;
@@ -96,7 +96,7 @@ const PrintIDComp = () => {
                 padding: 1.5rem;
                 text-transform: uppercase;
                 color: green;
-                top: 450px;
+                top: 430px;
               }
 
               .bulk-sticker .card-lga {
