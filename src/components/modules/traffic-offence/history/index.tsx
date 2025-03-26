@@ -11,8 +11,9 @@ import { formatAmount } from "@/src/utils/formatAmount";
 import { CustomHeader } from "@/src/components/common/header";
 import { GoBackButton } from "@/src/components/common/button";
 import useIsBrower from "@/src/hooks/useIsBrower";
-
+import { useRouter } from "next/navigation";
 const History = () => {
+    const router = useRouter();
   const [userData, setUserData] = useState<{ name?: string; email?: string } | null>(null);
   const [products, setProducts] = useState<any[]>([]);
   const isBrowser = useIsBrower(); 
@@ -64,7 +65,12 @@ const History = () => {
           <div className="main-table_form_tickets_container">
             <div className="tickets">
               {products.map((transaction: any, index: any) => (
-                <div key={index} className="ticket">
+                <div key={index} className="ticket"
+                onClick={() =>
+                  router.push(
+                    `/traffic-offence/traffic-ticket-history/${transaction.payment_reference}`
+                  )
+                }>
                   <div>
                     <p> {transaction.plate_number}</p>
                     <p>{transaction.offence_type}</p>
