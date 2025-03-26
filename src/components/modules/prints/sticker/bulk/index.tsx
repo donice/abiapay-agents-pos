@@ -19,7 +19,7 @@ const BulkComp = ({ bulkData, stickerLga }: any) => {
     <div className="bulk-sticker">
       {displayData.map((data: any, idx: number) => (
         <div key={idx} className="card">
-          <span className="card-lga">{stickerLga}</span>
+          <span className="card-lga">{data.Park}</span>
           <span className="card-plate_no">{data?.PlateNumber}</span>
           <span className="card-cat">{data?.IncomeCategory}</span>
           <span className="card-income">{data?.IncomeCategory}</span>
