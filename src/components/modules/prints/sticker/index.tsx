@@ -88,7 +88,7 @@ const PrintIDComp = () => {
               }
 
               .bulk-sticker .card-asset_code {
-                position: absolute;
+                 position: absolute;
                 left: 50%;
                 transform: translateX(-50%);
                 font-weight: 800;
@@ -96,7 +96,7 @@ const PrintIDComp = () => {
                 padding: 1.5rem;
                 text-transform: uppercase;
                 color: green;
-                top: 400px;
+                top: 450px;
               }
 
               .bulk-sticker .card-lga {
