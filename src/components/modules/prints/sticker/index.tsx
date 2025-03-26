@@ -53,7 +53,7 @@ const PrintIDComp = () => {
                 justify-content: center;
                 position: relative;
                 gap: 1rem;
-                background-image: url("/prints/sticker-bg.jpg");
+                background-image: url("/prints/sticker_bg.JPG");
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: contain;
@@ -76,7 +76,7 @@ const PrintIDComp = () => {
 
               .bulk-sticker .card-plate_no {
                 position: absolute;
-                top: 9.5rem;
+                top: 8.51rem;
                 left: 50%;
                 transform: translateX(-50%);
                 font-weight: 600;
@@ -88,26 +88,26 @@ const PrintIDComp = () => {
               }
 
               .bulk-sticker .card-asset_code {
-                position: absolute;
+                 position: absolute;
                 left: 50%;
                 transform: translateX(-50%);
                 font-weight: 800;
-                font-family: Tahoma, sans-serif;
-                bottom: 1.5rem;
                 font-size: 2.75rem;
                 padding: 1.5rem;
                 text-transform: uppercase;
                 color: green;
+                top: 450px;
               }
 
               .bulk-sticker .card-lga {
                 position: absolute;
-                top: 4.5rem;
-                left: 1.5rem;
+                 top: .5rem;
+                 left: 1.1rem;
                 color: gray;
                 font-size: 0.75rem;
                 padding: 0.5rem;
                 text-transform: uppercase;
+                color:green;
               }
 
               .bulk-sticker .card-cat,
