@@ -8,6 +8,7 @@ const BulkComp = ({ bulkData }: any) => {
 
   useEffect(() => {
     if (bulkData) {
+      console.log(bulkData);
       setDisplayData(bulkData);
     }
   }, [bulkData]);
@@ -18,7 +19,7 @@ const BulkComp = ({ bulkData }: any) => {
 
   return (
     <div className="bulk-id">
-      {displayData?.map((data: any, idx: number) => (
+      {/* {displayData?.map((data: any, idx: number) => (
         <div key={idx} className="card">
           <span className="card-id">{data?.EnumerationID}</span>
           <span className="card-tag">{data?.productTag}</span>
@@ -30,7 +31,7 @@ const BulkComp = ({ bulkData }: any) => {
               <div className="">
                 <p>Surname:</p>
                 <p>{data?.surname}</p>
-              </div>
+              </div> 
               <div className="middle top">
                 <p>Others:</p>
                 <p>{data?.first_name + " " + data?.middle_name}</p>
@@ -50,9 +51,73 @@ const BulkComp = ({ bulkData }: any) => {
          </div>
           </div>
         </div>
-      ))}
+
+
+        
+      ))} */}
+
+
+
+       {displayData?.map((data: any, idx: number) => (
+     <div className="id-card" key={idx}>
+      <div className="left-section">
+        <div className="logo">
+          <img src="/prints/abia-id-logo.png" alt="Abia State Logo" />
+        </div>
+        
+        <div className="profile-img">
+          <img src={data?.PhotoID} alt="Profile" />
+        </div>
+        
+        <p className="enumeration-id"> {data?.EnumerationID}</p>
+      </div>
+      
+      
+      <div className="right-section">
+        <div className="header">
+          <h2>ABIA STATE</h2>
+          <h3>MINISTRY OF TRANSPORTATION</h3>
+          <div className="banner">COMMERCIAL TRANSPORT OPERATORS CARD</div>
+        </div>
+
+        <div className="details">
+        <div className="personal-details">
+          <div className="detail">
+            <span className="label">SURNAME</span>
+            <span className="value">{data?.surname}</span>
+          </div>
+          <div className="detail">
+            <span className="label">FIRST NAME</span>
+            <span className="value">{data?.first_name}</span>
+          </div>
+          <div className="detail">
+            <span className="label">Park</span>
+            <span className="value">{data?.Park}</span>
+          </div>
+          <div className="detail">
+            <span className="label">Phone:</span>
+            <span className="value">+234 123 456 7890</span>
+          </div>
+        </div>
+
+        <div className="qr-code ">
+        <QRCodeSVG
+                      style={{ width: 100, height: 190 }}
+                      className="qrcode"
+                      value={`https://abiapay.com/verify-asset?assetCode=${data?.assetCode}&enum=${data?.EnumerationID}`}
+                    />
+          <p>ABSSIN</p>
+          <p>{data?.state_id}</p>
+        </div>
+        </div>
+       
+      </div>
+    </div>
+
+      ))}  
     </div>
   );
+
 };
 
 export default BulkComp;

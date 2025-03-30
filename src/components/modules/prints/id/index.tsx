@@ -52,7 +52,7 @@ const PrintIDComp = () => {
               justify-content: center;
               position: relative;
               gap: 1rem;
-              background-image: url("/prints/id-background.jpg");
+              background-image: url("/prints/id_bg.jpeg");
               background-repeat: no-repeat;
               background-position: center;
               padding: 1rem;
