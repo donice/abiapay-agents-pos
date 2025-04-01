@@ -31,13 +31,13 @@ const BulkComp = ({ bulkData }: any) => {
           <div className="right-section">
             <div className="personal-details">
               <div className="detail">
-                <span className="value">{data?.surname ?? "-"}</span>
+                <span className="value">{data?.surname || "-"}</span>
               </div>
               <div className="detail">
-                <span className="value">{data?.first_name ?? "-"}</span>
+                <span className="value">{data?.first_name || "-"}</span>
               </div>
               <div className="detail">
-                <span className="value">{data?.Park ?? "-"}</span>
+                <span className="value">{data?.Park || "-"}</span>
               </div>
               <div className="detail">
                 <span className="value">+234 123 456 7890</span>
