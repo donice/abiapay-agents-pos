@@ -16,7 +16,6 @@
   justify-content: center;
   position: relative;
   gap: 1rem;
-  // background-image: url("../../../../../../public/prints/id_bg.jpeg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -26,11 +25,11 @@
   height: 19.5rem;
   border: 2px solid rgb(240, 240, 240);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  background-image: url("../../../../../../public/prints/id_bg.jpeg") ;
+  background-image: url("../../../../../../public/prints/id_bg.png") ;
 }
 
 .img {
-  background-image: url("../../../../../../public/prints/id_bg.jpeg") ;
+  background-image: url("../../../../../../public/prints/id_bg.png") ;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -97,7 +96,7 @@
   // height: 250px;
   padding: 10px;
   background: #fff;
-  background: url("../../../../../../public/prints/id_bg.jpeg") no-repeat center center;
+  background: url("../../../../../../public/prints/id_bg.png") no-repeat center center;
   background-size: cover;
   border-radius: 12px;
   padding: 20px;
@@ -131,7 +130,7 @@
         object-position: center;
       }
     }
-  
+
     .enumeration-id {
       margin-top: 10px;
       font-weight: bold;
@@ -150,7 +149,7 @@
       margin-bottom: 10px;
       flex-direction: column;
       text-align: left;
-      
+
       .small-logo {
         width: 50px;
         height: 50px;
