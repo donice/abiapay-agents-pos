@@ -147,7 +147,7 @@ const PrintIDComp = () => {
       ) : viewData == "data" ? (
         <div className="print-top">
           <Button text={"Print IDs"} onClick={handlePrint} />
-          <div ref={printRef}>
+          <div ref={printRef} style={{ marginTop: "2rem" }}>
             <BulkComp bulkData={bulkData} />
           </div>
         </div>
