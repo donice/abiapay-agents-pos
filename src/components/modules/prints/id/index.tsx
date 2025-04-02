@@ -62,7 +62,8 @@ const PrintIDComp = () => {
   height: 19.5rem;
   border: 2px solid rgb(240, 240, 240);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
- 
+   background-image: url("/prints/id_bg.png");
+}
 
 
 .id-card {
@@ -108,11 +109,11 @@ const PrintIDComp = () => {
   .right-section {
 
     .personal-details {
-    display: flex 
-    flex-direction: column 
-    gap: 2.50rem 
-    margin-top: 6.5rem 
-    font-weight: 600 
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2.50rem !important;
+    margin-top: 6.5rem !important;
+    font-weight: 600 !important;
 }
 
 
