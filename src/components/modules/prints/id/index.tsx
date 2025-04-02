@@ -125,16 +125,16 @@ const PrintIDComp = () => {
 }
 .product-tag {
   position: absolute;
-  right: 3rem;
-  top: 8.75rem;
+  right: 2.5rem;
+  top: 9rem;
   font-weight: 700;
   color: #fff;
 }
 
 .qr-code {
   position: absolute;
-  right: 0.75rem;
-  bottom: 2.5rem;
+  right: 0.95rem;
+  bottom: 3.5rem;
   width: 100px;
   height: 100px;
   display: flex;
@@ -145,14 +145,14 @@ const PrintIDComp = () => {
 .abssin_span {
   display: flex;
   position: absolute;
-  bottom: 1.15rem;
+  bottom: 0.85rem;
   right: 1.75rem;
 }
 
 .abssin_span {
   display: flex;
   position: absolute;
-  bottom: 1.05rem;
+  bottom: 0.75rem;
   right: 1.75rem;
 }
 
