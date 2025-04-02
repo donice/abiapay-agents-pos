@@ -69,7 +69,7 @@ const PrintIDComp = () => {
 .id-card {
   position: relative;
   display: flex;
-  gap: 2rem;
+  gap: 2.75rem;
   width: 500px;
   height: 315px;
   padding: 10px;
@@ -107,11 +107,10 @@ const PrintIDComp = () => {
   }
 
   .right-section {
-
     .personal-details {
     display: flex !important;
     flex-direction: column !important;
-    gap: 2.50rem !important;
+    gap: 2rem !important;
     margin-top: 6.5rem !important;
     font-weight: 600 !important;
 }
@@ -153,7 +152,7 @@ const PrintIDComp = () => {
 .abssin_span {
   display: flex;
   position: absolute;
-  bottom: 1.15rem;
+  bottom: 1.05rem;
   right: 1.75rem;
 }
 
