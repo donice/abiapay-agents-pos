@@ -40,7 +40,7 @@ const BulkComp = ({ bulkData }: any) => {
                 <span className="value">{data?.Park || "-"}</span>
               </div>
               <div className="detail">
-                <span className="value">+234 123 456 7890</span>
+                <span className="value">{data?.phone_number || "-"}</span>
               </div>
             </div>
           </div>{" "}
