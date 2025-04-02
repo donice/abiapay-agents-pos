@@ -45,78 +45,115 @@ const PrintIDComp = () => {
               }
             }
 
-            .bulk-id .card {
-              margin-top: 2rem;
+          .bulk-id .card {
+            margin-top: 2rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+            gap: 1rem;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            width: 32rem;
+            height: 19.5rem;
+            border: 2px solid rgb(240, 240, 240);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            background-image: url("/prints/id_bg.png");
+          }
+
+          .id-card {
+            position: relative;
+            display: flex;
+            gap: 2.75rem;
+            width: 500px;
+            height: 315px;
+            padding: 10px;
+            background: #fff;
+            background: url("/prints/id_bg.png") no-repeat center center;
+            background-size: cover;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+
+            .left-section {
+              height: 100%;
               display: flex;
-              align-items: flex-end;
-              justify-content: center;
-              position: relative;
-              gap: 1rem;
-              background-image: url("/prints/id-background.jpg");
-              background-repeat: no-repeat;
-              background-position: center;
-              padding: 1rem;
-              border-radius: 0.5rem;
-              width: 32rem;
-              height: 19.5rem;
-              border: 2px solid rgb(240, 240, 240);
-              box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+              flex-direction: column;
+              justify-content: flex-end;
+
+              .profile-img {
+                width: 150px;
+                border-radius: 1rem;
+                height: 180px;
+                overflow: hidden;
+
+                img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                }
+              }
+
+              .enumeration-id {
+                font-family: 'Courier New', Courier, monospace;
+                font-weight: 700;
+                letter-spacing: 0.075rem;
+              }
             }
 
-            .bulk-id .card-tag {
-              position: absolute;
-              top: 6.75rem;
-              right: 3.25rem;
-              color: white;
-              font-weight: 600;
-              font-size: 0.9rem;
-              padding: 0.5rem;
-            }
+            .right-section {
+              .personal-details {
+              display: flex !important;
+              flex-direction: column !important;
+              gap: 2rem !important;
+              margin-top: 6.5rem !important;
+              font-weight: 600 !important;
+          }
 
-            .bulk-id .card-id {
-              position: absolute;
-              top: 8.5rem;
-              left: 7.3rem;
-              font-weight: 600;
-              font-family: serif;
-              font-size: 1.9rem;
-              padding: 0.5rem;
-            }
 
-            .bulk-id .card-content {
-              gap: 1rem;
-              display: grid;
-              grid-template-columns: repeat(5, minmax(0, 1fr));
+              .profile-img {
+                width: 100px;
+                height: auto;
+                border: 2px solid #fff;
+              }
             }
+          }
+          .product-tag {
+            position: absolute;
+            right: 2.5rem;
+            top: 9rem;
+            font-weight: 700;
+            color: #fff;
+          }
 
-            .bulk-id .card-content_text {
-              display: grid;
-              grid-template-columns: repeat(1, minmax(0, 1fr));
-              grid-column: span 3 / span 3;
-              margin-top: -2rem;
-              max-height: 7rem;
-            }
+          .qr-code {
+            position: absolute;
+            right: 0.95rem;
+            bottom: 3.5rem;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
 
-            .bulk-id .card-content_text div {
-              display: grid;
-              grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
+          .abssin_span {
+            display: flex;
+            position: absolute;
+            bottom: 0.85rem;
+            right: 1.75rem;
+          }
 
-            .bulk-id .card-content_text div p:first-child {
-              font-size: 0.85rem;
-              text-transform: uppercase;
-            }
-
-            .bulk-id .card-content_text div p:last-child {
-              grid-column: span 2 / span 2;
-              margin-bottom: -4rem;
-              font-weight: 700;
-            }
-
-            .top {
-            margin-top: -4rem;
-
-            }
+          .abssin_span {
+            display: flex;
+            position: absolute;
+            bottom: 0.75rem;
+            right: 1.75rem;
+          }
 
 
             </style>
@@ -147,7 +184,7 @@ const PrintIDComp = () => {
       ) : viewData == "data" ? (
         <div className="print-top">
           <Button text={"Print IDs"} onClick={handlePrint} />
-          <div ref={printRef}>
+          <div ref={printRef} style={{ marginTop: "2rem" }}>
             <BulkComp bulkData={bulkData} />
           </div>
         </div>
