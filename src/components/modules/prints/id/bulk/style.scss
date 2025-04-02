@@ -99,7 +99,7 @@
 .qr-code {
   position: absolute;
   right: 0.75rem;
-  bottom: 2.5rem;
+  bottom: 3.5rem;
   width: 100px;
   height: 100px;
   display: flex;
@@ -109,6 +109,7 @@
 
 .abssin_span {
   display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: 1.15rem;
   right: 1.75rem;

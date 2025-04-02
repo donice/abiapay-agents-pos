@@ -57,8 +57,8 @@ const BulkComp = ({ bulkData }: any) => {
             />
           </div>
           <div className="abssin_span">
-             <p>ABSSIN: {" "}</p>
-          <p>{data?.state_id}</p>
+             <p>ABSSIN {" "}</p>
+          <p className="font-bold"> {data?.state_id}</p>
           </div>
 
         </div>
