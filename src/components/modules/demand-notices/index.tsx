@@ -26,12 +26,12 @@ const items: AccountsProps[] = [
     icon:<FcAddDatabase className="icon" />,
   },
   {
-    link: "bills/view-bills",
+    link: "demand-notices/assign",
     title: "Assign Blank Notice",
     icon:<FcNews className="icon" />,
   },
   {
-    link: "bills/view-bills",
+    link: "demand-notices/search",
     title: "Search Demand Notice",
     icon:<FcNews className="icon" />,
   }
