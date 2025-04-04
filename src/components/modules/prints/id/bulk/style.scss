@@ -27,7 +27,7 @@
   height: 19.5rem;
   border: 2px solid rgb(240, 240, 240);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  background-image: url("../../../../../../public/prints/id_bg.png") ;
+  background-image: url("../../../../../../public/prints/abia-id.png") ;
 }
 
 
@@ -39,7 +39,7 @@
   height: 315px;
   padding: 10px;
   background: #fff;
-  background: url("../../../../../../public/prints/id_bg.png") no-repeat center center;
+  background: url("../../../../../../public/prints/abia-id.png") no-repeat center center;
   background-size: cover;
   border-radius: 12px;
   padding: 20px;
@@ -99,7 +99,7 @@
 .qr-code {
   position: absolute;
   right: 0.75rem;
-  bottom: 2.5rem;
+  bottom: 3.5rem;
   width: 100px;
   height: 100px;
   display: flex;
@@ -109,7 +109,8 @@
 
 .abssin_span {
   display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: 1.15rem;
-  right: 1.75rem;
+  right: 0.75rem;
 }

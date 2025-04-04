@@ -49,7 +49,7 @@ const VerifyTicketsComponent = () => {
         <header className="verify-tickets-comp_header">
           <CustomHeader
             title="Verify Ticket"
-            desc="Check for your Ticket's validity"
+            desc="Check for Ticket's validity"
           />
         </header>
 

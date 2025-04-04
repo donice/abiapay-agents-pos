@@ -61,7 +61,7 @@ const PrintIDComp = () => {
             height: 19.5rem;
             border: 2px solid rgb(240, 240, 240);
             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            background-image: url("/prints/id_bg.png");
+            background-image: url("/prints/abia-id.png");
           }
 
           .id-card {
@@ -72,7 +72,7 @@ const PrintIDComp = () => {
             height: 315px;
             padding: 10px;
             background: #fff;
-            background: url("/prints/id_bg.png") no-repeat center center;
+            background: url("/prints/abia-id.png") no-repeat center center;
             background-size: cover;
             border-radius: 12px;
             padding: 20px;
@@ -150,9 +150,10 @@ const PrintIDComp = () => {
 
           .abssin_span {
             display: flex;
+            flex-direction: column;
             position: absolute;
-            bottom: 0.75rem;
-            right: 1.75rem;
+            bottom: 1.15rem;
+            right: 0.75rem;
           }
 
 

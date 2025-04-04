@@ -40,15 +40,13 @@ const BulkComp = ({ bulkData }: any) => {
                 <span className="value">{data?.Park || "-"}</span>
               </div>
               <div className="detail">
-                <span className="value">+234 123 456 7890</span>
+                <span className="value">{data?.phone_number || "-"}</span>
               </div>
             </div>
           </div>{" "}
 
 
-          <div className="product-tag">
-<p>{data?.productTag ?? "-"}</p>
-          </div>
+          
           <div className="qr-code ">
             <QRCodeSVG
               style={{ width: 80, height: 100 }}
@@ -57,8 +55,8 @@ const BulkComp = ({ bulkData }: any) => {
             />
           </div>
           <div className="abssin_span">
-             <p>ABSSIN: {" "}</p>
-          <p>{data?.state_id}</p>
+             <p className="text-center">ABSSIN {" "}</p>
+          <p className="font-bold"> {data?.state_id}</p>
           </div>
 
         </div>
