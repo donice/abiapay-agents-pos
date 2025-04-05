@@ -155,6 +155,14 @@ const PrintIDComp = () => {
             bottom: 1.15rem;
             right: 0.75rem;
           }
+          
+          .abssin_text {
+            text-align: center;
+            }
+
+          .abssin_number {
+            font-weight: bold;
+          }
 
 
             </style>
