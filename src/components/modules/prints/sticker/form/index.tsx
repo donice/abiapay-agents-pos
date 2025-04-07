@@ -52,6 +52,7 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
       card_type: "sticker",
       no_of_cards: "",
       page: 1,
+      previous_print: "false",
     },
   });
 
@@ -77,6 +78,7 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
   });
 
   const onSubmit = (reqData: any) => {
+    reqData.previous_print = reqData.previous_print === "true"; // convert string to boolean
     mutate(reqData);
   };
 
@@ -111,6 +113,32 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
         validation={{ required: true }}
         error={errors.page}
       />
+
+<div className="form_group">
+        <label className="form_label">Print Type</label>
+        <div className="radio_group">
+          <label>
+            <input
+              type="radio"
+              value="false"
+              {...register("previous_print", { required: true })}
+            />
+            New Print
+          </label>
+          <label style={{ marginLeft: "1rem" }}>
+            <input
+              type="radio"
+              value="true"
+              {...register("previous_print", { required: true })}
+            />
+            Reprint
+          </label>
+        </div>
+        {errors.previous_print && (
+          <span className="error">Print type is required</span>
+        )}
+      </div>
+
 
       <Button text={"Fetch Data"} loading={isPending} disabled={isPending} />
     </form>
