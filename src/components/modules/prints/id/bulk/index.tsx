@@ -26,7 +26,10 @@ const BulkComp = ({ bulkData }: any) => {
               <img src={data?.PhotoID} alt="Profile" />
             </div>
 
-            <p className="enumeration-id"> {data?.EnumerationID}</p>
+            <div className="enum-row">
+            <p className="label">ENUM-ID</p>
+            <p className="enumeration-id">{data?.EnumerationID}</p>
+          </div>
           </div>
           <div className="right-section">
             <div className="personal-details">
@@ -55,7 +58,7 @@ const BulkComp = ({ bulkData }: any) => {
             />
           </div>
           <div className="abssin_span">
-             <p className="abssin_text">ABSSIN {" "}</p>
+          <p className="abssin_text">ABSSIN</p>
           <p className="abssin_number"> {data?.state_id}</p>
           </div>
 

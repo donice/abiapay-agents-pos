@@ -103,6 +103,19 @@ const PrintIDComp = () => {
                 font-weight: 700;
                 letter-spacing: 0.075rem;
               }
+
+              .enum-row {
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+                align-items: center;
+                margin-top: 0.5rem;
+              
+                p {
+                  margin: 0;
+                  line-height: 1;
+                }
+              }
             }
 
             .right-section {
@@ -140,31 +153,28 @@ const PrintIDComp = () => {
             justify-content: center;
             align-items: center;
           }
-
-          .abssin_span {
-            display: flex;
-            position: absolute;
-            bottom: 0.85rem;
-            right: 1.75rem;
-          }
+      
 
           .abssin_span {
             display: flex;
             flex-direction: column;
+            align-items: center;
             position: absolute;
-            bottom: 1.15rem;
+            bottom: 1.45rem;
             right: 0.75rem;
-          }
-          
-          .abssin_text {
-            text-align: center;
+
+            p {
+              margin: 0;
+              line-height: 1.1;
             }
 
-          .abssin_number {
-            font-weight: bold;
+            .abssin_number {
+              font-weight: bold;
+              font-family: 'Courier New', Courier, monospace;
+              font-weight: 800;
+              letter-spacing: 0.075rem;
+            }
           }
-
-
             </style>
           </head>
           <body>${printContents}</body>
