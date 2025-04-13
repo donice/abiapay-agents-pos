@@ -20,12 +20,21 @@ export const verifyTicket = async (requestData: VerifyTicketStatusPayload) => {
       `${url}/transport/verify-ticket`,
       requestData
     );
-
+    console.log("i am in success")
     return res;
   } catch (error: any) {
-    return {
-      error: error.data
-    }
+    console.error("API Error:", error);
+    throw error; 
   }
 };
 
+export const fetchAssessment = async () => {
+  try{
+    const {data} = await axiosInstance.get(
+      `${url}/transport/assessment-types`
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+}

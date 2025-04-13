@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import {
@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import "./style.scss";
 import toast from "react-hot-toast";
-import { VerifyTicketStatusPayload } from "@/src/services/verifyTicketStatus";
+import { fetchAssessment, VerifyTicketStatusPayload } from "@/src/services/verifyTicketStatus";
 
 const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
   const {
@@ -27,39 +27,81 @@ const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
     },
   });
 
-  const selectedVerificationType = watch("verificationType");
+  const selectedVerificationType = watch("verifyType");
+
+  const [assessments,setAsessments]=useState<any>([]);
 
 
   const mutation = useMutation({
     mutationFn: async (data: VerifyTicketStatusPayload) => verifyTicket(data),
     onSuccess: (data: any) => {
-      const res = data?.data?.data;
-      console.log("data", res);
-      if (data?.status == 200) {
-        if (res?.response_code == "00") {
-          setDetails(res);
-          toast.success("Ticket verified successfully");
-        } else {
-          res.response_code == "99" &&
-            setDetails(null) &&
-            toast.error(res.response_message);
-          res.response_code == "97" &&
-            setDetails(res) &&
-            toast.error(res.response_message ?? "No ticket for today");
-        }
+      const res = data?.data;
+  
+      console.log("API Response:", data);
+  
+      const responseCode = res?.data?.response_code;
+      const responseMessage = res?.data?.response_message;
+  
+      if (responseCode === "00") {
+        setDetails(res.data);
+        toast.success("Ticket verified successfully");
+      } else if (responseCode === "97") {
+        setDetails(res.data);
+        toast.error(responseMessage || "No ticket for today");
+      } else if (responseCode === "99") {
+        console.log("99")
+        setDetails(null);
+        toast.error(responseMessage || "Ticket not found");
       } else {
-        return;
+        toast.error("Unknown response from server");
       }
+  
       reset();
-      return;
     },
     onError: (error: any) => {
-      toast.error(error);
-      // setDetails(error.data);
-      console.log(error);
+      console.log("error", error);
+    
+      const res = error?.response?.data?.data; // or error?.data?.data depending on how your API client is set up
+      const responseCode = res?.response_code;
+      const responseMessage = res?.response_message;
+    
+      if (responseCode === "99") {
+        setDetails(null);
+        toast.error(responseMessage || "Ticket not found");
+      } else if (responseCode === "97") {
+        setDetails(res);
+        toast.error(responseMessage || "No ticket for today");
+      } else {
+        toast.error("An error occurred");
+      }
+    
       return error;
     },
   });
+  
+
+  const getAssessments = async () => {
+    try {
+      const { data } = await fetchAssessment();
+      console.log("res", data);
+      const response = data?.map((item: any) => {
+        return {
+          label: item?.name,
+          value: item?.name,
+        };
+      });
+      console.log("response", response);
+      setAsessments(response);
+    } catch (error: any) {
+      console.log(error);
+      toast.error("Error Enumerating Vehicle");
+    }
+  };
+
+   useEffect(() => {
+      getAssessments();
+    }, []);
+
 
   const onSubmit = (data: VerifyTicketStatusPayload) => {
     mutation.mutate({ ...data, agentEmail: userData?.email });
@@ -69,8 +111,8 @@ const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
     <form onSubmit={handleSubmit(onSubmit)} className="verify-tickets-form">
          <SelectInput
         label="Verification Type"
-        name="verificationType"
-        id="verificationType"
+        name="verifyType"
+        id="verifyType"
         register={register}
         options={[
             { label: "Transport", value: "transport" },
@@ -194,14 +236,10 @@ const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
           />
           <SelectInput
             label="Assessment Type"
-            name="assessmentType"
-            id="assessmentType"
+            name="assessment_type"
+            id="assessment_type"
             register={register}
-            options={[
-              { label: "Personal", value: "personal" },
-              { label: "Business", value: "business" },
-              { label: "Corporate", value: "corporate" },
-            ]}
+            options={assessments}
             placeholder="Select Assessment Type"
           />
           <SelectInput
@@ -218,7 +256,7 @@ const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
           />
         </>
       )}
-      <Button text="Verify Ticket" loading={mutation.isPending} />
+      <Button text="Verify Payment" loading={mutation.isPending} />
     </form>
   );
 };
