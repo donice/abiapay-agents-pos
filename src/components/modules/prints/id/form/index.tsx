@@ -12,6 +12,7 @@ import {
   fetchBulkPrintsData,
   FetchBulkPrintsPayload,
 } from "@/src/services/bulkPrintsService";
+import "./style.scss";
 
 interface LGA {
   label: string;
