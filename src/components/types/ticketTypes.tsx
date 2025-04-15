@@ -24,12 +24,12 @@ export interface CreateManifestPayloadType {
   passengers: [
     {
       name: string,
-      phone_number: number,
+      phone_number: number | null,
       next_of_kin_name: string,
       next_of_kin_phone: string
     }
   ],
-  amount: number,
+  amount: number | null,
   wallet_type: string
 }
 

@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { fetchProducts } from "@/src/services/common";
+
+import { useEffect } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
@@ -14,11 +14,11 @@ import { useDebounce } from "@/src/hooks/useDebounce";
 import "./style.scss";
 import { CreateManifestPayloadType } from "@/src/components/types/ticketTypes";
 import {
-  Product,
   createManifest,
   fetchPlateNumberInfo,
 } from "@/src/services/ticketsServices";
 import { useMutation } from "@tanstack/react-query";
+import { RiAddLine, RiDeleteBin2Line } from "react-icons/ri";
 
 const AddManifestForm = ({
   show,
@@ -26,9 +26,7 @@ const AddManifestForm = ({
   paymentRef,
   setPaymentRef,
   selectedPeriod,
-  setSelectedPeriod,
   selectedProduct,
-  setSelectedProduct,
 }: any) => {
   const {
     register,
@@ -36,6 +34,7 @@ const AddManifestForm = ({
     handleSubmit,
     formState: { errors },
     setValue,
+    control,
   } = useForm<CreateManifestPayloadType>({
     defaultValues: {
       merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
@@ -47,33 +46,24 @@ const AddManifestForm = ({
       passengers: [
         {
           name: "",
-          phone_number: 0,
+          phone_number: null,
           next_of_kin_name: "",
-          next_of_kin_phone: ""
-        }
+          next_of_kin_phone: "",
+        },
       ],
-      amount: 0
+      amount: null,
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "passengers",
+  });
+
   const router = useRouter();
-  const [products, setProducts] = useState<Product[]>([]);
 
   const data = useIsBrower() && sessionStorage.getItem("USER_DATA");
   const user_data = data && JSON.parse(data);
-  const getProductsData = async () => {
-    try {
-      const response = await fetchProducts();
-      setProducts(response?.data);
-    } catch {
-      toast.error("Error fetching products");
-    }
-  };
-
-
-  useEffect(() => {
-    getProductsData();
-  }, []);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateManifestPayloadType) => {
@@ -133,18 +123,17 @@ const AddManifestForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
-
-    <FormTextInput
-      label="Plate Number"
-      type="text"
-      name="vehiclePlateNumber"
-      placeholder="Enter Plate Number"
-      register={register}
-      validation={{
-        required: true,
-        setValueAs: (value: string) => value.toUpperCase()
-      }}
-      error={errors.vehiclePlateNumber}
+      <FormTextInput
+        label="Plate Number"
+        type="text"
+        name="vehiclePlateNumber"
+        placeholder="Enter Plate Number"
+        register={register}
+        validation={{
+          required: true,
+          setValueAs: (value: string) => value.toUpperCase(),
+        }}
+        error={errors.vehiclePlateNumber}
       />
 
       <FormTextInput
@@ -183,7 +172,6 @@ const AddManifestForm = ({
         name="amount"
         placeholder="Enter Amount"
         register={register}
-        readOnly
         validation={{ required: true }}
         error={errors.amount}
       />
@@ -201,6 +189,91 @@ const AddManifestForm = ({
         placeholder="Select Wallet Type"
         error={!!errors.wallet_type}
       />
+
+      <div className="passengers-section">
+        <h4>{`Passenger${fields.length > 1 ? "s" : ""}`}</h4>
+        {fields.map((field, index) => (
+          <div key={field.id} className="add-ticket">
+            <FormTextInput
+              label={`Passenger ${index + 1} Name`}
+              type="text"
+              name={`passengers.${index}.name`}
+              placeholder="Enter Name"
+              register={register}
+              validation={{ required: "Passenger name required" }}
+              error={errors.passengers?.[index]?.name}
+            />
+
+            <FormTextInput
+              label="Phone Number"
+              type="number"
+              name={`passengers.${index}.phone_number`}
+              placeholder="Enter Phone Number"
+              register={register}
+              validation={{ required: "Phone number required" }}
+              error={errors.passengers?.[index]?.phone_number}
+            />
+
+            <FormTextInput
+              label="Next of Kin Name"
+              type="text"
+              name={`passengers.${index}.next_of_kin_name`}
+              placeholder="Enter Next of Kin Name"
+              register={register}
+              validation={{ required: "Next of Kin name required" }}
+              error={errors.passengers?.[index]?.next_of_kin_name}
+            />
+
+            <FormTextInput
+              label="Next of Kin Phone"
+              type="number"
+              name={`passengers.${index}.next_of_kin_phone`}
+              placeholder="Enter Next of Kin Phone"
+              register={register}
+              validation={{ required: "Next of Kin phone required" }}
+              error={errors.passengers?.[index]?.next_of_kin_phone}
+            />
+
+            {fields.length > 1 && (
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                className="remove-btn"
+              >
+                <RiDeleteBin2Line /> <span>Remove Passenger</span>
+              </button>
+            )}
+          </div>
+        ))}
+
+        <button
+          type="button"
+          onClick={() => {
+            const lastPassenger = watch("passengers")?.[fields.length - 1];
+
+            if (
+              lastPassenger?.name &&
+              lastPassenger?.phone_number &&
+              lastPassenger?.next_of_kin_name &&
+              lastPassenger?.next_of_kin_phone
+            ) {
+              append({
+                name: "",
+                phone_number: null,
+                next_of_kin_name: "",
+                next_of_kin_phone: "",
+              });
+            } else {
+              toast.error(
+                "Please fill all fields for the current passenger before adding a new one."
+              );
+            }
+          }}
+          className="add-btn"
+        >
+          <RiAddLine /> <span>Add Passenger</span>
+        </button>
+      </div>
 
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
