@@ -14,6 +14,25 @@ export interface CreateTicketPayload {
   amount: number | string;
   wallet_type: string;
 }
+
+export interface CreateManifestPayloadType {
+  merchant_key: string,
+  taxpayer_name: string,
+  taxpayer_phone: string,
+  vehiclePlateNumber: string,
+  destination: string,
+  passengers: [
+    {
+      name: string,
+      phone_number: number,
+      next_of_kin_name: string,
+      next_of_kin_phone: string
+    }
+  ],
+  amount: number,
+  wallet_type: string
+}
+
 export interface CreateIndividualSportPayload {
   abssin: string,
   taxpayer_name: string,
