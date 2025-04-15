@@ -239,9 +239,9 @@ const AddTransportTicketForm = ({
         disabled={!selectedProduct}
         options={[
           { value: "", label: "Select Payment Period" },
-          { value: "1 Day", label: "1 Day" },
-          { value: "1 Week", label: "1 Week" },
-          { value: "1 Month", label: "1 Month" },
+          { value: "1Day", label: "1 Day" },
+          { value: "1Week", label: "1 Week" },
+          { value: "1Month", label: "1 Month" },
         ]}
         placeholder="Select Payment Period"
         error={!!errors.paymentPeriod}
