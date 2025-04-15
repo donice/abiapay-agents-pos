@@ -37,13 +37,13 @@ const AddManifestComp = () => {
         </div>
       </div>
 
-      {show && (
+      {/* {show && (
         <SuccessModal
           text="View Receipt"
           link="/tickets/transport/add/summary"
           id={`Ref: ${paymentRef}, Valid for: ${selectedPeriod}, Payment for: ${selectedProduct}`}
         />
-      )}
+      )} */}
     </section>
   );
 };

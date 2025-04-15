@@ -167,6 +167,16 @@ const AddManifestForm = ({
       />
 
       <FormTextInput
+        label="Destination"
+        type="text"
+        name="destination"
+        placeholder="Enter Destination"
+        register={register}
+        validation={{ required: true }}
+        error={errors.destination}
+      />
+
+      <FormTextInput
         label="Amount"
         type="number"
         name="amount"
@@ -276,15 +286,16 @@ const AddManifestForm = ({
       </div>
 
       <div className="btn_container">
-        <BackButton link="/tickets/transport" />
-        <Button text="Process Payment" loading={isPending} />
+        <BackButton link="/tickets" />
+        <Button text="Create Manifest" loading={isPending} />
       </div>
 
       {show && (
         <SuccessModal
-          text="View Receipt"
-          link="/tickets/transport/add/summary"
-          id={`Ref: ${paymentRef}, Valid for: ${selectedPeriod}, Payment for: ${selectedProduct}`}
+          maintext="Transaction completed successfully"
+          link="/tickets"
+          buttonText="Close"
+          id={`Manifest with Ref: ${paymentRef} was successfully created`}
         />
       )}
     </form>
