@@ -26,6 +26,7 @@ interface SuccessModalProps {
   maintext?: string;
   id?: string;
   text?: string;
+  buttonText?: string;
   link?: string;
   onClick?: any;
   icon?: React.ReactNode;
@@ -101,6 +102,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
   maintext,
   id,
   text,
+  buttonText,
   link,
   icon,
 }) => {
@@ -124,11 +126,11 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
           {/* {text && <p>{text}</p>} */}
           {link && (
             <button onClick={handleClick} className="button primary top">
-              {text}
+              {buttonText}
             </button>
           )}
 
-          <SecondaryButton text="Create New" link={"/tickets/transport"} />
+         {text && <SecondaryButton text="Create New" link={"/tickets/transport"} />}
         </div>
       </div>
     </div>
