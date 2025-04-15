@@ -192,6 +192,8 @@ const DashboardComponent: React.FC = () => {
 
   const { fidelityData, accessData, loading } = state;
 
+  console.log("userData", userData);
+
   return (
     <div className="dashboard">
       <header className="dashboard_header">
@@ -304,8 +306,9 @@ const DashboardComponent: React.FC = () => {
           <>
             {" "}
             <QuickLink name="Identity" link="/identity" />{" "}
+            <QuickLink name="Contract Management" link="/contract" />
             <QuickLink name="Bills" link="/bills" />{" "}
-            <QuickLink name="Demand Notices"  comingSoon={false} link="/demand-notices" />{" "}
+            {userData?.mda =="20008001" && <QuickLink name="Demand Notices"  comingSoon={false} link="/demand-notices" />}
             <QuickLink name="Receipts" link="/receipts" />
           </>
         )}
