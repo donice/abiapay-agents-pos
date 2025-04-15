@@ -10,6 +10,7 @@ import {
   FcDiploma2,
   FcAutomatic,
   FcSportsMode,
+  FcContacts,
 } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
@@ -33,6 +34,12 @@ const tickets: TicketsProps[] = [
     title: "Transport Tickets",
     desc: "Create transport ticket",
     icon: <FcShipped className="icon" />,
+  },
+  {
+    name: "tickets/manifest/add",
+    title: "Manifest",
+    desc: "Create transport manifest",
+    icon: <FcContacts className="icon" />,
   },
   {
     name: "tickets/market/add",

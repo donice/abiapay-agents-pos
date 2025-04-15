@@ -4,6 +4,7 @@ import { setToken } from "./setToken";
 import {
   CreateGroupSportPayload,
   CreateIndividualSportPayload,
+  CreateManifestPayloadType,
   CreateTicketPayload,
 } from "../components/types/ticketTypes";
 
@@ -50,6 +51,18 @@ export const createNewTicket = async (requestData: CreateTicketPayload) => {
   try {
     const { data } = await axiosInstance.post(
       `${url}/transport/create-ticket`,
+      requestData
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const createManifest = async (requestData: CreateManifestPayloadType) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/transport/create-manifest`,
       requestData
     );
     return data;
