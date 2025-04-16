@@ -79,7 +79,7 @@ const Dynamic = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateTicketPayload) => {
-      
+
       sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(data));
       return createNewTicket(data);
     },
@@ -164,6 +164,7 @@ const Dynamic = () => {
           maintext="Revend Ticket Successful"
           link="/tickets/transport/add/summary"
           id={`Valid for: ${ticket[0]?.payment_period}, Payment for: ${ticket[0]?.revenue_item} `}
+          buttonText="Done"
         />
       )}
     </div>

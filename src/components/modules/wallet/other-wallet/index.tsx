@@ -94,7 +94,7 @@ const OtherWalletsTransferComponent = () => {
 
   useEffect(() => {
     if (debouncedWalletNo) {
-      mutate({wallet_type: activeAccount, wallet_id: debouncedWalletNo});
+      mutate({ wallet_type: activeAccount, wallet_id: debouncedWalletNo });
     }
   }, [debouncedWalletNo, setValue]);
 
@@ -165,11 +165,22 @@ const OtherWalletsTransferComponent = () => {
           error={errors.desc}
         />
 
-        <Button text="Transfer Funds" loading={isPendingTransfer} disabled={isPendingTransfer}/>
+        <Button
+          text="Transfer Funds"
+          loading={isPendingTransfer}
+          disabled={isPendingTransfer}
+        />
         {/* <Button text="Transfer Funds" disabled={beneficiary === ""} /> */}
       </form>
 
-      {showSuccessModal && <SuccessModal maintext={"Transaction completed successfully"} link={"/wallet"} text="You can now proceed to sp" />}
+      {showSuccessModal && (
+        <SuccessModal
+          maintext={"Transaction completed successfully"}
+          link={"/wallet"}
+          text="You can now proceed to sp"
+          buttonText="Done"
+        />
+      )}
     </section>
   );
 };
