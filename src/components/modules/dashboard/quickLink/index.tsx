@@ -12,6 +12,7 @@ import {
   FcDeleteDatabase,
   FcDiploma2,
   FcBusinessContact,
+  FcBriefcase,
 } from "react-icons/fc";
 
 const QuickLinks = ({
@@ -25,6 +26,7 @@ const QuickLinks = ({
     | "Enforcement"
     | "Bills"
     | "Bulk Prints"
+    | "Contract Management"
     | "Demand Notices"
     | "Receipts"
     | "Verify Vehicle Status"
@@ -58,7 +60,9 @@ const QuickLinks = ({
         ) : name == "Traffic Offence Ticket" ? (
           <FcDeleteDatabase className="icon" />
         ) : name == "Ticket Fines" ? (
-          <FcDiploma2 className="icon" />
+          <FcDeleteDatabase className="icon" />
+        ) : name == "Contract Management" ? (
+          <FcBriefcase className="icon" />
         ) : name == "Identity" ? <FcBusinessContact className="icon" /> : (
           <Image src={badge} alt="badge" className="icon" />
         )}
