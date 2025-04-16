@@ -193,6 +193,7 @@ const Dynamic = () => {
           text="View Receipt"
           link="/tickets/transport/add/summary"
           id={`Valid for: ${ticket[0]?.payment_period}, Payment for: ${ticket[0]?.revenue_item} `}
+          buttonText="Done"
         />
       )}
       {show.mode == true && show.state == "warning" && (
