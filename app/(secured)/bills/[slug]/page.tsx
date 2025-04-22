@@ -21,6 +21,8 @@ import {
   fetchBillPayment,
   fetchBills,
   fetchInstantAccount,
+  sendBill,
+  SendBillPayload,
 } from "@/src/services/billServices";
 import { useForm } from "react-hook-form";
 import { SelectInput } from "@/src/components/common/input";
@@ -59,6 +61,21 @@ const Dynamic = () => {
     },
     onSuccess: (data: any) => {
       setBillIsueeDetails(data?.response_data);
+    },
+  });
+
+  const { mutate:mutateSendBill } = useMutation({
+    
+    mutationFn: (data: SendBillPayload) => {
+      return sendBill(data);
+    },
+    onSuccess: (data: any) => {
+      if (data.response_code == "96"){
+        toast.error(data.response_message);
+      }
+      else {
+        toast.success(data.response_message);
+      }
     },
   });
 
@@ -281,7 +298,10 @@ const Dynamic = () => {
         </div>
       </form>
       <div className="w-full grid gap-2 -mt-3">
-      <PrimaryButton text={"Send Bill"} disabled/>
+        <div className="w-full grid " onClick={() => mutateSendBill({ bill_ref: ticket[0]?.transref })}
+        >
+              <PrimaryButton text={"Send Bill"} />
+        </div>
       <BackButton link={"/bills"} />
       </div>
       {show.mode == true && show.state == "success" && (
