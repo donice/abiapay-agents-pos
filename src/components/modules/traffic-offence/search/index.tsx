@@ -45,7 +45,7 @@ const SearchTrafficTicket = () => {
                     className="ticket"
                     onClick={() =>
                       router.push(
-                        `/vehicle-status/license-vehicle-status/${transaction.registrationNumber}`
+                        `/traffic-offence/traffic-ticket-history/${transaction.payment_reference}`
                       )
                     }
                   >
