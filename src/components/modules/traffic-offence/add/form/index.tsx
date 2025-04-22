@@ -75,7 +75,7 @@ const AddTrafficOffenceTicketForm = ({
     onSuccess: (response: any) => {
       if (response.responseCode === "00") {
         toast.success(response.message);
-        router.push("/tickets/transport");
+        router.push("/traffic-offence/traffic-ticket-history");
         // setPaymentRef(response.payment_ref);
         // setShow(true);
       } else if (response.response_code === "74") {
@@ -112,7 +112,6 @@ const AddTrafficOffenceTicketForm = ({
 
           if (response.data?.length !== 0) {
             toast.success(response.message);
-            router.push("/traffic-offence/traffic-ticket-history");
             setValue("taxpayer_name", response.data.Name);
             setValue("taxpayer_phone", response.data.Phone);
           }
