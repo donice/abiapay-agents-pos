@@ -12,6 +12,8 @@ export interface VerifyTicketStatusPayload {
   enumerationYear?: string;
   billReference?: string;
   abssin: string;
+  referenceType?:string;
+  plateNumber?: string;
 }
 
 export const verifyTicket = async (requestData: VerifyTicketStatusPayload) => {
