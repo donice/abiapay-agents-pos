@@ -130,7 +130,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
             </button>
           )}
 
-         {text && <SecondaryButton text="Create New" link={"/tickets/transport"} />}
+         {text && <SecondaryButton text="Create New" link={link || "/tickets/transport"} />}
         </div>
       </div>
     </div>

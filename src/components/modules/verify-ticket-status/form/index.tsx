@@ -200,6 +200,8 @@ const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
             id="fiscalYear"
             register={register}
             options={[
+              { label: "2021", value: "2021" },
+              { label: "2022", value: "2022" },
               { label: "2023", value: "2023" },
               { label: "2024", value: "2024" },
               { label: "2025", value: "2025" },
@@ -212,25 +214,28 @@ const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
       {selectedVerificationType === "market_levy" && (
         <>
           <FormTextInput
-            label="Enumeration Year"
+            label="Enumeration ID"
             type="text"
-            name="enumerationYear"
-            placeholder="Enter Enumeration Year"
+            name="enumerationID"
+            placeholder="Enter Enumeration ID"
             register={register}
             validation={{ required: true }}
-            error={errors.enumerationYear}
+            error={errors.enumerationID}
           />
           <SelectInput
-            label="Fiscal Year"
-            name="fiscalYear"
-            id="fiscalYear"
+            label="Enumeration Year"
+            name="enumerationYear"
+            id="enumerationYear"
             register={register}
             options={[
+              { label: "2021", value: "2021" },
+              { label: "2022", value: "2022" },
               { label: "2023", value: "2023" },
               { label: "2024", value: "2024" },
               { label: "2025", value: "2025" },
             ]}
-            placeholder="Select Fiscal Year"
+            placeholder="Select Enumeration Year"
+        
           />
         </>
       )}
@@ -272,6 +277,8 @@ const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
             id="fiscalYear"
             register={register}
             options={[
+              { label: "2021", value: "2021" },
+              { label: "2022", value: "2022" },
               { label: "2023", value: "2023" },
               { label: "2024", value: "2024" },
               { label: "2025", value: "2025" },

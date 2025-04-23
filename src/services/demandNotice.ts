@@ -24,6 +24,10 @@ export interface generateDemandNoticePayload {
   fiscal_year?: string
 }
 
+export interface fetchBusinessAbssinPayload {
+  state_id: string;
+}
+
 
   export const searchDemandNotice = async (requestData: searchDemandNoticePayload) => {
     try {
@@ -35,6 +39,21 @@ export interface generateDemandNoticePayload {
       return {
         error: error.response?.data?.message || "Failed to fetch demand notice",
       };
+    }
+  };
+
+
+  export const fetchBusinessAbssin = async (
+    requestBody: fetchBusinessAbssinPayload
+  ) => {
+    try {
+      const { data } = await axiosInstance.post(
+        `${url}/abssin/fetch-business-abssin`,
+        requestBody 
+      );
+      return data;
+    } catch (error: any) {
+      throw new Error(`Error fetching Business Abssin: ${error?.message}`);
     }
   };
 
