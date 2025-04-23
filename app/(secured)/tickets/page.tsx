@@ -41,7 +41,7 @@ const tickets: TicketsProps[] = [
     title: "Manifest",
     desc: "Create transport manifest",
     icon: <FcContacts className="icon" />,
-    comingsoon: true,
+    // comingsoon: true,
   },
   {
     name: "tickets/market/add",
