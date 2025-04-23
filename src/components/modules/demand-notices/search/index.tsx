@@ -68,30 +68,29 @@ const SearchDemandnoticeComponent = () => {
                     />
         </header>
           
-      <form onSubmit={handleSubmit(onSubmit)} className="verify-tickets-comp_form">
-        <FormTextInput
-          label="Notice Number"
-          type="text"
-          name="notice_number"
-          placeholder="Enter Notice Number"
-          register={register}
-          validation={{ required: true }}
-          error={errors.notice_number}
-        />
-        <SelectInput 
-        className="mt-4"
-          label="Fiscal Year"
-          name="year"
-          id="year"
-          register={register}
-          options={[
-            { label: "2024", value: "2024" },
-            { label: "2025", value: "2025" },
-          ]}
-          placeholder="Select Fiscal Year"
-        />
-        <Button text="Search Demand Notice" loading={mutation.isPending} />
-      </form>
+        <form onSubmit={handleSubmit(onSubmit)} className="verify-tickets-comp_form flex flex-col gap-4">
+  <FormTextInput
+    label="Notice Number"
+    type="text"
+    name="notice_number"
+    register={register}
+    validation={{ required: true }}
+    error={errors.notice_number}
+  />
+  <SelectInput 
+    label="Fiscal Year"
+    name="year"
+    id="year"
+    register={register}
+    options={[
+      { label: "2024", value: "2024" },
+      { label: "2025", value: "2025" },
+    ]}
+    placeholder="Select Fiscal Year"
+  />
+  <Button text="Search Demand Notice" loading={mutation.isPending} />
+</form>
+
       </div>
     
 
