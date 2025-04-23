@@ -39,6 +39,10 @@ export interface CreateBillPayload {
     ]
 }
 
+export interface SendBillPayload {  
+  bill_ref: string;
+}
+
 export interface ConfirmInstantAccountPaymentPayload {
   notice_number: string;
 }
@@ -111,6 +115,20 @@ export const createBill = async (
     return data;
   } catch (error: any) {
     throw new Error(`Error creating bill: ${error?.message}`);
+  }
+};
+
+export const sendBill = async (
+  requestBody: SendBillPayload
+) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/payment/send-bill-notification`,
+      requestBody 
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error Sending bill: ${error?.message}`);
   }
 };
 

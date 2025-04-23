@@ -15,6 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchAllOffences } from "@/src/services/trafficOffences";
+import { useRouter } from "next/navigation";
 
 const AddTrafficOffenceTicketForm = ({
   setSelectedType,
@@ -38,6 +39,7 @@ const AddTrafficOffenceTicketForm = ({
       wallet_type: "fidelity",
     },
   });
+  const router = useRouter();
 
   const [offences, setOffences] = React.useState<Offences[]>([]);
   const [vehicles, setVehicles] = React.useState<Product[]>([]);
@@ -73,6 +75,7 @@ const AddTrafficOffenceTicketForm = ({
     onSuccess: (response: any) => {
       if (response.responseCode === "00") {
         toast.success(response.message);
+        router.push("/traffic-offence/traffic-ticket-history");
         // setPaymentRef(response.payment_ref);
         // setShow(true);
       } else if (response.response_code === "74") {
@@ -91,7 +94,6 @@ const AddTrafficOffenceTicketForm = ({
     const formData = {
       ...data,
       transaction_date: getCurrentDateTime(),
-      //   invoice_id: `INV${randomInvoiceGenerator()}`,
     };
 
     sessionStorage.setItem("TRAFFIC_OFFENCE", JSON.stringify(formData));
