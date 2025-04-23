@@ -12,9 +12,7 @@
   &-comp {
     display: flex;
     flex-direction: column;
-    min-height: 10vh;
     height: 100%;
-    // margin-top: 1.5rem;
 
     &_header {
       margin-bottom: 2rem;
@@ -35,16 +33,9 @@
           padding: px-to-rem(12px) 0;
         }
 
-        p {
-          &:nth-child(1) {
-            color: $text-primary;
-            font-size: 14px;
-
-            &:last-of-type {
-              // border: 2px solid red;
-              font-weight: 700;
-            }
-          }
+        p:first-child {
+          color: $text-primary;
+          font-size: 14px;
         }
       }
 
@@ -54,6 +45,7 @@
         font-size: 1.25rem;
         text-align: right;
       }
+
       .failure {
         color: red;
         font-weight: 600;
