@@ -54,6 +54,8 @@ const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
       no_of_cards: "",
       page: 1,
       previous_print: "false", 
+      start_date: "",
+      end_date: "",
     },
   });
 
@@ -103,6 +105,28 @@ const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
         validation={{ required: true }}
         error={errors.no_of_cards}
       />
+
+      <div className="date_group">
+        <FormTextInput
+          label={"Start Date"}
+          type="date"
+          name={"start_date"}
+          placeholder="Select Start Date"
+          register={register}
+          validation={{ required: true }}
+          error={errors.start_date}
+        />
+      
+        <FormTextInput
+          label={"End Date"}
+          type="date"
+          name={"end_date"}
+          placeholder="Select End Date"
+          register={register}
+          validation={{ required: true }}
+          error={errors.end_date}
+        />
+      </div>
 
       <div className="form_group">
         <label className="form_label">Print Type</label>

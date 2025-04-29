@@ -12,6 +12,7 @@ import {
   fetchBulkPrintsData,
   FetchBulkPrintsPayload,
 } from "@/src/services/bulkPrintsService";
+import './style.scss';
 
 interface LGA {
   label: string;
@@ -53,6 +54,8 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
       no_of_cards: "",
       page: 1,
       previous_print: "false",
+      start_date: "",
+      end_date: "",
     },
   });
 
@@ -94,6 +97,8 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
         options={lga}
       />
 
+
+
       <FormTextInput
         label={"Number of Cards"}
         type="number"
@@ -113,6 +118,28 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
         validation={{ required: true }}
         error={errors.page}
       />
+
+<div className="date_group">
+  <FormTextInput
+    label={"Start Date"}
+    type="date"
+    name={"start_date"}
+    placeholder="Select Start Date"
+    register={register}
+    validation={{ required: true }}
+    error={errors.start_date}
+  />
+
+  <FormTextInput
+    label={"End Date"}
+    type="date"
+    name={"end_date"}
+    placeholder="Select End Date"
+    register={register}
+    validation={{ required: true }}
+    error={errors.end_date}
+  />
+</div>
 
 <div className="form_group">
         <label className="form_label">Print Type</label>
