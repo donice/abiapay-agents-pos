@@ -11,6 +11,7 @@ import { FormTextInput } from "@/src/components/common/input";
 import { FormButton } from "@/src/components/common/button";
 import { BuyAirtimeService } from "@/src/services/VATService";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const AirtimeModule = () => {
   const router = useRouter();
@@ -40,7 +41,7 @@ const AirtimeModule = () => {
     queryFn: () => {
       return fetchDashboardData();
     },
-  })
+  });
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["buy_airtime"],
@@ -52,10 +53,14 @@ const AirtimeModule = () => {
       await refetch();
 
       if (data?.response_code == "00") {
+        if (typeof data?.response_message !== "string") {
+          return toast.error("Unsuccessful airtime purchase");
+        } else {
           router.push("/success");
+        }
+      } else {
+        toast.error(data?.response_message);
       }
-
-
     },
     onError: (error) => {
       console.error(error);
@@ -75,7 +80,7 @@ const AirtimeModule = () => {
           activeAccount={activeAccount}
           setActiveAccount={setActiveAccount}
           onWalletSelect={handleWalletSelect}
-          type="earnings"
+          type="balance"
         />
 
         <Networks onNetworkSelect={handleNetworkSelect} />
@@ -102,7 +107,9 @@ const AirtimeModule = () => {
             />
 
             <div>
-            <AirtimeAmounts onAmountSelect={(amount: number) => setValue("amount", amount)}/>
+              <AirtimeAmounts
+                onAmountSelect={(amount: number) => setValue("amount", amount)}
+              />
             </div>
             <FormTextInput
               label={"Amount"}
@@ -115,7 +122,6 @@ const AirtimeModule = () => {
               error={errors.amount}
               register={register}
             />
-
 
             <FormButton
               text={"Buy Airtime"}
