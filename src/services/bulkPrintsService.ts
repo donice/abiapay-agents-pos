@@ -15,7 +15,9 @@ export interface FetchBulkPrintsPayload {
   lga: number,
   card_type: string,
   no_of_cards: 50,
-  page: 1
+  page: 1,
+  start_date: string,
+  end_date: string
 }
 
 export const fetchBulkPrintsData = async ( reqData: FetchBulkPrintsPayload )=> {

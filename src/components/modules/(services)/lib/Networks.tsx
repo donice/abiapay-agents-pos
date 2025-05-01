@@ -78,12 +78,14 @@ export const AirtimeAmounts = ({ onAmountSelect }: any) => {
       <h1 className="networks-title">Select Amount</h1>
       <div className="airtime-amounts-container">
         {airtimeAmounts.map((amount) => (
+
           <div
             key={amount}
             className="airtime-amounts"
             onClick={() => handleAmountClick(amount)}
           >
-            ₦{amount}
+           <p className="-mb-2">₦{amount}</p>
+            <span className="text-purple-500 text-xs font-normal">₦{(amount * 0.015).toFixed(2)} Cashback</span>
           </div>
         ))}
       </div>

@@ -11,6 +11,7 @@ import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { FormButton } from "@/src/components/common/button";
 import { BuyDataService, GetDataPlans } from "@/src/services/VATService";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const DataModule = () => {
   const router = useRouter();
@@ -67,9 +68,18 @@ const DataModule = () => {
       const res = await BuyDataService(data);
       return res;
     },
-    onSuccess: async () => {
+    onSuccess: async (data: any) => {
       await refetch();
-      router.push("/success");
+
+      if (data?.response_code == "00") {
+        if (typeof data?.response_message !== "string") {
+          return toast.error("Unsuccessful data purchase");
+        } else {
+          router.push("/success");
+        }
+      } else {
+        toast.error(data?.response_message);
+      }
     },
     onError: (error) => {
       console.error(error);
@@ -77,7 +87,8 @@ const DataModule = () => {
   });
 
   const onSubmit = (data: AirtimeServiceTypes) => {
-    mutate(data);
+    console.log("Form Data: ", data); // Debugging
+    mutate({...data, amount: Number(data.amount)});
   };
 
   return (
@@ -89,7 +100,7 @@ const DataModule = () => {
           activeAccount={activeAccount}
           setActiveAccount={setActiveAccount}
           onWalletSelect={handleWalletSelect}
-          type="earnings"
+          type="balance"
         />
 
         <Networks onNetworkSelect={handleNetworkSelect} />
@@ -140,7 +151,7 @@ const DataModule = () => {
               register={register}
             />
 
-            <FormButton text={"Buy Airtime"} disabled={isPending} loading={isPending} />
+            <FormButton text={"Buy Data"} disabled={isPending} loading={isPending} />
           </form>
         )}
       </section>

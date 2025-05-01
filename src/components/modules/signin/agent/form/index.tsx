@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FormButton } from "@/src/components/common/button";
-import { TextInput } from "@/src/components/common/input"; // Importing the custom input component
+import { TextInput } from "@/src/components/common/input";
 import "./style.scss";
 import toast from "react-hot-toast";
 import { login, useAuthDispatch } from "@/src/context/authContext";
