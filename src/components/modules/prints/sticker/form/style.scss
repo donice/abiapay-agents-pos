@@ -1,0 +1,8 @@
+.date_group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; 
+    .form_group {
+      flex: 1; 
+    }
+  }
