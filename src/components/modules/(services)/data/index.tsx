@@ -87,7 +87,8 @@ const DataModule = () => {
   });
 
   const onSubmit = (data: AirtimeServiceTypes) => {
-    mutate(data);
+    console.log("Form Data: ", data); // Debugging
+    mutate({...data, amount: Number(data.amount)});
   };
 
   return (
