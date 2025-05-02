@@ -6,7 +6,7 @@ import React from "react";
 import TransferWalletCards from "../../wallet/components/wallet-cards";
 import Networks, { AirtimeAmounts } from "../lib/Networks";
 import "../style.scss";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { FormTextInput } from "@/src/components/common/input";
 import { FormButton } from "@/src/components/common/button";
 import { BuyAirtimeService } from "@/src/services/VATService";
@@ -22,12 +22,15 @@ const AirtimeModule = () => {
     setValue,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm<AirtimeServiceTypes>({
     defaultValues: {
       wallet: "fidelity",
     },
   });
+
+  const selectedNetwork = useWatch({ control, name: "network" });
 
   const handleNetworkSelect = (network: string) => {
     setValue("network", network);
@@ -45,6 +48,7 @@ const AirtimeModule = () => {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["buy_airtime"],
+
     mutationFn: async (data: AirtimeServiceTypes) => {
       const res = await BuyAirtimeService(data);
       return res;
@@ -85,7 +89,7 @@ const AirtimeModule = () => {
 
         <Networks onNetworkSelect={handleNetworkSelect} />
 
-        {watch("network") !== null && (
+        {selectedNetwork && (
           <form className="service_form" onSubmit={handleSubmit(onSubmit)}>
             <FormTextInput
               label={"Phone Number"}
@@ -122,6 +126,13 @@ const AirtimeModule = () => {
               error={errors.amount}
               register={register}
             />
+
+            {watch("amount") && (
+              <span className="animate-slide-down text-blue-500 text-xs font-normal border border-blue-200 bg-blue-50 p-1 rounded-md text-center block">
+                You will receive a ₦{(watch("amount") * 0.015).toFixed(2)}{" "}
+                Cashback
+              </span>
+            )}
 
             <FormButton
               text={"Buy Airtime"}

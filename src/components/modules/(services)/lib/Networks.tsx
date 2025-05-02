@@ -83,7 +83,7 @@ export const AirtimeAmounts = ({ onAmountSelect }: any) => {
             onClick={() => handleAmountClick(amount)}
           >
            <p className="-mb-2">₦{amount}</p>
-            <span className="text-purple-500 text-xs font-normal">₦{(amount * 0.015).toFixed(2)} Cashback</span>
+            <span className="text-blue-500 text-xs font-normal">₦{(amount * 0.015).toFixed(2)} Cashback</span>
           </div>
         ))}
       </div>
