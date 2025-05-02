@@ -5,7 +5,7 @@ interface NetworkProps {
   onNetworkSelect: (network: string) => void;
 }
 
-const networkArr = [
+export const networkArr = [
   {
     name: "MTN",
     value: "mtn",
@@ -23,7 +23,7 @@ const networkArr = [
   },
   {
     name: "9mobile",
-    value: "etisalat",
+    value: "9mobile",
     img: "https://9mobile.com.ng/_next/static/media/logos.2143115e.png",
   },
 ];
@@ -67,10 +67,8 @@ const Networks: React.FC<NetworkProps> = ({ onNetworkSelect }) => {
 export default Networks;
 
 export const AirtimeAmounts = ({ onAmountSelect }: any) => {
-  const [amount, setAmount] = useState<number | null>(null);
 
   const handleAmountClick = (value: number) => {
-    setAmount(value);
     onAmountSelect(value);
   };
   return (
