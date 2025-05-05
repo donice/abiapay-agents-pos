@@ -12,6 +12,7 @@ import { FormButton } from "@/src/components/common/button";
 import { BuyAirtimeService } from "@/src/services/VATService";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const AirtimeModule = () => {
   const router = useRouter();
@@ -78,6 +79,11 @@ const AirtimeModule = () => {
   return (
     <div>
       <CustomHeader title="Airtime" desc="Purchase airtime for any network" />
+      <div className="flex flex-end justify-end items-center my-4">
+        <Link href={"/airtime/history"} className="text-sm font-bold">
+          View history
+        </Link>
+      </div>
       <section className="service">
         <TransferWalletCards
           data={data}
