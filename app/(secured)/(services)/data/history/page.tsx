@@ -1,10 +1,10 @@
 import React from 'react'
-import AirtimeHistoryModule from './_components'
+import DataHistoryModule from './_components'
 
-const AirtimeHistoryPage = () => {
+const DataHistoryPage = () => {
   return (
-    <AirtimeHistoryModule />
+    <DataHistoryModule />
   )
 }
 
-export default AirtimeHistoryPage
+export default DataHistoryPage

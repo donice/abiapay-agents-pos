@@ -6,12 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { RiFileListLine } from "react-icons/ri";
 
-const AirtimeHistoryModule = () => {
+const DataHistoryModule = () => {
   const { data } = useQuery({
     queryKey: ["airtimeHistory"],
     queryFn: async () => {
       const res = await axiosInstance.post(
-        `/topup/purchase-history?limit=10&page=1&type=airtime`
+        `/topup/purchase-history?limit=10&page=1&type=data`
       );
       return res.data?.response_data;
     },
@@ -23,7 +23,7 @@ const AirtimeHistoryModule = () => {
 
   return (
     <div>
-      <CustomHeader title={"Airtime History"} desc={"View all history for airtime"} />
+      <CustomHeader title={"Data History"} desc={"View all history for data"} />
       <div className="mt-4">
         {data?.record?.map((item: any) => (
           <div key={item.id} className="border-b py-3 flex justify-between items-center">
@@ -48,4 +48,4 @@ const AirtimeHistoryModule = () => {
   );
 };
 
-export default AirtimeHistoryModule;
+export default DataHistoryModule;
