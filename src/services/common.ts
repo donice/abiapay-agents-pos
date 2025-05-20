@@ -128,8 +128,8 @@ export const fetchTaxOffice = async () => {
 
 export const fetchSchool = async () => {
   try {
-    const res = await axiosInstance.get(`https://portalapi.abiapay.com/api/v1/user/school-list`);
-    // const res = await axiosInstance.get(`${portal_url_2}/user/school-list`);
+    // const res = await axiosInstance.get(`https://portalapi.abiapay.com/api/v1/user/school-list`);
+    const res = await axiosInstance.get(`${portal_url_2}/user/school-list`);
     return res.data;
   } catch (error: any) {
     console.log(error);
