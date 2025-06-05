@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
 import { fetchABSSINStats } from "@/src/services/identityService";
 
+
 const IdentityStatsCard = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["ticketsWalletData"],
