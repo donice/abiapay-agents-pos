@@ -11,6 +11,8 @@ const IdentityStatsCard = () => {
     queryFn: fetchABSSINStats,
   });
 
+  console.log(data, "data");
+
   if (isLoading) {
     return (
       <div>
@@ -36,19 +38,33 @@ const IdentityStatsCard = () => {
           <div className="identity-stats-card">
             <div className="ticket_container grid grid-cols-3 gap-2">
               <div className="grid grid-cols-1">
-                <span>Total ABSSIN (This Year)</span>
-                <span className="text-white text-2xl font-semibold">
+                <span>Indv. ABSSIN (This Year)</span>
+                <span className="text-white text-xl font-semibold">
                   {(data &&
-                    data?.response_data?.tp_indv?.thisYear +
-                      data?.response_data?.tp_non_indv?.thisDay) ||
+                    data?.response_data?.tp_indv?.thisYear) ||
                     "0"}{" "}
                   ABSSIN
-                  {data?.response_data?.tp_indv?.thisYear +
-                    data?.response_data?.tp_non_indv?.thisDay >
+                  {data?.response_data?.tp_indv?.thisYear >
                   1
                     ? "s"
                     : ""}{" "}
-                  Created
+
+                </span>
+              </div>
+              <div className="grid grid-cols-1">
+                <span>Non Indv. ABSSIN (This Year)</span>
+                <span className="text-white text-xl font-semibold">
+                  {(data &&
+
+                      data?.response_data?.tp_non_indv?.thisYear) ||
+                    "0"}{" "}
+                  ABSSIN
+                  {
+                    data?.response_data?.tp_non_indv?.thisYear >
+                  1
+                    ? "s"
+                    : ""}{" "}
+
                 </span>
               </div>
             </div>
