@@ -2,30 +2,21 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
-import {
-  FormTextInput,
-  SelectSearchInput,
-  SelectInput,
-} from "@/src/components/common/input";
+import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
 import { Button, CancelButton } from "@/src/components/common/button";
 import {
   fetchABSSINInfoWIthPhone,
-  fetchLocationState,
-  fetchLocationStateLGA,
-  fetchSchool,
+  fetchLGAData,
 } from "@/src/services/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useIsBrower from "@/src/hooks/useIsBrower";
-import {
-  createInfantABSSIN,
-  InfantFormData,
-} from "@/src/services/identityService";
 import CustomDialog from "@/src/components/common/modal/CustomDialog";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import toast from "react-hot-toast";
 import FaceCam from "@/src/components/modules/identity/create/infant/faceCam";
+import axiosInstance from "@/src/lib/axiosInstance";
 
 const CreateInfantAbssinModule = () => {
   const [userData, setUserData] = useState<{
@@ -46,18 +37,31 @@ const CreateInfantAbssinModule = () => {
       }
     }
   }, []);
+
   const {
     handleSubmit,
     register,
     reset,
     watch,
     setValue,
-    control,
     formState: { errors },
-  } = useForm<InfantFormData>({
+  } = useForm<ImpoundmentProps>({
     defaultValues: {
-      agent_email: userData?.email || "",
-      state_of_origin: "",
+      merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+      plate_number: "",
+      amount: 0,
+      vehicle_image_base64: "",
+      driver_abssin: "",
+      driver_name: "",
+      driver_phone_number: "",
+      vehicle_color: "",
+      incident_location: "",
+      geohash: "",
+      taskforce_name: "",
+      lga_zone: "",
+      supervisor_name: "",
+      vehicle_owner_phone_number: "",
+      impound_reason: "",
     },
   });
 
@@ -68,27 +72,12 @@ const CreateInfantAbssinModule = () => {
   };
 
   const { data: lgaData } = useQuery({
-    queryKey: ["lgaData", watch("state_of_origin")],
-    queryFn: () =>
-      fetchLocationStateLGA({ stateId: watch("state_of_origin") as string }),
+    queryKey: ["lgaData"],
+    queryFn: () => fetchLGAData(),
   });
 
-  const { data: schools } = useQuery({
-    queryKey: ["getSchools"],
-    queryFn: fetchSchool,
-  });
-  const { data: stateData } = useQuery({
-    queryKey: ["fetchStates"],
-    queryFn: () => fetchLocationState(),
-  });
-
-  useEffect(() => {
-    if (userData) {
-      setValue("agent_email", userData.email || "");
-    }
-  }, [userData, setValue]);
-
-  const phone = watch("guardian_phone_number");
+  console.log("lgaData", lgaData);
+  const phone = watch("driver_phone_number");
   const debouncedPhoneNumber = useDebounce(phone, 500);
 
   useEffect(() => {
@@ -99,7 +88,8 @@ const CreateInfantAbssinModule = () => {
           console.log("response", response);
           if (response.response_data.length !== 0) {
             toast.success(response.message ?? "ABSSIN information fetched");
-            setValue("guardian_abssin", response.response_data.state_id);
+            setValue("driver_abssin", response.response_data.state_id);
+            setValue("driver_name", response.response_data.first_name + " " + response.response_data.surname);
           }
         } catch (error) {
           toast.error("Error fetching ABSSIN information");
@@ -111,36 +101,26 @@ const CreateInfantAbssinModule = () => {
   }, [debouncedPhoneNumber, setValue]);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: InfantFormData) => createInfantABSSIN(data),
-    onError: (error: any) => {},
+    mutationFn: (data: ImpoundmentProps) => {
+      const res = axiosInstance.post("/impoundment/impound-vehicle", data);
+      return res;
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.response_message ?? "Error");
+    },
 
     onSuccess: (data: any) => {
+      console.log("data", data);
       (
-        document.getElementById("createInfantABSSINDialog") as HTMLDialogElement
+        document.getElementById("createImpoundment") as HTMLDialogElement
       )?.showModal();
     },
   });
 
-  const onSubmit = (data: InfantFormData) => {
+  const onSubmit = (data: ImpoundmentProps) => {
     console.log("data", data);
-    mutate({ ...data, image: capturedImage || "" });
+    mutate({ ...data, vehicle_image_base64: capturedImage || "" });
   };
-
-  const watchSchoolName = watch("school_name");
-
-  useEffect(() => {
-    if (watchSchoolName) {
-      console.log("watchSchoolName", watchSchoolName);
-      const school = schools?.response_data.find(
-        (item: any) => item.id == watchSchoolName
-      );
-
-      if (school) {
-        setValue("school_address", school.adress + ", " + school.lga);
-        console.log("school", school);
-      }
-    }
-  }, [watchSchoolName]);
 
   return (
     <section>
@@ -164,108 +144,46 @@ const CreateInfantAbssinModule = () => {
             </div>
           )}
         </div>
+
         <FormTextInput
-          label="First Name"
-          placeholder="First Name"
-          name={"first_name"}
+          label={"Vehicle Color"}
+          name={"vehicle_color"}
+          placeholder="Enter Vehicle Color"
           register={register}
           validation={{ required: true }}
-          error={errors.first_name}
-        />
-        <FormTextInput
-          label="Middle Name"
-          placeholder="Middle Name"
-          name={"middle_name"}
-          register={register}
-          error={errors.middle_name}
+          error={errors.vehicle_color}
         />
         <FormTextInput
-          label="Surname"
-          placeholder="Surname"
-          name={"surname"}
+          label={"Vehicle Plate Number"}
+          name={"plate_number"}
+          placeholder="Enter Vehicle Plate Number"
           register={register}
           validation={{ required: true }}
-          error={errors.surname}
-        />
-        <FormTextInput
-          type="date"
-          label="Birth Date"
-          placeholder="Birth Date"
-          name={"birth_date"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.birth_date}
-        />
-        <SelectInput
-          label="Gender"
-          placeholder="Gender"
-          name={"gender"}
-          register={register}
-          validation={{ required: true }}
-          error={!!errors.gender}
-          id={"gender"}
-          options={[
-            {
-              label: "Male",
-              value: "male",
-            },
-            {
-              label: "Female",
-              value: "female",
-            },
-          ]}
-        />
-        <SelectInput
-          label="State of Origin"
-          placeholder="State of Origin"
-          name={"state_of_origin"}
-          register={register}
-          validation={{ required: true }}
-          error={!!errors.state_of_origin}
-          id={"state_of_origin"}
-          options={
-            stateData
-              ? stateData?.data.map((state_of_origin: any) => ({
-                  label: state_of_origin.state,
-                  value: state_of_origin.idstates,
-                }))
-              : []
-          }
+          error={errors.plate_number}
         />
 
         <SelectInput
           label="LGA"
           placeholder="LGA"
-          name={"lga"}
+          name={"lga_zone"}
           register={register}
           validation={{ required: true }}
-          disabled={!watch("state_of_origin")}
-          error={!!errors.lga}
-          id={"lga"}
+          error={!!errors.lga_zone}
+          id={"lga_zone"}
           options={
             lgaData
               ? lgaData?.data.map((lga: any) => ({
-                  label: lga.name,
-                  value: lga.idlga,
+                  label: lga.lgaName,
+                  value: lga.lgaID,
                 }))
               : []
           }
         />
 
         <FormTextInput
-          type="text"
-          label="Student School ID"
-          placeholder="Student School ID"
-          name={"student_school_id"}
-          register={register}
-          validation={{ required: true }}
-          error={errors.student_school_id}
-        />
-
-        <FormTextInput
-          label="Guardian Phone Number"
-          placeholder="Guardian Phone Number"
-          name={"guardian_phone_number"}
+          label="Driver's Phone Number"
+          placeholder="Driver's Phone Number"
+          name={"driver_phone_number"}
           register={register}
           validation={{
             required: true,
@@ -274,42 +192,102 @@ const CreateInfantAbssinModule = () => {
               message: "Phone number must be 11 digits",
             },
           }}
-          error={errors.guardian_phone_number}
+          error={errors.driver_phone_number}
         />
-
         <FormTextInput
-          label="Guardian ABSSIN"
-          placeholder="Guardian ABSSIN"
-          name={"guardian_abssin"}
+          label="Driver's Name"
+          placeholder="Driver's Name"
+          name={"driver_name"}
           register={register}
           validation={{
-            // required: true,
-            pattern: {
-              value: /^\d{9,11}$/,
-              message: "ABSSIN must be between 9 and 11 digits",
-            },
+            required: true,
           }}
-          error={errors.guardian_abssin}
+          error={errors.driver_name}
+        />
+        <FormTextInput
+          label="Driver's ABSSIN"
+          placeholder="Driver's ABSSIN"
+          name={"driver_abssin"}
+          register={register}
+          validation={{
+            required: true,
+          }}
+          error={errors.driver_abssin}
         />
 
+        <FormTextInput
+          label="Vehicle Owner's Number"
+          placeholder="Vehicle Owner's Number"
+          name={"vehicle_owner_phone_number"}
+          register={register}
+          validation={{
+            required: true,
+          }}
+          error={errors.vehicle_owner_phone_number}
+        />
 
         <FormTextInput
-          label="School Address"
-          placeholder="School Address"
-          name={"school_address"}
+          label="Taskforce's Name"
+          placeholder="Taskforce's Name"
+          name={"taskforce_name"}
           register={register}
-          error={errors.school_address}
+          validation={{
+            required: true,
+          }}
+          error={errors.taskforce_name}
+        />
+
+        <FormTextInput
+          label="Supervisor's Name"
+          placeholder="Supervisor's Name"
+          name={"supervisor_name"}
+          register={register}
+          validation={{
+            required: true,
+          }}
+          error={errors.supervisor_name}
+        />
+
+        <SelectInput
+          label="Reason for Impoundment"
+          placeholder="Reason for Impoundment"
+          name={"impound_reason"}
+          register={register}
+          validation={{ required: true }}
+          error={!!errors.impound_reason}
+          id={"impound_reason"}
+          options={[
+            { label: "Obstruction", value: "Obstruction" },
+            { label: "One way", value: "One way" },
+            { label: "Restriction Violation", value: "Restriction Violation" },
+          ]}
+        />
+
+        <SelectInput
+          label="Incident Location"
+          placeholder="Incident Location"
+          name={"incident_location"}
+          register={register}
+          validation={{ required: true }}
+          error={!!errors.incident_location}
+          id={"incident_location"}
+          options={
+            lgaData
+              ? lgaData?.data.map((lga: any) => ({
+                  label: lga.lgaName,
+                  value: lga.lgaID,
+                }))
+              : []
+          }
         />
 
         <Button text="Submit" loading={isPending} disabled={isPending} />
       </form>
       <CustomDialog
-        id="createInfantABSSINDialog"
+        id="createImpoundment"
         onClose={() =>
           (
-            document.getElementById(
-              "createInfantABSSINDialog"
-            ) as HTMLDialogElement
+            document.getElementById("createImpoundment") as HTMLDialogElement
           )?.close()
         }
       >
@@ -317,16 +295,16 @@ const CreateInfantAbssinModule = () => {
           <TbRosetteDiscountCheckFilled className="text-green-600 text-7xl" />
           <h1 className="text-lg font-semibold">Created Successfully</h1>
           <p className="text-xs md:text-sm text-gray-400 max-w-[14rem]">
-            You have successfully created a Dependent ABSSIN
+            You have successfully listed an impoundment
           </p>
           <div className="w-full grid grid-cols-2 gap-2 mt-4">
-            <CancelButton link={"/identity"} />
+            <CancelButton link={"/impoundment"} />
             <Button
               text="Create New"
               onClick={() => {
                 (
                   document.getElementById(
-                    "createInfantABSSINDialog"
+                    "createImpoundment"
                   ) as HTMLDialogElement
                 )?.close();
                 reset();
@@ -340,3 +318,21 @@ const CreateInfantAbssinModule = () => {
 };
 
 export default CreateInfantAbssinModule;
+
+type ImpoundmentProps = {
+  merchant_key: string;
+  plate_number: string;
+  amount: number;
+  vehicle_image_base64: string;
+  driver_abssin: string;
+  driver_name: string;
+  driver_phone_number: string;
+  vehicle_color: string;
+  incident_location: string;
+  geohash: string;
+  taskforce_name: string;
+  lga_zone: string;
+  supervisor_name: string;
+  vehicle_owner_phone_number: string;
+  impound_reason: string;
+};
