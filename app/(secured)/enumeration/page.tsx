@@ -33,7 +33,7 @@ const items: AccountsProps[] = [
     title: "Vehicle impoundment",
     desc: "Impounding vehicles",
     icon: <FcShipped className="icon" />,
-    // comingsoon: true
+    comingsoon: true
   },
   {
     link: "enumeration/market",
