@@ -39,13 +39,13 @@ const IdentityStatsCard = () => {
           <div className="identity-stats-card">
             <div className="ticket_container grid grid-cols-3 gap-2">
               <div className="grid grid-cols-1">
-                <span>Indv. ABSSIN (This Year)</span>
+                <span>Total ABSSINs (Today)</span>
                 <span className="text-white text-xl font-semibold">
                   {(data &&
-                    data?.response_data?.tp_indv?.thisYear) ||
+                    data?.response_data?.tp_indv?.thisDay) ||
                     "0"}{" "}
                   ABSSIN
-                  {data?.response_data?.tp_indv?.thisYear >
+                  {data?.response_data?.tp_indv?.thisDay >
                   1
                     ? "s"
                     : ""}{" "}
@@ -53,21 +53,20 @@ const IdentityStatsCard = () => {
                 </span>
               </div>
               <div className="grid grid-cols-1">
-                <span>Non Indv. ABSSIN (This Year)</span>
+                <span>Total ABSSINs (This Week)</span>
                 <span className="text-white text-xl font-semibold">
                   {(data &&
-
-                      data?.response_data?.tp_non_indv?.thisYear) ||
+                    data?.response_data?.tp_indv?.thisWeek) ||
                     "0"}{" "}
                   ABSSIN
-                  {
-                    data?.response_data?.tp_non_indv?.thisYear >
+                  {data?.response_data?.tp_indv?.thisWeek >
                   1
                     ? "s"
                     : ""}{" "}
 
                 </span>
               </div>
+
             </div>
           </div>
         </figure>
