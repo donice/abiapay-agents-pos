@@ -90,4 +90,3 @@ deploy_prod:
     - rm -rf ~/.kube
   environment:
     name: production
-    url: https://abiapay.ng
