@@ -176,7 +176,7 @@ const PrintIDComp = () => {
 
   return (
     <div>
-      <CustomHeader title="Bulk Stickers" desc="Print bulk stickers" />
+      <CustomHeader title="Bulk Stickers" desc="Print stickers" />
       {viewData == "form" ? (
         <BulkPrintForm setViewData={setViewData} setBulkData={setBulkData} setStickerLga={setStickerLga} />
       ) : viewData == "data" ? (

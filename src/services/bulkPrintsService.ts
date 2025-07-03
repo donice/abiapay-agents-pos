@@ -20,11 +20,27 @@ export interface FetchBulkPrintsPayload {
   end_date: string
 }
 
+export interface searchBulkPrintsData{
+  ref:string;
+}
+
 export const fetchBulkPrintsData = async ( reqData: FetchBulkPrintsPayload )=> {
   try {
     const { data } = await axiosInstance.post(`${url}/enumeration/print`, reqData);
     return data;
   } catch (error: any) {
+    throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+
+
+export const searchBulkPrintsData = async (payload: searchBulkPrintsData) => {
+  try{
+    const { data } = await axiosInstance.post(`${url}/enumeration/print/search`, payload);
+    return data;
+  }
+  catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
