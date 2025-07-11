@@ -16,6 +16,7 @@ interface InputProps {
   placeholder?: string;
   value?: string | number;
   onChange?: any;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
   readOnly?: boolean;
   register?: any;
   validation?: any;
@@ -100,6 +101,7 @@ export const FormTextInput: React.FC<InputProps> = ({
   placeholder = "",
   value,
   onChange,
+  onKeyDown,
   readOnly,
   register,
   error,
