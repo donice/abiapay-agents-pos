@@ -2,7 +2,7 @@ import { CustomHeader } from '@/src/components/common/header';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import React, { type ReactElement } from 'react'
-import { FcEditImage, FcInTransit, FcLowPriority, FcShop } from 'react-icons/fc';
+import { FcEditImage, FcInTransit, FcLowPriority, FcShipped, FcShop } from 'react-icons/fc';
 import "./style.scss";
 import EnumerationStatsCard from '@/src/components/modules/enumeration/enumerationStatsCard';
 
@@ -27,6 +27,13 @@ const items: AccountsProps[] = [
     desc: "Enumerate vehicles",
     icon: <FcInTransit className="icon" />,
     // comingsoon: true
+  },
+      {
+    link: "impoundment",
+    title: "Vehicle impoundment",
+    desc: "Impounding vehicles",
+    icon: <FcShipped className="icon" />,
+    comingsoon: true
   },
   {
     link: "enumeration/market",

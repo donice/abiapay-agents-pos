@@ -282,6 +282,7 @@ const AddTransportTicketForm = ({
           text="View Receipt"
           link="/tickets/transport/add/summary"
           id={`Ref: ${paymentRef}, Valid for: ${selectedPeriod}, Payment for: ${selectedProduct}`}
+          buttonText="Done"
         />
       )}
     </form>

@@ -6,7 +6,6 @@ import { protectedRoutes, unprotectedRoutes } from "@/src/routes";
 import SecuredPagesLayout from "@/src/components/layout/SecuredPagesLayout";
 import UnsecuredPagesLayout from "@/src/components/layout/UnsecuredPagesLayout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 
 export interface RouteConfig {

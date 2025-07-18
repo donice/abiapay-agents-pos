@@ -176,7 +176,7 @@ const CreateFirstPartySignageForm = ({
             value: "15.01m to 25.0(10 x 16 - 10 x 20)ft",
             label: "15.01m to 25.0(10 x 16 - 10 x 20)ft",
           },
-          
+
         ]}
         placeholder="Select Area in SQM"
         error={!!errors.size_meter}
@@ -266,7 +266,8 @@ const CreateFirstPartySignageForm = ({
           text="View Receipt"
           link="/tickets/transport/add/summary"
           id={`Ref: ${paymentRef}, Valid for: ${selectedPeriod}, Payment for: ${selectedProduct}`}
-        />
+       buttonText="Done"
+          />
       )}
     </form>
   );

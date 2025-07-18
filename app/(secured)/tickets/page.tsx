@@ -26,6 +26,7 @@ interface TicketsProps {
   title: string;
   desc: string;
   icon: ReactElement;
+  comingsoon?: boolean;
 }
 
 const tickets: TicketsProps[] = [
@@ -40,6 +41,7 @@ const tickets: TicketsProps[] = [
     title: "Manifest",
     desc: "Create transport manifest",
     icon: <FcContacts className="icon" />,
+    // comingsoon: true,
   },
   {
     name: "tickets/market/add",
@@ -94,22 +96,34 @@ const TicketPage = () => {
         <TicketsWalletCards />
 
         <div className="ticketspage_items">
-          {tickets.map((item) => (
-            <Link
-              href={`/${item.name}`}
-              key={item.name}
-              className={"ticketspage_item"}
-            >
-              <div>
-                {" "}
-                <span>{item.icon}</span>
+          {tickets.map((item) =>
+            item.comingsoon ? (
+              <div key={item.title} className={`ticketspage_item`}>
+                <div className="comingsoon">Coming Soon</div>
                 <div>
-                  <h2>{item.title}</h2>
-                  <p>{item.desc}</p>
+                  <span>{item.icon}</span>
+                  <div>
+                    <h2>{item.title}</h2>
+                    <p>{item.desc}</p>
+                  </div>
                 </div>
               </div>
-            </Link>
-          ))}
+            ) : (
+              <Link
+                href={`/${item.name}`}
+                key={item.name}
+                className={`ticketspage_item`}
+              >
+                <div>
+                  <span>{item.icon}</span>
+                  <div>
+                    <h2>{item.title}</h2>
+                    <p>{item.desc}</p>
+                  </div>
+                </div>
+              </Link>
+            )
+          )}
         </div>
       </div>
     </div>
