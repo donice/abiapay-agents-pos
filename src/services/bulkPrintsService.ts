@@ -26,7 +26,7 @@ export interface searchBulkPrintsData{
 
 export const fetchBulkPrintsData = async ( reqData: FetchBulkPrintsPayload )=> {
   try {
-    const { data } = await axiosInstance.post(`${url}/enumeration/print`, reqData);
+    const { data } = await axiosInstance.post(`${url}/enumeration/print-filter`, reqData);
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
