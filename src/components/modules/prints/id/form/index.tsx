@@ -167,6 +167,16 @@ const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
             error={errors.no_of_cards}
           />
 
+           <FormTextInput
+            label={"Page"}
+            type="number"
+            name={"page"}
+            placeholder="Enter Page Number"
+            register={register}
+            validation={{ required: true }}
+            error={errors.page}
+          />
+
           <div className="date_group">
             <FormTextInput
               label={"Start Date"}
