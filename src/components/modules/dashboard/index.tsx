@@ -291,7 +291,7 @@ const DashboardComponent: React.FC = () => {
       )}
 
       <div className="dashboard_quicklinks">
-        {(userData?.user_cat == "Agent" || userData?.mda == MDA_KEYS.absaa) && (
+        {( userData?.mda == MDA_KEYS.absaa) && (
           <>
             <QuickLink name="ABSSAA" link="/absaa/signage" />
           </>
@@ -318,6 +318,7 @@ const DashboardComponent: React.FC = () => {
             <QuickLink name="Verify Vehicle Status" link="/vehicle-status" />
             <QuickLink name="Traffic Offence Ticket" link="/traffic-offence"  />
             <QuickLink name="Verify Ticket Status" link="/verify-ticket"  />
+            {/* <QuickLink name="Vehicle Impound" link="/vehicle-impound"  /> */}
           </>
         )}
       </div>
