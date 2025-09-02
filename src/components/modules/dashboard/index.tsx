@@ -213,11 +213,11 @@ const DashboardComponent: React.FC = () => {
               text="Akara Ekwenti"
               link="/find/using-phone-number"
             />
-            <PrimaryButton
+            {/* <PrimaryButton
               text="Sharp Sharp"
               link="/find/using-plate-number"
               addIcon={true}
-            />
+            /> */}
           </div>
         )}
       </header>
