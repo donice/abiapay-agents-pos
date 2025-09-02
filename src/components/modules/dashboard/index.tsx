@@ -213,11 +213,11 @@ const DashboardComponent: React.FC = () => {
               text="Akara Ekwenti"
               link="/find/using-phone-number"
             />
-            <PrimaryButton
+            {/* <PrimaryButton
               text="Sharp Sharp"
               link="/find/using-plate-number"
               addIcon={true}
-            />
+            /> */}
           </div>
         )}
       </header>
@@ -291,7 +291,7 @@ const DashboardComponent: React.FC = () => {
       )}
 
       <div className="dashboard_quicklinks">
-        {(userData?.user_cat == "Agent" || userData?.mda == MDA_KEYS.absaa) && (
+        {( userData?.mda == MDA_KEYS.absaa) && (
           <>
             <QuickLink name="ABSSAA" link="/absaa/signage" />
           </>
@@ -318,6 +318,7 @@ const DashboardComponent: React.FC = () => {
             <QuickLink name="Verify Vehicle Status" link="/vehicle-status" />
             <QuickLink name="Traffic Offence Ticket" link="/traffic-offence"  />
             <QuickLink name="Verify Ticket Status" link="/verify-ticket"  />
+            {/* <QuickLink name="Vehicle Impound" link="/vehicle-impound"  /> */}
           </>
         )}
       </div>

@@ -7,12 +7,13 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { TbUser } from "react-icons/tb";
 import "./style.scss";
+import useIsBrower from "@/src/hooks/useIsBrower";
 
 const DyamicView = ({ id }: { id: string }) => {
   const [abssinView, setAbssinView] = useState<Record<string, any> | null>(
     null
   );
-  const [userData, setUserData] = useState<any>(null);
+  const [usersData, setUsersData] = useState<any>(null);
   const [activeTab, setActiveTab] = useState("profile");
 
   const formatDate = (dateString: string) => {
@@ -24,10 +25,32 @@ const DyamicView = ({ id }: { id: string }) => {
     queryFn: getIndividualABSSINs,
   });
 
+   const [userData, setUserData] = useState<{
+    name?: string;
+    user_cat?: string;
+    mda_name?: string;
+    mda?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (useIsBrower()) {
+      const data = window.sessionStorage.getItem("USER_DATA");
+      if (data) {
+        try {
+          setUserData(JSON.parse(data));
+        } catch (e) {
+          console.error("Error parsing JSON data:", e);
+          setUserData({});
+        }
+      }
+    }
+  }, []);
+
   useEffect(() => {
     if (data) {
+      console.log("user data:", data);
       const res = data?.data;
-      setUserData(res);
+      setUsersData(res);
       const abssin = res.find((item: any) => item.state_id === id);
       if (abssin) {
         const nonNullFields = Object.entries(abssin)
@@ -38,11 +61,13 @@ const DyamicView = ({ id }: { id: string }) => {
     }
   }, [data, id]);
 
-  const tabs = [
-    { label: "Profile", key: "profile" },
-    { label: "Demand Notices", key: "demandNotices" },
-    { label: "Bills", key: "bills" },
-  ];
+ const tabs = [
+  { label: "Profile", key: "profile" },
+  { label: "Demand Notices", key: "demandNotices" },
+  ...(userData?.user_cat === "MdaUser"
+    ? [{ label: "Bills", key: "bills" }]
+    : []),
+];
 
   return isLoading ? (
     <div className="flex justify-center items-center h-screen">
@@ -65,6 +90,7 @@ const DyamicView = ({ id }: { id: string }) => {
             <div className="title">
               <p>
                 {abssinView?.surname}
+                {" "}
                 {abssinView?.first_name}
               </p>
               <p className="abssin">ABSSIN: {abssinView?.state_id || "N/A"}</p>
@@ -82,32 +108,32 @@ const DyamicView = ({ id }: { id: string }) => {
               <tbody>
                 <tr>
                   <td>
-                    <p style={{ fontWeight: 500 }}>Status</p>
+                    <p style={{ fontWeight: 500, color: "black" }}>Status</p>
                     <p>{abssinView?.status || "N/A"}</p>
 
-                    <p style={{ fontWeight: 500 }}>Birth Date</p>
-                    <p>{abssinView?.birth_date || "N/A"}</p>
+                    <p style={{ fontWeight: 500, color: "black" }}>Birth Date</p>
+                    <p >{abssinView?.birth_date || "N/A"}</p>
 
-                    <p style={{ fontWeight: 500 }}>Email</p>
+                    <p style={{ fontWeight: 500, color: "black" }}>Email</p>
                     <p>{abssinView?.email || "N/A"}</p>
                   </td>
 
                   <td>
-                    <p style={{ fontWeight: 500 }}>Mobile</p>
+                    <p style={{ fontWeight: 500, color: "black" }}>Mobile</p>
                     <p>{abssinView?.mobile || "N/A"}</p>
 
-                    <p style={{ fontWeight: 500 }}>Marital Status</p>
+                    <p style={{ fontWeight: 500, color: "black" }}>Marital Status</p>
                     <p>{abssinView?.marital_status || "N/A"}</p>
                   </td>
 
                   <td>
-                    <p style={{ fontWeight: 500 }}>Gender</p>
+                    <p style={{ fontWeight: 500, color: "black" }}>Gender</p>
                     <p>{abssinView?.gender || "N/A"}</p>
 
-                    <p style={{ fontWeight: 500 }}>Birth Place</p>
+                    <p style={{ fontWeight: 500, color: "black" }}>Birth Place</p>
                     <p>{abssinView?.birth_place || "N/A"}</p>
 
-                    <p style={{ fontWeight: 500 }}>Date Created</p>
+                    <p style={{ fontWeight: 500, color: "black" }}>Date Created</p>
                     <p>{formatDate(abssinView?.createtime || "N/A")}</p>
                   </td>
                 </tr>
@@ -131,35 +157,37 @@ const DyamicView = ({ id }: { id: string }) => {
       </div>
 
       {/* Tab Content */}
-      <div className="tab-content">
-        {activeTab === "profile" && (
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(abssinView).map(([key, value]) => (
-              <div
-                key={key}
-                className="py-4 bg-white rounded-lg shadow-sm flex items-center justify-between border-b-2 border-dashed border-gray-100 p-4"
-              >
-                <p className="text-sm font-medium text-gray-600">
-                  {transformStringWithUnderscores(key)}
-                </p>
-                <p className="text-sm font-semibold text-gray-800">{value}</p>
-              </div>
-            ))}
-          </div>
-        )}
+     {/* Tab Content */}
+<div className="tab-content">
+  {activeTab === "profile" && (
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+      {Object.entries(abssinView).map(([key, value]) => (
+        <div
+          key={key}
+          className="py-4 bg-white rounded-lg shadow-sm flex items-center justify-between border-b-2 border-dashed border-gray-100 p-4"
+        >
+          <p className="text-sm font-medium text-gray-600">
+            {transformStringWithUnderscores(key)}
+          </p>
+          <p className="text-sm font-semibold text-gray-800">{value}</p>
+        </div>
+      ))}
+    </div>
+  )}
 
-        {activeTab === "demandNotices" && (
-          <div className="text-gray-600 p-4">
-            <p>Coming Soon.....</p>
-          </div>
-        )}
+  {activeTab === "demandNotices" && (
+    <div className="text-gray-600 p-4">
+      <p>Coming Soon.....</p>
+    </div>
+  )}
 
-        {activeTab === "bills" && (
-          <div className="text-gray-600 p-4">
-            <p>No bills available....</p>
-          </div>
-        )}
-      </div>
+  {activeTab === "bills" && userData?.user_cat === "MdaUser" && (
+    <div className="text-gray-600 p-4">
+      <p>No bills available....</p>
+    </div>
+  )}
+</div>
+
     </div>
   ) : (
     <div className="text-center mt-10 text-gray-600">
