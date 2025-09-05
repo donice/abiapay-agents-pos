@@ -1,8 +1,9 @@
+import AssignNotice from '@/src/components/modules/demand-notices/assign'
 import React from 'react'
 
 const AssignDemandNotice = () => {
   return (
-    <div>AssignDemandNotice</div>
+    <div><AssignNotice/></div>
   )
 }
 

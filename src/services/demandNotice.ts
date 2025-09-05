@@ -13,6 +13,12 @@ export interface generateDemandNoticePayload {
     year:string;
   };
 
+   export interface assignDemandNoticePayload {
+    notice_number: string;
+    abssin:string;
+    merchant_key:string;
+  };
+
   export interface createDemandNoticePayload {
    taxpayer_id: [
     {
@@ -41,6 +47,19 @@ export interface fetchBusinessAbssinPayload {
       };
     }
   };
+
+  export const assignDemandNotice = async (requestData: assignDemandNoticePayload) => {
+    try {
+      const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/assign-abssin-demand-notice`,requestData);
+  
+      return res;
+    } catch (error: any) {
+      return {
+        error: error.response?.data?.message || "Failed to fetch demand notice",
+      };
+    }
+  };
+
 
 
   export const fetchBusinessAbssin = async (
