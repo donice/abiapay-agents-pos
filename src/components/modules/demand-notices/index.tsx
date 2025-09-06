@@ -27,7 +27,12 @@ const items: AccountsProps[] = [
   },
   {
     link: "demand-notices/assign",
-    title: "Assign Blank Notice",
+    title: "Assign Blank Notice (with ABSSIN)",
+    icon:<FcNews className="icon" />,
+  },
+  {
+    link: "demand-notices/assign-no-abssin",
+    title: "Assign Blank Notice (without ABSSIN)",
     icon:<FcNews className="icon" />,
   },
   {

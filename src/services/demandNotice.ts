@@ -19,6 +19,22 @@ export interface generateDemandNoticePayload {
     merchant_key:string;
   };
 
+   export interface assignNoAbssinDemandNoticePayload {
+    merchant_key: string,
+  company_name: string,
+  company_phone_number: string,
+  company_address_street: string,
+  company_house_no: string,
+  lga: string,
+  notice_number: string
+
+  };
+
+  export interface fetchDemandNoticePayload {
+    notice_number: string;
+    merchant_key:string;
+  };
+
   export interface createDemandNoticePayload {
    taxpayer_id: [
     {
@@ -51,6 +67,30 @@ export interface fetchBusinessAbssinPayload {
   export const assignDemandNotice = async (requestData: assignDemandNoticePayload) => {
     try {
       const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/assign-abssin-demand-notice`,requestData);
+  
+      return res;
+    } catch (error: any) {
+      return {
+        error: error.response?.data?.message || "Failed to fetch demand notice",
+      };
+    }
+  };
+
+   export const assignnoAbssinDemandNotice = async (requestData: assignNoAbssinDemandNoticePayload) => {
+    try {
+      const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/assign-demand-notice`,requestData);
+  
+      return res;
+    } catch (error: any) {
+      return {
+        error: error.response?.data?.message || "Failed to fetch demand notice",
+      };
+    }
+  };
+
+   export const fetchDemandNotice = async (requestData: fetchDemandNoticePayload) => {
+    try {
+      const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/fetch-demand-notice`,requestData);
   
       return res;
     } catch (error: any) {
