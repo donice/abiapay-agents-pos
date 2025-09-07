@@ -153,7 +153,7 @@ const AssignNoAbssin = () => {
             //   error={errors.abssin}
             />
             <FormTextInput
-              label="Comapy Address Street"
+              label="Company Address Street"
               type="text"
               name="company_address_street"
               placeholder="Enter Company Street Address"
@@ -173,11 +173,11 @@ const AssignNoAbssin = () => {
             <SelectInput
                       label="LGA"
                       placeholder="LGA"
-                      name={"lga_zone"}
+                      name={"lga"}
                       register={register}
                       validation={{ required: true }}
                       error={!!errors.lga_zone}
-                      id={"lga_zone"}
+                      id={"lga"}
                       options={
                         lgaData
                           ? lgaData?.data.map((lga: any) => ({
