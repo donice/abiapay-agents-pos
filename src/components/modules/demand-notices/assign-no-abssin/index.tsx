@@ -149,7 +149,7 @@ const AssignNoAbssin = () => {
               name="company_phone_number"
               placeholder="Enter Company Phone Number"
               register={register}
-              validation={{ required: true }}
+              validation={{ required: false }}
             //   error={errors.abssin}
             />
             <FormTextInput
