@@ -10,7 +10,7 @@ export interface generateDemandNoticePayload {
 
   export interface searchDemandNoticePayload {
     notice_number: string;
-    year:string;
+    merchant_key:string;
   };
 
    export interface assignDemandNoticePayload {
@@ -50,11 +50,14 @@ export interface fetchBusinessAbssinPayload {
   state_id: string;
 }
 
+export interface searchCompanyPayload {
+  search_term: string;
+}
+
 
   export const searchDemandNotice = async (requestData: searchDemandNoticePayload) => {
     try {
-      const { notice_number, year } = requestData;
-      const res = await axiosInstance.get(`${url}/cdn/notice/${notice_number}?year=${year}`);
+      const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/fetch-demand-notice`,requestData);
   
       return res;
     } catch (error: any) {
@@ -63,6 +66,22 @@ export interface fetchBusinessAbssinPayload {
       };
     }
   };
+
+  export const searchCompany = async (requestData: searchCompanyPayload) => {
+  try {
+    const res = await axiosInstance.post(
+      `${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/search-company`,
+      requestData  
+    );
+    return res?.data;
+  } catch (error: any) {
+    return {
+      error: error.response?.data?.message || "Failed to search company",
+    };
+  }
+};
+
+  
 
   export const assignDemandNotice = async (requestData: assignDemandNoticePayload) => {
     try {
