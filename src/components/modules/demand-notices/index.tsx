@@ -2,7 +2,7 @@
 
 import { Metadata } from 'next';
 import React, { ReactElement } from 'react';
-import { FcAddDatabase, FcNews } from 'react-icons/fc';
+import { FcAddDatabase, FcCheckmark, FcNews, FcSearch } from 'react-icons/fc';
 import { GoBackButton } from '../../common/button';
 import { CustomHeader } from '../../common/header';
 import Link from 'next/link';
@@ -27,18 +27,18 @@ const items: AccountsProps[] = [
   },
   {
     link: "demand-notices/assign",
-    title: "Assign Blank Notice (with ABSSIN)",
+    title: "Assign Blank Notice",
     icon:<FcNews className="icon" />,
   },
-  {
-    link: "demand-notices/assign-no-abssin",
-    title: "Assign Blank Notice (without ABSSIN)",
-    icon:<FcNews className="icon" />,
-  },
+  // {
+  //   link: "demand-notices/assign-no-abssin",
+  //   title: "Assign Blank Notice (without ABSSIN)",
+  //   icon:<FcNews className="icon" />,
+  // },
   {
     link: "demand-notices/search",
     title: "Search Demand Notice",
-    icon:<FcNews className="icon" />,
+    icon:<FcSearch className="icon" />,
   }
 
 ];

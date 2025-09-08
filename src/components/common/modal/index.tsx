@@ -733,7 +733,7 @@ export const InformationModal = ({
   link?: string;
   success_text?: string;
   success_link?: string;
-  close?: void;
+   close?: () => void;
 }) => {
   const router = useRouter();
 
@@ -778,7 +778,7 @@ export const InformationModal = ({
 
           {mode == "success" && (
             <SecondaryButton
-              onClick={handleClick}
+              onClick={close ?? handleClick}
               text={success_text ? success_text : ""}
             />
           )}
