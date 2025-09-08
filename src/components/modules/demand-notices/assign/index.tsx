@@ -137,8 +137,9 @@ const AssignNotice = () => {
 
   const handleAssignResponse = (data: any) => {
     const responseCode = data?.data?.response_code;
+    console.log("Assign Response Data:", data?.data?.response_message);
     const responseMessage =
-      data?.data?.response_message || "Notice assigned successfully!";
+      data?.data?.response_message || "";
     const assignedNoticeNumber = data?.data?.response_data?.notice_number || "";
 
     if (responseCode !== "00") {
@@ -265,6 +266,11 @@ const AssignNotice = () => {
                           (cat: any) => cat.id === noticeDetails.cdn_category
                         )?.category_name || "N/A"}
                       </p>
+                    </div>
+                    <div>
+                    <p>{" "}</p>
+                    <p>{" "}</p>
+                    <p>{""}</p>
                     </div>
                   </div>
                 </div>
