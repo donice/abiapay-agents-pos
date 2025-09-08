@@ -1,7 +1,6 @@
 "use client"
 
 import { Button, GoBackButton } from '@/src/components/common/button'
-import Empty from '@/src/components/common/empty'
 import { CustomHeader } from '@/src/components/common/header'
 import { FormTextInput, SelectInput } from '@/src/components/common/input'
 import { fetchCategory, fetchLGAData } from '@/src/services/common'
@@ -11,9 +10,8 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import "./style.scss";
-import { InformationModal, SuccessModal } from '@/src/components/common/modal'
+import { InformationModal } from '@/src/components/common/modal'
 import { useRouter } from 'next/navigation'
-import { TbSend } from 'react-icons/tb'
 
 const AssignNotice = () => {
   const router = useRouter();
@@ -21,6 +19,7 @@ const AssignNotice = () => {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [noticeDetails, setNoticeDetails] = React.useState<any | null>(null);
   const [showModal, setShowModal] = React.useState(false);
+  const [modalProps, setModalProps] = React.useState<any>(null);
   const [noticeNumber, setNoticeNumber] = React.useState<string>("");
   const [taxpayerId, setTaxpayerId] = React.useState<string>("");
   const [mode, setMode] = React.useState<"abssin" | "no_abssin" | "">(""); 
@@ -28,7 +27,6 @@ const AssignNotice = () => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm<any>({
@@ -54,7 +52,7 @@ const AssignNotice = () => {
     queryFn: () => fetchCategory(),
   });
 
-  // Mutation for searching Demand Notice
+  // Search Mutation
   const searchMutation = useMutation({
     mutationFn: async (data: { notice_number: string; merchant_key: string }) =>
       fetchDemandNotice(data),
@@ -80,41 +78,55 @@ const AssignNotice = () => {
     },
   });
 
-  // Mutation for assigning with ABSSIN
+  // Assign with ABSSIN
   const assignWithAbssinMutation = useMutation({
     mutationFn: async (data: any) => assignDemandNotice(data),
-    onSuccess: (data: any) => {
-      toast.success(data.data?.response_message || "Notice assigned successfully!");
-      reset();
-      setNoticeDetails(null);
-       console.log("data", data);
-    //   setNoticeNumber(data?.data?.response_data?.notice_number || "");
-      setTaxpayerId(data?.data?.response_data?.taxpayer_id || "");
-      setShowModal(true);
-    },
+    onSuccess: (data: any) => handleAssignResponse(data),
     onError: (error: any) => {
       toast.error(error?.error || "An error occurred. Please try again.");
     },
   });
 
-  // Mutation for assigning without ABSSIN
+  // Assign without ABSSIN
   const assignWithoutAbssinMutation = useMutation({
     mutationFn: async (data: any) => assignnoAbssinDemandNotice(data),
-    onSuccess: (data: any) => {
-      toast.success(data.data?.response_message || "Notice assigned successfully!");
-      reset();
-      setNoticeDetails(null);
-      console.log("data", data);
-      setNoticeNumber(data?.data?.response_data?.notice_number || "");
-      setTaxpayerId(data?.data?.response_data?.taxpayer_id || "");
-      setShowModal(true);
-    },
+    onSuccess: (data: any) => handleAssignResponse(data),
     onError: (error: any) => {
       toast.error(error?.error || "An error occurred. Please try again.");
     },
   });
 
-  // Step 1: handle search
+  const handleAssignResponse = (data: any) => {
+    const responseCode = data?.data?.response_code;
+    const responseMessage = data?.data?.response_message || "Notice assigned successfully!";
+    const assignedNoticeNumber = data?.data?.response_data?.notice_number || "";
+
+    if (responseCode !== "00") {
+      setModalProps({
+        mode: "warning",
+        maintext: responseMessage,
+        subtext: "Please check and try again.",
+        link: "/demand-notices",
+      });
+      setShowModal(true);
+      return;
+    }
+
+    toast.success(responseMessage);
+    reset();
+    setNoticeDetails(null);
+    setNoticeNumber(assignedNoticeNumber);
+    setTaxpayerId(data?.data?.response_data?.taxpayer_id || "");
+    setModalProps({
+      mode: "success",
+      maintext: responseMessage,
+      subtext: `Notice Number: ${assignedNoticeNumber}`,
+      success_text: "Assign Another",
+      link: "/demand-notices",
+    });
+    setShowModal(true);
+  };
+
   const handleSearch = (formData: any) => {
     searchMutation.mutate({
       notice_number: formData.notice_number,
@@ -122,7 +134,6 @@ const AssignNotice = () => {
     });
   };
 
-  // Step 2: handle assign
   const handleAssign = (formData: any) => {
     if (mode === "abssin") {
       assignWithAbssinMutation.mutate(formData);
@@ -139,7 +150,7 @@ const AssignNotice = () => {
           <CustomHeader title="Assign Demand Notice" desc="" />
         </header>
 
-        {/* Step 0: Mode Selector */}
+        {/* Mode Selector */}
         <div className="verify-tickets-comp_form flex flex-col gap-4">
           <SelectInput
             label="Select Option"
@@ -149,13 +160,13 @@ const AssignNotice = () => {
             value={mode}
             onChange={(e: any) => setMode(e.target.value)}
             options={[
-              { label: "I have my ABSSIN", value: "abssin" },
-              { label: "I don’t have ABSSIN", value: "no_abssin" },
+              { label: "Assign with ABSSIN", value: "abssin" },
+              { label: "Assign without ABSSIN", value: "no_abssin" },
             ]}
           />
         </div>
 
-        {/* Step 1: Search Demand Notice (always visible) */}
+        {/* Search Form */}
         <form onSubmit={handleSubmit(handleSearch)} className="verify-tickets-comp_form flex flex-col gap-4 mt-4">
           <FormTextInput
             label="Notice Number"
@@ -167,26 +178,30 @@ const AssignNotice = () => {
           <Button text="Search Demand Notice" loading={searchMutation.isPending} />
         </form>
 
-        {/* Step 2: Show details + conditional form */}
+        {/* Notice Details */}
         {noticeDetails && (
-          <form onSubmit={handleSubmit(handleAssign)} className="verify-tickets-comp_form flex flex-col gap-4 mt-6">
-            {/* Demand Notice details */}
+          <>
             <div className="main-table">
               <div className="main-table_form_tickets_container">
                 <div className="tickets">
                   <div className="ticket">
                     <div>
                       <p>{noticeDetails.notice_number}</p>
-                      <p>{noticeDetails.status}</p>
-                      <p>{parseFloat(noticeDetails.total_amount).toLocaleString()}</p>
-                      <p>{noticeDetails.lga}</p>
+                      <p
+                        style={{
+                          color: noticeDetails.status?.toLowerCase() === "pending" ? "green" : "red",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {noticeDetails.status?.toLowerCase() === "pending" ? "Pending..." : noticeDetails.status}
+                      </p>
+                      <p>₦{parseFloat(noticeDetails.total_amount).toLocaleString()}</p>
+                      <p>
+                        {lgaData?.data?.find((lga: any) => lga.lgaID === noticeDetails.lga)?.lgaName || noticeDetails.lga || "N/A"}
+                      </p>
                       <p>
                         <strong>Business Category: </strong>
-                        {
-                          lgaCategory?.data?.find(
-                            (cat: any) => cat.id === noticeDetails.cdn_category
-                          )?.category_name || "N/A"
-                        }
+                        {lgaCategory?.data?.find((cat: any) => cat.id === noticeDetails.cdn_category)?.category_name || "N/A"}
                       </p>
                     </div>
                   </div>
@@ -194,99 +209,84 @@ const AssignNotice = () => {
               </div>
             </div>
 
-            {/* Conditional inputs */}
-            {mode === "abssin" ? (
-              <FormTextInput
-                label="ABSSIN"
-                type="text"
-                name="abssin"
-                placeholder="Enter Corporate ABSSIN"
-                register={register}
-                validation={{ required: true }}
-              />
-            ) : (
-              <>
-                <FormTextInput
-                  label="Company Name"
-                  type="text"
-                  name="company_name"
-                  placeholder="Enter Company Name"
-                  register={register}
-                  validation={{ required: true }}
-                />
-                <FormTextInput
-                  label="Company Phone Number"
-                  type="text"
-                  name="company_phone_number"
-                  placeholder="Enter Company Phone Number"
-                  register={register}
-                />
-                <FormTextInput
-                  label="Company Address Street"
-                  type="text"
-                  name="company_address_street"
-                  placeholder="Enter Company Street Address"
-                  register={register}
-                  validation={{ required: true }}
-                />
-                <FormTextInput
-                  label="Company House Number"
-                  type="text"
-                  name="company_house_no"
-                  placeholder="Enter Company House Number"
-                  register={register}
-                  validation={{ required: true }}
-                />
-                <SelectInput
-                  label="LGA"
-                  placeholder="LGA"
-                  name="lga"
-                  register={register}
-                  validation={{ required: true }}
-                  error={!!errors.lga}
-                  id="lga"
-                  options={
-                    lgaData
-                      ? lgaData?.data.map((lga: any) => ({
+            {/* Conditional Inputs */}
+            {noticeDetails.status?.toLowerCase() !== "served" && (
+              <form onSubmit={handleSubmit(handleAssign)} className="verify-tickets-comp_form flex flex-col gap-4 mt-6">
+                {mode === "abssin" ? (
+                  <FormTextInput
+                    label="ABSSIN"
+                    type="text"
+                    name="abssin"
+                    placeholder="Enter Corporate ABSSIN"
+                    register={register}
+                    validation={{ required: true }}
+                  />
+                ) : (
+                  <>
+                    <FormTextInput
+                      label="Company Name"
+                      type="text"
+                      name="company_name"
+                      placeholder="Enter Company Name"
+                      register={register}
+                      validation={{ required: true }}
+                    />
+                    <FormTextInput
+                      label="Company Phone Number"
+                      type="text"
+                      name="company_phone_number"
+                      placeholder="Enter Company Phone Number"
+                      register={register}
+                    />
+                    <FormTextInput
+                      label="Company Address Street"
+                      type="text"
+                      name="company_address_street"
+                      placeholder="Enter Company Street Address"
+                      register={register}
+                      validation={{ required: true }}
+                    />
+                    <FormTextInput
+                      label="Company House Number"
+                      type="text"
+                      name="company_house_no"
+                      placeholder="Enter Company House Number"
+                      register={register}
+                      validation={{ required: true }}
+                    />
+                    <SelectInput
+                      label="LGA"
+                      placeholder="LGA"
+                      name="lga"
+                      register={register}
+                      validation={{ required: true }}
+                      error={!!errors.lga}
+                      id="lga"
+                      options={
+                        lgaData?.data?.map((lga: any) => ({
                           label: lga.lgaName,
                           value: lga.lgaID,
-                        }))
-                      : []
-                  }
-                />
-              </>
-            )}
+                        })) || []
+                      }
+                    />
+                  </>
+                )}
 
-            <Button
-              text={mode === "abssin" ? "Assign Notice with ABSSIN" : "Assign Notice with Taxpayer Details"}
-              loading={
-                mode === "abssin" ? assignWithAbssinMutation.isPending : assignWithoutAbssinMutation.isPending
-              }
-            />
-          </form>
+                <Button
+                  text={mode === "abssin" ? "Assign Notice with ABSSIN" : "Assign Notice with Taxpayer Details"}
+                  loading={mode === "abssin" ? assignWithAbssinMutation.isPending : assignWithoutAbssinMutation.isPending}
+                />
+              </form>
+            )}
+          </>
         )}
 
-        {showModal && (
-        //   <SuccessModal
-        //     text="Demand Notice Assigned"
-        //     maintext="Demand Notice Assigned Successfully"
-        //     id={`Notice Number: ${noticeNumber} | Taxpayer ID: ${taxpayerId}`}
-        //     onClick={() => {
-        //       setShowModal(false);
-        //       router.push("/demand-notices/assign");
-        //     }}
-        //   />
-           <AssignNoticeModal
-    mode="success"
-    maintext="Notice Assigned Successfully!"
-    subtext={`Notice Number: ${noticeNumber}`}
-    success_text="Assign Another"
-    link="/demand-notices"
-    onClick={() => {
-              setShowModal(false);
-            }}
-    close={() => {setShowModal(false); console.log("closed")}}
-  />
+        {/* Modal */}
+        {showModal && modalProps && (
+          <InformationModal
+            {...modalProps}
+            close={() => setShowModal(false)}
+          />
         )}
       </div>
     </section>
@@ -294,15 +294,3 @@ const AssignNotice = () => {
 }
 
 export default AssignNotice
-
-const AssignNoticeModal = (props: any) => {
-  return (
-    <InformationModal
-      {...props}
-      success_text="Assign Another"
-      close={props.close}
-      
-    />
-  );
-};
-
