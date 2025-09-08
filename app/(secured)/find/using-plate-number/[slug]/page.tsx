@@ -209,7 +209,8 @@ const Dynamic = () => {
           mode="error"
           maintext={show.message}
           subtext="Cannot proceed the revending of this ticket"
-          close={setShow({ mode: false, state: "", message: "" })}
+          close={() => setShow({ mode: false, state: "", message: "" })}
+
           // link="/find/using-plate-number"
         />
       )}
