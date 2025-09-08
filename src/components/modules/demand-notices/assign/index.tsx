@@ -1,17 +1,22 @@
-"use client"
+"use client";
 
-import { Button, GoBackButton } from '@/src/components/common/button'
-import { CustomHeader } from '@/src/components/common/header'
-import { FormTextInput, SelectInput } from '@/src/components/common/input'
-import { fetchCategory, fetchLGAData } from '@/src/services/common'
-import { assignDemandNotice, assignnoAbssinDemandNotice, fetchDemandNotice } from '@/src/services/demandNotice'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
+import { Button, GoBackButton } from "@/src/components/common/button";
+import { CustomHeader } from "@/src/components/common/header";
+import { FormTextInput, SelectInput } from "@/src/components/common/input";
+import { fetchCategory, fetchLGAData } from "@/src/services/common";
+import {
+  assignDemandNotice,
+  assignnoAbssinDemandNotice,
+  fetchDemandNotice,
+  searchCompany,
+} from "@/src/services/demandNotice";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import React from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import "./style.scss";
-import { InformationModal } from '@/src/components/common/modal'
-import { useRouter } from 'next/navigation'
+import { InformationModal } from "@/src/components/common/modal";
+import { useRouter } from "next/navigation";
 
 const AssignNotice = () => {
   const router = useRouter();
@@ -22,12 +27,17 @@ const AssignNotice = () => {
   const [modalProps, setModalProps] = React.useState<any>(null);
   const [noticeNumber, setNoticeNumber] = React.useState<string>("");
   const [taxpayerId, setTaxpayerId] = React.useState<string>("");
-  const [mode, setMode] = React.useState<"abssin" | "no_abssin" | "">(""); 
+  const [mode, setMode] = React.useState<"abssin" | "no_abssin" | "">("");
+
+  const [companySuggestions, setCompanySuggestions] = React.useState<any[]>([]);
+  const [searchLoading, setSearchLoading] = React.useState(false);
+  const [searchTerm, setSearchTerm] = React.useState("");
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<any>({
     defaultValues: {
@@ -52,7 +62,36 @@ const AssignNotice = () => {
     queryFn: () => fetchCategory(),
   });
 
-  // Search Mutation
+  // Search Company Handler
+  const handleCompanySearch = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (value.length < 2) {
+      setCompanySuggestions([]);
+      return;
+    }
+
+    setSearchLoading(true);
+    try {
+      const res = await searchCompany({ search_term: value }); 
+      console.log("Company search result:", res);
+      if (res?.response_data) {
+        setCompanySuggestions(res.response_data);
+      } else {
+        setCompanySuggestions([]);
+      }
+    } catch (err) {
+      console.error("Error searching company:", err);
+      setCompanySuggestions([]);
+    } finally {
+      setSearchLoading(false);
+    }
+  };
+
+  // Demand Notice Search Mutation
   const searchMutation = useMutation({
     mutationFn: async (data: { notice_number: string; merchant_key: string }) =>
       fetchDemandNotice(data),
@@ -98,7 +137,8 @@ const AssignNotice = () => {
 
   const handleAssignResponse = (data: any) => {
     const responseCode = data?.data?.response_code;
-    const responseMessage = data?.data?.response_message || "Notice assigned successfully!";
+    const responseMessage =
+      data?.data?.response_message || "Notice assigned successfully!";
     const assignedNoticeNumber = data?.data?.response_data?.notice_number || "";
 
     if (responseCode !== "00") {
@@ -120,7 +160,7 @@ const AssignNotice = () => {
     setModalProps({
       mode: "success",
       maintext: responseMessage,
-      subtext: `Notice Number: ${assignedNoticeNumber}`,
+      subtext: `Taxpayer Name: ${data?.data?.response_data.taxpayer_name}`,
       success_text: "Assign Another",
       link: "/demand-notices",
     });
@@ -156,7 +196,7 @@ const AssignNotice = () => {
             label="Select Option"
             placeholder="Choose..."
             name="mode"
-            id='mode'
+            id="mode"
             value={mode}
             onChange={(e: any) => setMode(e.target.value)}
             options={[
@@ -167,7 +207,10 @@ const AssignNotice = () => {
         </div>
 
         {/* Search Form */}
-        <form onSubmit={handleSubmit(handleSearch)} className="verify-tickets-comp_form flex flex-col gap-4 mt-4">
+        <form
+          onSubmit={handleSubmit(handleSearch)}
+          className="verify-tickets-comp_form flex flex-col gap-4 mt-4"
+        >
           <FormTextInput
             label="Notice Number"
             type="text"
@@ -175,7 +218,10 @@ const AssignNotice = () => {
             register={register}
             validation={{ required: true }}
           />
-          <Button text="Search Demand Notice" loading={searchMutation.isPending} />
+          <Button
+            text="Search Demand Notice"
+            loading={searchMutation.isPending}
+          />
         </form>
 
         {/* Notice Details */}
@@ -189,19 +235,35 @@ const AssignNotice = () => {
                       <p>{noticeDetails.notice_number}</p>
                       <p
                         style={{
-                          color: noticeDetails.status?.toLowerCase() === "pending" ? "green" : "red",
+                          color:
+                            noticeDetails.status?.toLowerCase() === "pending"
+                              ? "green"
+                              : "red",
                           fontWeight: "bold",
                         }}
                       >
-                        {noticeDetails.status?.toLowerCase() === "pending" ? "Pending..." : noticeDetails.status}
+                        {noticeDetails.status?.toLowerCase() === "pending"
+                          ? "Pending..."
+                          : noticeDetails.status}
                       </p>
-                      <p>₦{parseFloat(noticeDetails.total_amount).toLocaleString()}</p>
                       <p>
-                        {lgaData?.data?.find((lga: any) => lga.lgaID === noticeDetails.lga)?.lgaName || noticeDetails.lga || "N/A"}
+                        ₦
+                        {parseFloat(
+                          noticeDetails.total_amount
+                        ).toLocaleString()}
+                      </p>
+                      <p>
+                        {lgaData?.data?.find(
+                          (lga: any) => lga.lgaID === noticeDetails.lga
+                        )?.lgaName ||
+                          noticeDetails.lga ||
+                          "N/A"}
                       </p>
                       <p>
                         <strong>Business Category: </strong>
-                        {lgaCategory?.data?.find((cat: any) => cat.id === noticeDetails.cdn_category)?.category_name || "N/A"}
+                        {lgaCategory?.data?.find(
+                          (cat: any) => cat.id === noticeDetails.cdn_category
+                        )?.category_name || "N/A"}
                       </p>
                     </div>
                   </div>
@@ -211,7 +273,10 @@ const AssignNotice = () => {
 
             {/* Conditional Inputs */}
             {noticeDetails.status?.toLowerCase() !== "served" && (
-              <form onSubmit={handleSubmit(handleAssign)} className="verify-tickets-comp_form flex flex-col gap-4 mt-6">
+              <form
+                onSubmit={handleSubmit(handleAssign)}
+                className="verify-tickets-comp_form flex flex-col gap-4 mt-6"
+              >
                 {mode === "abssin" ? (
                   <FormTextInput
                     label="ABSSIN"
@@ -223,14 +288,54 @@ const AssignNotice = () => {
                   />
                 ) : (
                   <>
-                    <FormTextInput
-                      label="Company Name"
-                      type="text"
-                      name="company_name"
-                      placeholder="Enter Company Name"
-                      register={register}
-                      validation={{ required: true }}
-                    />
+                    {/* Company Name with Suggestions */}
+                    <div className="relative">
+                      <FormTextInput
+                        label="Company Name"
+                        type="text"
+                        name="company_name"
+                        placeholder="Enter Company Name"
+                        register={register}
+                        validation={{
+                          required: true,
+                          onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleCompanySearch(e),
+                        }}
+                      />
+                      {searchLoading && (
+                        <p className="text-sm text-gray-400">Searching...</p>
+                      )}
+                      {companySuggestions.length > 0 && (
+                        <ul className="absolute bg-white border border-gray-200 rounded-md shadow-md mt-1 w-full z-10 max-h-48 overflow-y-auto">
+                          {companySuggestions.map((company, idx) => (
+                            <li
+                              key={idx}
+                              className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                              onClick={() => {
+                                setValue("company_name", company.company_name);
+                                setValue(
+                                  "company_phone_number",
+                                  company.phone_number
+                                );
+                                setValue(
+                                  "company_address_street",
+                                  company.street
+                                );
+                                setValue(
+                                  "company_house_no",
+                                  company.company_house_no
+                                );
+                                setValue("lga", company.lga);
+                                setCompanySuggestions([]);
+                              }}
+                            >
+                              {company.company_name}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
                     <FormTextInput
                       label="Company Phone Number"
                       type="text"
@@ -273,8 +378,16 @@ const AssignNotice = () => {
                 )}
 
                 <Button
-                  text={mode === "abssin" ? "Assign Notice with ABSSIN" : "Assign Notice with Taxpayer Details"}
-                  loading={mode === "abssin" ? assignWithAbssinMutation.isPending : assignWithoutAbssinMutation.isPending}
+                  text={
+                    mode === "abssin"
+                      ? "Assign Notice with ABSSIN"
+                      : "Assign Notice with Taxpayer Details"
+                  }
+                  loading={
+                    mode === "abssin"
+                      ? assignWithAbssinMutation.isPending
+                      : assignWithoutAbssinMutation.isPending
+                  }
                 />
               </form>
             )}
@@ -283,14 +396,11 @@ const AssignNotice = () => {
 
         {/* Modal */}
         {showModal && modalProps && (
-          <InformationModal
-            {...modalProps}
-            close={() => setShowModal(false)}
-          />
+          <InformationModal {...modalProps} close={() => setShowModal(false)} />
         )}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default AssignNotice
+export default AssignNotice;
