@@ -17,6 +17,7 @@ export interface generateDemandNoticePayload {
     notice_number: string;
     abssin:string;
     merchant_key:string;
+    geolocation:string
   };
 
    export interface assignNoAbssinDemandNoticePayload {
@@ -26,7 +27,8 @@ export interface generateDemandNoticePayload {
   company_address_street: string,
   company_house_no: string,
   lga: string,
-  notice_number: string
+  notice_number: string,
+  geolocation:string
 
   };
 

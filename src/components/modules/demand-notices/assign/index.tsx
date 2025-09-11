@@ -176,10 +176,18 @@ const AssignNotice = () => {
   };
 
   const handleAssign = (formData: any) => {
+
+     const geoString = typeof window !== "undefined" 
+    ? sessionStorage.getItem("USER_GEOLOCATION") 
+    : "";
+    const payload = {
+    ...formData,
+    geolocation: geoString || "", 
+  };
     if (mode === "abssin") {
-      assignWithAbssinMutation.mutate(formData);
+      assignWithAbssinMutation.mutate(payload);
     } else {
-      assignWithoutAbssinMutation.mutate(formData);
+      assignWithoutAbssinMutation.mutate(payload);
     }
   };
 
