@@ -106,6 +106,35 @@ const DashboardComponent: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+  if (useIsBrower()) {
+    const data = window.sessionStorage.getItem("USER_DATA");
+    if (data) {
+      try {
+        setUserData(JSON.parse(data));
+
+        // Get location once user logs in
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              const geoString = `${pos.coords.latitude},${pos.coords.longitude}`;
+              sessionStorage.setItem("USER_GEOLOCATION", geoString); 
+            },
+            (err) => {
+              console.error("Geolocation error:", err);
+              toast.error("Unable to fetch location. Please allow location access.");
+            }
+          );
+        }
+      } catch (e) {
+        console.error("Error parsing JSON data:", e);
+        setUserData({});
+      }
+    }
+  }
+}, []);
+
+
   // ! using useCallback to memoize the data coming from the services
 
   const getDashboardData = useCallback(async () => {
@@ -308,7 +337,9 @@ const DashboardComponent: React.FC = () => {
             <QuickLink name="Identity" link="/identity" />{" "}
             <QuickLink name="Contract Management" link="/contract" />
             <QuickLink name="Bills" link="/bills" />{" "}
-            {userData?.mda =="20008001" && <QuickLink name="Demand Notices"  comingSoon={false} link="/demand-notices" />}
+            {/* {userData?.mda =="20008001" && */}
+             <QuickLink name="Demand Notices"  comingSoon={false} link="/demand-notices" />
+             {/* } */}
             <QuickLink name="Receipts" link="/receipts" />
           </>
         )}

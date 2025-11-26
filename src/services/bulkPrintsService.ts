@@ -11,36 +11,64 @@ const isToken =
 setToken(isToken);
 
 export interface FetchBulkPrintsPayload {
-  category: string,
-  lga: number,
-  card_type: string,
-  no_of_cards: 50,
-  page: 1,
-  start_date: string,
-  end_date: string
+  category: string;
+  lga: number;
+  card_type: string;
+  no_of_cards: number;
+  page: number;
+  start_date: string;
+  end_date: string;
 }
 
-export interface searchBulkPrintsData{
-  ref:string;
+export interface SearchBulkPrintsPayload {
+  ref: string;
 }
 
-export const fetchBulkPrintsData = async ( reqData: FetchBulkPrintsPayload )=> {
+export interface SearchBulkPrintsGroupPayload {
+  plate_number: string;
+  card_type: string;
+  no_of_cards: number;
+  page: number;
+}
+
+
+// Bulk print (group fetch)
+export const fetchBulkPrintsData = async (reqData: FetchBulkPrintsPayload) => {
   try {
-    const { data } = await axiosInstance.post(`${url}/enumeration/print-filter`, reqData);
+    const { data } = await axiosInstance.post(
+      `${url}/enumeration/print-filter`,
+      reqData
+    );
     return data;
   } catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+    throw new Error(`Error fetching bulk prints: ${error?.message}`);
   }
 };
 
-
-
-export const searchBulkPrintsData = async (payload: searchBulkPrintsData) => {
-  try{
-    const { data } = await axiosInstance.post(`${url}/enumeration/print/search`, payload);
+// Single search by ref (single ABSSIN)
+export const searchBulkPrintsData = async (payload: SearchBulkPrintsPayload) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/enumeration/print/search`,
+      payload
+    );
     return data;
+  } catch (error: any) {
+    throw new Error(`Error searching prints: ${error?.message}`);
   }
-  catch (error: any) {
-    throw new Error(`Error fetching transactions: ${error?.message}`);
+};
+
+// Group search (for batch printing)
+export const searchBulkPrintsGroupData = async (
+  payload: SearchBulkPrintsGroupPayload
+) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `${url}/enumeration/print/group`,
+      payload
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(`Error searching print group: ${error?.message}`);
   }
 };

@@ -136,9 +136,14 @@ export const SecondaryButton = ({ text, link, onClick }: prop) => {
 
   return (
     <button
+      type="button"
       className="button secondary"
       onClick={() => {
-        onClick ? onClick : link && handleClick(link);
+        if (onClick) {
+          onClick(); 
+        } else if (link) {
+          handleClick(link);
+        }
       }}
     >
       <MdOutlineAdd className="icon" />
@@ -146,6 +151,7 @@ export const SecondaryButton = ({ text, link, onClick }: prop) => {
     </button>
   );
 };
+
 
 export const GoBackButton = () => {
   const router = useRouter();

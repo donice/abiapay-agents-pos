@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import {
   fetchBulkPrintsData,
   searchBulkPrintsData,
+  searchBulkPrintsGroupData,
   FetchBulkPrintsPayload,
 } from "@/src/services/bulkPrintsService";
 import { fetchLGAData } from "@/src/services/common";
@@ -20,10 +21,11 @@ interface LGA {
 
 const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
   const [selectedOption, setSelectedOption] = useState<
-    "none" | "search" | "bulk"
+    "bulk" | "search" | "multi"
   >("bulk");
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [multiSearchInput, setMultiSearchInput] = useState("");
   const [lga, setLga] = useState<LGA[]>([]);
 
   const getLgas = async () => {
@@ -58,7 +60,6 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
       previous_print: "false",
       start_date: "",
       end_date: "",
-      searchTerm: "",
     },
   });
 
@@ -79,12 +80,14 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
     },
   });
 
+
   const { mutate: searchMutate, isPending: isSearching } = useMutation({
     mutationFn: (data: { ref: string }) => searchBulkPrintsData(data),
     onSuccess: (data) => {
       if (data?.response_code === "00") {
         const result = data?.response_data;
         const normalized = Array.isArray(result) ? result : [result];
+
         setBulkData(normalized);
         setStickerLga(data?.response_data?.lga_name || "");
         setViewData("data");
@@ -93,17 +96,60 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
         toast.error(data?.response_message);
       }
     },
-    onError: (error) => {
-      console.error(error);
-      toast.error("Search failed");
-    },
+    onError: () => toast.error("Search failed"),
   });
 
   const handleSearch = () => {
-    if (searchTerm.trim() !== "") {
-      searchMutate({ ref: searchTerm });
+    if (!searchTerm.trim()) {
+      toast.error("Enter ABSSIN");
+      return;
     }
+
+    searchMutate({ ref: searchTerm });
   };
+
+  const {
+    mutate: multiSearchMutate,
+    isPending: isMultiSearching,
+  } = useMutation({
+    mutationFn: (data: any) => searchBulkPrintsGroupData(data),
+    onSuccess: (data: any) => {
+      if (data?.response_code === "00") {
+        const result = data.response_data.data;
+        const normalized = Array.isArray(result) ? result : [result];
+
+        setBulkData(normalized);
+        setViewData("data");
+
+        toast.success("Multi-search successful");
+      } else {
+        toast.error(data?.response_message || "Multi-search failed");
+      }
+    },
+    onError: () => toast.error("Error performing multi-search"),
+  });
+
+  const handleMultiSearch = () => {
+    let ids = multiSearchInput
+      .split(",")
+      .map((id) => id.trim())
+      .filter(Boolean);
+
+    if (ids.length === 0) {
+      toast.error("Please enter ABSSINs separated by commas");
+      return;
+    }
+
+    const payload = {
+      plate_number: ids.join(","),
+      card_type: "sticker",
+      no_of_cards: 0,
+      page: 1,
+    };
+
+    multiSearchMutate(payload);
+  };
+
 
   const onSubmit = (reqData: any) => {
     reqData.previous_print = reqData.previous_print === "true";
@@ -112,6 +158,7 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
 
   return (
     <div className="bulk_print_page">
+      {/* ---- TABS ---- */}
       <div className="tab_selector">
         <button
           className={selectedOption === "bulk" ? "active" : ""}
@@ -119,21 +166,22 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
         >
           Bulk Print
         </button>
+
         <button
           className={selectedOption === "search" ? "active" : ""}
           onClick={() => setSelectedOption("search")}
         >
           Search
         </button>
+
+        <button
+          className={selectedOption === "multi" ? "active" : ""}
+          onClick={() => setSelectedOption("multi")}
+        >
+          Multi Search
+        </button>
       </div>
 
-      {selectedOption === "none" && (
-        <div className="stats-card">
-          <div onClick={() => setSelectedOption("bulk")} className="stats-card">
-            Bulk Print{" "}
-          </div>
-        </div>
-      )}
 
       {selectedOption === "search" && (
         <div className="search_wrapper">
@@ -154,12 +202,38 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
         </div>
       )}
 
+      {selectedOption === "multi" && (
+        <div className="multi_search_wrapper">
+          <label className="form_label">Search Multiple ABSSINs</label>
+
+          <FormTextInput
+            label="Enter ABSSINs separated by commas (e.g. 12345, 77889, 99001)"
+            type="text"
+            name="searchTerm"
+            value={multiSearchInput}
+            onChange={(e: any) => setMultiSearchInput(e.target.value)}
+            onKeyDown={(e: any) => {
+              if (e.key === "Enter"&& !e.shiftKey) {
+                e.preventDefault();
+                handleMultiSearch();
+              }
+            }}
+          />
+
+          <Button
+            text="Search"
+            onClick={handleMultiSearch}
+            loading={isMultiSearching}
+          />
+        </div>
+      )}
+
       {selectedOption === "bulk" && (
         <form onSubmit={handleSubmit(onSubmit)} className="emblem_form">
           <SelectInput
-            label={"LGA"}
-            name={"lga"}
-            id={"lga"}
+            label="LGA"
+            name="lga"
+            id="lga"
             register={register}
             validation={{ required: true }}
             error={!!errors.lga}
@@ -167,9 +241,9 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
           />
 
           <FormTextInput
-            label={"Number of Cards"}
+            label="Number of Cards"
             type="number"
-            name={"no_of_cards"}
+            name="no_of_cards"
             placeholder="Enter Number of Cards"
             register={register}
             validation={{ required: true }}
@@ -177,9 +251,9 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
           />
 
           <FormTextInput
-            label={"Page"}
+            label="Page"
             type="number"
-            name={"page"}
+            name="page"
             placeholder="Enter Page Number"
             register={register}
             validation={{ required: true }}
@@ -188,9 +262,9 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
 
           <div className="date_group">
             <FormTextInput
-              label={"Start Date"}
+              label="Start Date"
               type="date"
-              name={"start_date"}
+              name="start_date"
               placeholder="Select Start Date"
               register={register}
               validation={{ required: true }}
@@ -198,9 +272,9 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
             />
 
             <FormTextInput
-              label={"End Date"}
+              label="End Date"
               type="date"
-              name={"end_date"}
+              name="end_date"
               placeholder="Select End Date"
               register={register}
               validation={{ required: true }}
@@ -233,11 +307,7 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
             )}
           </div>
 
-          <Button
-            text={"Fetch Data"}
-            loading={isPending}
-            disabled={isPending}
-          />
+          <Button text="Fetch Data" loading={isPending} disabled={isPending} />
         </form>
       )}
     </div>
