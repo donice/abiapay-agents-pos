@@ -209,7 +209,7 @@ const PrintIDComp = () => {
         </div>
       ): null}
     </div>
-  );
-};
+  );             
+ };
 
 export default PrintIDComp;

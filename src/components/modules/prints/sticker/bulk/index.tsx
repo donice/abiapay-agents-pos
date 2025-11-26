@@ -10,11 +10,9 @@ const BulkComp = ({ bulkData, stickerLga }: any) => {
       setDisplayData(bulkData);
     }
   }, [bulkData]);
-
   if (!displayData || displayData.length === 0) {
     return <div>No data available</div>;
   }
-
   return (
     <div className="bulk-sticker">
       {displayData.map((data: any, idx: number) => (
