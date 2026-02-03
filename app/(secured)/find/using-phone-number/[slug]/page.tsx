@@ -167,7 +167,7 @@ const Dynamic = () => {
       if (isAndroidBridge && selectedWallet !== 'fidelity') {
         // Convert amount to kobo (smallest currency unit)
         // If your amount is already in kobo, skip this multiplication
-        const amountInKobo = Math.round(data.amount * 100);
+        const amountInKobo = Math.round((Number(data?.amount) ?? 0) * 100);
 
         // Store ticket data for later (after payment succeeds)
         sessionStorage.setItem("PENDING_TICKET", JSON.stringify(data));
