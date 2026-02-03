@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
 import { SuccessModal } from "@/src/components/common/modal";
 import useIsBrower from "@/src/hooks/useIsBrower";
+import { bankOptions } from "@/src/lib/app";
 
 const Dynamic = () => {
   const path = usePathname();
@@ -146,10 +147,7 @@ const Dynamic = () => {
           id={"wallet_type"}
           register={register}
           validation={{ required: true }}
-          options={[
-            { value: "fidelity", label: "Fidelity Bank" },
-            { value: "access", label: "Access Bank" },
-          ]}
+          options={bankOptions}
           placeholder="Select Wallet Type"
           error={!!errors.wallet_type}
         />

@@ -19,6 +19,7 @@ import {
   fetchPlateNumberInfo,
 } from "@/src/services/ticketsServices";
 import { useMutation } from "@tanstack/react-query";
+import { bankOptions } from "@/src/lib/app";
 
 const  AddTransportTicketForm = ({
   show,
@@ -271,10 +272,7 @@ const  AddTransportTicketForm = ({
         id="wallet_type"
         register={register}
         validation={{ required: true }}
-        options={[
-          { value: "fidelity", label: "Fidelity Bank" },
-          { value: "access", label: "Access Bank" },
-        ]}
+        options={bankOptions}
         placeholder="Select Wallet Type"
         error={!!errors.wallet_type}
       />

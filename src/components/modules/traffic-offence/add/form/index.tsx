@@ -16,6 +16,7 @@ import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchAllOffences } from "@/src/services/trafficOffences";
 import { useRouter } from "next/navigation";
+import { bankOptions } from "@/src/lib/app";
 
 const AddTrafficOffenceTicketForm = ({
   setSelectedType,
@@ -128,14 +129,14 @@ const AddTrafficOffenceTicketForm = ({
 
   useEffect(() => {
     if (offenceType) {
-      const selectedOffence = offences.find((off) => off.id === Number(offenceType)); 
+      const selectedOffence = offences.find((off) => off.id === Number(offenceType));
       if (selectedOffence) {
         setValue("amount", String(selectedOffence.fee));
       }
     }
   }, [offenceType, offences, setValue]);
-  
-  
+
+
 
   return (
     <form className="add-offence" onSubmit={handleSubmit(onSubmit)}>
@@ -237,10 +238,7 @@ const AddTrafficOffenceTicketForm = ({
         id="wallet_type"
         register={register}
         validation={{ required: true }}
-        options={[
-          { value: "fidelity", label: "Fidelity Bank" },
-          { value: "access", label: "Access Bank" },
-        ]}
+        options={bankOptions}
         placeholder="Select Wallet Type"
         error={!!errors.wallet_type}
       />

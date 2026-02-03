@@ -32,6 +32,7 @@ import {
 } from "@/src/components/common/modal";
 import { getErrorMessages } from "@/src/utils/helper";
 import { PiReceiptDuotone } from "react-icons/pi";
+import { bankOptions } from "@/src/lib/app";
 
 const Dynamic = () => {
   const path = usePathname();
@@ -65,7 +66,7 @@ const Dynamic = () => {
   });
 
   const { mutate:mutateSendBill } = useMutation({
-    
+
     mutationFn: (data: SendBillPayload) => {
       return sendBill(data);
     },
@@ -181,6 +182,7 @@ const Dynamic = () => {
     },
   });
 
+
   const onSubmit = (formData: any) => {
     console.log(formData);
     mutateGenerateAccount(formData);
@@ -282,10 +284,7 @@ const Dynamic = () => {
           id="account_type"
           register={register}
           validation={{ required: true }}
-          options={[
-            { value: "access", label: "Access Bank" },
-            { value: "fidelity", label: "Fidelity Bank" },
-          ]}
+          options={bankOptions}
           placeholder="Select Wallet Type"
           error={!!errors.account_type}
         />

@@ -15,6 +15,7 @@ import "./style.scss";
 import { useMutation } from "@tanstack/react-query";
 import { ABSAAPayload } from "@/src/components/types/absaaTypes";
 import { createFirstPartySignage } from "@/src/services/absaaService";
+import { bankOptions } from "@/src/lib/app";
 
 const CreateFirstPartySignageForm = ({
   show,
@@ -249,10 +250,7 @@ const CreateFirstPartySignageForm = ({
         id="wallet_type"
         register={register}
         validation={{ required: true }}
-        options={[
-          { value: "fidelity", label: "Fidelity Bank" },
-          { value: "access", label: "Access Bank" },
-        ]}
+        options={bankOptions}
         placeholder="Select Wallet Type"
         error={!!errors.wallet_type}
       />
