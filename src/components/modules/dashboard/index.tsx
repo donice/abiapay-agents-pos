@@ -28,6 +28,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchReceipts } from "@/src/services/receiptsServices";
 import { fetchBills } from "@/src/services/billServices";
 import EnforcerCard from "./enforcerCard";
+import { appMetadata } from "@/src/lib/app";
 
 const MDA_KEYS = {
   ministry_of_transport: "29001001",
@@ -107,33 +108,34 @@ const DashboardComponent: React.FC = () => {
   }, []);
 
   useEffect(() => {
-  if (useIsBrower()) {
-    const data = window.sessionStorage.getItem("USER_DATA");
-    if (data) {
-      try {
-        setUserData(JSON.parse(data));
+    if (useIsBrower()) {
+      const data = window.sessionStorage.getItem("USER_DATA");
+      if (data) {
+        try {
+          setUserData(JSON.parse(data));
 
-        // Get location once user logs in
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (pos) => {
-              const geoString = `${pos.coords.latitude},${pos.coords.longitude}`;
-              sessionStorage.setItem("USER_GEOLOCATION", geoString); 
-            },
-            (err) => {
-              console.error("Geolocation error:", err);
-              toast.error("Unable to fetch location. Please allow location access.");
-            }
-          );
+          // Get location once user logs in
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                const geoString = `${pos.coords.latitude},${pos.coords.longitude}`;
+                sessionStorage.setItem("USER_GEOLOCATION", geoString);
+              },
+              (err) => {
+                console.error("Geolocation error:", err);
+                toast.error(
+                  "Unable to fetch location. Please allow location access.",
+                );
+              },
+            );
+          }
+        } catch (e) {
+          console.error("Error parsing JSON data:", e);
+          setUserData({});
         }
-      } catch (e) {
-        console.error("Error parsing JSON data:", e);
-        setUserData({});
       }
     }
-  }
-}, []);
-
+  }, []);
 
   // ! using useCallback to memoize the data coming from the services
 
@@ -176,7 +178,7 @@ const DashboardComponent: React.FC = () => {
       const res = await fetchEnumerationData();
       setEnumerationCount(
         res?.response_data?.transport?.thisDay +
-          res?.response_data?.market?.thisDay
+          res?.response_data?.market?.thisDay,
       );
     } catch (error) {
       toast.error("Cannot fetch enumeration data");
@@ -254,8 +256,11 @@ const DashboardComponent: React.FC = () => {
       {userData?.user_cat == "MdaUser" ||
       userData?.user_cat == "Enforcer" ? null : !loading ? (
         <div className="dashboard_wallets">
-          <WalletCard bank="access" data={accessData} />
-          <WalletCard bank="fidelity" data={fidelityData} />
+          {appMetadata.banksAllowed.find((b) => b.value === "access")
+            ?.allowed && <WalletCard bank="access" data={accessData} />}
+
+          {appMetadata.banksAllowed.find((b) => b.value === "fidelity")
+            ?.allowed && <WalletCard bank="fidelity" data={fidelityData} />}
         </div>
       ) : (
         <div className="dashboard_wallets_skeleton">
@@ -320,7 +325,7 @@ const DashboardComponent: React.FC = () => {
       )}
 
       <div className="dashboard_quicklinks">
-        {( userData?.mda == MDA_KEYS.absaa) && (
+        {userData?.mda == MDA_KEYS.absaa && (
           <>
             <QuickLink name="ABSSAA" link="/absaa/signage" />
           </>
@@ -338,8 +343,12 @@ const DashboardComponent: React.FC = () => {
             <QuickLink name="Contract Management" link="/contract" />
             <QuickLink name="Bills" link="/bills" />{" "}
             {/* {userData?.mda =="20008001" && */}
-             <QuickLink name="Demand Notices"  comingSoon={false} link="/demand-notices" />
-             {/* } */}
+            <QuickLink
+              name="Demand Notices"
+              comingSoon={false}
+              link="/demand-notices"
+            />
+            {/* } */}
             <QuickLink name="Receipts" link="/receipts" />
           </>
         )}
@@ -347,8 +356,8 @@ const DashboardComponent: React.FC = () => {
         {userData?.user_cat == "Enforcer" && (
           <>
             <QuickLink name="Verify Vehicle Status" link="/vehicle-status" />
-            <QuickLink name="Traffic Offence Ticket" link="/traffic-offence"  />
-            <QuickLink name="Verify Ticket Status" link="/verify-ticket"  />
+            <QuickLink name="Traffic Offence Ticket" link="/traffic-offence" />
+            <QuickLink name="Verify Ticket Status" link="/verify-ticket" />
             {/* <QuickLink name="Vehicle Impound" link="/vehicle-impound"  /> */}
           </>
         )}

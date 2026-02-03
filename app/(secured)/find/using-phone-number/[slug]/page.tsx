@@ -30,6 +30,9 @@ const Dynamic = () => {
     email?: string;
   } | null>();
 
+  // Check if running in Android bridge app
+  const [isAndroidBridge, setIsAndroidBridge] = useState(false);
+
   useEffect(() => {
     if (useIsBrower()) {
       const data = window.sessionStorage.getItem("USER_DATA");
@@ -41,6 +44,9 @@ const Dynamic = () => {
           setUserData({});
         }
       }
+
+      // Check if HydrogenBridge is available
+      setIsAndroidBridge(typeof (window as any).HydrogenBridge !== 'undefined');
     }
   }, []);
 
@@ -48,12 +54,11 @@ const Dynamic = () => {
     (ticket: any) => ticket.idagent_transactions == segment
   );
 
-  // console.log(ticket);
-
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<CreateTicketPayload>({
     defaultValues: {
@@ -78,9 +83,66 @@ const Dynamic = () => {
     setValue("agentEmail", userData?.email || "");
   }, [userData]);
 
+  // Handle payment result from Hydrogen Bridge
+  useEffect(() => {
+    if (useIsBrower()) {
+      (window as any).handleHydrogenPaymentResult = (result: any) => {
+        console.log('Hydrogen Payment Result:', result);
+
+        if (result.status === 'SUCCESS') {
+          toast.success('Payment Successful!');
+
+          // Parse the payment data
+          let paymentData;
+          try {
+            paymentData = typeof result.data === 'string'
+              ? JSON.parse(result.data)
+              : result.data;
+          } catch (e) {
+            paymentData = result.data;
+          }
+
+          console.log('Payment Data:', paymentData);
+
+          // Get the pending ticket data
+          const pendingTicket = sessionStorage.getItem("PENDING_TICKET");
+          if (pendingTicket) {
+            const ticketData = JSON.parse(pendingTicket);
+
+            // Store payment response
+            sessionStorage.setItem("HYDROGEN_PAYMENT", JSON.stringify(paymentData));
+            sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(ticketData));
+
+            // Clear pending ticket
+            sessionStorage.removeItem("PENDING_TICKET");
+
+            // Show success modal
+            setShow(true);
+          }
+
+        } else if (result.status === 'CANCELLED') {
+          toast.error('Payment Cancelled by user');
+          sessionStorage.removeItem("PENDING_TICKET");
+        } else if (result.status === 'FAILED') {
+          toast.error('Payment Failed: ' + result.data);
+          sessionStorage.removeItem("PENDING_TICKET");
+        } else if (result.status === 'ERROR') {
+          toast.error('Error: ' + result.message);
+          sessionStorage.removeItem("PENDING_TICKET");
+        }
+      };
+    }
+
+    // Cleanup
+    return () => {
+      if (useIsBrower()) {
+        delete (window as any).handleHydrogenPaymentResult;
+      }
+    };
+  }, []);
+
   const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateTicketPayload) => {
-
       sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(data));
       return createNewTicket(data);
     },
@@ -99,15 +161,76 @@ const Dynamic = () => {
 
   const onSubmit: SubmitHandler<CreateTicketPayload> = (data) => {
     try {
-      mutate(data);
+      const selectedWallet = data.wallet_type;
+
+      // Check if using Hydrogen payment (Android bridge app)
+      if (isAndroidBridge && selectedWallet !== 'fidelity') {
+        // Convert amount to kobo (smallest currency unit)
+        // If your amount is already in kobo, skip this multiplication
+        const amountInKobo = Math.round(data.amount * 100);
+
+        // Store ticket data for later (after payment succeeds)
+        sessionStorage.setItem("PENDING_TICKET", JSON.stringify(data));
+
+        // Trigger appropriate Hydrogen payment method
+        if ((window as any).HydrogenBridge) {
+          toast.loading('Launching payment...');
+
+          switch (selectedWallet) {
+            case 'card':
+            case 'pos':
+              (window as any).HydrogenBridge.initiateCardPayment(amountInKobo);
+              break;
+
+            case 'breezepay':
+              (window as any).HydrogenBridge.initiateBreezePay(amountInKobo);
+              break;
+
+            case 'transfer':
+            case 'instantpay':
+              (window as any).HydrogenBridge.initiateTransfer(amountInKobo);
+              break;
+
+            default:
+              // Default to card payment
+              (window as any).HydrogenBridge.initiateCardPayment(amountInKobo);
+          }
+        } else {
+          toast.error('Hydrogen Bridge not available');
+        }
+      } else {
+        mutate(data);
+      }
     } catch (error) {
       console.log(error);
+      toast.error('Payment initiation failed');
     }
   };
 
   return (
     <div className="ticket-details">
       <h1>Ticket Details</h1>
+
+      {/* Show indicator when running in Android app */}
+      {isAndroidBridge && (
+        <div style={{
+          padding: '12px',
+          background: '#e8f5e9',
+          borderRadius: '8px',
+          marginBottom: '20px',
+          border: '1px solid #4caf50'
+        }}>
+          <p style={{
+            margin: 0,
+            color: '#2e7d32',
+            fontSize: '14px',
+            fontWeight: '500'
+          }}>
+            ✓ Mobile App Mode - Hardware payments available
+          </p>
+        </div>
+      )}
+
       <div className="ticket-details_comp">
         <div>
           <p>Plate Number</p>
