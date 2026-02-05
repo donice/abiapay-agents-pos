@@ -4,11 +4,12 @@ stages:
 
 variables:
   CI_REGISTRY: docker.io #registry.gitlab.com
-  CI_REGISTRY_IMAGE: xtradot/abiapay-pos-portal
+  CI_REGISTRY_IMAGE: xtradot/abiapay-agent-portal
   CONTAINER_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
 
 services:
   - docker:24.0.6-dind
+
 
 # Build and push to repo
 docker_build:
@@ -71,8 +72,6 @@ deploy_sandbox:
     - eval $(ssh-add -D)
   environment:
     name: sandbox
-    
-
 
 # Deploy to production
 deploy_prod:
@@ -90,4 +89,4 @@ deploy_prod:
     - rm -rf ~/.kube
   environment:
     name: production
-    url: webagentportal.ibejulekkilga.com
+    url: https://abiapay.ng
