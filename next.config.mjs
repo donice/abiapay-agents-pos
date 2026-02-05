@@ -1,13 +1,47 @@
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
+  transpilePackages: ['your-dependencies'],
+
+  // Target older browsers
+  experimental: {
+    esmExternals: 'loose'
   },
+
+  // Disable image optimization if POS can't handle it
   images: {
-    domains: ["tms.tax"],
+    unoptimized: true,
+  },
+
+  // Force legacy browser support
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? false : true,
+  },
+
+  // Add webpack config
+  webpack: (config, { isServer, webpack }) => {
+    if (!isServer) {
+      // Fix for 'process' undefined error
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        process: require.resolve('process/browser'),
+        buffer: require.resolve('buffer/'),
+        util: require.resolve('util/'),
+        stream: require.resolve('stream-browserify'),
+        crypto: require.resolve('crypto-browserify'),
+      };
+
+      // Provide polyfills
+      config.plugins.push(
+        new webpack.ProvidePlugin({
+          process: 'process/browser',
+          Buffer: ['buffer', 'Buffer'],
+        })
+      );
+    }
+    return config;
   },
 
   // Allow WebView embedding
