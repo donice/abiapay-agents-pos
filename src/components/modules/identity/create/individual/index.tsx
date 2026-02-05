@@ -12,11 +12,11 @@ import UserData from "./userData";
 import OriginData from "./originData";
 import { useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 
 const CreateIndividualAbssinComponent = () => {
   const noIdDetails =
-  useIsBrower() && window.sessionStorage.getItem("NO_ID_DATA")
+  isBrowser && window.sessionStorage.getItem("NO_ID_DATA")
     ? window.sessionStorage.getItem("NO_ID_DATA")
     : null;
     const details = noIdDetails && JSON.parse(noIdDetails);

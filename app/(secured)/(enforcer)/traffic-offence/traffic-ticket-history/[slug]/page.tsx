@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Loading } from "@/src/components/common/loader/redirecting";
 import { fetchOffenceHistory } from "@/src/services/trafficOffences";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { useForm } from "react-hook-form";
 import { BillPaymentPayload } from "@/src/services/billServices";
 import { BackButton } from "@/src/components/common/button";
@@ -16,7 +16,6 @@ import { BackButton } from "@/src/components/common/button";
 const Dynamic = () => {
   const path = usePathname();
   const segment = getLastPathSegment(path);
-  const isBrowser = useIsBrower();
   const [userData, setUserData] = useState<{ name?: string; email?: string } | null>(null);
 
   useEffect(() => {

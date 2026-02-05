@@ -16,7 +16,7 @@ import {
 } from "react-icons/fc";
 import Link from "next/link";
 import "./style.scss";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 
 interface WalletItemsProps {
   href: string;
@@ -104,7 +104,7 @@ const UserSettingsComponent = () => {
   } | null>(null);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {

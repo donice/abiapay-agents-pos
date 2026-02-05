@@ -16,7 +16,7 @@ import {
   fetchSchool,
 } from "@/src/services/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import {
   createInfantABSSIN,
   InfantFormData,
@@ -34,7 +34,7 @@ const CreateInfantAbssinModule = () => {
   } | null>();
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {

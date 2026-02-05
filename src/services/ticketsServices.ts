@@ -1,5 +1,5 @@
 import axiosInstance from "../lib/axiosInstance";
-import useIsBrower from "../hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { setToken } from "./setToken";
 import {
   CreateGroupSportPayload,
@@ -13,7 +13,7 @@ const portal_url = process.env.NEXT_PUBLIC_PORTAL_URL;
 const centralapi_url = process.env.NEXT_PUBLIC_CENTRAL_URL;
 
 const isToken =
-  useIsBrower() && window.sessionStorage.getItem("TOKEN")
+  isBrowser && window.sessionStorage.getItem("TOKEN")
     ? window.sessionStorage.getItem("TOKEN")
     : null;
 setToken(isToken);

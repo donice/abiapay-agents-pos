@@ -4,7 +4,7 @@ import "./style.scss";
 import { AbiaLogo } from "@/src/components/common/Images";
 import { PiUserCircleDuotone } from "react-icons/pi";
 import { TbBellRinging } from "react-icons/tb";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
 
 const TopNav = () => {
@@ -14,7 +14,7 @@ const TopNav = () => {
   } | null>(null);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {

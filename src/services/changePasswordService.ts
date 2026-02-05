@@ -1,12 +1,12 @@
 import axiosInstance from "../lib/axiosInstance";
-import useIsBrower from "../hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { setToken } from "./setToken";
 import toast from "react-hot-toast";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const isToken =
-  useIsBrower() && window.sessionStorage.getItem("TOKEN")
+  isBrowser && window.sessionStorage.getItem("TOKEN")
     ? window.sessionStorage.getItem("TOKEN")
     : null;
 setToken(isToken);

@@ -5,7 +5,7 @@ import { fetchABSSINInfo } from "@/src/services/common";
 import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { useRouter } from "next/navigation";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
@@ -49,7 +49,7 @@ const CreateFirstPartySignageForm = ({
 
   const router = useRouter();
 
-  const data = useIsBrower() && sessionStorage.getItem("USER_DATA");
+  const data = isBrowser && sessionStorage.getItem("USER_DATA");
   const user_data = data && JSON.parse(data);
 
 

@@ -9,7 +9,7 @@ import React, {
 import axios from "axios";
 import toast from "react-hot-toast";
 import { setToken } from "../services/setToken";
-import useIsBrower from "../hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { useRouter } from 'next/router';
 
 interface LoginResponse {
@@ -34,7 +34,7 @@ interface AuthState {
 
 // Initial state
 
-const savedToken = useIsBrower() && window.sessionStorage.getItem("TOKEN")
+const savedToken = isBrowser && window.sessionStorage.getItem("TOKEN")
   ? window.sessionStorage.getItem("TOKEN")
   : null;
 
@@ -124,8 +124,8 @@ export const login = async (
 
     setToken(token);
     toast.success(response?.data?.message);
-    useIsBrower() && sessionStorage.setItem("TOKEN", token);
-    useIsBrower() && sessionStorage.setItem("USER_DATA", JSON.stringify(body));
+    isBrowser && sessionStorage.setItem("TOKEN", token);
+    isBrowser && sessionStorage.setItem("USER_DATA", JSON.stringify(body));
 
   } catch (error: any) {
     dispatch({
@@ -150,8 +150,8 @@ export const loginMDA = async (
 
     setToken(token);
     toast.success(response?.data?.message);
-    useIsBrower() && sessionStorage.setItem("TOKEN", token);
-    useIsBrower() && sessionStorage.setItem("USER_DATA", JSON.stringify(body));
+    isBrowser && sessionStorage.setItem("TOKEN", token);
+    isBrowser && sessionStorage.setItem("USER_DATA", JSON.stringify(body));
 
   } catch (error: any) {
     dispatch({
@@ -167,5 +167,5 @@ export const loginMDA = async (
 export const logout = (dispatch: Dispatch<AuthAction>) => {
   dispatch({ type: "LOGOUT" });
   setToken(null);
-  useIsBrower() && sessionStorage.clear();
+  isBrowser && sessionStorage.clear();
 };
