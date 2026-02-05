@@ -2,12 +2,30 @@
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
   images: {
     domains: ["tms.tax"],
+  },
+
+  // Disable code splitting for WebView compatibility
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          // Combine everything into fewer chunks
+          commons: {
+            name: 'commons',
+            chunks: 'all',
+            minChunks: 1,
+          },
+        },
+      };
+    }
+    return config;
   },
 
   // Allow WebView embedding
@@ -17,29 +35,16 @@ const nextConfig = {
         source: '/:path*',
         headers: [
           {
-            key: 'X-Frame-Options',
-            value: 'ALLOWALL', // Allow embedding in WebView
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: "frame-ancestors 'self' *", // Allow all frame ancestors
-          },
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: '*', // Allow all origins (for development)
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET, POST, PUT, DELETE, OPTIONS',
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'X-Requested-With, Content-Type, Authorization',
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
     ];
   },
+
+  // Use standalone output for better compatibility
+  output: 'standalone',
 };
 
 export default nextConfig;
