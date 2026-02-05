@@ -31,6 +31,14 @@ const nextConfig = {
         util: require.resolve('util/'),
         stream: require.resolve('stream-browserify'),
         crypto: require.resolve('crypto-browserify'),
+         fs: false,
+        net: false,
+        tls: false,
+        http: false,
+        https: false,
+        zlib: false,
+        os: false,
+        path: false,
       };
 
       // Provide polyfills
@@ -44,36 +52,36 @@ const nextConfig = {
     return config;
   },
 
-  // Allow WebView embedding
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'ALLOWALL', // Allow embedding in WebView
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: "frame-ancestors 'self' *", // Allow all frame ancestors
-          },
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: '*', // Allow all origins (for development)
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET, POST, PUT, DELETE, OPTIONS',
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'X-Requested-With, Content-Type, Authorization',
-          },
-        ],
-      },
-    ];
-  },
+  // // Allow WebView embedding
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/:path*',
+  //       headers: [
+  //         {
+  //           key: 'X-Frame-Options',
+  //           value: 'ALLOWALL', // Allow embedding in WebView
+  //         },
+  //         {
+  //           key: 'Content-Security-Policy',
+  //           value: "frame-ancestors 'self' *", // Allow all frame ancestors
+  //         },
+  //         {
+  //           key: 'Access-Control-Allow-Origin',
+  //           value: '*', // Allow all origins (for development)
+  //         },
+  //         {
+  //           key: 'Access-Control-Allow-Methods',
+  //           value: 'GET, POST, PUT, DELETE, OPTIONS',
+  //         },
+  //         {
+  //           key: 'Access-Control-Allow-Headers',
+  //           value: 'X-Requested-With, Content-Type, Authorization',
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig;
