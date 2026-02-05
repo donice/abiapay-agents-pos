@@ -16,7 +16,7 @@ const ConfirmEmail = ({ setStage, setFormData }: any) => {
     message: "",
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: changePasswordOTPType) => {
       return changePasswordOTP(data);
     },
@@ -67,7 +67,7 @@ const ConfirmEmail = ({ setStage, setFormData }: any) => {
           validation={{ required: true }}
           error={errors.email}
         />
-        <Button text="Send OTP" loading={isPending} />
+        <Button text="Send OTP" loading={isLoading} />
       </form>
 
       {modal.open === true && <EmailSuccessModal text={modal.message} buttonText="Validate OTP" onClick={() => setStage(1)}/>}

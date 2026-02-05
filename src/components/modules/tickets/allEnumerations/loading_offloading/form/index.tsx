@@ -2,7 +2,7 @@
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import React, { useEffect, useState } from "react";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { useForm } from "react-hook-form";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
@@ -113,7 +113,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
     setValue("product_code", selectedProductCode);
   };
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: LoadingOffloadingType) => {
       return createLoadingOffLoading(data);
     },
@@ -242,7 +242,7 @@ const LoadingOffLoadingForm = ({ setShow }: { setShow: any }) => {
 
       <div>Amount: ₦ {watch("amount")}</div>
 
-      <Button text={"Process Now"} loading={isPending} />
+      <Button text={"Process Now"} loading={isLoading} />
     </form>
   );
 };

@@ -3,7 +3,7 @@ import SideNav from "./components/nav/SideNav";
 import TopNav from "./components/nav/TopNav";
 import BottomNav from "./components/nav/ButtomNav";
 import AuthGuard from "@/src/routes/AuthGuard";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { getCurrentYear } from "@/src/utils/getCurrentYear";
 
 const SecuredPagesLayout: React.FC<{ children: React.ReactNode }> = ({

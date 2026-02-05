@@ -7,12 +7,10 @@
   justify-content: center;
   gap: 1rem;
   background: rgb(38, 132, 255);
-  background: linear-gradient(
-    59deg,
-    rgba(38, 132, 255, 1) 0%,
-    rgba(64, 193, 77, 1) 50%,
-    rgba(255, 255, 255, 1) 100%
-  );
+  background: linear-gradient(59deg,
+      rgba(38, 132, 255, 1) 0%,
+      rgba(64, 193, 77, 1) 50%,
+      rgba(255, 255, 255, 1) 100%);
   min-height: 100vh;
 
   footer {
@@ -21,9 +19,9 @@
     font-size: 0.8rem;
     line-height: normal;
   }
-  
+
   &_container {
-    // width: 100%;
+    width: 100%;
     max-width: $sm;
     background-color: white;
     padding: 2rem;
@@ -34,11 +32,12 @@
     align-items: center;
     transform: translateY(2.5rem);
     animation: fadeIn 2s forwards;
-    
+
     @keyframes fadeIn {
       0% {
         opacity: 0;
       }
+
       100% {
         opacity: 1;
         transform: translateY(0rem);

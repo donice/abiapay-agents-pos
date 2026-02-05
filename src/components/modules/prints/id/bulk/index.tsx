@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { QRCodeSVG } from "qrcode.react";
 
 const BulkComp = ({ bulkData }: any) => {

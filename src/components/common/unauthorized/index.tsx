@@ -1,7 +1,7 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { FcBinoculars } from "react-icons/fc";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import React from "react";
 
 const Unauthorized = ({ text, link }: { text?: string; link?: string }) => {

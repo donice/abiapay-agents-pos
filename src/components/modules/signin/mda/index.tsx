@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { CustomFormHeader } from "../../../common/header";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { logout, useAuthDispatch } from "@/src/context/authContext";
 import MDASigninForm from "./form";
 

@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactElement, useEffect, useState } from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import Link from "next/link";
 import useGetRoute from "@/src/hooks/useGetRoute";
 import {
@@ -16,7 +16,7 @@ import {
   TbZoomScanFilled,
   TbTicket,
 } from "react-icons/tb";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { isBrowser } from "@/src/utils/isBrowser";
 
 interface BottomNavProps {
@@ -102,12 +102,12 @@ const BottomNav = () => {
               <Link
                 href={`/${item.name}`}
                 key={item.name}
-                className={`bottom-nav_item ${item.name === route ? "active" : "inactive"
-                  }`}
               >
-                <span>
-                  {item.name === route ? item.icon_active : item.icon}
-                </span>
+                <a className={`bottom-nav_item ${item.name === route ? "active" : "inactive"}`}>
+                  <span>
+                    {item.name === route ? item.icon_active : item.icon}
+                  </span>
+                </a>
               </Link>
             ))}
         </div>

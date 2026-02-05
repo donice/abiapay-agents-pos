@@ -1,7 +1,7 @@
 import React from "react";
 import TicketsWalletCard from "../ticketsStatsCard";
 import { SecondaryButton } from "@/src/components/common/button";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 
 const MarketTicketComponent = () => {
   return (

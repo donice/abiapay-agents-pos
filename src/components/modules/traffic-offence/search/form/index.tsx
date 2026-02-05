@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { searchOffence } from "@/src/services/trafficOffences";
 import toast from "react-hot-toast";
 import { Button } from "@/src/components/common/button";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 
 
 const Form = ({ setTicketsData, setSearched }: any) => {
@@ -25,7 +25,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
 
       const selectedVerificationType = watch("search_by");
     
-      const { mutate, isPending } = useMutation({
+      const { mutate, isLoading } = useMutation({
         mutationFn: (data: SearchOffencePayload) => {
           return searchOffence(data);
         },
@@ -116,7 +116,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
               )}
        
 
-<Button text={"Search for Traffic Offence "} loading={isPending} />
+<Button text={"Search for Traffic Offence "} loading={isLoading} />
        
       </form>
     </div>

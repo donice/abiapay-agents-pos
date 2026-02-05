@@ -12,7 +12,7 @@ import {
 import { fetchLGAData } from "@/src/services/common";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 
 interface LGA {
   label: string;
@@ -63,7 +63,7 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: FetchBulkPrintsPayload) => fetchBulkPrintsData(data),
     onSuccess: (data) => {
       if (data?.response_code === "00") {
@@ -81,7 +81,7 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
   });
 
 
-  const { mutate: searchMutate, isPending: isSearching } = useMutation({
+  const { mutate: searchMutate, isLoading: isSearching } = useMutation({
     mutationFn: (data: { ref: string }) => searchBulkPrintsData(data),
     onSuccess: (data) => {
       if (data?.response_code === "00") {
@@ -110,7 +110,7 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
 
   const {
     mutate: multiSearchMutate,
-    isPending: isMultiSearching,
+    isLoading: isMultiSearching,
   } = useMutation({
     mutationFn: (data: any) => searchBulkPrintsGroupData(data),
     onSuccess: (data: any) => {
@@ -307,7 +307,7 @@ const BulkPrintForm = ({ setBulkData, setViewData, setStickerLga }: any) => {
             )}
           </div>
 
-          <Button text="Fetch Data" loading={isPending} disabled={isPending} />
+          <Button text="Fetch Data" loading={isLoading} disabled={isLoading} />
         </form>
       )}
     </div>

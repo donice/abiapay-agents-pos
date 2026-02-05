@@ -1,5 +1,5 @@
 import React from 'react'
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 
 const BusinessAbssinStatsCard = ({data}:any) => {
     console.log(data, "busness data");

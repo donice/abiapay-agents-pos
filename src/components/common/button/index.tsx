@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 import { MdOutlineAdd, MdOutlineArrowBackIos } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import Loader from "../loader";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 
 interface prop {
   text: string;

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { CustomFormHeader } from "../../common/header";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { logout, useAuthDispatch } from "@/src/context/authContext";
 import Link from "next/link";
 import { FcManager, FcPortraitMode } from "react-icons/fc";
@@ -38,10 +38,12 @@ const SigninComponent = () => {
 
       <div className="channel_container">
         {channelArr.map((item: any) => (
-            <Link href={item.link} className="channel" key={item.name}>
+          <Link href={item.link} key={item.name}>
+            <a className="channel">
               <span>{item.icon}</span>
               <span>{item.name} login</span>
-            </Link>
+            </a>
+          </Link>
         ))}
 
       </div>

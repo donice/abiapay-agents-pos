@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { fetchEnumerationData } from "@/src/services/dashboardService";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/app/(secured)/loading";

@@ -15,7 +15,7 @@ import {
   FcExport,
 } from "react-icons/fc";
 import Link from "next/link";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { isBrowser } from "@/src/utils/isBrowser";
 
 interface WalletItemsProps {
@@ -133,20 +133,20 @@ const UserSettingsComponent = () => {
       <div className="settings_items">
         {walletItems.map((item) => (
           <Link
-            href={`${
-              item.cat === "coming soon" ? "/user/settings" : item.href
-            }`}
+            href={`${item.cat === "coming soon" ? "/user/settings" : item.href
+              }`}
             key={item.href}
-            className={`settings_item`}
           >
-            <div>
-              {" "}
-              <span>{item.icon}</span>
+            <a className={`settings_item`}>
               <div>
-                <h2>{item.title}</h2>
-                <p>{item.desc}</p>
+                {" "}
+                <span>{item.icon}</span>
+                <div>
+                  <h2>{item.title}</h2>
+                  <p>{item.desc}</p>
+                </div>
               </div>
-            </div>
+            </a>
           </Link>
         ))}
       </div>
@@ -162,21 +162,21 @@ const UserSettingsComponent = () => {
       <div className="settings_items_service">
         {dailyServices.map((item) => (
           <Link
-            href={`${
-              item.cat === "coming soon" ? "/user/settings" : item.href
-            }`}
+            href={`${item.cat === "coming soon" ? "/user/settings" : item.href
+              }`}
             key={item.href}
-            className={`settings_item`}
           >
-            {item.cat === "coming soon" && <span className="soon">soon</span>}
-            <div>
-              {" "}
-              <span>{item.icon}</span>
+            <a className={`settings_item`}>
+              {item.cat === "coming soon" && <span className="soon">soon</span>}
               <div>
-                <h2>{item.title}</h2>
-                <p>{item.desc}</p>
+                {" "}
+                <span>{item.icon}</span>
+                <div>
+                  <h2>{item.title}</h2>
+                  <p>{item.desc}</p>
+                </div>
               </div>
-            </div>
+            </a>
           </Link>
         ))}
       </div>
@@ -186,16 +186,17 @@ const UserSettingsComponent = () => {
           <Link
             href={`${item.href}`}
             key={item.href}
-            className={`settings_item`}
           >
-            <div>
-              {" "}
-              <span className="icon">{item.icon}</span>
+            <a className={`settings_item`}>
               <div>
-                <h2>{item.title}</h2>
-                <p>{item.desc}</p>
+                {" "}
+                <span className="icon">{item.icon}</span>
+                <div>
+                  <h2>{item.title}</h2>
+                  <p>{item.desc}</p>
+                </div>
               </div>
-            </div>
+            </a>
           </Link>
         ))}
       </div>

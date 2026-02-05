@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { FieldError, useForm } from "react-hook-form";
@@ -177,7 +177,7 @@ const OriginData = ({ setStage, setFormData, formData }: any) => {
           <button className="button secondary" onClick={() => setStage(1)}>
             Go Back
           </button>
-          <Button text={"Create ABSSIN"} loading={mutation.isPending} disabled={mutation.isPending}  />
+          <Button text={"Create ABSSIN"} loading={mutation.isLoading} disabled={mutation.isLoading}  />
         </div>
       </form>
 

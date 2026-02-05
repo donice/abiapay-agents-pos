@@ -1,7 +1,7 @@
 // components/common/Input.tsx
 import React, { ReactNode, useState } from "react";
-import "./style.scss";
-import "./SearchableDropdown.scss";
+// import "./style.scss" // Moved to _app;
+// import "./SearchableDropdown.scss" // Moved to _app;
 import { TbCreditCard, TbEye, TbEyeOff, TbLockCheck } from "react-icons/tb";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { Controller, FieldError } from "react-hook-form";

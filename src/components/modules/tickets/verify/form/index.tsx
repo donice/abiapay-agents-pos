@@ -87,7 +87,7 @@ const VerifyTicketsFrom = ({ userData, setDetails }: any) => {
         }}
         error={errors.referenceID}
       />
-      <Button text="Verify Ticket" loading={mutation.isPending} />
+      <Button text="Verify Ticket" loading={mutation.isLoading} />
     </form>
   );
 };

@@ -2,7 +2,7 @@
 import { Button } from "@/src/components/common/button";
 import React, { useEffect, useState } from "react";
 import { FormTextInput } from "@/src/components/common/input";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { EnumerationModal } from "@/src/components/common/modal";

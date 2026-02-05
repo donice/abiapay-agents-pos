@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactElement, useEffect, useState } from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import Link from "next/link";
 import useGetRoute from "@/src/hooks/useGetRoute";
 import {
@@ -100,17 +100,20 @@ const SideNav = () => {
               <Link
                 href={`/${item.name}`}
                 key={item.name}
-                className={`side-nav_item ${item.name === route ? "active" : "inactive"}`}
               >
-                <span>{item.icon}</span>
-                <span>{item.title}</span>
+                <a className={`side-nav_item ${item.name === route ? "active" : "inactive"}`}>
+                  <span>{item.icon}</span>
+                  <span>{item.title}</span>
+                </a>
               </Link>
             ))}
-          <Link href={"/signin"} key={"logout"} className="side-nav_item logout">
-            <span>
-              <TbLogout2 className="icon out" />
-            </span>
-            <span>Sign Out</span>
+          <Link href={"/signin"} key={"logout"}>
+            <a className="side-nav_item logout">
+              <span>
+                <TbLogout2 className="icon out" />
+              </span>
+              <span>Sign Out</span>
+            </a>
           </Link>
         </div>
       </div>

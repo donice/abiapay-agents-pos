@@ -14,7 +14,7 @@ import {
   InfoModal,
   VehicleCheckSuccessModal,
 } from "@/src/components/common/modal";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { CustomHeader } from "@/src/components/common/header";
 
 const SignageRoadComponent = ({}: any) => {
@@ -46,7 +46,7 @@ const SignageRoadComponent = ({}: any) => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: VerifyPlateNumberType) => {
       return verifyPlateNumber(data);
     },
@@ -171,7 +171,7 @@ const SignageRoadComponent = ({}: any) => {
           validation={{ required: true }}
         />
       
-        <Button text="Submit" loading={isPending} />
+        <Button text="Submit" loading={isLoading} />
       </form>
 
       {show.mode === true && (

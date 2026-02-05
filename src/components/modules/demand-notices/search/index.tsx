@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { CustomHeader } from "@/src/components/common/header";
 
 const SearchDemandnoticeComponent = () => {
@@ -93,7 +93,7 @@ const SearchDemandnoticeComponent = () => {
             ]}
             placeholder="Select Fiscal Year"
           /> */}
-          <Button text="Search Demand Notice" loading={mutation.isPending} />
+          <Button text="Search Demand Notice" loading={mutation.isLoading} />
         </form>
       </div>
 

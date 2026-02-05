@@ -1,7 +1,7 @@
 import React from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { TbFolders, TbCash, TbReceipt } from "react-icons/tb";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 interface props {
   icon?: string;

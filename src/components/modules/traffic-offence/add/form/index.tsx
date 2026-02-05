@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { fetchProducts } from "@/src/services/common";
 import {  createTrafficoffence, Offences } from "@/src/services/trafficOffences";
 import { Product } from "@/src/services/ticketsServices";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { BackButton, Button } from "@/src/components/common/button";
 import toast from "react-hot-toast";
 import { CreateOffencePayload } from "@/src/services/trafficOffences";
@@ -15,7 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchAllOffences } from "@/src/services/trafficOffences";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { bankOptions } from "@/src/lib/app";
 
 const AddTrafficOffenceTicketForm = ({
@@ -68,7 +68,7 @@ const AddTrafficOffenceTicketForm = ({
     getProductsData();
   }, []);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: CreateOffencePayload) => {
         console.log(data)
       return createTrafficoffence(data);
@@ -245,7 +245,7 @@ const AddTrafficOffenceTicketForm = ({
 
       <div className="btn_container">
         <BackButton link="/traffic-offence" />
-        <Button text="Create Ticket" loading={isPending} />
+        <Button text="Create Ticket" loading={isLoading} />
       </div>
     </form>
   );

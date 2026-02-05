@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 
 const IndividualABSSINStatsCard = ({ data }: any) => {
   console.log(data, "data");

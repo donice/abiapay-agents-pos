@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/src/utils/navigation";
 import EnterDetailsComponent from "./enterDetails";
 import ValidateOtpComponent from "./validateOtp";
 import { getLastPathSegment } from "@/src/utils/getLastPathSegment";

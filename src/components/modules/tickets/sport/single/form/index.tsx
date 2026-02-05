@@ -2,7 +2,7 @@
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import React, { useEffect } from "react";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { useForm } from "react-hook-form";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { createIndividualSportTicket } from "@/src/services/ticketsServices";
@@ -62,7 +62,7 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
     }
   }, [debouncedABSSIN, setValue]);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: CreateIndividualSportPayload) => {
       return createIndividualSportTicket(data);
     },
@@ -192,7 +192,7 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
         ]}
       />
 
-      <Button text={"Process Now"} loading={isPending} />
+      <Button text={"Process Now"} loading={isLoading} />
     </form>
   );
 };

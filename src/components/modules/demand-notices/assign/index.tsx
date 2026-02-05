@@ -14,9 +14,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { InformationModal } from "@/src/components/common/modal";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 const AssignNotice = () => {
   const router = useRouter();
@@ -229,7 +229,7 @@ const AssignNotice = () => {
           />
           <Button
             text="Search Demand Notice"
-            loading={searchMutation.isPending}
+            loading={searchMutation.isLoading}
           />
         </form>
 
@@ -399,8 +399,8 @@ const AssignNotice = () => {
                   }
                   loading={
                     mode === "abssin"
-                      ? assignWithAbssinMutation.isPending
-                      : assignWithoutAbssinMutation.isPending
+                      ? assignWithAbssinMutation.isLoading
+                      : assignWithoutAbssinMutation.isLoading
                   }
                 />
               </form>

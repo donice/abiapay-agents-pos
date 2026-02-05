@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/src/utils/navigation";
 import { protectedRoutes } from "../routes";
 import { useAuthState } from "../context/authContext";
 import Redirecting from "../components/common/loader/redirecting";

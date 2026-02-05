@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
 import { LargeLoader } from "../loader";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 
 const Redirecting = () => {
   return (

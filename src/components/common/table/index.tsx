@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Pagination from "./pagination";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { MdOutlineManageSearch } from "react-icons/md";
 
 interface TableProps {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { BackButton, Button, PrimaryButton, SecondaryButton } from "../button";
 import { AbiaEnumerationLarge } from "../Images";
 import {

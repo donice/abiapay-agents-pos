@@ -2,7 +2,7 @@ import React from "react";
 import { AbiaLogoWhite } from "@/src/components/common/Images";
 import Image from "next/image";
 import GoogleDownloadImage from "./assets/google_play.png";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 
 const DashboardBanner = () => {

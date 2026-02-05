@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import ProgressBar from "./progressBar";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import Basic from "./basic";
 import { createBusinessAbssinPayloadType } from "@/src/services/identityService";
 import Business from "./business";

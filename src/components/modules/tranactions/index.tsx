@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import { CustomHeader } from "../../common/header";
 import { formatAmount } from "@/src/utils/formatAmount";
-import {useRouter} from "next/navigation";
+import {useRouter} from "next/router";
 import { GoVerified } from "react-icons/go";
 import { GoBackButton } from "../../common/button";
 import Empty from "../../common/empty";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { useQuery } from "@tanstack/react-query";
 import { fetchTransferHistory } from "@/src/services/transactions";
 import { Loading } from "../../common/loader/redirecting";

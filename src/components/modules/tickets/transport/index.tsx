@@ -2,7 +2,7 @@ import React from "react";
 import TicketsWalletCard from "../ticketsStatsCard";
 import { SecondaryButton } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import TransactionsTable from "./transportTable";
 
 

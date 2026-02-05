@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { CustomFormHeader } from "@/src/components/common/header";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import {
   Button,
   GoBackButton,
@@ -12,7 +12,7 @@ import { CamelCaseToTitleCase } from "@/src/utils/helper";
 import { formatAmount } from "@/src/utils/formatAmount";
 import { AbiaStateLogo } from "@/src/components/common/Images";
 import { useReactToPrint } from "react-to-print";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "@/src/utils/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSingleEmblem } from "@/src/services/ticketsServices";
 import Empty from "@/src/components/common/empty";

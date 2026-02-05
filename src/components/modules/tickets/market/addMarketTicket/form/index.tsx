@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import { FormButton } from "@/src/components/common/button";
 import { SelectInput, FormTextInput } from "@/src/components/common/input";
 import { fetchLGAData } from "@/src/services/common";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { useForm } from "react-hook-form";
 import { fetchMarketEnumerationDetails } from "@/src/services/ticketsServices";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import CreateMarketLevyForm from "./createMarketLevy";
 
@@ -26,7 +26,7 @@ const AddMarketTicketForm = () => {
 
   const {
     mutate: mutateEnumerationDetails,
-    isPending: isPendingEnumerationDetails,
+    isLoading: isLoadingEnumerationDetails,
   } = useMutation({
     mutationKey: ["fetchMarketEnumerationDetails"],
     mutationFn: () => {
@@ -86,9 +86,9 @@ const AddMarketTicketForm = () => {
                 text={"Check Details"}
                 disabled={
                   watchRenderForm("enumeration_id") == "" ||
-                  isPendingEnumerationDetails
+                  isLoadingEnumerationDetails
                 }
-                loading={isPendingEnumerationDetails}
+                loading={isLoadingEnumerationDetails}
               />
             </div>
           </form>

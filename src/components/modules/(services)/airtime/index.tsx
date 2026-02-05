@@ -5,12 +5,12 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import React from "react";
 import TransferWalletCards from "../../wallet/components/wallet-cards";
 import Networks, { AirtimeAmounts } from "../lib/Networks";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { useForm, useWatch } from "react-hook-form";
 import { FormTextInput } from "@/src/components/common/input";
 import { FormButton } from "@/src/components/common/button";
 import { BuyAirtimeService } from "@/src/services/VATService";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
@@ -47,7 +47,7 @@ const AirtimeModule = () => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["buy_airtime"],
 
     mutationFn: async (data: AirtimeServiceTypes) => {
@@ -80,8 +80,8 @@ const AirtimeModule = () => {
     <div>
       <CustomHeader title="Airtime" desc="Purchase airtime for any network" />
       <div className="flex flex-end justify-end items-center my-4">
-        <Link href={"/airtime/history"} className="text-sm font-bold">
-          View history
+        <Link href={"/airtime/history"}>
+          <a className="text-sm font-bold">View history</a>
         </Link>
       </div>
       <section className="service">
@@ -142,8 +142,8 @@ const AirtimeModule = () => {
 
             <FormButton
               text={"Buy Airtime"}
-              disabled={isPending}
-              loading={isPending}
+              disabled={isLoading}
+              loading={isLoading}
             />
           </form>
         )}

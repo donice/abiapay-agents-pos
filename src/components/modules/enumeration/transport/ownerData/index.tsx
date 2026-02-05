@@ -3,7 +3,7 @@ import { Button } from "@/src/components/common/button";
 import React from "react";
 import { LuUser } from "react-icons/lu";
 import { FormTextInput } from "@/src/components/common/input";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import {
   saveContact,
   SaveContactType,
@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 
 const OwnerData = ({ setStage, details, formData }: any) => {
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: SaveContactType) => {
       return saveContact(data);
     },
@@ -80,7 +80,7 @@ const OwnerData = ({ setStage, details, formData }: any) => {
         <button className="button secondary" onClick={() => setStage(0)}>
           Go Back
         </button>
-        <Button text="Save & Continue" loading={isPending}/>
+        <Button text="Save & Continue" loading={isLoading}/>
       </div>
     </form>
   );

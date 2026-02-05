@@ -2,13 +2,13 @@
 import React, {
   useEffect,
   useReducer,
-  type Reducer,
   useCallback,
   useState,
 } from "react";
+import type { Reducer } from "react";
 import StatsCard from "./statsCard";
 import { PrimaryButton, SecondaryButton } from "@/src/components/common/button";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { CustomHeader } from "@/src/components/common/header";
 import {
   fetchDashboardData,
@@ -178,7 +178,7 @@ const DashboardComponent: React.FC = () => {
       const res = await fetchEnumerationData();
       setEnumerationCount(
         res?.response_data?.transport?.thisDay +
-          res?.response_data?.market?.thisDay,
+        res?.response_data?.market?.thisDay,
       );
     } catch (error) {
       toast.error("Cannot fetch enumeration data");
@@ -237,8 +237,8 @@ const DashboardComponent: React.FC = () => {
           }
         />
         {userData?.user_cat == "MdaUser" ||
-        userData?.user_cat == "Enforcer" ||
-        userData?.user_cat == "Enforcer" ? null : (
+          userData?.user_cat == "Enforcer" ||
+          userData?.user_cat == "Enforcer" ? null : (
           <div className="dashboard_header_buttons">
             <SecondaryButton
               text="Akara Ekwenti"
@@ -254,15 +254,15 @@ const DashboardComponent: React.FC = () => {
       </header>
 
       {userData?.user_cat == "MdaUser" ||
-      userData?.user_cat == "Enforcer" ? null : !loading ? (
-        <div className="dashboard_wallets">
-          {appMetadata.banksAllowed.find((b) => b.value === "access")
-            ?.allowed && <WalletCard bank="access" data={accessData} />}
+        userData?.user_cat == "Enforcer" ? null : !loading ? (
+          <div className="dashboard_wallets">
+            {appMetadata.banksAllowed.find((b) => b.value === "access")
+              ?.allowed && <WalletCard bank="access" data={accessData} />}
 
-          {appMetadata.banksAllowed.find((b) => b.value === "fidelity")
-            ?.allowed && <WalletCard bank="fidelity" data={fidelityData} />}
-        </div>
-      ) : (
+            {appMetadata.banksAllowed.find((b) => b.value === "fidelity")
+              ?.allowed && <WalletCard bank="fidelity" data={fidelityData} />}
+          </div>
+        ) : (
         <div className="dashboard_wallets_skeleton">
           <LoaderSkeleton />
           <LoaderSkeleton />
@@ -332,10 +332,10 @@ const DashboardComponent: React.FC = () => {
         )}
         {(userData?.mda == MDA_KEYS.ministry_of_transport ||
           userData?.mda == MDA_KEYS.board_of_iternal_revenue) && (
-          <>
-            <QuickLink name="Bulk Prints" link="/prints" />
-          </>
-        )}
+            <>
+              <QuickLink name="Bulk Prints" link="/prints" />
+            </>
+          )}
         {userData?.user_cat == "MdaUser" && (
           <>
             {" "}

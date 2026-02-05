@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { TbCircleCheckFilled } from "react-icons/tb";
 import Image from "next/image";
 import AccessBankLogo from "../../../../assets/access_bank.png";

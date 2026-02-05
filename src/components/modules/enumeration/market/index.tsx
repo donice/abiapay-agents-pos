@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import ShopkeepersDetails from "./shopkeepersDetails";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import ProgressBar from "./progressBar";
 import EnumerationDetails from "./enumerationDetails";
 import { CustomHeader } from "@/src/components/common/header";

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useForm, useWatch } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -14,7 +14,7 @@ import { FormButton } from "@/src/components/common/button";
 import { fetchDashboardData } from "@/src/services/dashboardService";
 import { BuyDataService, GetDataPlans } from "@/src/services/VATService";
 
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 
 type AirtimeServiceTypes = {
   amount: number;
@@ -80,7 +80,7 @@ const DataModule = () => {
     setValue("tarrifTypeId", "");
   }, [selectedNetwork, setValue]);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["buy_airtime"],
     mutationFn: BuyDataService,
     onSuccess: async (res: any) => {
@@ -188,8 +188,8 @@ const DataModule = () => {
 
             <FormButton
               text="Buy Data"
-              disabled={isPending}
-              loading={isPending}
+              disabled={isLoading}
+              loading={isLoading}
             />
           </form>
         )}

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProgressBar from "./progressBar";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import PersonalData from "./personalData";
 import {
   createIndividualAbssinPayloadType,
@@ -10,7 +10,7 @@ import {
 } from "@/src/services/identityService";
 import UserData from "./userData";
 import OriginData from "./originData";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "@/src/utils/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { isBrowser } from "@/src/utils/isBrowser";
 

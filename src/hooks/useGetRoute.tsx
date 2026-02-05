@@ -1,5 +1,5 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/src/utils/navigation";
 
 const useGetRoute = () => {
   const currentPage = usePathname();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./style.css";
+ // import "./style.css" // Moved to _app;
 import { QRCodeSVG } from "qrcode.react";
 
 const BulkComp = ({ bulkData, stickerLga }: any) => {

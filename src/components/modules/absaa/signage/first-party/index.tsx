@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { CustomHeader } from "@/src/components/common/header";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { GoBackButton } from "@/src/components/common/button";
 import CreateFirstPartySignageForm from "./form";
 import { SuccessModal } from "@/src/components/common/modal";

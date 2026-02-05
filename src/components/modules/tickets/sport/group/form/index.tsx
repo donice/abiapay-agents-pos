@@ -2,7 +2,7 @@
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import React from "react";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { useForm } from "react-hook-form";
 import { createGroupSportTicket } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
@@ -28,7 +28,7 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: CreateGroupSportPayload) => {
       return createGroupSportTicket(data);
     },
@@ -147,7 +147,7 @@ const Form = ({ setShow, category }: { setShow: any; category: string }) => {
         ]}
       />
 
-      <Button text={"Process Now"} loading={isPending} />
+      <Button text={"Process Now"} loading={isLoading} />
     </form>
   );
 };

@@ -6,12 +6,12 @@ import toast from "react-hot-toast";
 import { GoVerified } from "react-icons/go";
 import { TbLoader } from "react-icons/tb";
 import Empty from "@/src/components/common/empty";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { formatAmount } from "@/src/utils/formatAmount";
 import { CustomHeader } from "@/src/components/common/header";
 import { GoBackButton } from "@/src/components/common/button";
 import { isBrowser } from "@/src/utils/isBrowser";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 const History = () => {
   const router = useRouter();
   const [userData, setUserData] = useState<{ name?: string; email?: string } | null>(null);

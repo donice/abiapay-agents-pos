@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { FormButton } from "@/src/components/common/button";
 import { TextInput } from "@/src/components/common/input"; // Importing the custom input component
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import toast from "react-hot-toast";
 import { loginMDA, useAuthDispatch } from "@/src/context/authContext";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 
 interface FormData {

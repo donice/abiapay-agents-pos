@@ -6,12 +6,12 @@ import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
 import { isBrowser } from "@/src/utils/isBrowser";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { Button, BackButton } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { SuccessModal } from "@/src/components/common/modal";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { CreateTicketPayload } from "@/src/components/types/ticketTypes";
 import {
   Product,
@@ -78,7 +78,7 @@ const  AddTransportTicketForm = ({
     getProductsData();
   }, []);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: CreateTicketPayload) => {
       return createNewTicket(data);
     },
@@ -279,7 +279,7 @@ const  AddTransportTicketForm = ({
 
       <div className="btn_container">
         <BackButton link="/tickets/transport" />
-        <Button text="Process Payment" loading={isPending} />
+        <Button text="Process Payment" loading={isLoading} />
       </div>
 
       {show && (

@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { AbiaLogoLarge } from "../../common/Images";
 import { getCurrentYear } from "@/src/utils/getCurrentYear";
 

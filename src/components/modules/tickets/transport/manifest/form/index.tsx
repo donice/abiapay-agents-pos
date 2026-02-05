@@ -6,12 +6,12 @@ import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
 import { isBrowser } from "@/src/utils/isBrowser";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { Button, BackButton } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { SuccessModal } from "@/src/components/common/modal";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { CreateManifestPayloadType } from "@/src/components/types/ticketTypes";
 import {
   createManifest,
@@ -66,7 +66,7 @@ const AddManifestForm = ({
   const data = isBrowser && sessionStorage.getItem("USER_DATA");
   const user_data = data && JSON.parse(data);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: CreateManifestPayloadType) => {
       return createManifest(data);
     },
@@ -285,7 +285,7 @@ const AddManifestForm = ({
 
       <div className="btn_container">
         <BackButton link="/tickets" />
-        <Button text="Create Manifest" loading={isPending} />
+        <Button text="Create Manifest" loading={isLoading} />
       </div>
 
       {show && (

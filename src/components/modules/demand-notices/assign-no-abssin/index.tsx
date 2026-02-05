@@ -10,7 +10,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 
 const AssignNoAbssin = () => {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
@@ -106,7 +106,7 @@ const AssignNoAbssin = () => {
               validation={{ required: true }}
             //   error={errors.notice_number}
             />
-            <Button text="Search Demand Notice" loading={searchMutation.isPending} />
+            <Button text="Search Demand Notice" loading={searchMutation.isLoading} />
           </form>
         )}
 
@@ -188,7 +188,7 @@ const AssignNoAbssin = () => {
                       }
                     />
 
-            <Button text="Assign Notice with Taxpayer Details" loading={assignMutation.isPending} />
+            <Button text="Assign Notice with Taxpayer Details" loading={assignMutation.isLoading} />
           </form>
         )}
       </div>

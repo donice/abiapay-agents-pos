@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { fetchCollectionData } from "@/src/services/dashboardService";
 import { useQuery } from "@tanstack/react-query";
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";

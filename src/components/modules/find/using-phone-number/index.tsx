@@ -7,8 +7,8 @@ import { formatAmount } from "@/src/utils/formatAmount";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
 import { GoVerified } from "react-icons/go";
 import Empty from "@/src/components/common/empty";
-import { useRouter } from "next/navigation";
-import "../style.scss";
+import { useRouter } from "next/router";
+ // import "../style.scss" // Moved to _app;
 
 const UsingPhoneNumberComponent = () => {
   const router = useRouter();

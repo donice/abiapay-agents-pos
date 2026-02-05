@@ -6,7 +6,7 @@ import { transformStringWithUnderscores } from "@/src/utils/transformStringWithU
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { TbUser } from "react-icons/tb";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { isBrowser } from "@/src/utils/isBrowser";
 
 const DyamicView = ({ id }: { id: string }) => {

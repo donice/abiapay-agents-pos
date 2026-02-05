@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { formatAmount } from "@/src/utils/formatAmount";
 import Image from "next/image";
 import AccessBankLogo from "../../../assets/access_bank.png";

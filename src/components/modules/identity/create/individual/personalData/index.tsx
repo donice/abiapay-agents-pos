@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { useForm, FieldError } from "react-hook-form";

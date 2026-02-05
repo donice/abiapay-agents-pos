@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { FieldError, useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import {
   fetchTaxOffice,
 } from "@/src/services/common";
 import { submitDate, transformDate } from "@/src/utils/formatDate";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "@/src/utils/navigation";
 
 const UserData = ({ setStage, setFormData, formData }: any) => {    
   const querySearch = useSearchParams();

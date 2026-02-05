@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import VehicleData from "./vehicleData";
 import OwnerData from "./ownerData";
 import DriverData from "./driverData";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import ProgressBar from "./progressBar";
 
 const TransportEnumerationComponent = () => {

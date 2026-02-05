@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { CustomHeader } from "@/src/components/common/header";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import {
   DefaultButton,
   CancelButton,

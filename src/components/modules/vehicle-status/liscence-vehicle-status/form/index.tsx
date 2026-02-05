@@ -3,7 +3,7 @@ import React from "react";
 import { TextInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
 import { SubmitHandler, useForm } from "react-hook-form";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { TbSearch } from "react-icons/tb";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -23,7 +23,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["verify_vehicle_status"],
     mutationFn: (data: verifyVehicleStatusPayload) => {
       return verifyVehicleStatus(data);
@@ -77,7 +77,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
           error={errors.ref}
         />
 
-        <Button text={"Search Tickets"} loading={isPending} />
+        <Button text={"Search Tickets"} loading={isLoading} />
       </form>
     </>
   );

@@ -8,7 +8,7 @@ import {
 } from "@/src/services/verifyTickets";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import toast from "react-hot-toast";
 import {
   fetchAssessment,
@@ -287,7 +287,7 @@ const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
           />
         </>
       )}
-      <Button text="Verify Payment" loading={mutation.isPending} />
+      <Button text="Verify Payment" loading={mutation.isLoading} />
     </form>
   );
 };

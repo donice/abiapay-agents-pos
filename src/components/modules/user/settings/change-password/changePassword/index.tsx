@@ -19,7 +19,7 @@ const ValidateOTP = ({ setStage, setFormData, formData }: any) => {
     message: "",
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: changePasswordType) => {
       return changePasswordAPI(data);
     },
@@ -98,7 +98,7 @@ const ValidateOTP = ({ setStage, setFormData, formData }: any) => {
           <button className="button secondary" onClick={() => setStage(1)}>
             Edit OTP
           </button>
-          <Button text="Change Password" loading={isPending} />
+          <Button text="Change Password" loading={isLoading} />
         </div>
       </form>
 

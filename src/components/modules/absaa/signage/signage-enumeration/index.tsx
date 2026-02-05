@@ -14,7 +14,7 @@ import {
   InfoModal,
   VehicleCheckSuccessModal,
 } from "@/src/components/common/modal";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { CustomHeader } from "@/src/components/common/header";
 
 const SignageCategoryComponent = ({}: any) => {
@@ -46,7 +46,7 @@ const SignageCategoryComponent = ({}: any) => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: VerifyPlateNumberType) => {
       return verifyPlateNumber(data);
     },
@@ -238,7 +238,7 @@ const SignageCategoryComponent = ({}: any) => {
           }}
           error={errors.amount as FieldError}
         />
-        <Button text="Pay now" loading={isPending} />
+        <Button text="Pay now" loading={isLoading} />
       </form>
 
       {show.mode === true && (

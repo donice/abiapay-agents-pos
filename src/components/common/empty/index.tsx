@@ -1,7 +1,7 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { FcOpenedFolder } from "react-icons/fc";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import React from "react";
 import Image from "next/image";
 import emptySVG from "@/public/images/empty.svg";

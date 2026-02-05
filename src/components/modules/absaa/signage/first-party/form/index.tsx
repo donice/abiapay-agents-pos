@@ -6,12 +6,12 @@ import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
 import { isBrowser } from "@/src/utils/isBrowser";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { SuccessModal } from "@/src/components/common/modal";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { useMutation } from "@tanstack/react-query";
 import { ABSAAPayload } from "@/src/components/types/absaaTypes";
 import { createFirstPartySignage } from "@/src/services/absaaService";
@@ -53,7 +53,7 @@ const CreateFirstPartySignageForm = ({
   const user_data = data && JSON.parse(data);
 
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: ABSAAPayload) => {
       return createFirstPartySignage(data);
     },
@@ -256,7 +256,7 @@ const CreateFirstPartySignageForm = ({
       />
 
       <div className="btn_container">
-        <Button text="Pay Now" loading={isPending} />
+        <Button text="Pay Now" loading={isLoading} />
       </div>
 
       {show && (

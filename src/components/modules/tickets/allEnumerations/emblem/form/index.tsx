@@ -2,7 +2,7 @@
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import React, { useEffect, useState } from "react";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { useForm } from "react-hook-form";
 import {
   createTransportEmblem,
@@ -137,7 +137,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
     setValue("product_code", selectedProductCode);
   };
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: CreateTransportEmblemType) => {
       return createTransportEmblem(data);
     },
@@ -249,7 +249,7 @@ const CreateEmblemForm = ({ setShow }: { setShow: any }) => {
         ]}
       />
 
-      <Button text={"Process Now"} loading={isPending} />
+      <Button text={"Process Now"} loading={isLoading} />
 
     </form>
   );

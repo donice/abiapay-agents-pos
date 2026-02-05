@@ -60,7 +60,7 @@ const AuthDispatchContext = createContext<Dispatch<AuthAction> | undefined>(
   undefined
 );
 
-const url = process.env.NEXT_PUBLIC_BASE_URL;
+const url = process.env.NEXT_PUBLIC_BASE_URL || 'https://sandboxmobileapi.abiapay.ng/api/v1';
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {

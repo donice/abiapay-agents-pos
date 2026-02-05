@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { FormButton } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { set, useForm } from "react-hook-form";
 import {
   fetchMarketEnumerationDetails,
@@ -237,8 +237,8 @@ const AddMarketTicketForm = (id: any) => {
             />
             <FormButton
               text={"Pay Now"}
-              disabled={mutatePayForMarketLevy.isPending}
-              loading={mutatePayForMarketLevy.isPending}
+              disabled={mutatePayForMarketLevy.isLoading}
+              loading={mutatePayForMarketLevy.isLoading}
             />
           </form>
 

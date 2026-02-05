@@ -2,14 +2,14 @@
 import { CustomHeader } from "@/src/components/common/header";
 import type { Metadata } from "next";
 import React, { useState } from "react";
-import "../../style.scss";
+ // import "../../style.scss" // Moved to _app;
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useForm } from "react-hook-form";
 import { Button } from "@/src/components/common/button";
 import { validateID, validateNoID } from "@/src/services/identityService";
 import toast from "react-hot-toast";
 import { OtpSuccessModal } from "@/src/components/common/modal";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/src/utils/navigation";
 
 export const metadata: Metadata = {
   title: "ABIAPAY Identity",
@@ -22,7 +22,7 @@ const EnterDetailsComponent = () => {
     mode: false,
     message: "",
   });
-  const [isPending, setIsPending] = useState(false);
+  const [isLoading, setIsPending] = useState(false);
    const [selectedId, setSelectedId] = useState("");
 
   const {
@@ -155,8 +155,8 @@ const EnterDetailsComponent = () => {
 
         <Button
           text="Submit"
-          loading={isPending}
-          disabled={isPending || selectedId === ""}
+          loading={isLoading}
+          disabled={isLoading || selectedId === ""}
         />
       </form>
 

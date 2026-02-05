@@ -1,6 +1,6 @@
 import React from "react";
 import { CustomHeader } from "@/src/components/common/header";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import BillsTable from "./billsTable";
 import { SecondaryButton } from "@/src/components/common/button";
 

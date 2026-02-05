@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { CustomHeader } from "@/src/components/common/header";
 import {
   FormTextInput,
@@ -110,7 +110,7 @@ const CreateInfantAbssinModule = () => {
     }
   }, [debouncedPhoneNumber, setValue]);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: InfantFormData) => createInfantABSSIN(data),
     onError: (error: any) => {},
 
@@ -314,7 +314,7 @@ const CreateInfantAbssinModule = () => {
           error={errors.school_address}
         />
 
-        <Button text="Submit" loading={isPending} disabled={isPending} />
+        <Button text="Submit" loading={isLoading} disabled={isLoading} />
       </form>
       <CustomDialog
         id="createInfantABSSINDialog"

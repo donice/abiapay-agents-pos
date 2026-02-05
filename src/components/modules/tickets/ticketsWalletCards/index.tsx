@@ -4,7 +4,7 @@ import { fetchCollectionData, fetchDashboardData } from "@/src/services/dashboar
 import { useQuery } from "@tanstack/react-query";
 import { TicketsWalletCard } from "../../dashboard/walletCard";
 import { State } from "@/src/components/types/dashboardTypes";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
 
 

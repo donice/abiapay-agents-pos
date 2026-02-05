@@ -3,7 +3,7 @@ import { Button } from "@/src/components/common/button";
 import React, { useEffect, useState } from "react";
 import { LuUser } from "react-icons/lu";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { useForm } from "react-hook-form";
 import {
   SaveContactType,
@@ -35,7 +35,7 @@ const DriverData = ({ setStage, details, formData }: any) => {
   });
   const [show, setShow] = useState(false);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: SaveContactType) => {
       return saveContact(data);
     },
@@ -181,8 +181,8 @@ const DriverData = ({ setStage, details, formData }: any) => {
           </button>
           <Button
             text="Complete Enumerate"
-            loading={isPending}
-            disabled={isPending}
+            loading={isLoading}
+            disabled={isLoading}
           />
         </div>
       </form>

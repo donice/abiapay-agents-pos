@@ -7,7 +7,7 @@ import {
   FetchTransactionsUsingPlateNumberRequest,
   fetchTransactionsUsingPlateeNumber,
 } from "@/src/services/findServices";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { TbSearch } from "react-icons/tb";
 import { useMutation } from "@tanstack/react-query";
 
@@ -25,7 +25,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
     },
   });
 
-  const { mutate, error, isPending } = useMutation({
+  const { mutate, error, isLoading } = useMutation({
     mutationFn: (data: FetchTransactionsUsingPlateNumberRequest) => {
       return fetchTransactionsUsingPlateeNumber(data);
     },
@@ -71,7 +71,7 @@ const Form = ({ setTicketsData, setSearched }: any) => {
           error={errors.plate_number}
         />
 
-        <Button text={"Search Tickets"} loading={isPending} />
+        <Button text={"Search Tickets"} loading={isLoading} />
       </form>
     </>
   );

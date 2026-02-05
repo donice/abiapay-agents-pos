@@ -50,7 +50,7 @@ const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: VerifyPlateNumberType) => {
       return verifyPlateNumber(data);
     },
@@ -216,7 +216,7 @@ const VehicleData = ({ setStage, setDetails, setFormData, formData }: any) => {
           register={register}
           validation={{ required: true }}
         />
-        <Button text="Save & Continue" loading={isPending} />
+        <Button text="Save & Continue" loading={isLoading} />
       </form>
 
       {show.mode === true && (

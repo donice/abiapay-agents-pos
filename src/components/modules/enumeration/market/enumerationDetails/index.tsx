@@ -22,7 +22,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
   const [markets, setMarkets] = useState([]);
   const [lga, setLga] = useState([]);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: CreateMarketEnumerationType) => {
       return createMarketEnumeration(data);
     },
@@ -312,7 +312,7 @@ const EnumerationDetails = ({ setStage, setFormData, formData }: any) => {
           validation={{ required: true }}
         /> */}
 
-        <Button text="Create Enumeration" loading={isPending} />
+        <Button text="Create Enumeration" loading={isLoading} />
       </form>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import TransferWalletCards from "../components/wallet-cards";
 import { FormTextInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
@@ -51,7 +51,7 @@ const OtherWalletsTransferComponent = () => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: WalletInfoType) => {
       return fetchWalletInfo(data);
     },
@@ -69,7 +69,7 @@ const OtherWalletsTransferComponent = () => {
     },
   });
 
-  const { mutate: mutateTransfer, isPending: isPendingTransfer } = useMutation({
+  const { mutate: mutateTransfer, isLoading: isLoadingTransfer } = useMutation({
     mutationFn: (data: WalletToWalletPayload) => {
       return activeAccount == "access"
         ? AccessWalletToWallet(data)
@@ -121,12 +121,12 @@ const OtherWalletsTransferComponent = () => {
           validation={{ required: true }}
           error={errors.recipient_wallet_no}
         />
-        {isPending && (
+        {isLoading && (
           <p className="other-wallet_form_beneficiary">
             <SmallLoader />{" "}
           </p>
         )}
-        {beneficiary !== "" && !isPending && (
+        {beneficiary !== "" && !isLoading && (
           <div className="other-wallet_form_beneficiary">
             <p>{beneficiary}</p>
           </div>
@@ -167,8 +167,8 @@ const OtherWalletsTransferComponent = () => {
 
         <Button
           text="Transfer Funds"
-          loading={isPendingTransfer}
-          disabled={isPendingTransfer}
+          loading={isLoadingTransfer}
+          disabled={isLoadingTransfer}
         />
         {/* <Button text="Transfer Funds" disabled={beneficiary === ""} /> */}
       </form>

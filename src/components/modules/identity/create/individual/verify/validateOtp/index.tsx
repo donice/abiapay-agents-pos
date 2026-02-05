@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { FormTextInput } from "@/src/components/common/input";
 import { BackButton, Button } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
-import "../../style.scss";
+ // import "../../style.scss" // Moved to _app;
 import { useMutation } from "@tanstack/react-query";
 import { validateIDOtp, validateNoIDOtp } from "@/src/services/identityService";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "@/src/utils/navigation";
 import { OtpSuccessModal } from "@/src/components/common/modal";
 import Unauthorized from "@/src/components/common/unauthorized";
 
@@ -21,7 +21,7 @@ const ValidateOtpComponent = () => {
     message: "",
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["verify_otp_for_abssin_creation"],
     mutationFn:
       source == "No ID"
@@ -110,8 +110,8 @@ const ValidateOtpComponent = () => {
               <BackButton link="/identity/create/individual/verify" />
               <Button
               text={"Validate OTP"}
-              loading={isPending}
-              disabled={isPending}
+              loading={isLoading}
+              disabled={isLoading}
             />
             </div>
             

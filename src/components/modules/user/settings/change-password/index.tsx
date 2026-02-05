@@ -1,7 +1,7 @@
 "use client";
 import { CustomHeader } from "@/src/components/common/header";
 import React, { useState } from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import ProgressBar from "./progressBar";
 import ConfirmEmail from "./confirmEmail";
 import ValidateOTP from "./validateOTP";

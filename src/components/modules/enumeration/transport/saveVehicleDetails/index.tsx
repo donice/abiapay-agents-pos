@@ -11,7 +11,7 @@ import {
 import toast from "react-hot-toast";
 import { InfoModal } from "@/src/components/common/modal";
 import { CustomHeader } from "@/src/components/common/header";
-import "../style.scss";
+ // import "../style.scss" // Moved to _app;
 import { fetchStates } from "@/src/services/common";
 
 const SaveVehicleDetailsComponent = () => {
@@ -69,7 +69,7 @@ const SaveVehicleDetailsComponent = () => {
     getStates();
   }, []);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (data: SaveVehicleDetailsProps) => {
       return saveVehicleDetails({
         ...data,
@@ -233,7 +233,7 @@ const SaveVehicleDetailsComponent = () => {
           error={errors.expiry_date}
         />
 
-        <Button text="Save & Continue" loading={isPending} />
+        <Button text="Save & Continue" loading={isLoading} />
       </form>
 
       {show.mode && show.status == "success" && (

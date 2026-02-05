@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import "./style.scss";
+// import "./style.scss" // Moved to _app;
 import { AbiaLogo } from "@/src/components/common/Images";
 import { PiUserCircleDuotone } from "react-icons/pi";
 import { TbBellRinging } from "react-icons/tb";
