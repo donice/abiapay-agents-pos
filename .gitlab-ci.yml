@@ -61,7 +61,7 @@ deploy_sandbox:
         git fetch origin &&
         git reset --hard &&
         git checkout $CI_COMMIT_REF_NAME &&
-        git pull origin $CI_COMMIT_REF_NAME &&
+        git pull origin &&
         echo -e "\n Installing dependencies..." &&
         yarn install &&
         yarn build &&
@@ -89,4 +89,4 @@ deploy_prod:
     - rm -rf ~/.kube
   environment:
     name: production
-    url: https://abiapay.ng
+
