@@ -1,3 +1,4 @@
+"use client";
 import React, {
   createContext,
   useContext,
@@ -10,7 +11,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { setToken } from "../services/setToken";
 import { isBrowser } from "@/src/utils/isBrowser";
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router'; // next/router is for pages directory
 
 interface LoginResponse {
   status: number;
@@ -82,7 +83,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
+    console.log("[Auth] AuthProvider mounted.");
     if (state.token) {
+      console.log("[Auth] Setting initial token.");
       setToken(state.token);
     }
   }, [state.token]);
@@ -116,18 +119,24 @@ export const login = async (
   dispatch: Dispatch<AuthAction>,
   data: { email: string; password: string }
 ) => {
+  console.log("[Auth] Attempting login...", { email: data.email });
   dispatch({ type: "SET_LOGIN_SUBMITTING", payload: true });
   try {
     const response = await axios.post(`${url}/user/login`, data);
+    console.log("[Auth] Login successful response:", response.data);
     const { token, body }: LoginResponse = response.data;
     dispatch({ type: "LOGIN", payload: token });
 
     setToken(token);
     toast.success(response?.data?.message);
-    isBrowser && sessionStorage.setItem("TOKEN", token);
-    isBrowser && sessionStorage.setItem("USER_DATA", JSON.stringify(body));
+    if (isBrowser) {
+      sessionStorage.setItem("TOKEN", token);
+      sessionStorage.setItem("USER_DATA", JSON.stringify(body));
+      console.log("[Auth] Token and UserData saved to sessionStorage.");
+    }
 
   } catch (error: any) {
+    console.error("[Auth] Login error:", error?.response?.data || error.message);
     dispatch({
       type: "SET_LOGIN_ERRORS",
       payload: "Invalid login credentials",
@@ -165,7 +174,11 @@ export const loginMDA = async (
 };
 
 export const logout = (dispatch: Dispatch<AuthAction>) => {
+  console.log("[Auth] Performing logout...");
   dispatch({ type: "LOGOUT" });
   setToken(null);
-  isBrowser && sessionStorage.clear();
+  if (isBrowser) {
+    sessionStorage.clear();
+    console.log("[Auth] sessionStorage cleared.");
+  }
 };

@@ -10,11 +10,13 @@ import { FcManager, FcPortraitMode } from "react-icons/fc";
 const SigninComponent = () => {
   const dispatch = useAuthDispatch();
   useEffect(() => {
+    console.log("[Signin] SigninComponent mounted. Clearing session...");
     handleLogout()
     sessionStorage.clear();
   }, []);
 
   const handleLogout = () => {
+    console.log("[Signin] Handling logout...");
     logout(dispatch);
   };
 

@@ -94,15 +94,20 @@ const DashboardComponent: React.FC = () => {
   } | null>(null);
 
   useEffect(() => {
+    console.log("[Dashboard] Initializing data from sessionStorage...");
     if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {
-          setUserData(JSON.parse(data));
+          const parsedData = JSON.parse(data);
+          console.log("[Dashboard] Parsed user data:", parsedData);
+          setUserData(parsedData);
         } catch (e) {
-          console.error("Error parsing JSON data:", e);
+          console.error("[Dashboard] Error parsing USER_DATA from sessionStorage:", e);
           setUserData({});
         }
+      } else {
+        console.warn("[Dashboard] No USER_DATA found in sessionStorage.");
       }
     }
   }, []);
@@ -112,17 +117,19 @@ const DashboardComponent: React.FC = () => {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {
-          setUserData(JSON.parse(data));
+          // setUserData(JSON.parse(data)); // Duplicate call?
 
           // Get location once user logs in
           if (navigator.geolocation) {
+            console.log("[Dashboard] Requesting geolocation...");
             navigator.geolocation.getCurrentPosition(
               (pos) => {
                 const geoString = `${pos.coords.latitude},${pos.coords.longitude}`;
+                console.log("[Dashboard] Geolocation obtained:", geoString);
                 sessionStorage.setItem("USER_GEOLOCATION", geoString);
               },
               (err) => {
-                console.error("Geolocation error:", err);
+                console.error("[Dashboard] Geolocation error:", err);
                 toast.error(
                   "Unable to fetch location. Please allow location access.",
                 );
@@ -130,8 +137,7 @@ const DashboardComponent: React.FC = () => {
             );
           }
         } catch (e) {
-          console.error("Error parsing JSON data:", e);
-          setUserData({});
+          console.error("[Dashboard] Error during initialization:", e);
         }
       }
     }
@@ -140,8 +146,10 @@ const DashboardComponent: React.FC = () => {
   // ! using useCallback to memoize the data coming from the services
 
   const getDashboardData = useCallback(async () => {
+    console.log("[Dashboard] Fetching dashboard data...");
     try {
       const res = await fetchDashboardData();
+      console.log("[Dashboard] Dashboard data fetched successfully:", res);
       dispatch({
         type: "FETCH_SUCCESS",
         payload: {
@@ -150,6 +158,7 @@ const DashboardComponent: React.FC = () => {
         },
       });
     } catch (error) {
+      console.error("[Dashboard] Error fetching dashboard data:", error);
       // toast.error("Error fetching dashboard data");
       dispatch({ type: "FETCH_ERROR" });
     }
@@ -214,6 +223,7 @@ const DashboardComponent: React.FC = () => {
   // console.log(receiptData, "RECEIPT DATA");
 
   useEffect(() => {
+    console.log("[Dashboard] Component mounted. Starting aggregate data fetch...");
     getDashboardData();
     getABSSINData();
     getEnumerationDailyData();

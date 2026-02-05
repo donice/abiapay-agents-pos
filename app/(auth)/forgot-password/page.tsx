@@ -1,8 +1,8 @@
 import ChangePasswordComponent from "@/src/components/modules/user/settings/change-password";
-import { Metadata } from "next/types";
 import React from "react";
 import "./style.scss";
 import { CustomFormHeader, CustomHeader } from "@/src/components/common/header";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Change Password",

@@ -181,7 +181,7 @@ export const fetchMarkets = async () => {
     throw new Error(`Error fetching transactions: ${error?.message}`);
   }
 };
-export const fetchMarketEnumerationDetails = async ({enumeration_id}: { enumeration_id: string }) => {
+export const fetchMarketEnumerationDetails = async ({ enumeration_id }: { enumeration_id: string }) => {
   try {
     const { data } = await axiosInstance.post(`${portal_url}/payment/enumeration`, {
       enumeration_id: enumeration_id,
@@ -198,5 +198,39 @@ export const postPayForMarketLevy = async (reqData: MarketLevyType) => {
     return data;
   } catch (error: any) {
     throw new Error(`Error fetching transactions: ${error?.message}`);
+  }
+};
+
+export const downloadEmblem = async (payload: {
+  plate_number: string;
+  payment_ref: string;
+  vehicle_type?: string;
+  product_code?: string;
+}) => {
+  try {
+    const response = await fetch('/api/emblem', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to download emblem');
+    }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `emblem-receipt-${payload.payment_ref}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  } catch (error: any) {
+    console.error('Error downloading emblem:', error);
+    throw error;
   }
 };
