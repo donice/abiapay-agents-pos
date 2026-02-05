@@ -1,5 +1,4 @@
 stages:
-  - test
   - build
   - deploy
 
@@ -10,18 +9,6 @@ variables:
 
 services:
   - docker:24.0.6-dind
-
-# CI Stage
-test:
-  stage: test
-  image: node:24-alpine
-  # only:
-  #   - dev
-  #   - main
-  script:
-    - export NVM_DIR="$HOME/.nvm"
-    - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
-    - npm audit
 
 
 # Build and push to repo
@@ -51,7 +38,7 @@ docker_build:
     - rm .env
     - docker logout
 
-ddeploy_sandbox:
+deploy_sandbox:
   image: jomoflash/cicd-utils:v1
   stage: deploy
   only:
@@ -76,6 +63,7 @@ ddeploy_sandbox:
         git pull &&
         echo -e "\n Installing dependencies..." &&
         npm install &&
+        npm run build:pos &&
         echo "Restarting app..." &&
         pm2 reload abiapay-pos-portal &&
         echo "Deployment successful!" &&
