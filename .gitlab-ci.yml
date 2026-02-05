@@ -61,7 +61,7 @@ deploy_sandbox:
         git fetch origin &&
         git reset --hard &&
         git checkout $CI_COMMIT_REF_NAME &&
-        git pull &&
+        git pull origin $CI_COMMIT_REF_NAME && &&
         echo -e "\n Installing dependencies..." &&
         yarn install &&
         yarn build &&
