@@ -51,7 +51,7 @@ docker_build:
     - rm .env
     - docker logout
 
-deploy_sandbox:
+ddeploy_sandbox:
   image: jomoflash/cicd-utils:v1
   stage: deploy
   only:
@@ -68,7 +68,6 @@ deploy_sandbox:
         echo "Checking Node.js version..." &&
         echo "node $(node -v)" &&
         echo "npm $(npm -v)" &&
-        echo "yarn $(yarn -v)" &&
         cd /opt/deployment/abia/abiapay-pos-portal &&
         echo -e "\n Pulling latest changes from GitLab..." &&
         git fetch origin &&
@@ -76,16 +75,13 @@ deploy_sandbox:
         git checkout $CI_COMMIT_REF_NAME &&
         git pull &&
         echo -e "\n Installing dependencies..." &&
-        yarn install &&
-        yarn build &&
+        npm install &&
         echo "Restarting app..." &&
         pm2 reload abiapay-pos-portal &&
         echo "Deployment successful!" &&
         exit'
     - eval $(ssh-add -D)
-  environment:
-    name: sandbox
-    url: pos.abiaone.com
+
 
 
 # Deploy to production
