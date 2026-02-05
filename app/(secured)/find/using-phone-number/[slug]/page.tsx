@@ -15,14 +15,14 @@ import { createNewTicket } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
 import { SuccessModal } from "@/src/components/common/modal";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { bankOptions } from "@/src/lib/app";
 
 const Dynamic = () => {
   const path = usePathname();
   const [show, setShow] = useState(false);
   const segment = getLastPathSegment(path);
-  let fetched_data = sessionStorage.getItem("TICKETS_DATA");
+  let fetched_data = isBrowser ? sessionStorage.getItem("TICKETS_DATA") : null;
   const data = fetched_data && JSON.parse(fetched_data);
 
   const [userData, setUserData] = useState<{
@@ -34,7 +34,7 @@ const Dynamic = () => {
   const [isAndroidBridge, setIsAndroidBridge] = useState(false);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {
@@ -85,7 +85,7 @@ const Dynamic = () => {
 
   // Handle payment result from Hydrogen Bridge
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       (window as any).handleHydrogenPaymentResult = (result: any) => {
         console.log('Hydrogen Payment Result:', result);
 
@@ -135,7 +135,7 @@ const Dynamic = () => {
 
     // Cleanup
     return () => {
-      if (useIsBrower()) {
+      if (isBrowser) {
         delete (window as any).handleHydrogenPaymentResult;
       }
     };

@@ -2,7 +2,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import "./style.scss";
 import Link from "next/link";
-import getRoute from "@/src/hooks/getRoute";
+import useGetRoute from "@/src/hooks/useGetRoute";
 import {
   TbHome,
   TbTicket,
@@ -12,7 +12,7 @@ import {
   TbSquareRoundedPlus,
   TbLayoutGridAdd,
 } from "react-icons/tb";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 
 // Define the allowed user categories
 type UserCategory = "Agent" | "Enforcer" | "MdaUser";
@@ -35,7 +35,7 @@ const nav_items: SideNavProps[] = [
     name: "tickets/transport",
     title: "Transport Ticket",
     icon: <TbTicket className="icon" />,
-    access: ["Agent"], 
+    access: ["Agent"],
   },
   {
     name: "tickets/verify",
@@ -47,7 +47,7 @@ const nav_items: SideNavProps[] = [
     name: "tickets/add",
     title: "Add Tickets",
     icon: <TbSquareRoundedPlus className="icon plus" />,
-    access: ["Agent"], 
+    access: ["Agent"],
   },
   {
     name: "user/account",
@@ -62,7 +62,7 @@ const nav_items: SideNavProps[] = [
 ];
 
 const SideNav = () => {
-  const route = getRoute();
+  const route = useGetRoute();
 
   const [userData, setUserData] = useState<{
     name?: string;
@@ -70,7 +70,7 @@ const SideNav = () => {
   } | null>(null);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {
@@ -92,11 +92,11 @@ const SideNav = () => {
       <div className="side-nav_items_container">
         <div className="side-nav_items">
           {nav_items
-           .filter(
-            (item) =>
-              !item.access || (userData?.user_cat && item.access.includes(userData.user_cat))
-          )
-          .map((item) => (
+            .filter(
+              (item) =>
+                !item.access || (userData?.user_cat && item.access.includes(userData.user_cat))
+            )
+            .map((item) => (
               <Link
                 href={`/${item.name}`}
                 key={item.name}

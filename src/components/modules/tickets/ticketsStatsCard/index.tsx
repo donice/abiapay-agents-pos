@@ -37,7 +37,7 @@ const TicketsStatsCard = () => {
           <div className="tickets-wallet-card">
             <div className="ticket_container">
               <div className="tickets-wallet-card_balance">
-                <span>Today's Collections</span>
+                <span>Today&apos;s Collections</span>
                 <span>₦{formatAmount(data.data?.[0].total_amount)}</span>
               </div>
 
@@ -53,7 +53,7 @@ const TicketsStatsCard = () => {
           <div className="tickets-wallet-card">
             <div className="ticket_container">
               <div className="tickets-wallet-card_balance">
-                <span>Week's Collections</span>
+                <span>Week&apos;s Collections</span>
                 <span>
                   ₦{formatAmount(data.data?.[0].total_amount_weekly)}
                 </span>
@@ -62,7 +62,7 @@ const TicketsStatsCard = () => {
               <div className="tickets-wallet-card_image"></div>
 
               <div className="tickets-wallet-card_balance">
-                <span>Month's Collection</span>
+                <span>Month&apos;s Collection</span>
                 <span>{data.data?.[0].total_transaction_weekly} Tickets</span>
               </div>
             </div>

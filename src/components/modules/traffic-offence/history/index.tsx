@@ -10,14 +10,12 @@ import "./style.scss";
 import { formatAmount } from "@/src/utils/formatAmount";
 import { CustomHeader } from "@/src/components/common/header";
 import { GoBackButton } from "@/src/components/common/button";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { useRouter } from "next/navigation";
 const History = () => {
-    const router = useRouter();
+  const router = useRouter();
   const [userData, setUserData] = useState<{ name?: string; email?: string } | null>(null);
   const [products, setProducts] = useState<any[]>([]);
-  const isBrowser = useIsBrower(); 
-
   useEffect(() => {
     if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
@@ -32,7 +30,7 @@ const History = () => {
         }
       }
     }
-  }, [isBrowser]); 
+  }, [isBrowser]);
 
   const getProductsData = async () => {
     console.log(userData, "user data");
@@ -52,7 +50,7 @@ const History = () => {
     if (userData?.email) {
       getProductsData();
     }
-  }, [userData]); 
+  }, [userData]);
 
   return (
     <>
@@ -66,11 +64,11 @@ const History = () => {
             <div className="tickets">
               {products.map((transaction: any, index: any) => (
                 <div key={index} className="ticket"
-                onClick={() =>
-                  router.push(
-                    `/traffic-offence/traffic-ticket-history/${transaction.payment_reference}`
-                  )
-                }>
+                  onClick={() =>
+                    router.push(
+                      `/traffic-offence/traffic-ticket-history/${transaction.payment_reference}`
+                    )
+                  }>
                   <div>
                     <p> {transaction.plate_number}</p>
                     <p>{transaction.offence_type}</p>

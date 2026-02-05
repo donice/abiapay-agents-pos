@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { TbUser } from "react-icons/tb";
 import "./style.scss";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 
 const DyamicView = ({ id }: { id: string }) => {
   const [abssinView, setAbssinView] = useState<Record<string, any> | null>(
@@ -33,7 +33,7 @@ const DyamicView = ({ id }: { id: string }) => {
   } | null>(null);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {

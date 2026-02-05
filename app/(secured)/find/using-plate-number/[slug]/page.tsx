@@ -15,7 +15,7 @@ import { createNewTicket } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
 import { InformationModal, SuccessModal } from "@/src/components/common/modal";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { bankOptions } from "@/src/lib/app";
 
 const Dynamic = () => {
@@ -25,7 +25,7 @@ const Dynamic = () => {
   } | null>(null);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {
@@ -209,7 +209,7 @@ const Dynamic = () => {
           subtext="Cannot proceed the revending of this ticket"
           close={() => setShow({ mode: false, state: "", message: "" })}
 
-          // link="/find/using-plate-number"
+        // link="/find/using-plate-number"
         />
       )}
     </div>

@@ -10,7 +10,7 @@ import {
   fetchLGAData,
 } from "@/src/services/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import CustomDialog from "@/src/components/common/modal/CustomDialog";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import { useDebounce } from "@/src/hooks/useDebounce";
@@ -25,7 +25,7 @@ const CreateInfantAbssinModule = () => {
   } | null>();
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {
@@ -173,9 +173,9 @@ const CreateInfantAbssinModule = () => {
           options={
             lgaData
               ? lgaData?.data.map((lga: any) => ({
-                  label: lga.lgaName,
-                  value: lga.lgaID,
-                }))
+                label: lga.lgaName,
+                value: lga.lgaID,
+              }))
               : []
           }
         />
@@ -274,9 +274,9 @@ const CreateInfantAbssinModule = () => {
           options={
             lgaData
               ? lgaData?.data.map((lga: any) => ({
-                  label: lga.lgaName,
-                  value: lga.lgaID,
-                }))
+                label: lga.lgaName,
+                value: lga.lgaID,
+              }))
               : []
           }
         />

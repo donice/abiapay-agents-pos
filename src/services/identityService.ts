@@ -1,5 +1,5 @@
 import axiosInstance from "../lib/axiosInstance";
-import useIsBrower from "../hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { setToken } from "./setToken";
 import { https } from "../lib/axiosInstance";
 import toast from "react-hot-toast";
@@ -28,7 +28,7 @@ export type InfantFormData = {
 
 
 const isToken =
-  useIsBrower() && window.sessionStorage.getItem("TOKEN")
+  isBrowser && window.sessionStorage.getItem("TOKEN")
     ? window.sessionStorage.getItem("TOKEN")
     : null;
 setToken(isToken);

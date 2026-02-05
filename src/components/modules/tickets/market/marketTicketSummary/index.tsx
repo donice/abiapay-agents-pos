@@ -8,7 +8,7 @@ import {
   GoBackButton,
 } from "@/src/components/common/button";
 import Redirecting from "@/src/components/common/loader/redirecting";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
 
 const MarketTicketsSummaryComponent = () => {
@@ -16,7 +16,7 @@ const MarketTicketsSummaryComponent = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedData = useIsBrower() && sessionStorage.getItem("TRANSPORT_FORM_DETAILS");
+      const storedData = isBrowser && sessionStorage.getItem("TRANSPORT_FORM_DETAILS");
       if (storedData) {
         setData(JSON.parse(storedData));
       }

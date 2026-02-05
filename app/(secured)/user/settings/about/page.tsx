@@ -17,7 +17,7 @@ const AboutPage = () => {
           Application - your one-stop solution for seamless and efficient tax
           management. At Abia State IRS, we are committed to revolutionizing the
           way you interact with your tax obligations. Our mobile app is more
-          than just a platform; it's a commitment to providing you with a
+          than just a platform; it&apos;s a commitment to providing you with a
           seamless, convenient, transparent, and user-friendly experience in
           managing your tax responsibilities.
         </p>

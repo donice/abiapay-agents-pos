@@ -11,7 +11,7 @@ import "../style.scss";
 
 const UsingPlateNumberExportComponent = () => {
   const router = useRouter();
-  const [ticketsData, setTicketsData] = useState(null || []);
+  const [ticketsData, setTicketsData] = useState<any[]>([]);
   const [searched, setSearched] = useState(false);
 
   if (ticketsData) {
@@ -24,7 +24,7 @@ const UsingPlateNumberExportComponent = () => {
       <div className="find-comp export">
 
         <div className="find-comp_form">
-          <Form setTicketsData={setTicketsData} setSearched={setSearched}/>
+          <Form setTicketsData={setTicketsData} setSearched={setSearched} />
 
           {ticketsData.length > 0 ? (
             <div className="find-comp_form_tickets_container">
@@ -44,11 +44,10 @@ const UsingPlateNumberExportComponent = () => {
                     <div>
                       <p>₦{formatAmount(transaction.amount)}</p>
                       <p
-                        className={`${
-                          transaction.status === "Completed" ? "completed" : "processing"
-                        }`}
+                        className={`${transaction.status === "Completed" ? "completed" : "processing"
+                          }`}
                       >
-                        {transaction.status === "Completed" ? <GoVerified /> : <RiLoaderLine/>}
+                        {transaction.status === "Completed" ? <GoVerified /> : <RiLoaderLine />}
                         {transaction.status}
                       </p>
                       <p>{transaction.payment_period}</p>

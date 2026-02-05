@@ -41,9 +41,9 @@ export async function POST(request: Request) {
     doc.end()
 
     // Wait for PDF generation to complete
-    const pdfBuffer = await new Promise((resolve) => {
+    const pdfBuffer: Buffer = await new Promise((resolve) => {
       doc.on('end', () => {
-        resolve(Buffer.concat(chunks))
+        resolve(Buffer.concat(chunks) as Buffer)
       })
     })
 

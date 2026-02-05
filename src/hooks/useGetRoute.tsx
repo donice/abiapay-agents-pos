@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 
-const getRoute = () => {
+const useGetRoute = () => {
   const currentPage = usePathname();
   function removeLeadingSlash(input: string): string {
     if (input.startsWith("/")) {
@@ -13,4 +13,4 @@ const getRoute = () => {
   return removeLeadingSlash(currentPage);
 };
 
-export default getRoute;
+export default useGetRoute;

@@ -2,7 +2,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import "./style.scss";
 import Link from "next/link";
-import getRoute from "@/src/hooks/getRoute";
+import useGetRoute from "@/src/hooks/useGetRoute";
 import {
   TbHome,
   TbHomeFilled,
@@ -17,7 +17,7 @@ import {
   TbTicket,
 } from "react-icons/tb";
 import { useRouter } from "next/navigation";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 
 interface BottomNavProps {
   name: string;
@@ -70,7 +70,7 @@ const nav_items: BottomNavProps[] = [
 ];
 
 const BottomNav = () => {
-  const route = getRoute();
+  const route = useGetRoute();
   const router = useRouter();
 
   const [userData, setUserData] = useState<{
@@ -79,7 +79,7 @@ const BottomNav = () => {
   } | null>(null);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {
@@ -91,7 +91,7 @@ const BottomNav = () => {
       }
     }
   }, []);
-  
+
   return (
     <div className="bottom-nav">
       <div className="bottom-nav_items_container">
@@ -102,9 +102,8 @@ const BottomNav = () => {
               <Link
                 href={`/${item.name}`}
                 key={item.name}
-                className={`bottom-nav_item ${
-                  item.name === route ? "active" : "inactive"
-                }`}
+                className={`bottom-nav_item ${item.name === route ? "active" : "inactive"
+                  }`}
               >
                 <span>
                   {item.name === route ? item.icon_active : item.icon}

@@ -19,7 +19,7 @@ import {
 import toast from "react-hot-toast";
 import LoaderSkeleton from "../../common/loader-skeleton";
 import type { Action, State } from "../../types/dashboardTypes";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { WalletCard } from "./walletCard";
 import { fetchTransactions } from "@/src/services/ticketsServices";
 import QuickLink from "./quickLink";
@@ -94,7 +94,7 @@ const DashboardComponent: React.FC = () => {
   } | null>(null);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {
@@ -108,7 +108,7 @@ const DashboardComponent: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {

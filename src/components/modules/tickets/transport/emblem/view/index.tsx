@@ -6,7 +6,7 @@ import QRCode from "react-qr-code";
 import abiaLogo from "@/public/logos/emblem/abia_@33.jpg";
 import coaLogo from "@/public/logos/emblem/coat_of_arm.png";
 import jtb from "@/public/logos/emblem/jtb.png";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import { Button } from "@/src/components/common/button";
 import html2canvas from "html2canvas"
 import { useMutation } from "@tanstack/react-query";
@@ -26,7 +26,7 @@ const ViewTransportEmblemReceipt = ({
   });
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("TRANSPORT_INVOICE");
       if (data) {
         try {

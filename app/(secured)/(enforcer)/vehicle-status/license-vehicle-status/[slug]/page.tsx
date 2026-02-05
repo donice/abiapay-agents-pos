@@ -14,7 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createNewTicket } from "@/src/services/ticketsServices";
 import toast from "react-hot-toast";
 import { getErrorMessages } from "@/src/utils/helper";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 
 const Dynamic = () => {
   const router = useRouter();
@@ -24,7 +24,7 @@ const Dynamic = () => {
   } | null>(null);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {

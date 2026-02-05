@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { CustomHeader } from "@/src/components/common/header";
 import VerifyTicketsFrom from "./form";
 import "./style.scss";
-import useIsBrower from "@/src/hooks/useIsBrower";
+import { isBrowser } from "@/src/utils/isBrowser";
 import Empty from "@/src/components/common/empty";
 import { CamelCaseToTitleCase } from "@/src/utils/helper";
 import { formatDate } from "@/src/utils/formatDate";
@@ -22,7 +22,7 @@ const VerifyTicketsComponent = () => {
   } | null>(null);
 
   useEffect(() => {
-    if (useIsBrower()) {
+    if (isBrowser) {
       const data = window.sessionStorage.getItem("USER_DATA");
       if (data) {
         try {

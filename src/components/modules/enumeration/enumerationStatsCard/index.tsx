@@ -36,14 +36,14 @@ const EnumerationStatsCard = () => {
           <div className="identity-stats-card">
             <div className="ticket_container">
               <div className="identity-stats-card_balance">
-                <span>Today's Enumeration</span>
+                <span>Today&apos;s Enumeration</span>
                 <span>{(data?.response_data?.transport?.thisDay + data?.response_data?.market?.thisDay) || 0}</span>
               </div>
 
               <div className="identity-stats-card_image"></div>
 
               <div className="identity-stats-card_balance">
-                <span>This Month's Enumeration</span>
+                <span>This Month&apos;s Enumeration</span>
                 <span>{(data?.response_data?.transport?.thisMonth + data?.response_data?.market?.thisMonth) || 0}</span>
               </div>
             </div>

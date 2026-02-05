@@ -5,7 +5,7 @@ interface CountdownTimerProps {
 }
 
 export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
-  const calculateTimeLeft = () => {
+  const calculateTimeLeft = React.useCallback(() => {
     const difference = +new Date(targetDate) - +new Date();
     let timeLeft = {};
 
@@ -19,7 +19,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) =>
     }
 
     return timeLeft;
-  };
+  }, [targetDate]);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
@@ -30,7 +30,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) =>
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate]);
+  }, [calculateTimeLeft]);
 
   const timerComponents: JSX.Element[] = [];
 
@@ -45,7 +45,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) =>
   });
 
   return (
-    <span style={{ fontWeight: "bold"}}>
+    <span style={{ fontWeight: "bold" }}>
       {timerComponents.length ? timerComponents : <span>Countdown finished!</span>}
     </span>
   );
