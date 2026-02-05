@@ -47,7 +47,7 @@ deploy_sandbox:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_KEY" | base64 -d)
     - |
-      ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
+      ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 
         set -e
         echo "Loading NVM..."
         export NVM_DIR="$HOME/.nvm"
