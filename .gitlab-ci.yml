@@ -64,7 +64,7 @@ deploy_sandbox:
         git pull origin &&
         echo -e "\n Installing dependencies..." &&
         yarn install &&
-        yarn build &&
+        npm run build:pos &&
         echo "Restarting app..." &&
         pm2 reload abiapay-pos-portal &&
         echo "Deployment successful!" &&
