@@ -10,7 +10,6 @@ variables:
 services:
   - docker:24.0.6-dind
 
-
 # Build and push to repo
 docker_build:
   stage: build
@@ -43,37 +42,36 @@ deploy_sandbox:
   stage: deploy
   only:
     - dev
-  sscript:
+  script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_KEY" | base64 -d)
     - ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST '
-        set -e
-        echo "Loading NVM..."
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        export PATH="$(yarn global bin):$PATH"
-        echo "Checking Node.js version..."
-        echo "node $(node -v)"
-        echo "npm $(npm -v)"
-        echo "yarn $(yarn -v)"
-        cd /opt/deployment/abia/abiapay-pos-portal
-        echo -e "\n Pulling latest changes from GitLab..."
-        git fetch origin
-        git reset --hard
-        git checkout ${CI_COMMIT_REF_NAME}
+        set -e &&
+        echo "Loading NVM..." &&
+        export NVM_DIR="$HOME/.nvm" &&
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" &&
+        export PATH="$(yarn global bin):$PATH" &&
+        echo "Checking Node.js version..." &&
+        echo "node $(node -v)" &&
+        echo "npm $(npm -v)" &&
+        echo "yarn $(yarn -v)" &&
+        cd /opt/deployment/abia/abiapay-pos-portal &&
+        echo -e "\n Pulling latest changes from GitLab..." &&
+        git fetch origin &&
+        git reset --hard &&
+        git checkout $CI_COMMIT_REF_NAME &&
         git pull &&
-        echo -e "\n Installing dependencies..."
-        yarn install
-        yarn build
-        echo "Restarting app..."
-        pm2 reload abiapay-pos-portal
-        echo "Deployment successful!"
-        exit  
-    -  eval $(ssh-add -D)
+        echo -e "\n Installing dependencies..." &&
+        yarn install &&
+        yarn build &&
+        echo "Restarting app..." &&
+        pm2 reload abiapay-pos-portal &&
+        echo "Deployment successful!" &&
+        exit'
+    - eval $(ssh-add -D)
   environment:
     name: sandbox
-    url: https://pos.abiaone.com
-
+    
 
 
 # Deploy to production
@@ -91,4 +89,5 @@ deploy_prod:
   after_script:
     - rm -rf ~/.kube
   environment:
-    name: Hydrogen.abiapay.com
+    name: production
+    url: webagentportal.ibejulekkilga.com
