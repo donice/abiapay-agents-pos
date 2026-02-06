@@ -42,7 +42,7 @@ deploy_sandbox:
   image: jomoflash/cicd-utils:v1
   stage: deploy
   only:
-    - dev
+    - pos.js
   script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_KEY" | base64 -d)
