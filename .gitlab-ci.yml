@@ -4,11 +4,12 @@ stages:
 
 variables:
   CI_REGISTRY: docker.io #registry.gitlab.com
-  CI_REGISTRY_IMAGE: xtradot/abiapay-agent-portal
+  CI_REGISTRY_IMAGE: xtradot/abiapay-pos-portal
   CONTAINER_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
 
 services:
   - docker:24.0.6-dind
+
 
 # Build and push to repo
 docker_build:
@@ -41,7 +42,7 @@ deploy_sandbox:
   image: jomoflash/cicd-utils:v1
   stage: deploy
   only:
-    - dev
+    - pos.js
   script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_KEY" | base64 -d)
@@ -55,24 +56,23 @@ deploy_sandbox:
         echo "node $(node -v)" &&
         echo "npm $(npm -v)" &&
         echo "yarn $(yarn -v)" &&
-        cd /opt/deployment/abia/abiapay-agent-portal &&
+        cd /opt/deployment/abia/abiapay-pos-portal &&
         echo -e "\n Pulling latest changes from GitLab..." &&
         git fetch origin &&
         git reset --hard &&
         git checkout $CI_COMMIT_REF_NAME &&
-        git pull &&
+        git pull origin &&
         echo -e "\n Installing dependencies..." &&
         yarn install &&
-        yarn build &&
+        npm run build:pos &&
         echo "Restarting app..." &&
-        pm2 reload abiapay-agent-portal &&
+        pm2 reload abiapay-pos-portal &&
         echo "Deployment successful!" &&
         exit'
     - eval $(ssh-add -D)
   environment:
     name: sandbox
-    url: https://sandboxweb.abiapay.ng
-
+    url: pos.abiaone.com
 
 # Deploy to production
 deploy_prod:
@@ -90,3 +90,4 @@ deploy_prod:
     - rm -rf ~/.kube
   environment:
     name: production
+

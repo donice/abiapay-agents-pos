@@ -3,24 +3,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: mobile-agent-web
-  name: mobile-agent-web
+    app: pos-portal
+  name: pos-portal
   namespace: abiapay
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: mobile-agent-web
+      app: pos-portal
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mobile-agent-web
+        app: pos-portal
     spec:
       containers:
         - image: $CONTAINER_IMAGE
-          name: mobile-agent-web
+          name: pos-portal
           ports:
             - containerPort: 3000
               protocol: TCP
