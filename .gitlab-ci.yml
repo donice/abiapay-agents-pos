@@ -4,7 +4,7 @@ stages:
 
 variables:
   CI_REGISTRY: docker.io #registry.gitlab.com
-  CI_REGISTRY_IMAGE: xtradot/abiapay-agent-portal
+  CI_REGISTRY_IMAGE: xtradot/abiapay-pos-portal
   CONTAINER_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
 
 services:
