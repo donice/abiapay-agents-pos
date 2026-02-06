@@ -72,6 +72,7 @@ deploy_sandbox:
     - eval $(ssh-add -D)
   environment:
     name: sandbox
+    url: pos.abiaone.com
 
 # Deploy to production
 deploy_prod:
