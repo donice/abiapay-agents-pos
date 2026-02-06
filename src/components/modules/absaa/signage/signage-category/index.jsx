@@ -1,0 +1,176 @@
+"use client";
+import React, { useState } from "react";
+import { Button } from "@/src/components/common/button";
+import { FormTextInput, SelectInput } from "@/src/components/common/input";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { verifyPlateNumber, } from "@/src/services/transportEnumerationService";
+import toast from "react-hot-toast";
+import { ErrorModal, InfoModal, VehicleCheckSuccessModal, } from "@/src/components/common/modal";
+// import "../style.scss" // Moved to _app;
+import { CustomHeader } from "@/src/components/common/header";
+var SignageCategoryComponent = function (_a) {
+    var _b = useState({
+        vehicle_make: "",
+        vehicle_model: "",
+        vehicle_color: "",
+        state_of_registration: "",
+        expiry_date: "",
+    }), modalDetails = _b[0], setModalDetails = _b[1];
+    var _c = useState({
+        mode: false,
+        user: "",
+        status: "",
+    }), show = _c[0], setShow = _c[1];
+    var _d = useForm({
+        defaultValues: {
+            merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
+            amount: "",
+            signage_category: "",
+            trade_union: "",
+            operating_park: "",
+        },
+    }), register = _d.register, handleSubmit = _d.handleSubmit, reset = _d.reset, errors = _d.formState.errors;
+    var _e = useMutation({
+        mutationFn: function (data) {
+            return verifyPlateNumber(data);
+        },
+        mutationKey: ["verify_plate_number"],
+        onSuccess: function (data) {
+            console.log("FIRST LOG", data);
+        },
+        onError: function (error) {
+            toast.error("Error Verifying Plate Number");
+            reset();
+            console.log(error);
+        },
+    }), mutate = _e.mutate, isLoading = _e.isLoading;
+    var onSubmit = function (reqData) {
+        mutate(reqData);
+    };
+    return (<div>
+      <CustomHeader title="Signage Category" desc="Signage Details"/>
+      <form onSubmit={handleSubmit(onSubmit)} className="absaa-form">
+        <SelectInput label="Signage Category" name="signage_category" id="signage_category" options={[
+            {
+                label: "Select Signage Category",
+                value: "",
+            },
+            {
+                label: "Wall Signs",
+                value: "Wall Signs",
+            },
+            {
+                label: "Free Standing",
+                value: "Free Standing",
+            },
+        ]} placeholder="Select Signage Category" register={register} validation={{ required: true }}/>
+        <SelectInput label="Road Type" name="road_type" id="road_type" options={[
+            {
+                label: "Select Road Type",
+                value: "",
+            },
+            {
+                label: "Premium",
+                value: "Premium",
+            },
+            {
+                label: "Standard",
+                value: "Standard",
+            },
+        ]} placeholder="Select Road Type" register={register} validation={{ required: true }}/>
+
+        <SelectInput label="Road Type" name="road_type" id="road_type" options={[
+            {
+                label: "Select Road Type",
+                value: "",
+            },
+            {
+                label: "Premium",
+                value: "Premium",
+            },
+            {
+                label: "Standard",
+                value: "Standard",
+            },
+        ]} placeholder="Select Road Type" register={register} validation={{ required: true }}/>
+        <SelectInput label="Road Name" name="road_name" id="road_name" options={[
+            {
+                label: "Select Road Name",
+                value: "",
+            },
+            {
+                label: "Azikwe Road",
+                value: "Azikwe Road",
+            },
+            {
+                label: "Azikwe Street",
+                value: "Azikwe Street",
+            },
+        ]} placeholder="Select Road Name" register={register} validation={{ required: true }}/>
+        <SelectInput label="Zone" name="zone" id="zone" options={[
+            {
+                label: "Select Zone",
+                value: "",
+            },
+            {
+                label: "Premium Zone",
+                value: "Premium Zone",
+            },
+            {
+                label: "Standard Zone",
+                value: "Standard Zone",
+            },
+        ]} placeholder="Select Zone" register={register} validation={{ required: true }}/>
+        <SelectInput label="Size" name="size" id="size" options={[
+            {
+                label: "Select Size",
+                value: "",
+            },
+            {
+                label: "0.1 to 1.0 (2x2 - 3x4)",
+                value: "0.1 to 1.0 (2x2 - 3x4)",
+            },
+            {
+                label: "1.01 to 3.0 (4x6 - 5x8)",
+                value: "1.01 to 3.0 (4x6 - 5x8)",
+            },
+            {
+                label: "3.01 to 5.0 (6x10 - 6x12)",
+                value: "3.01 to 5.0 (6x10 - 6x12)",
+            },
+            {
+                label: "5.01 to 7.0 (6x12 - 8x10)",
+                value: "5.01 to 7.0 (6x12 - 8x10)",
+            },
+            {
+                label: "7.01 to 10.0 (8x10 - 10x10)",
+                value: "7.01 to 10.0 (8x10 - 10x10)",
+            },
+            {
+                label: "10.01 to 13.0 (10x10 - 10x12)",
+                value: "10.01 to 13.0 (10x10 - 10x12)",
+            },
+            {
+                label: "13.01 to 15.0 (10x12 - 10x16)",
+                value: "13.01 to 15.0 (10x12 - 10x16)",
+            },
+            {
+                label: "15.01 to 25.0 (10x16 - 10x20)",
+                value: "15.01 to 25.0 (10x16 - 10x20)",
+            },
+        ]} placeholder="Select Size" register={register} validation={{ required: true }}/>
+        <FormTextInput label="Amount" type="number" name="amount" placeholder="Enter Amount" register={register} validation={{
+            required: true,
+        }} error={errors.amount}/>
+        <Button text="Pay now" loading={isLoading}/>
+      </form>
+
+      {show.mode === true && (<ErrorModal text_header={"Error Validating ".concat(show.user, " ABSSIN")} button_text="Create ABSSIN" link="/identity/create/individual/verify" text_info={"To proceed, kindly click \"Create ABSSIN\" to create ".concat(show.user, " ABSSIN")} status={"error"}/>)}
+      {show.mode && show.status == "error" && (<InfoModal status={show.status} text_header="Vehicle Information Not Found" button_text="Enter Vehicle Details" link="/enumeration/transport/save" text_info={"Cannot Proceed. Please Register Vehicle Details"}/>)}
+      {show.mode && show.status == "success" && (<VehicleCheckSuccessModal text_header="Information Retrieved Successfully" vehicle_make={modalDetails.vehicle_make} vehicle_model={modalDetails.vehicle_model} vehicle_color={modalDetails.vehicle_color} state_of_registration={modalDetails.state_of_registration} expiry_date={modalDetails.expiry_date} button_text="Continue" onClick={function () {
+                setShow({ mode: false, status: "", user: "" });
+            }}/>)}
+    </div>);
+};
+export default SignageCategoryComponent;

@@ -1,0 +1,20 @@
+import React from "react";
+import { CustomHeader } from "@/src/components/common/header";
+// import "./style.scss" // Moved to _app;
+import BillsTable from "./billsTable";
+var BillsComponent = function () {
+    return (<div className="bills_comp">
+      <header className="bills_comp_header">
+        <CustomHeader title="Bills" desc="View your bills"/>
+        {/* <div className="bills_header_buttons mb-4">
+          <SecondaryButton text="Add Bills" link="/bills/add" />
+        </div> */}
+      </header>
+      {/* <TicketsWalletCard /> */}
+
+      <div className="bills_comp_table">
+        <BillsTable />
+      </div>
+    </div>);
+};
+export default BillsComponent;

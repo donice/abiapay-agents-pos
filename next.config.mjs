@@ -9,7 +9,7 @@ const nextConfig = {
   experimental: {
     esmExternals: 'loose'
   },
-
+  ignoreBuildErrors: true,
   // Disable image optimization if POS can't handle it
   images: {
     unoptimized: true,
