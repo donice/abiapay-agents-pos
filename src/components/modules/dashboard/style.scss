@@ -21,8 +21,9 @@
       @include custom-media-query("mobile", $sm) {
         margin-bottom: 2rem;
       }
+
       h1 {
-        font-size: clamp(min(1rem), 300px, max(1.5rem));
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
         font-weight: 700;
         color: $text-primary;
       }
@@ -78,7 +79,7 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
-  
+
   &_enf_stats {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -126,4 +127,3 @@
     gap: 1rem;
   }
 }
-

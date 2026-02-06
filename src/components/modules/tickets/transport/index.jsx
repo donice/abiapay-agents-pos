@@ -1,0 +1,22 @@
+import React from "react";
+import TicketsWalletCard from "../ticketsStatsCard";
+import { SecondaryButton } from "@/src/components/common/button";
+import { CustomHeader } from "@/src/components/common/header";
+// import "./style.scss" // Moved to _app;
+import TransactionsTable from "./transportTable";
+var TransportTicketComponent = function () {
+    return (<div className="transport">
+      <header className="transport_header">
+        <CustomHeader title="Transport Ticket" desc="Manage/Create Transport Ticket"/>
+        <div className="transport_header_buttons">
+          <SecondaryButton text="Add Ticket" link="/tickets/transport/add"/>
+        </div>
+      </header>
+      <TicketsWalletCard />
+
+      <div className="transport_table">
+        <TransactionsTable />
+      </div>
+    </div>);
+};
+export default TransportTicketComponent;
