@@ -156,37 +156,40 @@ var DashboardComponent = function () {
         }
     }, []);
     // ! using useCallback to memoize the data coming from the services
-    var getDashboardData = useCallback(function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    console.log("[Dashboard] Fetching dashboard data...");
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, fetchDashboardData()];
-                case 2:
-                    res = _a.sent();
-                    console.log("[Dashboard] Dashboard data fetched successfully:", res);
-                    dispatch({
-                        type: "FETCH_SUCCESS",
-                        payload: {
-                            fidelityData: res.fidelity,
-                            accessData: res.access,
-                        },
-                    });
-                    return [3 /*break*/, 4];
-                case 3:
-                    error_1 = _a.sent();
-                    console.error("[Dashboard] Error fetching dashboard data:", error_1);
-                    // toast.error("Error fetching dashboard data");
-                    dispatch({ type: "FETCH_ERROR" });
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
-            }
+    const getDashboardData = useCallback(function () {
+        return __awaiter(void 0, void 0, void 0, function () {
+            let res, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("[Dashboard] Fetching dashboard data...");
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, fetchDashboardData()];
+                    case 2:
+                        res = _a.sent();
+                        console.log("[Dashboard] Dashboard data fetched successfully:", res);
+                        dispatch({
+                            type: "FETCH_SUCCESS",
+                            payload: {
+                                fidelityData: res.fidelity,
+                                accessData: res.access,
+                            },
+                        });
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _a.sent();
+                        console.error("[Dashboard] Error fetching dashboard data:", error_1);
+                        // toast.error("Error fetching dashboard data");
+                        dispatch({type: "FETCH_ERROR"});
+                        return [3 /*break*/, 4];
+                    case 4:
+                        return [2 /*return*/];
+                }
+            });
         });
-    }); }, []);
+    }, []);
     var getABSSINData = useCallback(function () { return __awaiter(void 0, void 0, void 0, function () {
         var res, error_2;
         return __generator(this, function (_a) {
@@ -225,48 +228,54 @@ var DashboardComponent = function () {
             }
         });
     }); }, []);
-    var getEnumerationDailyData = useCallback(function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res, error_4;
-        var _a, _b, _c, _d;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
-                case 0:
-                    _e.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fetchEnumerationData()];
-                case 1:
-                    res = _e.sent();
-                    setEnumerationCount(((_b = (_a = res === null || res === void 0 ? void 0 : res.response_data) === null || _a === void 0 ? void 0 : _a.transport) === null || _b === void 0 ? void 0 : _b.thisDay) +
-                        ((_d = (_c = res === null || res === void 0 ? void 0 : res.response_data) === null || _c === void 0 ? void 0 : _c.market) === null || _d === void 0 ? void 0 : _d.thisDay));
-                    return [3 /*break*/, 3];
-                case 2:
-                    error_4 = _e.sent();
-                    toast.error("Cannot fetch enumeration data");
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
-            }
+    const getEnumerationDailyData = useCallback(function () {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var res, error_4;
+            var _a, _b, _c, _d;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
+                    case 0:
+                        _e.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, fetchEnumerationData()];
+                    case 1:
+                        res = _e.sent();
+                        setEnumerationCount(((_b = (_a = res === null || res === void 0 ? void 0 : res.response_data) === null || _a === void 0 ? void 0 : _a.transport) === null || _b === void 0 ? void 0 : _b.thisDay) +
+                            ((_d = (_c = res === null || res === void 0 ? void 0 : res.response_data) === null || _c === void 0 ? void 0 : _c.market) === null || _d === void 0 ? void 0 : _d.thisDay));
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_4 = _e.sent();
+                        toast.error("Cannot fetch enumeration data");
+                        return [3 /*break*/, 3];
+                    case 3:
+                        return [2 /*return*/];
+                }
+            });
         });
-    }); }, []);
-    var getTransportTicketData = useCallback(function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res, todaysTickets, error_5;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fetchTransactions()];
-                case 1:
-                    res = _a.sent();
-                    todaysTickets = filterByTodaysDate(res === null || res === void 0 ? void 0 : res.data);
-                    setTtCount(todaysTickets.length);
-                    return [3 /*break*/, 3];
-                case 2:
-                    error_5 = _a.sent();
-                    toast.error("Cannot fetch ticket data");
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
-            }
+    }, []);
+    const getTransportTicketData = useCallback(function () {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var res, todaysTickets, error_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, fetchTransactions()];
+                    case 1:
+                        res = _a.sent();
+                        todaysTickets = filterByTodaysDate(res === null || res === void 0 ? void 0 : res.data);
+                        setTtCount(todaysTickets.length);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_5 = _a.sent();
+                        toast.error("Cannot fetch ticket data");
+                        return [3 /*break*/, 3];
+                    case 3:
+                        return [2 /*return*/];
+                }
+            });
         });
-    }); }, []);
-    var _h = useQuery({
+    }, []);
+    const _h = useQuery({
         queryKey: ["get_receipts"],
         queryFn: function () {
             return fetchReceipts();

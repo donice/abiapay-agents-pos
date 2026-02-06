@@ -13,7 +13,7 @@
   border-right: $border;
   transition: width 1s ease-in-out;
 
-  @include custom-media-query("mobile", $sm) {
+  @include custom-media-query("mobile", $md) {
     padding: px-to-rem(16px);
     display: flex;
   }
@@ -46,6 +46,7 @@
         span {
           font-size: 2px;
           display: flex;
+
           &:nth-child(1) .icon {
             width: 24px;
             height: 24px;
@@ -70,6 +71,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
         &:hover {
           color: $primary-hover;
           // background-color: #d3d3d339;

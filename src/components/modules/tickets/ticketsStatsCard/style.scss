@@ -6,12 +6,8 @@
   gap: 1rem;
 
   @include custom-media-query("mobile", $sm) {
-    display: block;
-    margin-top: 0rem;
-    overflow: auto;
-    white-space: nowrap;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    margin-top: 0.5rem;
   }
 
   &-card {
@@ -29,7 +25,7 @@
     width: 100%;
 
     @include custom-media-query("mobile", $sm) {
-      max-width: 21rem;
+      // max-width: 100%;
     }
 
     .ticket_container {

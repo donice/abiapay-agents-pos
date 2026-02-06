@@ -1,42 +1,49 @@
 @use "../../../styles/index.scss" as *;
- 
+
+.layout-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
 .main-section {
-  width: 80%;
+  flex: 1;
   height: 100%;
-  right: 0;
-  top: 2.5rem;
-  position: fixed;
   padding: px-to-rem(36px);
-  transition: width 1s ease-in-out;
-  z-index: -1;
-  // background-color: #f0fdf4c7;
-  overflow: scroll;
+  transition: all 0.3s ease-in-out;
+  overflow-y: auto;
+  background-color: #f9fafb; // Light background for better contrast
+  display: flex;
+  flex-direction: column;
 
-  margin: 1rem 0;
-
-  @include custom-media-query("mobile", $md) {
-    width: 100%;
-    min-height: 100dvh;
-    top: 0;
-    padding: px-to-rem(61px) 1rem px-to-rem(106px) 1rem;
+  .content-wrapper {
+    flex: 1;
   }
 
   @include custom-media-query("mobile", $md) {
+    padding: px-to-rem(24px) 1rem px-to-rem(106px) 1rem;
     background-color: white;
   }
-footer {
-  border-top: 1px solid #e0e0e0;
-  padding-top: 2rem;
-  position: relative;
-  bottom: 0;
-  margin-top: 5rem;
-  color: #d4d4d4;
-  text-align: center;
-  font-size: 0.8rem;
-  line-height: normal;
 
-  @include custom-media-query("mobile", $sm) {
-    display: none;
+  footer {
+    border-top: 1px solid #e0e0e0;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    color: #9ca3af;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: normal;
+
+    @include custom-media-query("mobile", $sm) {
+      display: none;
+    }
   }
-}
 }

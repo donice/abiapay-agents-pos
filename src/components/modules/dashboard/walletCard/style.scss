@@ -39,6 +39,7 @@
     align-items: center;
     justify-content: center;
   }
+
   &_balance {
     display: grid;
 
@@ -49,6 +50,7 @@
       font-size: clamp(1.1rem, 1.2vw + 7.16px, 1.3rem);
     }
   }
+
   &_earnings {
     display: grid;
     align-items: end;
@@ -83,17 +85,18 @@
     }
   }
 }
+
 .ticketwallet-card {
-  background: 
-    url("../../../assets/card_bg.png") no-repeat   center / cover,
-    linear-gradient(
-    #2BAC69 0%,
-    #000000 100%,
-  );
+  background:
+    url("../../../assets/card_bg.png") no-repeat center / cover,
+    linear-gradient(#2BAC69 0%,
+      #000000 100%,
+    );
   border-radius: 0.75rem;
   padding: 1.5rem;
   display: inline-block;
-  min-width: 21rem;
+  width: 100%;
+  // min-width: 21rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   color: white;
   margin-right: 0.25rem;

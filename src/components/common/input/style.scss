@@ -1,99 +1,156 @@
 @use "../../../styles/index.scss" as *;
 
-$form-label: #595a5b;
-$form-input-border: #d5d5d5;
-$icon-color: #a4a4a4;
+$form-label: #374151;
+$form-input-border: #d1d5db;
+$icon-color: #9ca3af;
+$input-bg: #ffffff;
+$focus-border: $primary;
+$focus-shadow: rgba(34, 197, 94, 0.1);
 
 .input-container {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.4rem;
   position: relative;
-  
+  width: 100%;
+
   label {
     display: flex;
     color: $form-label;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-left: 0.125rem;
   }
 
   input {
-    border: thin solid $form-input-border;
-    padding: 0.5rem 1rem 0.5rem 3rem;
-    border-radius: 10px;
-    min-width: 20rem;
+    background-color: $input-bg;
+    border: 1px solid $form-input-border;
+    padding: 0.625rem 1rem 0.625rem 3rem;
+    border-radius: 12px;
     width: 100%;
-    outline: green;
+    outline: none;
+    font-size: 0.95rem;
+    color: #111827;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
     &::placeholder {
-      color: #8e8e8ea5;
-      font-size: 14px;
-      font-weight: 200;
+      color: #9ca3af;
+      font-size: 0.875rem;
+      font-weight: 400;
+    }
+
+    &:focus {
+      border-color: $focus-border;
+      box-shadow: 0 0 0 4px $focus-shadow;
+      background-color: #fff;
+    }
+
+    &:hover:not(:focus) {
+      border-color: #9ca3af;
     }
   }
+
   .input_icon {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     position: absolute;
-    // z-index: 1;
     color: $icon-color;
-    top: 2.1rem;
+    top: 2.25rem;
     left: 1rem;
+    transition: color 0.2s;
+  }
+
+  input:focus+.input_icon {
+    color: $primary;
   }
 
   .input_toggle_icon {
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     position: absolute;
     z-index: 1;
     color: $icon-color;
-    top: 2.1rem;
+    top: 2.25rem;
     right: 1rem;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $primary;
+    }
   }
 }
-$icon-color: #a4a4a4;
 
 // form input
 .form-input-container {
   display: flex;
   flex-direction: column;
-  // gap: 0.15rem;
   position: relative;
+  width: 100%;
 
   input {
-    border: thin solid $form-input-border;
-    padding: 1.5rem 1rem 0.5rem 1rem;
-    border-radius: 10px;
-    min-width: 20rem;
+    background-color: $input-bg;
+    border: 1px solid $form-input-border;
+    padding: 1.625rem 1rem 0.625rem 1rem;
+    border-radius: 12px;
     width: 100%;
-    outline: green;
+    outline: none;
+    font-size: 0.95rem;
+    color: #111827;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
     &::placeholder {
-      color: #bbbbbba5;
-      font-size: 14px;
-      font-weight: 200;
+      color: #9ca3af;
+      font-size: 0.875rem;
+      font-weight: 400;
+    }
+
+    &:focus {
+      border-color: $focus-border;
+      box-shadow: 0 0 0 4px $focus-shadow;
+      background-color: #fff;
+    }
+
+    &:hover:not(:focus) {
+      border-color: #9ca3af;
     }
   }
 
+  .abia-error-input {
+    border-color: #ef4444;
 
-.errorinput {
-  border: thin solid red;
-}
+    &:focus {
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+    }
+  }
+
   .form-input_icon {
-    font-size: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
     position: absolute;
-    // z-index: 1;
-    color: $icon-color;
-    top: 0.5rem;
+    color: #6b7280;
+    top: 0.625rem;
     left: 1rem;
+    transition: color 0.2s;
+  }
+
+  input:focus~.form-input_icon {
+    color: $primary;
   }
 
   .form-input_toggle_icon {
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     position: absolute;
-    z-index: 1;
+    z-index: 10;
     color: $icon-color;
-    top: 2.1rem;
+    top: 1.2rem;
     right: 1rem;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $primary;
+    }
   }
 }
 
@@ -101,100 +158,102 @@ $icon-color: #a4a4a4;
 .select-container {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
   position: relative;
+  width: 100%;
 
   label {
-    font-size: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
     position: absolute;
-    // z-index: 1;
-    color: $icon-color;
-    top: 0.5rem;
+    color: #6b7280;
+    top: 0.625rem;
     left: 1rem;
+    pointer-events: none;
+    transition: color 0.2s;
   }
+
   select {
-    /* styling */
-    background-color: white;
-    border: thin solid $form-input-border;
-    border-radius: 10px;
+    background-color: $input-bg;
+    border: 1px solid $form-input-border;
+    border-radius: 12px;
     display: inline-block;
-    font: inherit;
-    line-height: 1.5em;
-    padding: 1.5rem 1rem 0.5rem 1rem;
-    // position: relative;
-
-    /* reset */
-
-    margin: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 1.625rem 1rem 0.625rem 1rem;
+    width: 100%;
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     appearance: none;
+    color: #111827;
 
-    /* arrows */
+    &:focus {
+      border-color: $focus-border;
+      box-shadow: 0 0 0 4px $focus-shadow;
+      background-color: #fff;
+    }
+
+    &:hover:not(:focus) {
+      border-color: #9ca3af;
+    }
 
     &.minimal {
-      background-image: linear-gradient(45deg, transparent 50%, gray 50%),
-        linear-gradient(135deg, gray 50%, transparent 50%),
-        linear-gradient(to right, #ccc, #ccc);
-      background-position: calc(100% - 20px) calc(1em + 2px),
-        calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
-      background-size: 5px 5px, 5px 5px, 1px 1.5em;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #6b7280 50%),
+        linear-gradient(135deg, #6b7280 50%, transparent 50%);
+      background-position:
+        calc(100% - 20px) calc(0.5em + 1.2rem),
+        calc(100% - 15px) calc(0.5em + 1.2rem);
+      background-size: 5px 5px, 5px 5px;
       background-repeat: no-repeat;
+    }
+  }
 
-      &:focus {
-        background-image: linear-gradient(45deg, #d5d5d5 50%, transparent 50%),
-          linear-gradient(135deg, transparent 50%, #d5d5d5 50%),
-          linear-gradient(to right, #ccc, #ccc);
-        background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em,
-          calc(100% - 2.5em) 0.5em;
-        background-size: 5px 5px, 5px 5px, 1px 1.5em;
-        background-repeat: no-repeat;
-        border-color: gray;
-        outline: 0;
-      }
-    }
-    &:-moz-focusring {
-      color: transparent;
-      text-shadow: 0 0 0 #000;
-    }
+  select:focus~label {
+    color: $primary;
   }
 }
 
-
-.error {
-  color: red;
-  font-style: italic;
-  font-size: 12px;
+.abia-input-error {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  margin-left: 0.5rem;
+  font-weight: 500;
 }
 
 .selectsearch-container {
-  border: thin solid $form-input-border;
+  border: 1px solid $form-input-border;
   padding: 0.5rem 1rem;
-  border-radius: 10px;
-  min-width: 20rem;
+  border-radius: 12px;
   width: 100%;
-  outline: green;
-  display: grid;
+  outline: none;
+  background-color: $input-bg;
+  transition: all 0.2s;
+
+  &:focus-within {
+    border-color: $focus-border;
+    box-shadow: 0 0 0 4px $focus-shadow;
+  }
 
   label {
     display: flex;
-    color: #a6a6a6;
-    font-size: 0.8rem;
+    color: #6b7280;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
   }
+
   input {
-    border-radius: 10px;
-    min-width: 20rem;
     width: 100%;
-    outline: green;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    background: transparent;
 
     &::placeholder {
-      color: #8e8e8ea5;
-      font-size: 14px;
-      font-weight: 200;
+      color: #9ca3af;
     }
   }
-  
 }

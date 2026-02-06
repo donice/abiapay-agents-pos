@@ -6,9 +6,9 @@ import Loader from "../loader";
 export var FormButton = function (_a) {
     var text = _a.text, disabled = _a.disabled, loading = _a.loading;
     var router = useRouter();
-    return (<button className={"button ".concat(disabled ? "disabled" : "primary")} disabled={disabled}>
-      {text}
-      {loading && <Loader />}
+    return (<button className={"abia-button ".concat(disabled ? "abia-button-disabled" : "abia-button-primary")} disabled={disabled}>
+        {text}
+        {loading && <Loader />}
     </button>);
 };
 export var DefaultButton = function (_a) {
@@ -19,16 +19,16 @@ export var DefaultButton = function (_a) {
             router.push(route);
         }
     };
-    return (<button className={"button ".concat(disabled ? "disabled" : "primary")} disabled={disabled} onClick={function () { return link && handleClick(link); }}>
-      {text}
+    return (<button className={"abia-button ".concat(disabled ? "abia-button-disabled" : "abia-button-primary")} disabled={disabled} onClick={function () { return link && handleClick(link); }}>
+        {text}
     </button>);
 };
 export var Button = function (_a) {
     var text = _a.text, disabled = _a.disabled, onClick = _a.onClick, loading = _a.loading, children = _a.children;
     var router = useRouter();
-    return (<button className={"button ".concat(disabled ? "disabled" : "primary")} disabled={disabled} onClick={onClick}>
-      {children} {text}
-      {loading && <Loader />}
+    return (<button className={"abia-button ".concat(disabled ? "abia-button-disabled" : "abia-button-primary")} disabled={disabled} onClick={onClick}>
+        {children} {text}
+        {loading && <Loader />}
     </button>);
 };
 export var CancelButton = function (_a) {
@@ -37,8 +37,8 @@ export var CancelButton = function (_a) {
     var handleClick = function (route) {
         return router.push(route);
     };
-    return (<div className="button secondary" onClick={function () { return handleClick(link); }}>
-      Cancel
+    return (<div className="abia-button abia-button-secondary" onClick={function () { return handleClick(link); }}>
+        Cancel
     </div>);
 };
 export var BackButton = function (_a) {
@@ -47,8 +47,8 @@ export var BackButton = function (_a) {
     var handleClick = function (route) {
         return router.push(route);
     };
-    return (<div className="button secondary" onClick={function () { return handleClick(link); }}>
-      Go Back
+    return (<div className="abia-button abia-button-secondary" onClick={function () { return handleClick(link); }}>
+        Go Back
     </div>);
 };
 export var PrimaryButton = function (_a) {
@@ -57,9 +57,9 @@ export var PrimaryButton = function (_a) {
     var handleClick = function (route) {
         return router.push(route);
     };
-    return (<button className="button primary" onClick={function () { return link && handleClick(link); }}>
-      {addIcon && <MdOutlineAdd className="icon"/>}
-      {text}
+    return (<button className="abia-button abia-button-primary" onClick={function () { return link && handleClick(link); }}>
+        {addIcon && <MdOutlineAdd className="abia-button-icon" />}
+        {text}
     </button>);
 };
 export var SecondaryButton = function (_a) {
@@ -68,16 +68,16 @@ export var SecondaryButton = function (_a) {
     var handleClick = function (route) {
         return router.push(route);
     };
-    return (<button type="button" className="button secondary" onClick={function () {
-            if (onClick) {
-                onClick();
-            }
-            else if (link) {
-                handleClick(link);
-            }
-        }}>
-      <MdOutlineAdd className="icon"/>
-      {text}
+    return (<button type="button" className="abia-button abia-button-secondary" onClick={function () {
+        if (onClick) {
+            onClick();
+        }
+        else if (link) {
+            handleClick(link);
+        }
+    }}>
+        <MdOutlineAdd className="abia-button-icon" />
+        {text}
     </button>);
 };
 export var GoBackButton = function () {
@@ -85,8 +85,8 @@ export var GoBackButton = function () {
     var handleClick = function () {
         return router.back();
     };
-    return (<button className="go_back" onClick={function () { return handleClick(); }}>
-      <MdOutlineArrowBackIos className="icon"/>
-      Go Back
+    return (<button className="abia-go-back" onClick={function () { return handleClick(); }}>
+        <MdOutlineArrowBackIos className="abia-button-icon" />
+        Go Back
     </button>);
 };

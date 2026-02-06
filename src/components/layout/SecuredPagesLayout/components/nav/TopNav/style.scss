@@ -1,99 +1,125 @@
 @use "../../../../../../styles/index.scss" as *;
 
-$primary: rgb(34 197 94);
-$primary-hover: rgb(2 44 34);
-$text-primary: rgb(113 113 122);
-$gray: rgba(86, 86, 94, 0.291);
-$border: 1px solid $gray;
-
 .top-nav {
   width: 100%;
-  position: fixed;
-  // left: 0;
-  top: 0;
+  height: 64px;
+  background-color: white;
+  border-bottom: $border;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: $text-primary;
-  background-color: white;
-  border-bottom: $border;
-  padding: 0 px-to-rem(36px);
-  z-index: 1;
+  padding: 0 px-to-rem(24px);
+  z-index: 50;
+  position: relative; // No longer fixed, managed by flex root
 
-  @include custom-media-query("mobile", $lg) {
+  @include custom-media-query("mobile", $md) {
     padding: 0 px-to-rem(12px);
   }
 
-  @include custom-media-query("mobile", $sm) {
-    flex-direction: row-reverse;
+  &_left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .menu-toggle {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #374151;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        background-color: #f3f4f6;
+        color: $primary;
+        border-color: $primary;
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      .icon {
+        font-size: 20px;
+      }
+
+      @include custom-media-query("mobile", $md) {
+        display: none; // Handled by bottom nav or hidden on mobile
+      }
+    }
   }
 
   &_logo {
-    padding: 1rem 0;
     display: flex;
     align-items: center;
+    height: 32px;
 
-    @include custom-media-query("mobile", $sm) {
-      display: none;
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &_right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .settings {
+    cursor: pointer;
+    font-size: 22px;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $primary;
     }
   }
 
   &_user {
-    padding: 0.5rem 0;
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
+    gap: 0.75rem;
 
     &_data {
-      display: flex;
-      flex-direction: column;
-      align-items: self-start;
+      text-align: right;
 
       p {
-        font-size: 0.75rem;
+        font-weight: 600;
+        font-size: 14px;
+        color: #111827;
+        margin: 0;
       }
+
       span {
-        margin-bottom: 0rem;
-        color: rgb(245 158 11);
-        background-color: rgba(251, 190, 36, 0.208);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0rem 0.5rem;
-        border-radius: 0.35rem;
-        font-size: 12px;
+        font-size: 11px;
+        color: #6b7280;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
       }
-    }
 
-    // &_skeleton {
-    //   margin-top: 10px;
-    //   display: flex;
-    //   flex-direction: column;
-    //   margin: 0;
-    //   border: 2px solid red;
-    // }
-
-  }
-  .icon {
-    font-size: 36px;
-    color: $text-primary;
-  }
-
-  .settings {
-    padding: 1rem 0;
-    display: none;
-    align-items: center;
-   
-
-    @include custom-media-query("mobile", $sm) {
-      display: flex;
+      @include custom-media-query("mobile", $md) {
+        display: none;
+      }
     }
 
     .icon {
-       font-size: 28px;
+      font-size: 34px;
+      color: #9ca3af;
+      transition: color 0.2s;
+
+      &:hover {
+        color: $primary;
+      }
     }
   }
 }
