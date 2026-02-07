@@ -134,7 +134,7 @@ var CreateIndividualAbssinComponent = function () {
       <ProgressBar stage={stage} setStage={setStage}/>
 
       {stage === 0 && (<PersonalData formData={formData} setFormData={setFormData} setStage={setStage}/>)}
-      {stage === 1 && (<UserData formData={formData} x setFormData={setFormData} setStage={setStage}/>)}
+      {stage === 1 && (<UserData formData={formData} setFormData={setFormData} setStage={setStage}/>)}
       {stage === 2 && (<OriginData formData={formData} setFormData={setFormData} setStage={setStage}/>)}
     </section>);
 };
