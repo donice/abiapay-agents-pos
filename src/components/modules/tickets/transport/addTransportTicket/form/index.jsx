@@ -283,7 +283,7 @@ var AddTransportTicketForm = function (_a) {
                                 toast.error('Card payment requires Android app with POS hardware');
                                 return [2 /*return*/];
                             }
-                            amountInKobo = Math.round(((_a = Number(data === null || data === void 0 ? void 0 : data.amount)) !== null && _a !== void 0 ? _a : 0) * 100);
+                            amountInKobo = Math.round(Number(data === null || data === void 0 ? void 0 : data.amount) || 0);
                             console.log('Initiating card payment - Amount in Kobo:', amountInKobo);
                             // Store pending ticket data
                             sessionStorage.setItem("PENDING_TICKET", JSON.stringify(formData));
