@@ -1,6 +1,6 @@
 "use client";
 var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
+    __assign = Object.assign || function (t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
@@ -20,8 +20,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function () { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -56,13 +56,14 @@ import { isBrowser } from "@/src/utils/isBrowser";
 import { useRouter } from "next/router";
 import { Button, BackButton } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
-import { SuccessModal } from "@/src/components/common/modal";
+import { SuccessModal, InstantAccountModal } from "@/src/components/common/modal";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { createNewTicket, fetchPlateNumberInfo, } from "@/src/services/ticketsServices";
 import { useMutation } from "@tanstack/react-query";
 import { bankOptions } from "@/src/lib/app";
 var AddTransportTicketForm = function (_a) {
-    var show = _a.show, setShow = _a.setShow, paymentRef = _a.paymentRef, setPaymentRef = _a.setPaymentRef, selectedPeriod = _a.selectedPeriod, setSelectedPeriod = _a.setSelectedPeriod, selectedProduct = _a.selectedProduct, setSelectedProduct = _a.setSelectedProduct;
+    var show = _a.show, setShow = _a.setShow, paymentRef = _a.paymentRef, setPaymentRef = _a.setPaymentRef, selectedPeriod = _a.selectedPeriod, setSelectedPeriod = _a.setSelectedPeriod, selectedProduct = _a.selectedProduct, setSelectedProduct = _a.setSelectedProduct, selectedProductName = _a.selectedProductName, setSelectedProductName = _a.setSelectedProductName;
+    var _instantModal = useState({ show: false, details: null }), instantModal = _instantModal[0], setInstantModal = _instantModal[1];
     var _b = useForm({
         defaultValues: {
             merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
@@ -85,25 +86,27 @@ var AddTransportTicketForm = function (_a) {
     var _c = useState([]), products = _c[0], setProducts = _c[1];
     var data = isBrowser && sessionStorage.getItem("USER_DATA");
     var user_data = data && JSON.parse(data);
-    var getProductsData = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response, _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    _b.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fetchProducts()];
-                case 1:
-                    response = _b.sent();
-                    setProducts(response === null || response === void 0 ? void 0 : response.data);
-                    return [3 /*break*/, 3];
-                case 2:
-                    _a = _b.sent();
-                    toast.error("Error fetching products");
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
-            }
+    var getProductsData = function () {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var response, _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, fetchProducts()];
+                    case 1:
+                        response = _b.sent();
+                        setProducts(response === null || response === void 0 ? void 0 : response.data);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        _a = _b.sent();
+                        toast.error("Error fetching products");
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
         });
-    }); };
+    };
     useEffect(function () {
         setValue("agentEmail", user_data === null || user_data === void 0 ? void 0 : user_data.email);
     }, [setValue, user_data]);
@@ -115,10 +118,26 @@ var AddTransportTicketForm = function (_a) {
             return createNewTicket(data);
         },
         onSuccess: function (response) {
+            var _a, _b;
             if (response.response_code === "00") {
                 toast.success(response.response_message);
-                setPaymentRef(response.payment_ref);
+                setPaymentRef(response.payment_ref || response.paymentRef || "N/A");
                 setShow(true);
+            }
+            else if (response.response_code === "12") {
+                toast.success(response.response_message);
+                var details = response.data || response;
+                setInstantModal({
+                    show: true,
+                    details: {
+                        virtual_acct_no: details.virtual_acct_no || details.account_number || details.Account_Number,
+                        virtual_acct_name: details.virtual_acct_name || details.account_name || details.Account_Name,
+                        transaction_amount: details.transaction_amount || details.amount || details.Amount,
+                        bank_name: details.bank_name || details.Bank_Name || "Bank",
+                        expiry_datetime: details.expiry_datetime || details.Expiry_Date,
+                        payment_ref: details.payment_ref || details.paymentRef
+                    }
+                });
             }
             else if (response.response_code === "74") {
                 toast.error(response.response_message);
@@ -132,25 +151,24 @@ var AddTransportTicketForm = function (_a) {
             toast.error("Error Creating Ticket");
         },
     }), mutate = _d.mutate, isLoading = _d.isLoading;
-    var onSubmit = function (data) { return __awaiter(void 0, void 0, void 0, function () {
-        var formData;
-        return __generator(this, function (_a) {
-            formData = __assign(__assign({}, data), { transaction_date: getCurrentDateTime(), invoice_id: "INV".concat(randomInvoiceGenerator()) });
-            sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
-            mutate(formData);
-            return [2 /*return*/];
+    var onSubmit = function (data) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var formData;
+            return __generator(this, function (_a) {
+                formData = __assign(__assign({}, data), { transaction_date: getCurrentDateTime(), invoice_id: "INV".concat(randomInvoiceGenerator()) });
+                sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
+                mutate(formData);
+                return [2 /*return*/];
+            });
         });
-    }); };
-    var handleProductChange = function (event) {
-        var productCode = event.target.value;
-        setSelectedProduct(productCode);
-        setValue("productCode", productCode);
     };
-    var handlePeriodChange = function (event) {
-        var period = event.target.value;
-        setSelectedPeriod(period);
-        setValue("paymentPeriod", period);
-        var selectedProductData = products.find(function (product) { return product.productCode === selectedProduct; });
+
+    var calculateAmount = function (productCode, period) {
+        if (!productCode || !period) return;
+
+        var selectedProductData = products.find(function (product) { return product.productCode === productCode; });
+        if (!selectedProductData) return;
+
         var amount = 0;
         var no_of_days = "0";
         switch (period) {
@@ -167,60 +185,83 @@ var AddTransportTicketForm = function (_a) {
                 amount = (selectedProductData === null || selectedProductData === void 0 ? void 0 : selectedProductData.monthlyAmount) || 0;
                 break;
         }
+
+        setValue("amount", amount);
         setValue("no_of_days", no_of_days);
+
         var transaction_date = new Date();
         var next_expiration_date = new Date(transaction_date.getTime() + parseInt(no_of_days) * 24 * 60 * 60 * 1000);
         setValue("next_expiration_date", next_expiration_date.toISOString());
-        setValue("amount", amount);
+    };
+
+    var handleProductChange = function (event) {
+        var productCode = event.target.value;
+        var product = products.find(p => p.productCode === productCode);
+        setSelectedProduct(productCode);
+        setSelectedProductName(product ? product.productName : "");
+        setValue("productCode", productCode);
+        if (selectedPeriod) {
+            calculateAmount(productCode, selectedPeriod);
+        }
+    };
+    var handlePeriodChange = function (event) {
+        var period = event.target.value;
+        setSelectedPeriod(period);
+        setValue("paymentPeriod", period);
+        if (selectedProduct) {
+            calculateAmount(selectedProduct, period);
+        }
     };
     var plateNumber = watch("plateNumber");
     var debouncedPlateNumber = useDebounce(plateNumber, 500);
     useEffect(function () {
         if (debouncedPlateNumber) {
-            var getPlateNumberInfo = function (plateNumber) { return __awaiter(void 0, void 0, void 0, function () {
-                var response, error_1;
-                var _a;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            _b.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, fetchPlateNumberInfo(plateNumber)];
-                        case 1:
-                            response = _b.sent();
-                            if (((_a = response.data) === null || _a === void 0 ? void 0 : _a.length) !== 0) {
-                                toast.success(response.message);
-                                setValue("taxPayerName", response.data.Name);
-                                setValue("taxPayerPhone", response.data.Phone);
-                            }
-                            return [3 /*break*/, 3];
-                        case 2:
-                            error_1 = _b.sent();
-                            toast.error("Error fetching plate number information");
-                            return [3 /*break*/, 3];
-                        case 3: return [2 /*return*/];
-                    }
+            var getPlateNumberInfo = function (plateNumber) {
+                return __awaiter(void 0, void 0, void 0, function () {
+                    var response, error_1;
+                    var _a;
+                    return __generator(this, function (_b) {
+                        switch (_b.label) {
+                            case 0:
+                                _b.trys.push([0, 2, , 3]);
+                                return [4 /*yield*/, fetchPlateNumberInfo(plateNumber)];
+                            case 1:
+                                response = _b.sent();
+                                if (((_a = response.data) === null || _a === void 0 ? void 0 : _a.length) !== 0) {
+                                    toast.success(response.message);
+                                    setValue("taxPayerName", response.data.Name);
+                                    setValue("taxPayerPhone", response.data.Phone);
+                                }
+                                return [3 /*break*/, 3];
+                            case 2:
+                                error_1 = _b.sent();
+                                toast.error("Error fetching plate number information");
+                                return [3 /*break*/, 3];
+                            case 3: return [2 /*return*/];
+                        }
+                    });
                 });
-            }); };
+            };
             getPlateNumberInfo(debouncedPlateNumber);
         }
     }, [debouncedPlateNumber, setValue]);
     return (<form onSubmit={handleSubmit(onSubmit)} className="add-ticket">
-       <SelectInput label="Ticket Type" name="productCode" id="productCode" register={register} validation={{
+        <SelectInput label="Ticket Type" name="productCode" id="productCode" register={register} validation={{
             required: true,
-            onChange: function (e) {
-                setSelectedProduct(e.target.value);
-            }
-        }} options={products.map(function (product) { return ({
-            value: product.productCode,
-            label: product.productName,
-        }); })} placeholder="Select Ticket Type" error={!!errors.productCode}/>
+            onChange: handleProductChange
+        }} options={products.map(function (product) {
+            return ({
+                value: product.productCode,
+                label: product.productName,
+            });
+        })} placeholder="Select Ticket Type" error={!!errors.productCode} />
 
-    <FormTextInput label="Plate Number" type="text" name="plateNumber" placeholder="Enter Plate Number" register={register} validation={{
+        <FormTextInput label="Plate Number" type="text" name="plateNumber" placeholder="Enter Plate Number" register={register} validation={{
             required: true,
             setValueAs: function (value) { return value.toUpperCase(); }
-        }} error={errors.plateNumber}/>
+        }} error={errors.plateNumber} />
 
-      <FormTextInput label="Taxpayer Phone Number" type="number" name="taxPayerPhone" placeholder="Enter Taxpayer Phone Number" register={register} validation={{
+        <FormTextInput label="Taxpayer Phone Number" type="number" name="taxPayerPhone" placeholder="Enter Taxpayer Phone Number" register={register} validation={{
             required: "Field Required",
             minLength: {
                 value: 11,
@@ -230,26 +271,38 @@ var AddTransportTicketForm = function (_a) {
                 value: 11,
                 message: "Length must be below 13 characters",
             },
-        }} error={errors.taxPayerPhone}/>
+        }} error={errors.taxPayerPhone} />
 
-      <FormTextInput label="Taxpayer Name" type="text" name="taxPayerName" placeholder="Enter Taxpayer Name" register={register} validation={{ required: true }} error={errors.taxPayerName}/>
+        <FormTextInput label="Taxpayer Name" type="text" name="taxPayerName" placeholder="Enter Taxpayer Name" register={register} validation={{ required: true }} error={errors.taxPayerName} />
 
-      <SelectInput label="Payment Period" name="paymentPeriod" id="paymentPeriod" value={selectedPeriod} onChange={handlePeriodChange} disabled={!selectedProduct} options={[
+        <SelectInput label="Payment Period" name="paymentPeriod" id="paymentPeriod" value={selectedPeriod} onChange={handlePeriodChange} disabled={!selectedProduct} options={[
             { value: "1 Day", label: "1 Day" },
             { value: "1 Week", label: "1 Week" },
             { value: "1 Month", label: "1 Month" },
-        ]} placeholder="Select Payment Period" error={!!errors.paymentPeriod}/>
+        ]} placeholder="Select Payment Period" error={!!errors.paymentPeriod} />
 
-      <FormTextInput label="Amount" type="number" name="amount" placeholder="Enter Amount" register={register} readOnly validation={{ required: true }} error={errors.amount}/>
+        <FormTextInput label="Amount" type="number" name="amount" placeholder="Enter Amount" register={register} readOnly validation={{ required: true }} error={errors.amount} />
 
-      <SelectInput label="Choose Wallet" name="wallet_type" id="wallet_type" register={register} validation={{ required: true }} options={bankOptions} placeholder="Select Wallet Type" error={!!errors.wallet_type}/>
+        <SelectInput label="Choose Wallet" name="wallet_type" id="wallet_type" register={register} validation={{ required: true }} options={bankOptions} placeholder="Select Wallet Type" error={!!errors.wallet_type} />
 
-      <div className="btn_container">
-        <BackButton link="/tickets/transport"/>
-        <Button text="Process Payment" loading={isLoading}/>
-      </div>
+        <div className="btn_container">
+            <BackButton link="/tickets/transport" />
+            <Button text="Process Payment" loading={isLoading} />
+        </div>
 
-      {show && (<SuccessModal text="View Receipt" link="/tickets/transport/add/summary" id={"Ref: ".concat(paymentRef, ", Valid for: ").concat(selectedPeriod, ", Payment for: ").concat(selectedProduct)} buttonText="Done"/>)}
+        {show && (<SuccessModal text="View Receipt" link="/tickets/transport/add/summary" id={"Ref: ".concat(paymentRef, ", Valid for: ").concat(selectedPeriod, ", Payment for: ").concat(selectedProductName)} buttonText="Done" />)}
+
+        {instantModal.show && (<InstantAccountModal
+            virtual_acct_no={instantModal.details.virtual_acct_no}
+            virtual_acct_name={instantModal.details.virtual_acct_name}
+            transaction_amount={instantModal.details.transaction_amount}
+            bank_name={instantModal.details.bank_name}
+            expiry_datetime={instantModal.details.expiry_datetime}
+            onClick={() => {
+                setInstantModal({ show: false, details: null });
+                router.push("/tickets/transport");
+            }}
+        />)}
     </form>);
 };
 export default AddTransportTicketForm;

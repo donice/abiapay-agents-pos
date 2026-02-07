@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function () { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -73,27 +73,31 @@ var CreateMarketLevyForm = function () {
             wallet_type: "fidelity",
         },
     }), register = _d.register, watch = _d.watch, handleSubmit = _d.handleSubmit, setValue = _d.setValue, errors = _d.formState.errors;
-    var getMarkets = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var data, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fetchMarkets()];
-                case 1:
-                    data = _a.sent();
-                    setMarkets(data === null || data === void 0 ? void 0 : data.data.map(function (item) { return ({
-                        label: item.market,
-                        value: item.market_id,
-                    }); }));
-                    return [2 /*return*/, data];
-                case 2:
-                    error_1 = _a.sent();
-                    throw new Error("Error fetching transactions: ".concat(error_1 === null || error_1 === void 0 ? void 0 : error_1.message));
-                case 3: return [2 /*return*/];
-            }
+    var getMarkets = function () {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var data, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, fetchMarkets()];
+                    case 1:
+                        data = _a.sent();
+                        setMarkets(data === null || data === void 0 ? void 0 : data.data.map(function (item) {
+                            return ({
+                                label: item.market,
+                                value: item.market_id,
+                            });
+                        }));
+                        return [2 /*return*/, data];
+                    case 2:
+                        error_1 = _a.sent();
+                        throw new Error("Error fetching transactions: ".concat(error_1 === null || error_1 === void 0 ? void 0 : error_1.message));
+                    case 3: return [2 /*return*/];
+                }
+            });
         });
-    }); };
+    };
     var mutatePayForMarketLevy = useMutation({
         mutationKey: ["payForMarketLevy"],
         mutationFn: function (data) {
@@ -105,10 +109,10 @@ var CreateMarketLevyForm = function () {
                 setStatus({ openModal: true, mode: "success" });
                 console.log(data);
                 setModalDetails({
-                    enumeration_id: data === null || data === void 0 ? void 0 : data.enumeration_id,
-                    payment_status: data === null || data === void 0 ? void 0 : data.payment_status,
-                    response_message: data === null || data === void 0 ? void 0 : data.response_message,
-                    payment_ref: data === null || data === void 0 ? void 0 : data.payment_ref,
+                    enumeration_id: (data === null || data === void 0 ? void 0 : data.enumeration_id) || (data === null || data === void 0 ? void 0 : data.enumerationId) || "N/A",
+                    payment_status: (data === null || data === void 0 ? void 0 : data.payment_status) || (data === null || data === void 0 ? void 0 : data.paymentStatus) || "N/A",
+                    response_message: (data === null || data === void 0 ? void 0 : data.response_message) || (data === null || data === void 0 ? void 0 : data.responseMessage) || "Success",
+                    payment_ref: (data === null || data === void 0 ? void 0 : data.payment_ref) || (data === null || data === void 0 ? void 0 : data.paymentRef) || "N/A",
                 });
                 toast.success(data === null || data === void 0 ? void 0 : data.response_message);
             }
@@ -125,34 +129,36 @@ var CreateMarketLevyForm = function () {
     var debouncedAbssin = useDebounce(abssin, 300);
     useEffect(function () {
         if (debouncedAbssin) {
-            var getPlateNumberInfo = function (req) { return __awaiter(void 0, void 0, void 0, function () {
-                var response, error_2;
-                var _a;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            _b.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, fetchABSSINInfo({ id: req })];
-                        case 1:
-                            response = _b.sent();
-                            if (((_a = response.data) === null || _a === void 0 ? void 0 : _a.length) !== 0) {
-                                toast.success(response.message);
-                                setValue("taxpayer_name", response.data.firstname +
-                                    " " +
-                                    response.data.middle_name +
-                                    " " +
-                                    response.data.lastname);
-                                setValue("taxpayer_phone", response.data.phone_number);
-                            }
-                            return [3 /*break*/, 3];
-                        case 2:
-                            error_2 = _b.sent();
-                            console.log(error_2);
-                            return [3 /*break*/, 3];
-                        case 3: return [2 /*return*/];
-                    }
+            var getPlateNumberInfo = function (req) {
+                return __awaiter(void 0, void 0, void 0, function () {
+                    var response, error_2;
+                    var _a;
+                    return __generator(this, function (_b) {
+                        switch (_b.label) {
+                            case 0:
+                                _b.trys.push([0, 2, , 3]);
+                                return [4 /*yield*/, fetchABSSINInfo({ id: req })];
+                            case 1:
+                                response = _b.sent();
+                                if (((_a = response.data) === null || _a === void 0 ? void 0 : _a.length) !== 0) {
+                                    toast.success(response.message);
+                                    setValue("taxpayer_name", response.data.firstname +
+                                        " " +
+                                        response.data.middle_name +
+                                        " " +
+                                        response.data.lastname);
+                                    setValue("taxpayer_phone", response.data.phone_number);
+                                }
+                                return [3 /*break*/, 3];
+                            case 2:
+                                error_2 = _b.sent();
+                                console.log(error_2);
+                                return [3 /*break*/, 3];
+                            case 3: return [2 /*return*/];
+                        }
+                    });
                 });
-            }); };
+            };
             getPlateNumberInfo(debouncedAbssin);
         }
     }, [debouncedAbssin, setValue]);
@@ -160,48 +166,48 @@ var CreateMarketLevyForm = function () {
         getMarkets();
     }, []);
     return (<div className="add-market-ticket">
-      <section className="grid gap-4">
-        <div>
-          <form onSubmit={handleSubmit(onsubmit)} className="flex flex-col gap-2 justify-between">
-            {" "}
-            <FormTextInput label="Taxpayer ABSSIN" type="number" name="abssin" placeholder="Enter Taxpayer ABSSIN" register={register} validation={{
-            required: "Taxpayer ABSSIN is Required",
-            minLength: {
-                value: 10,
-                message: "Length must be above 10 characters",
-            },
-            maxLength: {
-                value: 11,
-                message: "Length must be below 11 characters",
-            },
-        }} error={errors.abssin}/>
-            <FormTextInput label="Taxpayer Name" type="text" name="taxpayer_name" placeholder="Enter Taxpayer Name" register={register} validation={{
-            required: "Taxpayer Name is Required",
-        }} error={errors.taxpayer_name}/>
-            <FormTextInput label="Taxpayer Phone" type="number" name="taxpayer_phone" placeholder="Enter Taxpayer Phone" register={register} validation={{
-            required: "Taxpayer Phone is Required",
-        }} error={errors.taxpayer_phone}/>
-            <SelectInput label={"Market Name"} name={"market_id"} id={"market_id"} register={register} validation={{ required: true }} error={!!errors.market_id} options={markets}/>
-            <FormTextInput label={"Shop Number"} name={"shop_number"} register={register} validation={{ required: true }} error={errors.shop_number}/>
-            <FormTextInput label={"Zone Line"} name={"zone_line"} register={register} validation={{ required: true }} error={errors.zone_line}/>{" "}
-            <SelectInput label={"Payment Period"} name={"payment_period"} id={"payment_period"} register={register} validation={{ required: true }} error={!!errors.payment_period} options={[
-            { label: "2025", value: "2025" },
-        ]}/>
-            <FormTextInput label={"Amount to be paid"} name={"amount"} disabled value={18000} error={errors.zone_line}/>
-            <SelectInput label={"Wallet Type"} name={"wallet_type"} id={"wallet_type"} options={[
-            { value: "fidelity", label: "Fidelity" },
-            { value: "access", label: "Access" },
-        ]}/>
-            <FormButton text={"Pay Now"} disabled={mutatePayForMarketLevy.isLoading} loading={mutatePayForMarketLevy.isLoading}/>
-          </form>
+        <section className="grid gap-4">
+            <div>
+                <form onSubmit={handleSubmit(onsubmit)} className="flex flex-col gap-2 justify-between">
+                    {" "}
+                    <FormTextInput label="Taxpayer ABSSIN" type="number" name="abssin" placeholder="Enter Taxpayer ABSSIN" register={register} validation={{
+                        required: "Taxpayer ABSSIN is Required",
+                        minLength: {
+                            value: 10,
+                            message: "Length must be above 10 characters",
+                        },
+                        maxLength: {
+                            value: 11,
+                            message: "Length must be below 11 characters",
+                        },
+                    }} error={errors.abssin} />
+                    <FormTextInput label="Taxpayer Name" type="text" name="taxpayer_name" placeholder="Enter Taxpayer Name" register={register} validation={{
+                        required: "Taxpayer Name is Required",
+                    }} error={errors.taxpayer_name} />
+                    <FormTextInput label="Taxpayer Phone" type="number" name="taxpayer_phone" placeholder="Enter Taxpayer Phone" register={register} validation={{
+                        required: "Taxpayer Phone is Required",
+                    }} error={errors.taxpayer_phone} />
+                    <SelectInput label={"Market Name"} name={"market_id"} id={"market_id"} register={register} validation={{ required: true }} error={!!errors.market_id} options={markets} />
+                    <FormTextInput label={"Shop Number"} name={"shop_number"} register={register} validation={{ required: true }} error={errors.shop_number} />
+                    <FormTextInput label={"Zone Line"} name={"zone_line"} register={register} validation={{ required: true }} error={errors.zone_line} />{" "}
+                    <SelectInput label={"Payment Period"} name={"payment_period"} id={"payment_period"} register={register} validation={{ required: true }} error={!!errors.payment_period} options={[
+                        { label: "2025", value: "2025" },
+                    ]} />
+                    <FormTextInput label={"Amount to be paid"} name={"amount"} disabled value={18000} error={errors.zone_line} />
+                    <SelectInput label={"Wallet Type"} name={"wallet_type"} id={"wallet_type"} options={[
+                        { value: "fidelity", label: "Fidelity" },
+                        { value: "access", label: "Access" },
+                    ]} />
+                    <FormButton text={"Pay Now"} disabled={mutatePayForMarketLevy.isLoading} loading={mutatePayForMarketLevy.isLoading} />
+                </form>
 
-          {status.openModal && status.mode === "success" && (<MarketTicketModal details={{
-                enum_id: modalDetails === null || modalDetails === void 0 ? void 0 : modalDetails.enumeration_id,
-                payment_status: modalDetails === null || modalDetails === void 0 ? void 0 : modalDetails.payment_status,
-                payment_ref: modalDetails === null || modalDetails === void 0 ? void 0 : modalDetails.payment_ref,
-            }} text={modalDetails === null || modalDetails === void 0 ? void 0 : modalDetails.response_message} icon={<FcApproval className="my-4 text-[5rem] p-3 bg-green-100 rounded-full"/>} maintext={"Market Ticket Payment Successful"}/>)}
-        </div>
-      </section>
+                {status.openModal && status.mode === "success" && (<MarketTicketModal details={{
+                    enum_id: modalDetails === null || modalDetails === void 0 ? void 0 : modalDetails.enumeration_id,
+                    payment_status: modalDetails === null || modalDetails === void 0 ? void 0 : modalDetails.payment_status,
+                    payment_ref: modalDetails === null || modalDetails === void 0 ? void 0 : modalDetails.payment_ref,
+                }} text={modalDetails === null || modalDetails === void 0 ? void 0 : modalDetails.response_message} icon={<FcApproval className="my-4 text-[5rem] p-3 bg-green-100 rounded-full" />} maintext={"Market Ticket Payment Successful"} />)}
+            </div>
+        </section>
     </div>);
 };
 export default CreateMarketLevyForm;

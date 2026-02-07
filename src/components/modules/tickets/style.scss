@@ -104,3 +104,102 @@
         }
     }
 }
+
+// Add Tickets Page Styles
+.identity {
+    padding-bottom: 20px;
+
+    @include custom-media-query("mobile", $sm) {
+        padding-bottom: 140px;
+    }
+
+    &_container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    &_items {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.5rem;
+
+        @include custom-media-query("mobile", $lg) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @include custom-media-query("mobile", $sm) {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1rem;
+        }
+    }
+
+    &_item {
+        background: white;
+        padding: 1.25rem 1.5rem;
+        border-radius: 1rem;
+        border: 1px solid #e5e7eb;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+        color: inherit;
+
+        @include custom-media-query("mobile", $sm) {
+            padding: 1rem;
+        }
+
+        &:hover {
+            border-color: $primary;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        &>div {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+
+            @include custom-media-query("mobile", $sm) {
+                gap: 0.75rem;
+            }
+
+            span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 3.5rem;
+                height: 3.5rem;
+                background: #f3f4f6;
+                border-radius: 0.75rem;
+                font-size: 2rem;
+
+                @include custom-media-query("mobile", $sm) {
+                    width: 2.75rem;
+                    height: 2.75rem;
+                    font-size: 1.5rem;
+                }
+            }
+
+            h2 {
+                font-size: 1.125rem;
+                font-weight: 600;
+                margin-bottom: 0.25rem;
+                color: #111827;
+
+                @include custom-media-query("mobile", $sm) {
+                    font-size: 1rem;
+                }
+            }
+
+            p {
+                font-size: 0.875rem;
+                color: #6b7280;
+
+                @include custom-media-query("mobile", $sm) {
+                    font-size: 0.75rem;
+                }
+            }
+        }
+    }
+}

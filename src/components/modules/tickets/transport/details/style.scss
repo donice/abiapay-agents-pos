@@ -1,0 +1,140 @@
+@use "../../../../../styles/index.scss" as *;
+
+.ticket-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 20px;
+
+    @include custom-media-query("mobile", $sm) {
+        padding-bottom: 140px;
+    }
+
+    &_container {
+        display: flex;
+        justify-content: center;
+        padding: 1rem 0;
+    }
+
+    &_card {
+        background: white;
+        border-radius: 1rem;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 800px;
+        overflow: hidden;
+
+        @include custom-media-query("mobile", $sm) {
+            border-radius: 0.75rem;
+        }
+    }
+
+    &_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+
+        @include custom-media-query("mobile", $sm) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            color: $primary;
+            margin: 0;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+
+            &.completed {
+                color: #059669;
+                background-color: rgba(110, 231, 183, 0.3);
+            }
+
+            &.pending {
+                color: rgb(202 138 4);
+                background-color: #fde04751;
+            }
+
+            svg {
+                font-size: 1.25rem;
+            }
+        }
+    }
+
+    &_info {
+        padding: 1.5rem;
+
+        @include custom-media-query("mobile", $sm) {
+            padding: 1.25rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f3f4f6;
+
+            @include custom-media-query("mobile", $sm) {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.875rem 0;
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .label {
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: #6b7280;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+
+                @include custom-media-query("mobile", $sm) {
+                    font-size: 0.75rem;
+                }
+            }
+
+            .value {
+                font-size: 1rem;
+                font-weight: 600;
+                color: #111827;
+                text-align: right;
+
+                @include custom-media-query("mobile", $sm) {
+                    text-align: left;
+                    font-size: 0.9375rem;
+                }
+
+                &.next-date {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    color: #ca8a04;
+
+                    .icon {
+                        font-size: 1.25rem;
+                    }
+                }
+            }
+        }
+    }
+}
