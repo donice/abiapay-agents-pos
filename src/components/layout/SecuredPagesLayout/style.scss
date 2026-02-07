@@ -29,7 +29,7 @@
   }
 
   @include custom-media-query("mobile", $md) {
-    padding: px-to-rem(24px) 1rem px-to-rem(106px) 1rem;
+    padding: px-to-rem(16px) 1rem px-to-rem(120px) 1rem;
     background-color: white;
   }
 

@@ -6,7 +6,7 @@ import { TicketsWalletCard } from "../../dashboard/walletCard";
 // import "./style.scss" // Moved to _app;
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
 var TicketsWalletCards = function () {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
     var data = useQuery({
         queryKey: ["get_dashboard_data"],
         queryFn: function () {
@@ -20,16 +20,16 @@ var TicketsWalletCards = function () {
     console.log(ticketData);
     if (isLoading) {
         return (<div>
-        <LoaderSkeleton height="100px"/>
-      </div>);
+            <LoaderSkeleton height="100px" />
+        </div>);
     }
     if (isError) {
         return (<div>
-        <p>Error</p>
-      </div>);
+            <p>Error</p>
+        </div>);
     }
     return (<div className="ticketspage_wallet">
-      <TicketsWalletCard bank={"access"} data={{
+        <TicketsWalletCard bank={"access"} data={{
             total_credit: undefined,
             total_debit: data === null || data === void 0 ? void 0 : data.ledger_balance,
             balance: undefined,
@@ -45,24 +45,7 @@ var TicketsWalletCards = function () {
             this_month_amount: (_g = ticketData === null || ticketData === void 0 ? void 0 : ticketData.data[0]) === null || _g === void 0 ? void 0 : _g.total_amount_monthly,
             this_week_count: (_h = ticketData === null || ticketData === void 0 ? void 0 : ticketData.data[0]) === null || _h === void 0 ? void 0 : _h.total_transaction_weekly,
             this_week_amount: (_j = ticketData === null || ticketData === void 0 ? void 0 : ticketData.data[0]) === null || _j === void 0 ? void 0 : _j.total_amount_weekly
-        }}/>
-      <TicketsWalletCard bank={"fidelity"} data={{
-            total_credit: undefined,
-            total_debit: data === null || data === void 0 ? void 0 : data.ledger_balance,
-            balance: (_k = data === null || data === void 0 ? void 0 : data.fidelity) === null || _k === void 0 ? void 0 : _k.balance,
-            earnings: (_l = data === null || data === void 0 ? void 0 : data.fidelity) === null || _l === void 0 ? void 0 : _l.earnings,
-            account_name: data === null || data === void 0 ? void 0 : data.fidelity.wallet_name,
-            account_number: (_m = data === null || data === void 0 ? void 0 : data.fidelity) === null || _m === void 0 ? void 0 : _m.account_number,
-            bank_name: "fidelity",
-            current_earnings: (_o = data === null || data === void 0 ? void 0 : data.fidelity) === null || _o === void 0 ? void 0 : _o.earnings,
-            wallet_balance: (_p = data === null || data === void 0 ? void 0 : data.fidelity) === null || _p === void 0 ? void 0 : _p.balance,
-            wallet_id: (_q = data === null || data === void 0 ? void 0 : data.fidelity) === null || _q === void 0 ? void 0 : _q.account_number,
-            wallet_name: (_r = data === null || data === void 0 ? void 0 : data.fidelity) === null || _r === void 0 ? void 0 : _r.account_name,
-            this_month_count: (_s = ticketData === null || ticketData === void 0 ? void 0 : ticketData.data[0]) === null || _s === void 0 ? void 0 : _s.total_transaction_monthly,
-            this_month_amount: (_t = ticketData === null || ticketData === void 0 ? void 0 : ticketData.data[0]) === null || _t === void 0 ? void 0 : _t.total_amount_monthly,
-            this_week_count: (_u = ticketData === null || ticketData === void 0 ? void 0 : ticketData.data[0]) === null || _u === void 0 ? void 0 : _u.total_transaction_weekly,
-            this_week_amount: (_v = ticketData === null || ticketData === void 0 ? void 0 : ticketData.data[0]) === null || _v === void 0 ? void 0 : _v.total_amount_weekly
-        }}/>
+        }} />
     </div>);
 };
 export default TicketsWalletCards;

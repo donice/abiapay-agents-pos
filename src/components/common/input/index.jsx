@@ -40,15 +40,15 @@ export var TextInput = function (_a) {
   var errorMessage = error ? getErrorMessage(error) : "";
   return (<div className="input-container">
     <label htmlFor={name}>{label}</label>
-    <span>
+    <div className="abia-input-wrapper">
       <span className="input_icon">
         {input_icon ? (input_icon) : type === "password" ? (<TbLockCheck />) : type === "email" ? (<MdOutlineAlternateEmail />) : (<TbCreditCard />)}
       </span>
-    </span>
-    <input type={type === "password" && showPassword ? "text" : type} name={name} placeholder={placeholder} value={value} onChange={onChange} {...(register && register(name, validation))} {...rest} />
-    {type === "password" && (<span onClick={handleTogglePassword} className="input_toggle_icon">
-      {showPassword ? <TbEyeOff /> : <TbEye />}
-    </span>)}
+      <input type={type === "password" && showPassword ? "text" : type} name={name} placeholder={placeholder} value={value} onChange={onChange} {...(register && register(name, validation))} {...rest} />
+      {type === "password" && (<span onClick={handleTogglePassword} className="input_toggle_icon">
+        {showPassword ? <TbEyeOff /> : <TbEye />}
+      </span>)}
+    </div>
     {errorMessage && <span className="abia-input-error">{errorMessage}</span>}
   </div>);
 };
@@ -79,17 +79,16 @@ export var FormTextInput = function (_a) {
   };
   var errorMessage = error ? getErrorMessage(error) : "";
   return (<div className="form-input-container">
-    <span>
+    <div className="abia-input-wrapper">
       <label className="form-input_icon flex">
         {label}{" "}
         {(validation === null || validation === void 0 ? void 0 : validation.required) && <LuAsterisk className="text-red-600" />}
       </label>
-    </span>
-    <input type={type === "password" && showPassword ? "text" : type} name={name} placeholder={placeholder} value={value} readOnly={readOnly} disabled={disabled} onChange={onChange} className={"".concat(error ? "abia-error-input" : "")} {...(register && register(name, validation))} {...rest} />
-    <span></span>
-    {type === "password" && (<span onClick={handleTogglePassword} className="form-input_toggle_icon">
-      {showPassword ? <TbEyeOff /> : <TbEye />}
-    </span>)}
+      <input type={type === "password" && showPassword ? "text" : type} name={name} placeholder={placeholder} value={value} readOnly={readOnly} disabled={disabled} onChange={onChange} className={"".concat(error ? "abia-error-input" : "")} {...(register && register(name, validation))} {...rest} />
+      {type === "password" && (<span onClick={handleTogglePassword} className="form-input_toggle_icon">
+        {showPassword ? <TbEyeOff /> : <TbEye />}
+      </span>)}
+    </div>
     {errorMessage && <span className="abia-input-error">{errorMessage}</span>}
   </div>);
 };

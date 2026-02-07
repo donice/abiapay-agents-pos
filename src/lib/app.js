@@ -7,7 +7,7 @@ export var appMetadata = {
     repository: "https://github.com/yourusername/abiapay-agent-portal",
     homepage: "https://yourhomepage.com",
     banksAllowed: [
-        { name: "Access Bank", value: "access", allowed: false },
+        { name: "Wallet" , value: "access", allowed: true },
         { name: "Fidelity Bank", value: "fidelity", allowed: false },
         // Add Hydrogen payment methods
         { name: "Card Payment (POS)", value: "card", allowed: true },

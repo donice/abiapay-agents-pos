@@ -1,15 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
-import { CustomHeader } from '@/src/components/common/header';
+import LoadingOffLoadingPageComponent from '@/src/components/modules/tickets/transport/loading_offloading';
 var LoadingOffloadingPage = function () {
     return (<div>
-            <Head>
-                <title>Loading & Offloading</title>
-            </Head>
-            <CustomHeader title="Loading & Offloading" desc="Register Loading & Offloading Vehicles"/>
-            <div style={{ padding: '20px', textAlign: 'center' }}>
-                <p>This feature is under development.</p>
-            </div>
-        </div>);
+        <Head>
+            <title>Loading & Offloading</title>
+        </Head>
+        <LoadingOffLoadingPageComponent />
+    </div>);
 };
 export default LoadingOffloadingPage;

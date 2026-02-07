@@ -1,6 +1,7 @@
 @use "../../../../../styles/index.scss" as *;
 
 .walletcard {
+
   // border: 2px solid red;
   &_container {
     display: grid;
@@ -16,6 +17,11 @@
       padding: 1rem;
       border: 1px solid transparent;
       background-color: #f3f3f3b2;
+
+      @include custom-media-query("mobile", $sm) {
+        padding: 0.75rem;
+      }
+
       transition: all 0.5s ease-in-out;
 
       &_check {
@@ -60,8 +66,17 @@
           align-items: center;
           justify-content: center;
 
+          @include custom-media-query("mobile", $sm) {
+            width: 2rem;
+            height: 2rem;
+          }
+
           img {
             width: 1.32rem;
+
+            @include custom-media-query("mobile", $sm) {
+              width: 1.1rem;
+            }
           }
         }
       }
@@ -81,7 +96,7 @@
       .wallet_details {
         &_icon {
           background-color: #ffffffca;
-          border: 1px solid #d0ffe0 ;
+          border: 1px solid #d0ffe0;
         }
       }
     }

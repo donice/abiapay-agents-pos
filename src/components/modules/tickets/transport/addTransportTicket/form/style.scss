@@ -6,7 +6,12 @@ $form-input-border: #d5d5d5;
 .add-ticket {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 0.5rem; 
+  gap: 0.5rem;
+  padding-bottom: 0;
+
+  @include custom-media-query("mobile", $sm) {
+    padding-bottom: 20px;
+  }
 
   .btn_container {
     margin-top: 2rem;
@@ -14,6 +19,14 @@ $form-input-border: #d5d5d5;
     gap: 1rem;
     display: flex;
     flex-direction: row;
+
+    @include custom-media-query("mobile", $sm) {
+      margin-bottom: 3rem;
+    }
+
+    @include custom-media-query("mobile", 400px) {
+      margin-bottom: 4rem;
+    }
   }
 
   .error {

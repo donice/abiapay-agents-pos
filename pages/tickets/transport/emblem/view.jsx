@@ -1,15 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
-import { CustomHeader } from '@/src/components/common/header';
+import TransportEmblemComponent from '@/src/components/modules/tickets/transport/emblem';
 var ViewEmblemPage = function () {
     return (<div>
-            <Head>
-                <title>Transport Emblem</title>
-            </Head>
-            <CustomHeader title="Transport Emblem" desc="View transport emblems"/>
-            <div style={{ padding: '20px', textAlign: 'center' }}>
-                <p>This feature is under development.</p>
-            </div>
-        </div>);
+        <Head>
+            <title>Transport Emblem</title>
+        </Head>
+        <TransportEmblemComponent />
+    </div>);
 };
 export default ViewEmblemPage;
