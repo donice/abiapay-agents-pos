@@ -60,7 +60,8 @@ import { SuccessModal, InstantAccountModal } from "@/src/components/common/modal
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { createNewTicket, fetchPlateNumberInfo, } from "@/src/services/ticketsServices";
 import { useMutation } from "@tanstack/react-query";
-import { bankOptions } from "@/src/lib/app";
+import { paymentMethodOptions, walletTypeOptions } from "@/src/lib/app";
+import { fetchInstantAccount, confirmInstantAccountPayment } from "@/src/services/billServices";
 var AddTransportTicketForm = function (_a) {
     var show = _a.show, setShow = _a.setShow, paymentRef = _a.paymentRef, setPaymentRef = _a.setPaymentRef, selectedPeriod = _a.selectedPeriod, setSelectedPeriod = _a.setSelectedPeriod, selectedProduct = _a.selectedProduct, setSelectedProduct = _a.setSelectedProduct, selectedProductName = _a.selectedProductName, setSelectedProductName = _a.setSelectedProductName;
     var _instantModal = useState({ show: false, details: null }), instantModal = _instantModal[0], setInstantModal = _instantModal[1];
@@ -79,13 +80,16 @@ var AddTransportTicketForm = function (_a) {
             plateNumber: "",
             taxPayerPhone: "",
             taxPayerName: "",
-            wallet_type: "fidelity",
+            payment_method: "wallet",
+            wallet_type: "access",
         },
     }), register = _b.register, watch = _b.watch, handleSubmit = _b.handleSubmit, errors = _b.formState.errors, setValue = _b.setValue;
     var router = useRouter();
     var _c = useState([]), products = _c[0], setProducts = _c[1];
+    var _d = useState(false), isAndroidBridge = _d[0], setIsAndroidBridge = _d[1];
     var data = isBrowser && sessionStorage.getItem("USER_DATA");
     var user_data = data && JSON.parse(data);
+    var payment_method = watch("payment_method");
     var getProductsData = function () {
         return __awaiter(void 0, void 0, void 0, function () {
             var response, _a;
@@ -113,7 +117,60 @@ var AddTransportTicketForm = function (_a) {
     useEffect(function () {
         getProductsData();
     }, []);
-    var _d = useMutation({
+    // Check if running in Android bridge app
+    useEffect(function () {
+        if (isBrowser) {
+            setIsAndroidBridge(typeof window.HydrogenBridge !== 'undefined');
+        }
+    }, []);
+    // Handle payment result from Hydrogen Bridge
+    useEffect(function () {
+        if (isBrowser) {
+            window.handleHydrogenPaymentResult = function (result) {
+                console.log('Hydrogen Payment Result:', result);
+                if (result.status === 'SUCCESS') {
+                    toast.success('Payment Successful!');
+                    var paymentData = void 0;
+                    try {
+                        paymentData = typeof result.data === 'string'
+                            ? JSON.parse(result.data)
+                            : result.data;
+                    }
+                    catch (e) {
+                        paymentData = result.data;
+                    }
+                    console.log('Payment Data:', paymentData);
+                    var pendingTicket = sessionStorage.getItem("PENDING_TICKET");
+                    if (pendingTicket) {
+                        var ticketData = JSON.parse(pendingTicket);
+                        sessionStorage.setItem("HYDROGEN_PAYMENT", JSON.stringify(paymentData));
+                        sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(ticketData));
+                        sessionStorage.removeItem("PENDING_TICKET");
+                        setPaymentRef(paymentData.reference || paymentData.paymentRef || "N/A");
+                        setShow(true);
+                    }
+                }
+                else if (result.status === 'CANCELLED') {
+                    toast.error('Payment Cancelled by user');
+                    sessionStorage.removeItem("PENDING_TICKET");
+                }
+                else if (result.status === 'FAILED') {
+                    toast.error('Payment Failed: ' + result.data);
+                    sessionStorage.removeItem("PENDING_TICKET");
+                }
+                else if (result.status === 'ERROR') {
+                    toast.error('Error: ' + result.message);
+                    sessionStorage.removeItem("PENDING_TICKET");
+                }
+            };
+        }
+        return function () {
+            if (isBrowser) {
+                delete window.handleHydrogenPaymentResult;
+            }
+        };
+    }, [setShow, setPaymentRef]);
+    var _e = useMutation({
         mutationFn: function (data) {
             return createNewTicket(data);
         },
@@ -150,15 +207,89 @@ var AddTransportTicketForm = function (_a) {
         onError: function () {
             toast.error("Error Creating Ticket");
         },
-    }), mutate = _d.mutate, isLoading = _d.isLoading;
+    }), mutate = _e.mutate, isLoading = _e.isLoading;
+    var _f = useMutation({
+        mutationFn: function (payload) {
+            // Store ticket data in session for later finalization
+            if (payload.ticketData) {
+                sessionStorage.setItem("PENDING_TICKET", JSON.stringify(payload.ticketData));
+            }
+            return fetchInstantAccount(payload.instantAccountData);
+        },
+        onSuccess: function (response) {
+            if (response.response_code === "00" || response.response_code === "12") {
+                toast.success(response.response_message || "Instant account created");
+                var details = response.data || response;
+                setInstantModal({
+                    show: true,
+                    details: {
+                        virtual_acct_no: details.virtual_acct_no || details.account_number || details.Account_Number,
+                        virtual_acct_name: details.virtual_acct_name || details.account_name || details.Account_Name,
+                        transaction_amount: details.transaction_amount || details.amount || details.Amount,
+                        bank_name: details.bank_name || details.Bank_Name || "Bank",
+                        expiry_datetime: details.expiry_datetime || details.Expiry_Date,
+                        payment_ref: details.payment_ref || details.paymentRef
+                    }
+                });
+            }
+            else {
+                toast.error(response.response_message || "Failed to create instant account");
+            }
+        },
+        onError: function () {
+            toast.error("Error creating instant account");
+        },
+    }), mutateInstantAccount = _f.mutate, isLoadingInstantAccount = _f.isLoading;
     var onSubmit = function (data) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var formData;
-            return __generator(this, function (_a) {
-                formData = __assign(__assign({}, data), { transaction_date: getCurrentDateTime(), invoice_id: "INV".concat(randomInvoiceGenerator()) });
-                sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
-                mutate(formData);
-                return [2 /*return*/];
+            var formData, paymentMethod, amountInKobo, error_1;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 1, , 2]);
+                        formData = __assign(__assign({}, data), { transaction_date: getCurrentDateTime(), invoice_id: "INV".concat(randomInvoiceGenerator()) });
+                        paymentMethod = data.payment_method;
+                        if (paymentMethod === "card") {
+                            // Card payment via Hydrogen POS
+                            if (!isAndroidBridge || typeof window.HydrogenBridge === 'undefined') {
+                                toast.error('Card payment requires Android app with POS hardware');
+                                return [2 /*return*/];
+                            }
+                            amountInKobo = Math.round(((_a = Number(data === null || data === void 0 ? void 0 : data.amount)) !== null && _a !== void 0 ? _a : 0) * 100);
+                            // Store pending ticket data
+                            sessionStorage.setItem("PENDING_TICKET", JSON.stringify(formData));
+                            toast.loading('Launching POS payment...');
+                            // Start POS payment
+                            window.HydrogenBridge.initiateCardPayment(amountInKobo);
+                        }
+                        else if (paymentMethod === "transfer") {
+                            // Transfer payment - create instant account
+                            var instantAccountPayload = {
+                                notice_number: formData.invoice_id,
+                                customer_name: formData.taxPayerName,
+                                customer_phone: formData.taxPayerPhone,
+                                customer_email: formData.agentEmail,
+                                account_type: "access",
+                            };
+                            mutateInstantAccount({
+                                instantAccountData: instantAccountPayload,
+                                ticketData: formData
+                            });
+                        }
+                        else {
+                            // Wallet payment
+                            sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(formData));
+                            mutate(formData);
+                        }
+                        return [3 /*break*/, 2];
+                    case 1:
+                        error_1 = _b.sent();
+                        console.error('Payment submission error:', error_1);
+                        toast.error('Failed to process payment');
+                        return [3 /*break*/, 2];
+                    case 2: return [2 /*return*/];
+                }
             });
         });
     };
@@ -283,11 +414,30 @@ var AddTransportTicketForm = function (_a) {
 
         <FormTextInput label="Amount" type="number" name="amount" placeholder="Enter Amount" register={register} readOnly validation={{ required: true }} error={errors.amount} />
 
-        <SelectInput label="Choose Wallet" name="wallet_type" id="wallet_type" register={register} validation={{ required: true }} options={bankOptions} placeholder="Select Wallet Type" error={!!errors.wallet_type} />
+        <SelectInput label="Payment Method" name="payment_method" id="payment_method" register={register} validation={{ required: true }} options={paymentMethodOptions} placeholder="Select Payment Method" error={!!errors.payment_method} />
+
+        {payment_method === "wallet" && (<SelectInput label="Choose Wallet" name="wallet_type" id="wallet_type" register={register} validation={{ required: true }} options={walletTypeOptions} placeholder="Select Wallet Type" error={!!errors.wallet_type} />)}
+
+        {isAndroidBridge && payment_method === "card" && (<div style={{
+                padding: '12px',
+                background: '#e8f5e9',
+                borderRadius: '8px',
+                marginBottom: '20px',
+                border: '1px solid #4caf50'
+            }}>
+            <p style={{
+                margin: 0,
+                color: '#2e7d32',
+                fontSize: '14px',
+                fontWeight: '500'
+            }}>
+                ✓ POS hardware payment available
+            </p>
+        </div>)}
 
         <div className="btn_container">
             <BackButton link="/tickets/transport" />
-            <Button text="Process Payment" loading={isLoading} />
+            <Button text="Process Payment" loading={isLoading || isLoadingInstantAccount} />
         </div>
 
         {show && (<SuccessModal text="View Receipt" link="/tickets/transport/add/summary" id={"Ref: ".concat(paymentRef, ", Valid for: ").concat(selectedPeriod, ", Payment for: ").concat(selectedProductName)} buttonText="Done" />)}

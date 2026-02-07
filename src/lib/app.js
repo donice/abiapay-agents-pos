@@ -8,7 +8,6 @@ export var appMetadata = {
     homepage: "https://yourhomepage.com",
     banksAllowed: [
         { name: "Wallet" , value: "access", allowed: true },
-        { name: "Fidelity Bank", value: "fidelity", allowed: false },
         // Add Hydrogen payment methods
         { name: "Card Payment (POS)", value: "card", allowed: true },
         { name: "BreezePay", value: "breezepay", allowed: true },
@@ -21,3 +20,15 @@ export var bankOptions = appMetadata.banksAllowed
     value: bank.value,
     label: bank.name,
 }); });
+
+// Payment method options (wallet/card/transfer)
+export var paymentMethodOptions = [
+    { value: "wallet", label: "Wallet" },
+    { value: "card", label: "Card Payment (POS)" },
+    { value: "transfer", label: "Bank Transfer/InstantPay" },
+];
+
+// Wallet type options (only shown when payment_method is wallet)
+export var walletTypeOptions = [
+    { value: "access", label: "Access Bank" },
+];
