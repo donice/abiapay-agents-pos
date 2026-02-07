@@ -20,13 +20,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    var _ = { label: 0, sent: function() { if (t[0] && 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
         while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (f = 1
+                , y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
@@ -317,7 +318,7 @@ var DashboardComponent = function () {
       </header>
 
       {(userData === null || userData === void 0 ? void 0 : userData.user_cat) == "MdaUser" ||
-            (userData === null || userData === void 0 ? void 0 : userData.user_cat) == "Enforcer" ? null : !loading ? (<div className="dashboard_wallets">
+            (userData === null || userData === void 0 ? void 0 : userData.user_cat) === "Enforcer" ? null : !loading ? (<div className="dashboard_wallets">
             {((_a = appMetadata.banksAllowed.find(function (b) { return b.value === "access"; })) === null || _a === void 0 ? void 0 : _a.allowed) && <WalletCard bank="access" data={accessData}/>}
 
             {((_b = appMetadata.banksAllowed.find(function (b) { return b.value === "fidelity"; })) === null || _b === void 0 ? void 0 : _b.allowed) && <WalletCard bank="fidelity" data={fidelityData}/>}

@@ -26,6 +26,7 @@ var Dynamic = function () {
     var _u = useState(), userData = _u[0], setUserData = _u[1];
     // Check if running in Android bridge app
     var _v = useState(false), isAndroidBridge = _v[0], setIsAndroidBridge = _v[1];
+    var _w = useState(null), paymentTimeout = _w[0], setPaymentTimeout = _w[1];
     useEffect(function () {
         if (isBrowser) {
             var data_1 = window.sessionStorage.getItem("USER_DATA");
@@ -43,7 +44,7 @@ var Dynamic = function () {
         }
     }, []);
     var ticket = data === null || data === void 0 ? void 0 : data.filter(function (ticket) { return ticket.idagent_transactions == segment; });
-    var _w = useForm({
+    var _x = useForm({
         defaultValues: {
             merchant_key: process.env.NEXT_PUBLIC_MERCHANT_KEY || "",
             transaction_date: getCurrentDateTime(),
@@ -60,7 +61,7 @@ var Dynamic = function () {
             taxPayerName: ((_j = ticket[0]) === null || _j === void 0 ? void 0 : _j.taxpayer_name) || "",
             wallet_type: "fidelity",
         },
-    }), register = _w.register, handleSubmit = _w.handleSubmit, setValue = _w.setValue, watch = _w.watch, errors = _w.formState.errors;
+    }), register = _x.register, handleSubmit = _x.handleSubmit, setValue = _x.setValue, watch = _x.watch, errors = _x.formState.errors;
     useEffect(function () {
         setValue("agentEmail", (userData === null || userData === void 0 ? void 0 : userData.email) || "");
     }, [userData]);
@@ -69,6 +70,11 @@ var Dynamic = function () {
         if (isBrowser) {
             window.handleHydrogenPaymentResult = function (result) {
                 console.log('Hydrogen Payment Result:', result);
+                // Clear any pending timeout
+                if (paymentTimeout) {
+                    clearTimeout(paymentTimeout);
+                    setPaymentTimeout(null);
+                }
                 if (result.status === 'SUCCESS') {
                     toast.success('Payment Successful!');
                     // Parse the payment data
@@ -79,6 +85,7 @@ var Dynamic = function () {
                             : result.data;
                     }
                     catch (e) {
+                        console.error('Error parsing payment data:', e);
                         paymentData = result.data;
                     }
                     console.log('Payment Data:', paymentData);
@@ -91,20 +98,36 @@ var Dynamic = function () {
                         sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(ticketData));
                         // Clear pending ticket
                         sessionStorage.removeItem("PENDING_TICKET");
+                        var paymentRef = paymentData.reference || paymentData.paymentRef || paymentData.reference_id || paymentData.transactionRef || "N/A";
+                        console.log('Payment reference extracted:', paymentRef);
                         // Show success modal
                         setShow(true);
                     }
+                    else {
+                        console.warn('No pending ticket found in session storage');
+                    }
                 }
                 else if (result.status === 'CANCELLED') {
-                    toast.error('Payment Cancelled by user');
+                    console.warn('Payment was cancelled - Status:', result);
+                    var details = result.data || result.message || 'User cancelled payment';
+                    toast.error('Payment Cancelled: ' + details);
                     sessionStorage.removeItem("PENDING_TICKET");
                 }
                 else if (result.status === 'FAILED') {
-                    toast.error('Payment Failed: ' + result.data);
+                    console.error('Payment failed - Status:', result);
+                    var errorMsg = result.data || result.message || 'Unknown error';
+                    toast.error('Payment Failed: ' + errorMsg);
                     sessionStorage.removeItem("PENDING_TICKET");
                 }
                 else if (result.status === 'ERROR') {
-                    toast.error('Error: ' + result.message);
+                    console.error('Payment error - Status:', result);
+                    var errorMessage = result.message || result.data || 'Unknown error occurred';
+                    toast.error('Error: ' + errorMessage);
+                    sessionStorage.removeItem("PENDING_TICKET");
+                }
+                else {
+                    console.error('Unknown payment status:', result.status);
+                    toast.error('Payment Error: Unknown status response');
                     sessionStorage.removeItem("PENDING_TICKET");
                 }
             };
@@ -113,10 +136,14 @@ var Dynamic = function () {
         return function () {
             if (isBrowser) {
                 delete window.handleHydrogenPaymentResult;
+                // Cleanup any pending timeout
+                if (paymentTimeout) {
+                    clearTimeout(paymentTimeout);
+                }
             }
         };
-    }, []);
-    var _x = useMutation({
+    }, [paymentTimeout]);
+    var _y = useMutation({
         mutationFn: function (data) {
             sessionStorage.setItem("TRANSPORT_INVOICE", JSON.stringify(data));
             return createNewTicket(data);
@@ -132,8 +159,8 @@ var Dynamic = function () {
         onError: function (error) {
             console.log(error);
         },
-    }), mutate = _x.mutate, isPending = _x.isPending;
-    var onSubmit = function (data) {
+    }), mutate = _y.mutate, isPending = _y.isPending;
+    var _z = function (data) {
         var _a;
         try {
             var selectedWallet = data.wallet_type;
@@ -142,30 +169,57 @@ var Dynamic = function () {
                 // Convert amount to kobo (smallest currency unit)
                 // If your amount is already in kobo, skip this multiplication
                 var amountInKobo = Math.round(((_a = Number(data === null || data === void 0 ? void 0 : data.amount)) !== null && _a !== void 0 ? _a : 0) * 100);
+                console.log('Initiating Hydrogen payment - Wallet:', selectedWallet, '- Amount in Kobo:', amountInKobo);
                 // Store ticket data for later (after payment succeeds)
                 sessionStorage.setItem("PENDING_TICKET", JSON.stringify(data));
+                // Set timeout for payment callback (180 seconds / 3 minutes)
+                var timeout_1 = setTimeout(function () {
+                    console.error('Payment timeout - No response from payment device after 3 minutes');
+                    toast.error('Payment timeout: Device did not respond. Please check connection and try again.');
+                    sessionStorage.removeItem("PENDING_TICKET");
+                    setPaymentTimeout(null);
+                }, 180000);
+                setPaymentTimeout(timeout_1);
+                console.log('Payment timeout set for 3 minutes');
                 // Trigger appropriate Hydrogen payment method
                 if (window.HydrogenBridge) {
                     toast.loading('Launching payment...');
-                    switch (selectedWallet) {
-                        case 'card':
-                        case 'pos':
-                            window.HydrogenBridge.initiateCardPayment(amountInKobo);
-                            break;
-                        case 'breezepay':
-                            window.HydrogenBridge.initiateBreezePay(amountInKobo);
-                            break;
-                        case 'transfer':
-                        case 'instantpay':
-                            window.HydrogenBridge.initiateTransfer(amountInKobo);
-                            break;
-                        default:
-                            // Default to card payment
-                            window.HydrogenBridge.initiateCardPayment(amountInKobo);
+                    try {
+                        switch (selectedWallet) {
+                            case 'card':
+                            case 'pos':
+                                console.log('Initiating card payment');
+                                window.HydrogenBridge.initiateCardPayment(amountInKobo);
+                                break;
+                            case 'breezepay':
+                                console.log('Initiating breezepay payment');
+                                window.HydrogenBridge.initiateBreezePay(amountInKobo);
+                                break;
+                            case 'transfer':
+                            case 'instantpay':
+                                console.log('Initiating transfer payment');
+                                window.HydrogenBridge.initiateTransfer(amountInKobo);
+                                break;
+                            default:
+                                // Default to card payment
+                                console.log('Initiating card payment (default)');
+                                window.HydrogenBridge.initiateCardPayment(amountInKobo);
+                        }
+                    }
+                    catch (e) {
+                        console.error('Error initiating Hydrogen payment:', e);
+                        clearTimeout(timeout_1);
+                        setPaymentTimeout(null);
+                        toast.error('Failed to initiate payment: ' + (e.message || 'Unknown error'));
+                        sessionStorage.removeItem("PENDING_TICKET");
                     }
                 }
                 else {
+                    console.error('Hydrogen Bridge not available');
+                    clearTimeout(timeout_1);
+                    setPaymentTimeout(null);
                     toast.error('Hydrogen Bridge not available');
+                    sessionStorage.removeItem("PENDING_TICKET");
                 }
             }
             else {
@@ -173,8 +227,8 @@ var Dynamic = function () {
             }
         }
         catch (error) {
-            console.log(error);
-            toast.error('Payment initiation failed');
+            console.error('Payment submission error:', error);
+            toast.error('Payment initiation failed: ' + (error.message || 'Unknown error'));
         }
     };
     return (<div className="ticket-details">
