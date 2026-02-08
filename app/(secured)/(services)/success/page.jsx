@@ -3,6 +3,7 @@ import { Button } from "@/src/components/common/button";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { FcOk } from "react-icons/fc";
+import "./style.scss";
 var Page = function () {
     var router = useRouter();
     return (<div className="w-full h-96 flex flex-col items-center justify-center">

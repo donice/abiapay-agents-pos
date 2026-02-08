@@ -1,5 +1,6 @@
 import DataModule from '@/src/components/modules/(services)/data';
 import React from 'react';
+import './style.scss';
 export var metadata = {
     title: "Get Data - Agents Portal",
     description: "Purchase Data Using The AbiaPay App",

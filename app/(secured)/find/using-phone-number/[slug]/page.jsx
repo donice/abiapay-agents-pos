@@ -27,6 +27,7 @@ var Dynamic = function () {
     // Check if running in Android bridge app
     var _v = useState(false), isAndroidBridge = _v[0], setIsAndroidBridge = _v[1];
     var _w = useState(null), paymentTimeout = _w[0], setPaymentTimeout = _w[1];
+    var _aa = useState(null), paymentToastId = _aa[0], setPaymentToastId = _aa[1];
     useEffect(function () {
         if (isBrowser) {
             var data_1 = window.sessionStorage.getItem("USER_DATA");
@@ -69,7 +70,23 @@ var Dynamic = function () {
     useEffect(function () {
         if (isBrowser) {
             window.handleHydrogenPaymentResult = function (result) {
-                console.log('Hydrogen Payment Result:', result);
+                console.log("[HYDROGEN][" + new Date().toISOString() + "] Hydrogen Payment Result:", result);
+                try {
+                    sessionStorage.setItem('HYDROGEN_LAST_RESULT', JSON.stringify({ ts: new Date().toISOString(), result: result }));
+                }
+                catch (e) {
+                    console.warn('Failed to persist hydrogen last result:', e);
+                }
+                // Dismiss loading toast if present
+                if (paymentToastId) {
+                    try {
+                        toast.dismiss(paymentToastId);
+                    }
+                    catch (e) {
+                        console.warn('Error dismissing toast:', e);
+                    }
+                    setPaymentToastId(null);
+                }
                 // Clear any pending timeout
                 if (paymentTimeout) {
                     clearTimeout(paymentTimeout);
@@ -88,7 +105,15 @@ var Dynamic = function () {
                         console.error('Error parsing payment data:', e);
                         paymentData = result.data;
                     }
-                    console.log('Payment Data:', paymentData);
+                    console.log('[HYDROGEN] Payment Data:', paymentData);
+                    try {
+                        var pendingRaw = sessionStorage.getItem("PENDING_TICKET");
+                        console.log('[HYDROGEN] Pending ticket from sessionStorage:', pendingRaw);
+                        sessionStorage.setItem('HYDROGEN_LAST_SUCCESS', JSON.stringify({ ts: new Date().toISOString(), paymentData: paymentData, pending: pendingRaw }));
+                    }
+                    catch (e) {
+                        console.warn('Failed to persist hydrogen success log:', e);
+                    }
                     // Get the pending ticket data
                     var pendingTicket = sessionStorage.getItem("PENDING_TICKET");
                     if (pendingTicket) {
@@ -108,7 +133,13 @@ var Dynamic = function () {
                     }
                 }
                 else if (result.status === 'CANCELLED') {
-                    console.warn('Payment was cancelled - Status:', result);
+                    console.warn('[HYDROGEN] Payment CANCELLED at', new Date().toISOString(), 'Status:', result);
+                    try {
+                        var pending_1 = sessionStorage.getItem("PENDING_TICKET");
+                        console.log('[HYDROGEN] Pending ticket at cancel:', pending_1);
+                        sessionStorage.setItem('HYDROGEN_LAST_CANCEL', JSON.stringify({ ts: new Date().toISOString(), result: result, pending: pending_1 }));
+                    }
+                    catch (e) { console.warn('Failed to persist hydrogen cancel log:', e); }
                     var details = result.data || result.message || 'User cancelled payment';
                     toast.error('Payment Cancelled: ' + details);
                     sessionStorage.removeItem("PENDING_TICKET");
@@ -172,18 +203,38 @@ var Dynamic = function () {
                 console.log('Initiating Hydrogen payment - Wallet:', selectedWallet, '- Amount in Kobo:', amountInKobo);
                 // Store ticket data for later (after payment succeeds)
                 sessionStorage.setItem("PENDING_TICKET", JSON.stringify(data));
+                // Start loading toast and capture id
+                var toastId = toast.loading('Launching payment...');
+                setPaymentToastId(toastId);
                 // Set timeout for payment callback (180 seconds / 3 minutes)
                 var timeout_1 = setTimeout(function () {
                     console.error('Payment timeout - No response from payment device after 3 minutes');
+                    if (toastId) {
+                        try { toast.dismiss(toastId); }
+                        catch (e) { console.warn('Error dismissing toast on timeout', e); }
+                        setPaymentToastId(null);
+                    }
                     toast.error('Payment timeout: Device did not respond. Please check connection and try again.');
                     sessionStorage.removeItem("PENDING_TICKET");
                     setPaymentTimeout(null);
                 }, 180000);
                 setPaymentTimeout(timeout_1);
                 console.log('Payment timeout set for 3 minutes');
+                // Validate amount
+                if (!(amountInKobo > 0)) {
+                    if (toastId) {
+                        try { toast.dismiss(toastId); }
+                        catch (e) { console.warn('Error dismissing toast on invalid amount', e); }
+                        setPaymentToastId(null);
+                    }
+                    clearTimeout(timeout_1);
+                    setPaymentTimeout(null);
+                    toast.error('Invalid payment amount');
+                    sessionStorage.removeItem("PENDING_TICKET");
+                    return [2 /*return*/];
+                }
                 // Trigger appropriate Hydrogen payment method
                 if (window.HydrogenBridge) {
-                    toast.loading('Launching payment...');
                     try {
                         switch (selectedWallet) {
                             case 'card':
@@ -208,10 +259,43 @@ var Dynamic = function () {
                     }
                     catch (e) {
                         console.error('Error initiating Hydrogen payment:', e);
+                        if (toastId) {
+                            try { toast.dismiss(toastId); }
+                            catch (err) { console.warn('Error dismissing toast on init error', err); }
+                            setPaymentToastId(null);
+                        }
                         clearTimeout(timeout_1);
                         setPaymentTimeout(null);
                         toast.error('Failed to initiate payment: ' + (e.message || 'Unknown error'));
                         sessionStorage.removeItem("PENDING_TICKET");
+                    }
+                    // DEV: simulate HydrogenBridge callback when URL contains ?simulateHydrogen=success|cancel|fail
+                    try {
+                        if (isBrowser) {
+                            var _params2 = new URLSearchParams(window.location.search);
+                            var sim2 = _params2.get('simulateHydrogen');
+                            if (sim2) {
+                                console.log('[HYDROGEN_SIM] Simulating result:', sim2);
+                                setTimeout(function () {
+                                    var simulated = null;
+                                    if (sim2 === 'success') {
+                                        simulated = { status: 'SUCCESS', data: JSON.stringify({ reference: 'SIM-REF-123', transactionRef: 'SIM-TRX-123' }) };
+                                    }
+                                    else if (sim2 === 'cancel') {
+                                        simulated = { status: 'CANCELLED', data: 'Simulated cancellation by user' };
+                                    }
+                                    else {
+                                        simulated = { status: 'FAILED', data: 'Simulated failure' };
+                                    }
+                                    if (window.handleHydrogenPaymentResult) {
+                                        window.handleHydrogenPaymentResult(simulated);
+                                    }
+                                }, 1500);
+                            }
+                        }
+                    }
+                    catch (e) {
+                        console.warn('Hydrogen simulate error:', e);
                     }
                 }
                 else {
