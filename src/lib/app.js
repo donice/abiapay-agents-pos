@@ -5,7 +5,7 @@ export var appMetadata = {
     author: "Your Name",
     license: "MIT",
     repository: "https://github.com/yourusername/abiapay-agent-portal",
-    homepage: "https://yourhomepage.com",
+    homepage: "https://hydrohen.abiaone.com",
     banksAllowed: [
         { name: "Wallet" , value: "access", allowed: true },
         // Add Hydrogen payment methods
