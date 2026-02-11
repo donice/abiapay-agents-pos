@@ -38,14 +38,11 @@ export interface generateDemandNoticePayload {
   };
 
   export interface createDemandNoticePayload {
-   taxpayer_id: [
-    {
-      id: string
-    }
-  ],
+   taxpayer_id: string,
   cdn_category_id?: number,
   createdby?: string,
   fiscal_year?: string
+  lga?: string
 }
 
 export interface fetchBusinessAbssinPayload {
@@ -60,7 +57,7 @@ export interface searchCompanyPayload {
   export const searchDemandNotice = async (requestData: searchDemandNoticePayload) => {
     try {
       const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/fetch-demand-notice`,requestData);
-  
+
       return res;
     } catch (error: any) {
       return {
@@ -73,7 +70,7 @@ export interface searchCompanyPayload {
   try {
     const res = await axiosInstance.post(
       `${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/search-company`,
-      requestData  
+      requestData
     );
     return res?.data;
   } catch (error: any) {
@@ -83,12 +80,12 @@ export interface searchCompanyPayload {
   }
 };
 
-  
+
 
   export const assignDemandNotice = async (requestData: assignDemandNoticePayload) => {
     try {
       const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/assign-abssin-demand-notice`,requestData);
-  
+
       return res;
     } catch (error: any) {
       return {
@@ -100,7 +97,7 @@ export interface searchCompanyPayload {
    export const assignnoAbssinDemandNotice = async (requestData: assignNoAbssinDemandNoticePayload) => {
     try {
       const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/assign-demand-notice`,requestData);
-  
+
       return res;
     } catch (error: any) {
       return {
@@ -112,7 +109,7 @@ export interface searchCompanyPayload {
    export const fetchDemandNotice = async (requestData: fetchDemandNoticePayload) => {
     try {
       const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_CENTRAL_URL}/cdn/fetch-demand-notice`,requestData);
-  
+
       return res;
     } catch (error: any) {
       return {
@@ -129,7 +126,7 @@ export interface searchCompanyPayload {
     try {
       const { data } = await axiosInstance.post(
         `${url}/abssin/fetch-business-abssin`,
-        requestBody 
+        requestBody
       );
       return data;
     } catch (error: any) {
@@ -142,12 +139,11 @@ export interface searchCompanyPayload {
   ) => {
     try {
       const { data } = await axiosInstance.post(
-        `${url}/cdn/create-demand-notice`,
-        requestBody 
+        `${url}/cdn/create-notice`,
+        requestBody
       );
       return data;
     } catch (error: any) {
       throw new Error(`Error creating Demand Notice: ${error?.message}`);
     }
   };
-  

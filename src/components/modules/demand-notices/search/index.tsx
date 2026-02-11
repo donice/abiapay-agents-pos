@@ -82,7 +82,7 @@ const SearchDemandnoticeComponent = () => {
             validation={{ required: true }}
             error={errors.notice_number}
           />
-          {/* <SelectInput 
+          {/* <SelectInput
             label="Fiscal Year"
             name="year"
             id="year"
@@ -118,7 +118,7 @@ const SearchDemandnoticeComponent = () => {
             ]
               .filter(
                 ({ key }, index, self) =>
-                  index === self.findIndex((k) => k.key === key) // to remove duplicates
+                  index === self.findIndex((k) => k.key === key), // to remove duplicates
               )
               .map(({ label, key }) => {
                 if (!displayDetails?.[key]) return null;
