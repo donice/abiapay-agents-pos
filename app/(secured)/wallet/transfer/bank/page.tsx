@@ -4,41 +4,39 @@ import { Button } from "@/src/components/common/button";
 import "./style.scss";
 import { CustomHeader } from "@/src/components/common/header";
 import { useRouter } from "next/navigation";
+import { appMetadata } from "@/src/lib/app";
 
 const Dynamic = () => {
   const router = useRouter();
 
+  const walletBanks = appMetadata.banksAllowed.filter(
+    (bank:any) =>
+      bank.allowed &&
+      ["access", "fidelity"].includes(bank.value)
+  );
+
   return (
     <>
-      {" "}
       <CustomHeader
-        title={"Transfer to other banks"}
-        desc={"Select your preferred bank"}
+        title="Transfer to other wallets"
+        desc="Select wallet"
       />
 
-        <div className="bank">
-
-          <div className="bank_cta">
-            {/* <div className="bank_cta_info">
-              <p>
-                Payout requests will be activated when your current earnings are
-                N100, and above
-              </p>
-            </div> */}
+      <div className="other-wallet">
+        <div className="other-wallet_cta">
+          {walletBanks.map((bank) => (
             <Button
-              text={"Fidelity Bank Transfer"}
+              key={bank.value}
+              text={`${bank.name} Wallet Transfer`}
               onClick={() => {
-                router.push("/wallet/transfer/bank/fidelity");
+                router.push(
+                  `/wallet/transfer/other-wallet/${bank.value}`
+                );
               }}
             />
-            <Button
-              text={"Access Bank Transfer"}
-              onClick={() => {
-                router.push("/wallet/transfer/bank/access");
-              }}
-            />
-          </div>
+          ))}
         </div>
+      </div>
     </>
   );
 };
