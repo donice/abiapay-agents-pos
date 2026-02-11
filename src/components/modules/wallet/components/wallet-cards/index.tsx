@@ -72,7 +72,6 @@ const TransferWalletCards = ({data, activeAccount, setActiveAccount, type, onWal
 export default TransferWalletCards;
 
 export const IndividualTransferWalletCards = ({data, activeAccount}: any) => {
-
   return (
     <section className="walletcard">
       <div className="walletcard_container">
