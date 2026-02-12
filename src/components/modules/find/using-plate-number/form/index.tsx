@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useState } from "react";
 import { TextInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";

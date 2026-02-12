@@ -1,4 +1,4 @@
-"use client";
+;
 import { CustomHeader } from "@/src/components/common/header";
 import { fetchDashboardData } from "@/src/services/dashboardService";
 import { useMutation, useQuery } from "@tanstack/react-query";

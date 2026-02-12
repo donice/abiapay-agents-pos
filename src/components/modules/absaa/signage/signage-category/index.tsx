@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useState } from "react";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
@@ -221,7 +221,7 @@ const SignageCategoryComponent = ({}: any) => {
               label: "15.01 to 25.0 (10x16 - 10x20)",
               value: "15.01 to 25.0 (10x16 - 10x20)",
             },
-            
+
           ]}
           placeholder="Select Size"
           register={register}

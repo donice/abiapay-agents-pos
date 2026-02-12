@@ -1,4 +1,4 @@
-"use client";
+;
 import React from "react";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";

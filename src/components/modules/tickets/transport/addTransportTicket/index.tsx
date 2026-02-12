@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useState } from "react";
 import { CustomHeader } from "@/src/components/common/header";
 import "./style.scss";

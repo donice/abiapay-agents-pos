@@ -1,4 +1,4 @@
-"use client";
+;
 import React from "react";
 import "./style.scss";
 import { fetchCollectionData } from "@/src/services/dashboardService";

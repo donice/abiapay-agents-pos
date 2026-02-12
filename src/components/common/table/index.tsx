@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useState } from "react";
 import Pagination from "./pagination";
 import "./style.scss";

@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useEffect, useRef, useState } from "react";
 import { CustomFormHeader } from "@/src/components/common/header";
 import "./style.scss";

@@ -1,4 +1,4 @@
-"use client"
+
 
 import { GoBackButton } from '@/src/components/common/button'
 import { CustomHeader } from '@/src/components/common/header'
@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 
 const AddTrafficOffenceTicket = ({ show, setShow }: any) => {
 
-  
+
   const [selectedType, setSelectedType] = React.useState("");
   const [selectedVehicleType, setSelectedVehicleType] = React.useState("");
   return (

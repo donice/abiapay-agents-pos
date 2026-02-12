@@ -1,4 +1,4 @@
-"use client";
+;
 
 
 import { GoBackButton } from '@/src/components/common/button'
@@ -23,18 +23,18 @@ const SearchTrafficTicket = () => {
   if (ticketsData) {
     sessionStorage.setItem("TICKETS_DATA", JSON.stringify(ticketsData));
   }
-  
+
   return (
     <section>
         <GoBackButton/>
 
         <div className="find">
             <header>
-                <CustomHeader title='Search Traffic Offence Ticket' desc=' ' />    
+                <CustomHeader title='Search Traffic Offence Ticket' desc=' ' />
             </header>
 
             <div className="find-comp-form">
-               <Form setTicketsData={setTicketsData} setSearched={setSearched}/> 
+               <Form setTicketsData={setTicketsData} setSearched={setSearched}/>
                <div className="main-table">
                {ticketsData && ticketsData.length > 0 ? (
             <div className="main-table_form_tickets_container">
@@ -70,8 +70,8 @@ const SearchTrafficTicket = () => {
                                        )}
                                        {transaction.status}
                                      </p>
-                   
-                                     
+
+
                                    </div>
                   </div>
                 ))}
@@ -82,7 +82,7 @@ const SearchTrafficTicket = () => {
           ) : null}
                </div>
 
-             
+
             </div>
         </div>
     </section>

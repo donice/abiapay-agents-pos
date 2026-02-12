@@ -1,4 +1,4 @@
-"use client";
+;
 import React from "react";
 import "./style.scss";
 import { useQuery } from "@tanstack/react-query";

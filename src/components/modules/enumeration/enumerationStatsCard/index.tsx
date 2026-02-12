@@ -1,9 +1,9 @@
-"use client";
+;
 import React from "react";
 import "./style.scss";
 import { fetchEnumerationData } from "@/src/services/dashboardService";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "@/app/(secured)/loading";
+import Loading from "@/pages/(secured)/loading";
 import LoaderSkeleton from "@/src/components/common/loader-skeleton";
 
 const EnumerationStatsCard = () => {

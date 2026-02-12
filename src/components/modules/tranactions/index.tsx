@@ -1,4 +1,4 @@
-"use client"
+
 import React, { useState } from "react";
 import { CustomHeader } from "../../common/header";
 import { formatAmount } from "@/src/utils/formatAmount";
@@ -79,7 +79,7 @@ const { data, isError, isLoading } = useQuery({
             </div>
           ) : isLoading ? <Loading /> : (
             <Empty text="No Transactions found" />
-            
+
           )}
         </div>
       </div>

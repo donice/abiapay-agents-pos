@@ -1,4 +1,4 @@
-"use client";
+;
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -100,7 +100,7 @@ const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
     onError: () => toast.error("Search failed"),
   });
 
-  
+
   const {
     mutate: multiSearchMutate,
     isPending: isMultiSearching,
@@ -122,7 +122,7 @@ const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
     onError: () => toast.error("Error performing multi-search"),
   });
 
-  
+
   const handleSearch = () => {
     if (!searchTerm.trim()) {
       toast.error("Enter ABSSIN");
@@ -142,7 +142,7 @@ const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
       return;
     }
 
-    
+
 
     // Build payload for multi-search endpoint
     const payload = {
@@ -160,7 +160,7 @@ const BulkPrintForm = ({ setBulkData, setViewData }: any) => {
     mutate(reqData);
   };
 
-  
+
 
   return (
     <div className="bulk_print_page">

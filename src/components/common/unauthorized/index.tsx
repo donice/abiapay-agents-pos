@@ -1,4 +1,4 @@
-"use client";
+;
 import { useRouter } from "next/navigation";
 import { FcBinoculars } from "react-icons/fc";
 import "./style.scss";

@@ -1,4 +1,4 @@
-"use client";
+;
 import { Button } from "@/src/components/common/button";
 import React from "react";
 import { LuUser } from "react-icons/lu";

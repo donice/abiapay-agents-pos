@@ -1,4 +1,4 @@
-"use client";
+;
 import React from "react";
 import { fetchCollectionData, fetchDashboardData } from "@/src/services/dashboardService";
 import { useQuery } from "@tanstack/react-query";
@@ -22,7 +22,7 @@ const TicketsWalletCards = () => {
   });
 
   console.log(ticketData)
-  
+
   if (isLoading) {
     return (
       <div>
@@ -30,7 +30,7 @@ const TicketsWalletCards = () => {
       </div>
     );
   }
-  
+
   if (isError) {
     return (
       <div>
@@ -38,7 +38,7 @@ const TicketsWalletCards = () => {
       </div>
     );
   }
-  
+
 
   return (
     <div className="ticketspage_wallet">

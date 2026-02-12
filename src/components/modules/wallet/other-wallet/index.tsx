@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import TransferWalletCards from "../components/wallet-cards";

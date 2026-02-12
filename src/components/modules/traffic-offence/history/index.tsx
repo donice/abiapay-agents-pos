@@ -1,4 +1,4 @@
-"use client";
+;
 
 import React, { useEffect, useState } from "react";
 import { fetchOffenceHistory } from "@/src/services/trafficOffences";

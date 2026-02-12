@@ -1,4 +1,4 @@
-"use client";
+;
 import { CustomHeader } from "@/src/components/common/header";
 import React, { useState } from "react";
 import "./style.scss";
@@ -22,7 +22,7 @@ const ChangePasswordComponent = () => {
       {stage === 0 && <ConfirmEmail setStage={setStage} setFormData={setFormData}/>}
       {stage === 1 && <ValidateOTP setStage={setStage} setFormData={setFormData} formData={formData}/>}
       {stage === 2 && <ChangePassword setStage={setStage} setFormData={setFormData} formData={formData}/>}
-      
+
     </div>
   );
 };

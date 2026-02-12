@@ -1,4 +1,4 @@
-"use client";
+;
 import { CustomHeader } from "@/src/components/common/header";
 import React, { useState, useRef } from "react";
 import BulkPrintForm from "./form";

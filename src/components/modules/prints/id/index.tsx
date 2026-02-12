@@ -1,4 +1,4 @@
-"use client";
+;
 import { CustomHeader } from "@/src/components/common/header";
 import React, { useRef, useState } from "react";
 import BulkPrintForm from "./form";
@@ -110,7 +110,7 @@ const PrintIDComp = () => {
                 gap: 0.3rem;
                 align-items: center;
                 margin-top: 0.5rem;
-              
+
                 p {
                   margin: 0;
                   line-height: 1;
@@ -153,7 +153,7 @@ const PrintIDComp = () => {
             justify-content: center;
             align-items: center;
           }
-      
+
 
           .abssin_span {
             display: flex;
@@ -209,7 +209,7 @@ const PrintIDComp = () => {
         </div>
       ): null}
     </div>
-  );             
+  );
  };
 
 export default PrintIDComp;

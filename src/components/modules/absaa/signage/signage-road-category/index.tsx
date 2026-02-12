@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useState } from "react";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
@@ -141,8 +141,8 @@ const SignageCategoryComponent = ({}: any) => {
           register={register}
           validation={{ required: true }}
         />
-       
-       
+
+
         <FormTextInput
           label="Amount"
           type="number"

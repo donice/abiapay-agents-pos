@@ -1,4 +1,4 @@
-"use client";
+;
 import React from "react";
 import { MdOutlineAdd, MdOutlineArrowBackIos } from "react-icons/md";
 import { useRouter } from "next/navigation";
@@ -140,7 +140,7 @@ export const SecondaryButton = ({ text, link, onClick }: prop) => {
       className="button secondary"
       onClick={() => {
         if (onClick) {
-          onClick(); 
+          onClick();
         } else if (link) {
           handleClick(link);
         }

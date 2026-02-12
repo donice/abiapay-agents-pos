@@ -1,4 +1,4 @@
-"use client";
+;
 import React from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Loading } from "@/src/components/common/loader/redirecting";
@@ -80,7 +80,7 @@ const TransactionsTable: React.FC = () => {
                   </p>
 
                   <p className="next_date">
-                  
+
                     <span>
                       {" "}
                       {transaction.occurrence}

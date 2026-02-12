@@ -1,4 +1,4 @@
-"use client";
+;
 import Form from "./form";
 import React, { useState } from "react";
 import { formatAmount } from "@/src/utils/formatAmount";

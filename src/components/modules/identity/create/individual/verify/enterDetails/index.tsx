@@ -1,4 +1,4 @@
-"use client";
+;
 import { CustomHeader } from "@/src/components/common/header";
 import type { Metadata } from "next";
 import React, { useState } from "react";

@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useState, useMemo } from "react";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { useQuery } from "@tanstack/react-query";

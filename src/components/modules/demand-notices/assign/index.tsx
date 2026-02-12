@@ -1,4 +1,4 @@
-"use client";
+;
 
 import { Button, GoBackButton } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
@@ -76,7 +76,7 @@ const AssignNotice = () => {
 
     setSearchLoading(true);
     try {
-      const res = await searchCompany({ search_term: value }); 
+      const res = await searchCompany({ search_term: value });
       console.log("Company search result:", res);
       if (res?.response_data) {
         setCompanySuggestions(res.response_data);
@@ -177,12 +177,12 @@ const AssignNotice = () => {
 
   const handleAssign = (formData: any) => {
 
-     const geoString = typeof window !== "undefined" 
-    ? sessionStorage.getItem("USER_GEOLOCATION") 
+     const geoString = typeof window !== "undefined"
+    ? sessionStorage.getItem("USER_GEOLOCATION")
     : "";
     const payload = {
     ...formData,
-    geolocation: geoString || "", 
+    geolocation: geoString || "",
   };
     if (mode === "abssin") {
       assignWithAbssinMutation.mutate(payload);

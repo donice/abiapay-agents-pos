@@ -1,4 +1,4 @@
-"use client";
+;
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { useDebounce } from "@/src/hooks/useDebounce";
@@ -28,7 +28,7 @@ const CreateBillModule = () => {
     const requestBody = {
       taxpayer_id: formData.taxpayer_id,
       full_name: formData.full_name,
-      email: formData.email || "", 
+      email: formData.email || "",
       phone_number: formData.phone_number,
       revenue_office: formData.revenue_office,
       occurrence: selectedProduct.paymentFrequency,
@@ -74,10 +74,10 @@ const CreateBillModule = () => {
     console.log("Found Product:", foundProduct);
     setSelectedProduct(foundProduct || null);
   }, [selectedProductId, products]);
-  
-  
 
-  
+
+
+
   useEffect(() => {
     if (data?.response_data) {
       console.log("data",data.response_data.map((bill:any) => ({
@@ -87,18 +87,18 @@ const CreateBillModule = () => {
         id: bill.id,
         productname: bill.productname || "No product",
         totalamount: bill.totalamount || "0",
-        collectionTitle: bill.collectionTitle || "N/A", 
-        paymentFrequency: bill.paymentFrequency || "N/A", 
-        items: bill.items || [], 
-        amount: bill?.totalamount || "0", 
+        collectionTitle: bill.collectionTitle || "N/A",
+        paymentFrequency: bill.paymentFrequency || "N/A",
+        items: bill.items || [],
+        amount: bill?.totalamount || "0",
         occurrence: bill.occurrence || "N/A",
       }));
       console.log("extractedBills",extractedBills);
       setProducts(extractedBills);
     }
-  
+
   }, [data]);
-  
+
 
 
   useEffect(() => {
@@ -191,13 +191,13 @@ const CreateBillModule = () => {
         }))}
       />
 
-      
+
 
 
 {selectedProduct && (
   <>
-  
-   
+
+
         <div className="bill-details">
           {/* <h3>Bill Details</h3> */}
           <p>
@@ -234,7 +234,7 @@ const CreateBillModule = () => {
         </>
       )}
 
-      
+
         <Button text={"Create Bill"}  />
     </form>
   );

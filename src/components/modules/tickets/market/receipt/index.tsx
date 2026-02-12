@@ -1,4 +1,4 @@
-"use client";
+;
 import Empty from "@/src/components/common/empty";
 import Loader from "@/src/components/common/loader";
 import { fetchMarketEnumerationDetails } from "@/src/services/ticketsServices";

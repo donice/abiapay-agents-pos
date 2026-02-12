@@ -1,4 +1,4 @@
-"use client";
+;
 import { GoBackButton } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
 import Form from "./form";

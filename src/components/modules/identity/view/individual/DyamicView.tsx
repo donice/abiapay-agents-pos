@@ -1,4 +1,4 @@
-"use client";
+;
 import { CustomFormHeader } from "@/src/components/common/header";
 import LargeLoader from "@/src/components/common/loader";
 import { getIndividualABSSINs } from "@/src/services/identityService";

@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Button, GoBackButton } from '@/src/components/common/button'
 import Empty from '@/src/components/common/empty'
@@ -132,7 +132,7 @@ const AssignNoAbssin = () => {
               )}
             </div>
 
-           
+
             {/* Extra fields for taxpayer */}
             <FormTextInput
               label="Company Name"

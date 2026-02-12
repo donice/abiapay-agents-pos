@@ -1,4 +1,4 @@
-"use client";
+;
 import { GoBackButton } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
 import Form from "./form";
@@ -17,7 +17,7 @@ function expired(date: string): string {
   if (/\d{2}\/\d{2}\/\d{4}/.test(date)) {
     const [day, month, year] = date.split('/');
     normalizedDate = `${year}-${month}-${day}`;
-  } 
+  }
   else if (!/\d{4}-\d{2}-\d{2}/.test(date) && !/\d{4}\/\d{2}\/\d{2}/.test(date)) {
     console.error("Invalid date format");
     return "Invalid date";

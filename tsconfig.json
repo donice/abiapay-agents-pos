@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/api/v1/verify-faces/verify-face",
+    "pages/api/v1/verify-faces/verify-face",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [

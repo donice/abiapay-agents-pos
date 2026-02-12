@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useState, useEffect } from "react";
 import { FormButton } from "@/src/components/common/button";
 import { TextInput } from "@/src/components/common/input"; // Importing the custom input component
@@ -82,7 +82,7 @@ const MDASigninForm: React.FC = () => {
 
       <div className="btn_container">
         <FormButton loading={loading} text="Sign in" disabled={!isFormValid || loading} />
-       
+
         <div className="bottom_links">
         <div
           className="forgot-password link"

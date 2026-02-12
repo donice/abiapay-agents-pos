@@ -1,4 +1,4 @@
-"use client";
+;
 import { GoBackButton } from "@/src/components/common/button";
 import { CustomHeader } from "@/src/components/common/header";
 import Form from "./form";
@@ -59,7 +59,7 @@ const VehicleEnumerationStatusComponent = () => {
                       <p>{transaction.phone}</p>
                     </div>
                     <div>
-                      
+
                       <p>{transaction.IncomeCategory}</p><p>{transaction.RevenueItem}</p>
                       <p>N{formatAmount(transaction.EnumerationFee)}</p><p
                         className={`${
@@ -75,7 +75,7 @@ const VehicleEnumerationStatusComponent = () => {
                         )}
                         {transaction.Status}
                       </p>
-                      
+
                     </div>
                   </div>
                 ))}

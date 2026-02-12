@@ -1,4 +1,4 @@
-"use client";
+;
 import { Button } from "@/src/components/common/button";
 import React, { useEffect, useState } from "react";
 import { LuUser } from "react-icons/lu";

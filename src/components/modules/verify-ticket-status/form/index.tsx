@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useEffect, useState } from "react";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { Button } from "@/src/components/common/button";
@@ -235,7 +235,7 @@ const VerifyticketStatusForm = ({ userData, setDetails }: any) => {
               { label: "2025", value: "2025" },
             ]}
             placeholder="Select Enumeration Year"
-        
+
           />
         </>
       )}

@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { ReactElement, useEffect, useState } from "react";
 import "./style.scss";
 import Link from "next/link";

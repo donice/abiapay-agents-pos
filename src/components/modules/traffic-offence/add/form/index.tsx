@@ -1,4 +1,4 @@
-"use client";
+;
 
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import React, { useEffect } from "react";

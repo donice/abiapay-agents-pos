@@ -1,4 +1,4 @@
-"use client";
+;
 import React, { useState } from "react";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
@@ -137,7 +137,7 @@ const SignageRoadComponent = ({}: any) => {
           register={register}
           validation={{ required: true }}
         />
-      
+
         <FormTextInput
           label="Road Name"
           name="amount"
@@ -170,7 +170,7 @@ const SignageRoadComponent = ({}: any) => {
           register={register}
           validation={{ required: true }}
         />
-      
+
         <Button text="Submit" loading={isPending} />
       </form>
 
