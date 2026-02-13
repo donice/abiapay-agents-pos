@@ -36,7 +36,7 @@ const AddTicketPage = () => {
         <UsingPlateNumberExportComponent />
 
         {tickets.map((item) => (
-          <Link
+          <a
             href={`/${item.name}`}
             key={item.name}
             className={`ticketspage_item`}
@@ -49,7 +49,7 @@ const AddTicketPage = () => {
                 <p>{item.desc}</p>
               </div>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
     </div>

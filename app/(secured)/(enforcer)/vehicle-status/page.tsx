@@ -42,7 +42,7 @@ const UserAccountPage = () => {
 
         <div className="vehicle-stats_items">
           {items.map((item) => (
-            <Link
+            <a
               href={`/${item.link}`}
               key={item.link}
               className={`vehicle-stats_item`}
@@ -55,7 +55,7 @@ const UserAccountPage = () => {
                   <p>{item.desc}</p>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

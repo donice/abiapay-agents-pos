@@ -80,13 +80,13 @@ const SignagePage = () => {
   return (
     <div className="signage">
       <CustomHeader title="ABSSAA Dashboard" desc={"Manage all signages done by ABSSAA"} />
-      
+
 
       <div className="signage_container">
         {/* <IdentityStatsCard /> */}
         <div className="signage_items">
           {items.map((item) => (
-            <Link
+            <a
               href={`/${item.link ? item.link : "absaa/signage"}`}
               key={item.link}
               className={`signage_item`}
@@ -102,7 +102,7 @@ const SignagePage = () => {
                   <p>{item.desc}</p>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

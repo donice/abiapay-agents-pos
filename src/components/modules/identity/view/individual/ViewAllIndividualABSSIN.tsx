@@ -13,7 +13,7 @@ const ViewAllIndividualABSSIN = (data: any) => {
   return (
     <div>
       {ABSSINs?.map((abssin: any, idx: number) => (
-        <Link
+        <a
           href={`/identity/view/individual/${abssin?.state_id}`}
           key={idx}
           className="border-b border-gray-300 py-4 grid  gap-4"
@@ -45,7 +45,7 @@ const ViewAllIndividualABSSIN = (data: any) => {
               <p className="text-gray-400">{abssin?.address}</p>
             </div>
           </div>
-        </Link>
+        </a>
       ))}
     </div>
   );

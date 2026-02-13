@@ -38,10 +38,10 @@ const SigninComponent = () => {
 
       <div className="channel_container">
         {channelArr.map((item: any) => (
-            <Link href={item.link} className="channel" key={item.name}>
+            <a href={item.link} className="channel" key={item.name}>
               <span>{item.icon}</span>
               <span>{item.name} login</span>
-            </Link>
+            </a>
         ))}
 
       </div>

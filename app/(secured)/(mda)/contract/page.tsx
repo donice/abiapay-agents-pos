@@ -71,7 +71,7 @@ const IdentityPage = () => {
                 </div>
               </div>
             ) : (
-              <Link
+              <a
                 href={`/${item.link ? item.link : "contract"}`}
                 key={item.link}
                 className={`contract_item`}
@@ -83,7 +83,7 @@ const IdentityPage = () => {
                     <p>{item.desc}</p>
                   </div>
                 </div>
-              </Link>
+              </a>
             )
           )}
         </div>

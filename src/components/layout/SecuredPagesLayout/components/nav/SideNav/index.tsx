@@ -97,21 +97,21 @@ const SideNav = () => {
                 !item.access || (userData?.user_cat && item.access.includes(userData.user_cat))
             )
             .map((item) => (
-              <Link
+              <a
                 href={`/${item.name}`}
                 key={item.name}
                 className={`side-nav_item ${item.name === route ? "active" : "inactive"}`}
               >
                 <span>{item.icon}</span>
                 <span>{item.title}</span>
-              </Link>
+              </a>
             ))}
-          <Link href={"/signin"} key={"logout"} className="side-nav_item logout">
+          <a href={"/signin"} key={"logout"} className="side-nav_item logout">
             <span>
               <TbLogout2 className="icon out" />
             </span>
             <span>Sign Out</span>
-          </Link>
+          </a>
         </div>
       </div>
     </div>

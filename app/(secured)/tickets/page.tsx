@@ -109,7 +109,7 @@ const TicketPage = () => {
                 </div>
               </div>
             ) : (
-              <Link
+              <a
                 href={`/${item.name}`}
                 key={item.name}
                 className={`ticketspage_item`}
@@ -121,7 +121,7 @@ const TicketPage = () => {
                     <p>{item.desc}</p>
                   </div>
                 </div>
-              </Link>
+              </a>
             )
           )}
         </div>

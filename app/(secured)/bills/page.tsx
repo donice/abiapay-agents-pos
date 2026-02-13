@@ -47,7 +47,7 @@ const BillsPage = () => {
         <div className="bills-stats_container">
           <div className="bills-stats_items">
           {items.map((item) => (
-            <Link
+            <a
             href={`/${item.link}`}
             key={item.link}
             className={`bills-stats_item`}
@@ -60,7 +60,7 @@ const BillsPage = () => {
                 {/* <p>{item.desc}</p> */}
                 </div>
             </div>
-            </Link>
+            </a>
         ))}
           </div>
         </div>

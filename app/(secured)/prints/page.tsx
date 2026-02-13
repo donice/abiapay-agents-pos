@@ -27,7 +27,7 @@ const tickets: TicketsProps[] = [
     title: "Stickers",
     desc: "Print bulk stickers",
     icon: <FcGallery className="icon" />,
-  },  
+  },
   {
     name: "prints/id",
     title: "ID Cards",
@@ -45,7 +45,7 @@ const TicketPage = () => {
 
         <div className="bulkprints_items">
           {tickets.map((item) => (
-            <Link
+            <a
               href={`/${item.name}`}
               key={item.name}
               className={"bulkprints_item"}
@@ -58,7 +58,7 @@ const TicketPage = () => {
                   <p>{item.desc}</p>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

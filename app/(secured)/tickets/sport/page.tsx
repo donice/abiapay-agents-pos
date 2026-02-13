@@ -53,7 +53,7 @@ const TicketPage = () => {
       <div className="sports-ticket_container">
         <div className="sports-ticket_items">
           {tickets.map((item) => (
-            <Link
+            <a
               href={`/${item.name}`}
               key={item.name}
               className={"sports-ticket_item"}
@@ -66,7 +66,7 @@ const TicketPage = () => {
                   <p>{item.desc}</p>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

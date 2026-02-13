@@ -49,7 +49,7 @@ const UserAccountPage = () => {
 
         <div className="traffic-stats_items">
         {items.map((item) => (
-            <Link
+            <a
             href={`/${item.link}`}
             key={item.link}
             className={`traffic-stats_item`}
@@ -62,7 +62,7 @@ const UserAccountPage = () => {
                 {/* <p>{item.desc}</p> */}
                 </div>
             </div>
-            </Link>
+            </a>
         ))}
         </div>
         </div>

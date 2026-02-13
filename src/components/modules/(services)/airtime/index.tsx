@@ -80,9 +80,9 @@ const AirtimeModule = () => {
     <div>
       <CustomHeader title="Airtime" desc="Purchase airtime for any network" />
       <div className="flex flex-end justify-end items-center my-4">
-        <Link href={"/airtime/history"} className="text-sm font-bold">
+        <a href={"/airtime/history"} className="text-sm font-bold">
           View history
-        </Link>
+        </a>
       </div>
       <section className="service">
         <TransferWalletCards

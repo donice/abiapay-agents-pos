@@ -99,7 +99,7 @@ const BottomNav = () => {
           {nav_items
             // .filter((item) => item.access == userData?.user_cat)
             .map((item) => (
-              <Link
+              <a
                 href={`/${item.name}`}
                 key={item.name}
                 className={`bottom-nav_item ${item.name === route ? "active" : "inactive"
@@ -108,7 +108,7 @@ const BottomNav = () => {
                 <span>
                   {item.name === route ? item.icon_active : item.icon}
                 </span>
-              </Link>
+              </a>
             ))}
         </div>
       </div>

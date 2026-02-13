@@ -74,7 +74,7 @@ const IdentityPage = () => {
                 </div>
               </div>
             ) : (
-              <Link
+              <a
                 href={`/${item.link ? item.link : "identity"}`}
                 key={item.link}
                 className={`identity_item`}
@@ -86,7 +86,7 @@ const IdentityPage = () => {
                     <p>{item.desc}</p>
                   </div>
                 </div>
-              </Link>
+              </a>
             )
           )}
         </div>

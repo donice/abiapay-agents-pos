@@ -20,7 +20,7 @@ const TicketPage = () => {
 
         <div className="flying-revenue_items">
           {haulages.map((item) => (
-            <Link
+            <a
               href={`/${item.name}`}
               key={item.name}
               className={"flying-revenue_item"}
@@ -33,7 +33,7 @@ const TicketPage = () => {
                   {/* <p>{item.desc}</p> */}
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

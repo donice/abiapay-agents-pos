@@ -68,7 +68,7 @@ const EnumerationPage = () => {
 
         <div className="enumeration_items">
           {items.map((item) => (
-            <Link
+            <a
               href={`/${item.link? item.link : "enumeration"}`}
               key={item.link}
               className={`enumeration_item`}
@@ -84,7 +84,7 @@ const EnumerationPage = () => {
                   <p>{item.desc}</p>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

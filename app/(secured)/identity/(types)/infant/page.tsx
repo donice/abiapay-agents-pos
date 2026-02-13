@@ -56,7 +56,7 @@ const DependentsAbssinPage = () => {
                 </div>
               </div>
             ) : (
-              <Link
+              <a
                 href={`/${item.link ? item.link : "identity"}`}
                 key={item.link}
                 className={`identity_item`}
@@ -68,7 +68,7 @@ const DependentsAbssinPage = () => {
                     <p>{item.desc}</p>
                   </div>
                 </div>
-              </Link>
+              </a>
             )
           )}
         </div>

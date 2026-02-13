@@ -132,7 +132,7 @@ const UserSettingsComponent = () => {
       <h2>My Wallet Transfer</h2>
       <div className="settings_items">
         {walletItems.map((item) => (
-          <Link
+          <a
             href={`${
               item.cat === "coming soon" ? "/user/settings" : item.href
             }`}
@@ -147,7 +147,7 @@ const UserSettingsComponent = () => {
                 <p>{item.desc}</p>
               </div>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
 
@@ -161,7 +161,7 @@ const UserSettingsComponent = () => {
       <h2>Daily Services</h2>
       <div className="settings_items_service">
         {dailyServices.map((item) => (
-          <Link
+          <a
             href={`${
               item.cat === "coming soon" ? "/user/settings" : item.href
             }`}
@@ -177,13 +177,13 @@ const UserSettingsComponent = () => {
                 <p>{item.desc}</p>
               </div>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
       <h2>Other Services</h2>
       <div className="settings_items_service">
         {otherServices.map((item) => (
-          <Link
+          <a
             href={`${item.href}`}
             key={item.href}
             className={`settings_item`}
@@ -196,7 +196,7 @@ const UserSettingsComponent = () => {
                 <p>{item.desc}</p>
               </div>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
     </div>
