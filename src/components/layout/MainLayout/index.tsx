@@ -29,7 +29,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   console.log("pathname", pathname);
   return (
-    <AuthProvider>
+    <AuthProvider>nm
       <QueryClientProvider client={queryClient}>
         {pathname == "/gateway" || pathname.includes("/gateway") ? (
           <section>{children}</section>
