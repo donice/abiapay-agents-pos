@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: false,
+  output: 'export',
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
