@@ -340,7 +340,7 @@ const DashboardComponent: React.FC = () => {
           <>
             {" "}
             <QuickLink name="Identity" link="/identity" />{" "}
-            <QuickLink name="Contract Management" link="/contract" />
+            {/* <QuickLink name="Contract Management" link="/contract" /> */}
             <QuickLink name="Bills" link="/bills" />{" "}
             {/* {userData?.mda =="20008001" && */}
             <QuickLink
