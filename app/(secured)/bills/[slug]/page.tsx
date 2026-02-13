@@ -279,22 +279,22 @@ const Dynamic = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <SelectInput
-          label="Choose Wallet"
+          label="Action"
           name="account_type"
           id="account_type"
           register={register}
           validation={{ required: true }}
           options={bankOptions}
-          placeholder="Select Wallet Type"
+          placeholder="Select Action"
           error={!!errors.account_type}
         />
-        <div className="bill-details_form_btn">
+        {/* <div className="bill-details_form_btn">
           <FormButton
             text={"Generate Instant Account"}
             disabled={isPendingGenerateAccount}
             loading={isPendingGenerateAccount}
           />
-        </div>
+        </div> */}
       </form>
       <div className="w-full grid gap-2 -mt-3">
         <div className="w-full grid " onClick={() => mutateSendBill({ bill_ref: ticket[0]?.transref })}
