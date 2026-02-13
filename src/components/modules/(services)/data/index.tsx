@@ -1,7 +1,7 @@
 ;
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useForm, useWatch } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";

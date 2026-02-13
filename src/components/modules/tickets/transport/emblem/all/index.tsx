@@ -6,7 +6,7 @@ import { Loading } from "@/src/components/common/loader/redirecting";
 import "../../transportTable/style.scss";
 import Empty from "@/src/components/common/empty";
 import { formatAmount } from "@/src/utils/formatAmount";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { GoVerified } from "react-icons/go";
 import { fetchAllEmblem } from "@/src/services/ticketsServices";
 import { TbLoader } from "react-icons/tb";

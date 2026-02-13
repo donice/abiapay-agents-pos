@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { CustomHeader } from "../../common/header";
 import { formatAmount } from "@/src/utils/formatAmount";
-import {useRouter} from "next/navigation";
+import {useRouter} from "next/router";
 import { GoVerified } from "react-icons/go";
 import { GoBackButton } from "../../common/button";
 import Empty from "../../common/empty";

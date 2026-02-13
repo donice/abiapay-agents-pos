@@ -6,7 +6,7 @@ import { randomInvoiceGenerator } from "@/src/utils/randomInvoiceGenerator";
 import { getCurrentDateTime } from "@/src/utils/getCurrentDateTime";
 import toast from "react-hot-toast";
 import { isBrowser } from "@/src/utils/isBrowser";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { Button } from "@/src/components/common/button";
 import { FormTextInput, SelectInput } from "@/src/components/common/input";
 import { SuccessModal } from "@/src/components/common/modal";

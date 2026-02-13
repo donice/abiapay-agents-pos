@@ -5,7 +5,7 @@ import { Loading } from "@/src/components/common/loader/redirecting";
 import "./style.scss";
 import Empty from "@/src/components/common/empty";
 import { formatAmount } from "@/src/utils/formatAmount";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { fetchCompletedTransportEnumeration } from "@/src/services/transportEnumerationService";
 

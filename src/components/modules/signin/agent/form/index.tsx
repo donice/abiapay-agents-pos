@@ -5,7 +5,7 @@ import { TextInput } from "@/src/components/common/input";
 import "./style.scss";
 import toast from "react-hot-toast";
 import { login, useAuthDispatch } from "@/src/context/authContext";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 
 interface FormData {

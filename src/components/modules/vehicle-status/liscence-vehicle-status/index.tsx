@@ -8,7 +8,7 @@ import { CamelCaseToTitleCase } from "@/src/utils/helper";
 import { GoVerified } from "react-icons/go";
 import { RiLoaderLine } from "react-icons/ri";
 import Empty from "@/src/components/common/empty";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import "../style.scss";
 
 function expired(date: string): string {

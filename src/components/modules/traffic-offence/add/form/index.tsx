@@ -15,7 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { fetchPlateNumberInfo } from "@/src/services/ticketsServices";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { fetchAllOffences } from "@/src/services/trafficOffences";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { bankOptions } from "@/src/lib/app";
 
 const AddTrafficOffenceTicketForm = ({

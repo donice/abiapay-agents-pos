@@ -1,6 +1,6 @@
 ;
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import { AuthProvider } from "@/src/context/authContext";
 import { protectedRoutes, unprotectedRoutes } from "@/src/routes";
 import SecuredPagesLayout from "@/src/components/layout/SecuredPagesLayout";
@@ -19,7 +19,7 @@ export interface RouteConfig {
 }
 
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const pathname = usePathname();
+  const pathname = useRouter().asPath;
   const isProtectedRoute = protectedRoutes.includes(pathname);
   const isPartOfProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)

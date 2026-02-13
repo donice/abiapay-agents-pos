@@ -2,7 +2,7 @@
 import { CustomHeader } from "@/src/components/common/header";
 import React, { useState } from "react";
 import CreateEmblemForm from "./form";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { EmblemModal } from "@/src/components/common/modal";
 
 const TransportEmblemComponent = () => {

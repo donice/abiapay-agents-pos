@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { validateIDOtp, validateNoIDOtp } from "@/src/services/identityService";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/router";
 import { OtpSuccessModal } from "@/src/components/common/modal";
 import Unauthorized from "@/src/components/common/unauthorized";
 
@@ -34,7 +34,7 @@ const ValidateOtpComponent = () => {
     onSuccess: (data: any) => {
       console.log("DATA", data);
       source == "No ID"
-      ?  data.status == true && setShow({ mode: true, message: data.message }) 
+      ?  data.status == true && setShow({ mode: true, message: data.message })
       :  data.status == true
         ? toast.success(data.response_message) && setShow({ mode: true, message: data.response_message })
         : toast.error(data.response_message);
@@ -114,14 +114,14 @@ const ValidateOtpComponent = () => {
               disabled={isPending}
             />
             </div>
-            
+
           </form>
 
           {show.mode && (
             <OtpSuccessModal
             mode="verified"
               maintext={`${show?.message}`}
-              subtext="Click 'Continue' to proceed your ABSSIN creation" 
+              subtext="Click 'Continue' to proceed your ABSSIN creation"
               buttontext="Continue"
               link={`/identity/create/individual?source=${source}&_id=${_id}`}
             />

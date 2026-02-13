@@ -10,7 +10,7 @@ import {
   fetchBusinessAbssin,
   fetchBusinessAbssinPayload,
 } from "@/src/services/demandNotice";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";

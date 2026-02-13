@@ -9,12 +9,12 @@ import {
   fetchTaxOffice,
 } from "@/src/services/common";
 import { submitDate, transformDate } from "@/src/utils/formatDate";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/router";
 
-const UserData = ({ setStage, setFormData, formData }: any) => {    
+const UserData = ({ setStage, setFormData, formData }: any) => {
   const querySearch = useSearchParams();
   const source = querySearch.get("source");
-  
+
   // NO_ID_DATA
 
   const [taxOffice, setTaxOffice] = useState<any>([]);

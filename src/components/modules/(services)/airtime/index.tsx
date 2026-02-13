@@ -10,7 +10,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { FormTextInput } from "@/src/components/common/input";
 import { FormButton } from "@/src/components/common/button";
 import { BuyAirtimeService } from "@/src/services/VATService";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import Link from "next/link";
 

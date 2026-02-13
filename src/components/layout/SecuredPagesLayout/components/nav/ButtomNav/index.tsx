@@ -16,7 +16,7 @@ import {
   TbZoomScanFilled,
   TbTicket,
 } from "react-icons/tb";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { isBrowser } from "@/src/utils/isBrowser";
 
 interface BottomNavProps {

@@ -5,7 +5,7 @@ import { GoBackButton } from '@/src/components/common/button'
 import { CustomHeader } from '@/src/components/common/header'
 import React, { useState } from 'react'
 import Form from './form'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { CamelCaseToTitleCase } from '@/src/utils/helper';
 import { GoVerified } from 'react-icons/go';
 import { RiLoaderLine } from 'react-icons/ri';

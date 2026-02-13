@@ -9,7 +9,7 @@ import { Button } from "@/src/components/common/button";
 import { validateID, validateNoID } from "@/src/services/identityService";
 import toast from "react-hot-toast";
 import { OtpSuccessModal } from "@/src/components/common/modal";
-import { usePathname } from "next/navigation";
+import { usePathname } from "next/router";
 
 export const metadata: Metadata = {
   title: "ABIAPAY Identity",

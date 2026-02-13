@@ -1,7 +1,7 @@
 ;
 import { CustomHeader } from "@/src/components/common/header";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { FlyingRevenue } from "@/src/components/common/modal";
 import FlyingRevenueForm from "./form";
 import { haulages } from "./lib/haulages";

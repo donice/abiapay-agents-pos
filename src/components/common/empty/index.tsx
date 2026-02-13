@@ -1,5 +1,5 @@
 ;
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { FcOpenedFolder } from "react-icons/fc";
 import "./style.scss";
 import React from "react";

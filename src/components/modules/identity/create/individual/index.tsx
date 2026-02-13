@@ -10,7 +10,7 @@ import {
 } from "@/src/services/identityService";
 import UserData from "./userData";
 import OriginData from "./originData";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { isBrowser } from "@/src/utils/isBrowser";
 

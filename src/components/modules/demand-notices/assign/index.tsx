@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import "./style.scss";
 import { InformationModal } from "@/src/components/common/modal";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 const AssignNotice = () => {
   const router = useRouter();

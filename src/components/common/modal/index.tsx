@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { FcDeleteDatabase, FcAcceptDatabase, FcOk } from "react-icons/fc";
 import "./style.scss";
 import { BackButton, Button, PrimaryButton, SecondaryButton } from "../button";

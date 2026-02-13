@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.scss";
 import { TbChevronRight } from "react-icons/tb";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import badge from "./assets/badge.png";
 import {

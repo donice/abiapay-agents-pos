@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.scss";
 import { TbTicket, TbCreditCard, TbFolders } from "react-icons/tb";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 interface props {
   icon?: string;

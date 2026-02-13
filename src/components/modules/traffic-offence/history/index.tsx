@@ -11,7 +11,7 @@ import { formatAmount } from "@/src/utils/formatAmount";
 import { CustomHeader } from "@/src/components/common/header";
 import { GoBackButton } from "@/src/components/common/button";
 import { isBrowser } from "@/src/utils/isBrowser";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 const History = () => {
   const router = useRouter();
   const [userData, setUserData] = useState<{ name?: string; email?: string } | null>(null);
